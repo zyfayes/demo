@@ -2370,6 +2370,20 @@
       ctx.fillRect(0, 0, w, h);
       if (!info.chart) return;
       const pad = 10;
+      const markers = [];
+      function addMarker(x, y) {
+        markers.push({ x, y });
+      }
+      function drawMarkers() {
+        ctx.strokeStyle = 'rgba(239,68,68,0.95)';
+        ctx.fillStyle = 'rgba(239,68,68,0.25)';
+        markers.forEach(m => {
+          ctx.beginPath();
+          ctx.arc(m.x, m.y, 4.5, 0, Math.PI*2);
+          ctx.fill();
+          ctx.stroke();
+        });
+      }
       function norm(val, min, max) {
         if (max === min) return h/2;
         return h - pad - (val - min) / (max - min) * (h - pad*2);
@@ -2396,6 +2410,31 @@
             ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke();
           });
           ctx.setLineDash([]);
+          let count = 0;
+          info.chart.thresholds.forEach(t => {
+            for (let i=1;i<data.length;i++) {
+              const prev = data[i-1];
+              const cur = data[i];
+              if ((prev - t) * (cur - t) <= 0 && prev !== cur) {
+                const x = pad + (w - pad*2) * (i/(data.length-1));
+                const y = norm(cur, min, max);
+                addMarker(x, y);
+                count++;
+                if (count >= 3) break;
+              }
+            }
+          });
+        } else {
+          const topIdx = data
+            .map((v,i)=>({v,i}))
+            .sort((a,b)=>b.v-a.v)
+            .slice(0,2)
+            .map(o=>o.i);
+          topIdx.forEach(i=>{
+            const x = pad + (w - pad*2) * (i/(data.length-1));
+            const y = norm(data[i], min, max);
+            addMarker(x, y);
+          });
         }
       } else if (info.chart.type === 'bars') {
         const bars = info.chart.bars;
@@ -2408,6 +2447,14 @@
           ctx.fillStyle = 'rgba(59,130,246,0.75)';
           ctx.fillRect(x, y, bw-4, h - pad - y);
         });
+        const thresh = max * 0.8;
+        bars.forEach((v,i)=>{
+          if (v >= thresh) {
+            const cx = pad + i*bw + 2 + (bw-4)/2;
+            const cy = norm(v, min, max);
+            addMarker(cx, cy);
+          }
+        });
       } else if (info.chart.type === 'pulses') {
         const pulses = info.chart.pulses;
         const heights = info.chart.heights || pulses.map(()=>20);
@@ -2419,6 +2466,17 @@
           ctx.lineWidth = 2;
           ctx.beginPath();
           ctx.moveTo(x,y0); ctx.lineTo(x,y1); ctx.stroke();
+        });
+        const idxs = heights
+          .map((v,i)=>({v,i}))
+          .sort((a,b)=>b.v-a.v)
+          .slice(0,2)
+          .map(o=>o.i);
+        idxs.forEach(i=>{
+          const x = pad + (w - pad*2) * pulses[i];
+          const y1 = h - pad;
+          const y0 = y1 - heights[i];
+          addMarker(x, y0);
         });
       } else if (info.chart.type === 'multiLine') {
         const lines = info.chart.lines;
@@ -2436,6 +2494,12 @@
             if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
           });
           ctx.stroke();
+        });
+        const i = Math.max.apply(null, lines.map(a=>a.length)) - 1;
+        const x = pad + (w - pad*2) * (i/(lines[0].length-1));
+        lines.forEach(arr=>{
+          const y = norm(arr[i], min, max);
+          addMarker(x, y);
         });
       } else if (info.chart.type === 'dual') {
         const data = info.chart.data;
@@ -2459,7 +2523,16 @@
           ctx.fillStyle = 'rgba(59,130,246,0.35)';
           ctx.fillRect(x, y, bw-4, h - pad - y);
         });
+        const thresh = maxBar * 0.8;
+        bars.forEach((v,i)=>{
+          if (v >= thresh) {
+            const cx = pad + i*bw + 2 + (bw-4)/2;
+            const cy = h - pad - (v/maxBar) * (h - pad*2) * 0.5;
+            addMarker(cx, cy);
+          }
+        });
       }
+      drawMarkers();
     }
     function openDrawerForFeature(featureId) {
       const info = featureConfig[featureId] || featureConfig['funding_rate_trend'];

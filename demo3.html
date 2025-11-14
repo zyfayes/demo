@@ -1,0 +1,2569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Trading Strategy – Features</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+      font-size: 14px;
+      color-scheme: dark;
+      --bg: #050710;
+      --bg-elevated: #0b0f1c;
+      --bg-soft: #111727;
+      --border-subtle: #252c3f;
+      --accent: #3b82f6;
+      --accent-soft: rgba(59,130,246,0.12);
+      --accent-strong: rgba(59,130,246,0.3);
+      --text-main: #f9fafb;
+      --text-subtle: #9ca3af;
+      --text-muted: #6b7280;
+      --success: #22c55e;
+      --danger: #ef4444;
+      --warning: #eab308;
+      --radius-lg: 14px;
+      --radius-xl: 18px;
+      --shadow-soft: 0 18px 40px rgba(15,23,42,0.65);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: radial-gradient(circle at top, #0b1120 0, #020617 38%, #020617 100%);
+      color: var(--text-main);
+      padding: 24px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1280px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .panel {
+      background: radial-gradient(circle at top left, rgba(37,99,235,0.14), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(14,165,233,0.08), transparent 65%),
+                  var(--bg-elevated);
+      border-radius: 22px;
+      border: 1px solid rgba(148,163,184,0.18);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .panel-title {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-subtle);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.3);
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: rgba(15,23,42,0.7);
+    }
+
+    .pill-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.4);
+    }
+
+    .panel-body {
+      margin-top: 4px;
+    }
+
+    /* Selector panel */
+
+    .selector-date-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+
+    .selector-date-label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .selector-history-dates {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .selector-date-btn {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .selector-date-btn.active {
+      background: rgba(59,130,246,0.25);
+      border-color: rgba(59,130,246,0.9);
+      color: #dbeafe;
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.6);
+    }
+
+    .selector-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.7fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .selector-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .drawer-section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    }
+
+    .funnel {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .funnel-step {
+      display: grid;
+      grid-template-columns: auto 70px 60px;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(30,64,175,0.7);
+      position: relative;
+    }
+
+    .funnel-step::after {
+      content: "↓";
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 50%);
+      bottom: -11px;
+      font-size: 10px;
+      color: #64748b;
+    }
+
+    .funnel-step:last-child::after {
+      display: none;
+    }
+
+    .funnel-label {
+      color: #e5e7eb;
+    }
+
+    .funnel-count {
+      font-variant-numeric: tabular-nums;
+      text-align: right;
+      color: #cbd5f5;
+    }
+
+    .funnel-drop {
+      font-size: 10px;
+      text-align: right;
+      color: #a5b4fc;
+    }
+
+    .selector-history {
+      background: rgba(15,23,42,0.9);
+      border-radius: 18px;
+      border: 1px solid rgba(31,41,55,0.95);
+      padding: 10px 10px 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .selector-history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+
+    .selector-symbols-wrapper {
+      position: relative;
+    }
+
+    .selector-symbols {
+      margin-top: 4px;
+      display: none;
+      flex-wrap: wrap;
+      gap: 6px;
+      overflow: hidden;
+      transition: max-height 0.18s ease-out;
+    }
+
+    .selector-symbols.active {
+      display: flex;
+    }
+
+    .selector-symbols.collapsed {
+      max-height: 52px;
+    }
+
+    .selector-symbols.expanded {
+      max-height: 200px;
+    }
+
+    .symbol-chip {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.45);
+      background: rgba(15,23,42,0.95);
+      color: #e5e7eb;
+    }
+
+    .symbol-chip.main {
+      border-color: rgba(34,197,94,0.7);
+      color: #bbf7d0;
+    }
+
+    .symbol-chip.trim {
+      border-color: rgba(234,179,8,0.7);
+      color: #fef9c3;
+    }
+
+    .selector-toggle {
+      margin-top: 4px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .selector-toggle-btn {
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.95);
+      color: var(--text-subtle);
+      cursor: pointer;
+    }
+
+    .mini-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* Features header actions */
+
+    .feature-header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .feature-filters {
+      display: inline-flex;
+      gap: 6px;
+      background: rgba(15,23,42,0.85);
+      border-radius: 999px;
+      padding: 2px;
+      border: 1px solid rgba(148,163,184,0.3);
+    }
+
+    .feature-filter-btn {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .feature-filter-btn.is-active {
+      background: rgba(59,130,246,0.18);
+      color: var(--text-main);
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.5);
+    }
+
+    .feature-filters .feature-filter-btn:not(.is-active):hover {
+      background: rgba(15,23,42,0.95);
+      color: var(--text-subtle);
+    }
+
+    .feature-btn {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.5);
+      background: rgba(15,23,42,0.9);
+      color: #e5e7eb;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.16s ease-out;
+      white-space: nowrap;
+    }
+
+    .feature-btn.primary {
+      border-color: rgba(59,130,246,0.9);
+      background: rgba(37,99,235,0.9);
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.7);
+    }
+
+    .feature-btn.primary:hover {
+      background: rgba(37,99,235,1);
+    }
+
+    .feature-btn:hover:not(.primary) {
+      background: rgba(15,23,42,1);
+      border-color: rgba(148,163,184,0.8);
+    }
+
+    .feature-btn-icon {
+      font-size: 12px;
+    }
+
+    /* Feature grid */
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 14px;
+      margin-top: 6px;
+    }
+
+    .feature-card {
+      position: relative;
+      background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.85));
+      border-radius: 18px;
+      border: 1px solid rgba(31,41,55,0.9);
+      padding: 14px 14px 13px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: transform 0.14s ease-out, box-shadow 0.14s ease-out, border-color 0.14s ease-out, background 0.2s;
+      min-height: 160px;
+    }
+
+    .feature-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top right, rgba(59,130,246,0.24), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.2s ease-out;
+      pointer-events: none;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-1px);
+      border-color: rgba(59,130,246,0.65);
+      box-shadow: 0 14px 28px rgba(15,23,42,0.9);
+    }
+
+    .feature-card:hover::before {
+      opacity: 0.9;
+    }
+
+    .feature-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+
+    .feature-name {
+      font-size: 14px;
+      font-weight: 500;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .feature-name small {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .feature-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      justify-content: flex-end;
+    }
+
+    .tag {
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.35);
+      color: var(--text-subtle);
+      background: rgba(15,23,42,0.85);
+    }
+
+    .tag--type {
+      border-color: rgba(59,130,246,0.6);
+      color: #93c5fd;
+    }
+
+    .feature-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1.05fr);
+      gap: 10px;
+      align-items: stretch;
+      margin-bottom: 7px;
+    }
+
+    .feature-value {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .feature-value-main {
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .feature-value-sub {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .feature-state-chip {
+      font-size: 11px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      justify-self: flex-start;
+    }
+
+    .state-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+    }
+
+    .state-bull {
+      background: rgba(22,163,74,0.15);
+      color: #bbf7d0;
+    }
+    .state-bull .state-dot {
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(34,197,94,0.4);
+    }
+
+    .state-neutral {
+      background: rgba(148,163,184,0.18);
+      color: #e5e7eb;
+    }
+    .state-neutral .state-dot {
+      background: #9ca3af;
+      box-shadow: 0 0 0 3px rgba(148,163,184,0.4);
+    }
+
+    .state-bear {
+      background: rgba(185,28,28,0.18);
+      color: #fecaca;
+    }
+    .state-bear .state-dot {
+      background: var(--danger);
+      box-shadow: 0 0 0 3px rgba(248,113,113,0.4);
+    }
+
+    .feature-mini-chart {
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      background: rgba(15,23,42,0.98);
+      border: 1px solid rgba(30,64,175,0.75);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      min-height: 68px;
+    }
+
+    .feature-mini-chart--time {
+      background-image:
+        linear-gradient(to top, rgba(30,64,175,0.5), rgba(37,99,235,0.1)),
+        repeating-linear-gradient(
+          to right,
+          rgba(51,65,85,0.7),
+          rgba(51,65,85,0.7) 1px,
+          rgba(15,23,42,0.95) 1px,
+          rgba(15,23,42,0.95) 8px
+        );
+    }
+
+    .feature-mini-chart--cross {
+      background-image:
+        radial-gradient(circle at bottom, rgba(59,130,246,0.28), transparent 70%),
+        repeating-linear-gradient(
+          to right,
+          rgba(30,64,175,0.7),
+          rgba(30,64,175,0.7) 3px,
+          rgba(15,23,42,0.95) 3px,
+          rgba(15,23,42,0.95) 10px
+        );
+    }
+
+    .feature-mini-chart--slow {
+      background-image:
+        linear-gradient(to top, rgba(56,189,248,0.35), rgba(15,23,42,0.9)),
+        repeating-linear-gradient(
+          to right,
+          rgba(15,23,42,0.9),
+          rgba(15,23,42,0.9) 8px,
+          rgba(15,23,42,1) 8px,
+          rgba(15,23,42,1) 14px
+        );
+    }
+
+    .feature-mini-chart--event {
+      background-image:
+        radial-gradient(circle at top, rgba(236,72,153,0.3), transparent 70%),
+        repeating-linear-gradient(
+          to right,
+          rgba(51,65,85,0.9),
+          rgba(51,65,85,0.9) 2px,
+          rgba(15,23,42,1) 2px,
+          rgba(15,23,42,1) 10px
+        );
+    }
+
+    .mini-sparkline {
+      position: relative;
+      width: 100%;
+      height: 40px;
+      border-radius: 999px;
+      border: 1px dashed rgba(191,219,254,0.65);
+      opacity: 0.85;
+    }
+
+    .mini-sparkline-dots {
+      position: absolute;
+      inset: 7px 8px 5px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 3px;
+    }
+
+    .mini-sparkline-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(191,219,254,0.95);
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.6);
+    }
+
+    .mini-bar-row {
+      position: absolute;
+      inset: 6px 8px 6px;
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+    }
+
+    .mini-bar {
+      flex: 1;
+      border-radius: 6px 6px 0 0;
+      background: rgba(59,130,246,0.75);
+    }
+
+    .mini-step-row {
+      position: absolute;
+      inset: 10px 8px 8px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .mini-step {
+      width: 16%;
+      border-radius: 4px;
+      background: rgba(56,189,248,0.9);
+      border: 1px solid rgba(56,189,248,0.9);
+    }
+
+    .mini-pulse-row {
+      position: absolute;
+      inset: 4px 8px 4px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      justify-content: space-between;
+    }
+
+    .mini-pulse {
+      width: 2px;
+      border-radius: 999px;
+      background: rgba(236,72,153,0.95);
+      box-shadow: 0 0 0 2px rgba(236,72,153,0.5);
+    }
+
+    .feature-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .feature-meta-left,
+    .feature-meta-right {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-size: 10px;
+      color: #64748b;
+    }
+
+    .meta-val {
+      font-size: 11px;
+      color: #e5e7eb;
+    }
+
+    .meta-val.positive {
+      color: #4ade80;
+    }
+    .meta-val.negative {
+      color: #fca5a5;
+    }
+    .meta-val.muted {
+      color: var(--text-muted);
+    }
+
+    /* Drawer */
+
+    .drawer-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,0.65);
+      backdrop-filter: blur(16px);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease-out, visibility 0.2s ease-out;
+      z-index: 40;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .drawer-backdrop.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .feature-drawer {
+      width: min(420px, 100%);
+      background: radial-gradient(circle at top left, rgba(37,99,235,0.2), transparent 55%),
+                  radial-gradient(circle at bottom right, rgba(14,165,233,0.16), transparent 70%),
+                  #020617;
+      border-left: 1px solid rgba(148,163,184,0.25);
+      padding: 18px 16px 18px;
+      transform: translateX(100%);
+      transition: transform 0.22s ease-out;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .drawer-backdrop.is-open .feature-drawer {
+      transform: translateX(0);
+    }
+
+    .drawer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .drawer-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .drawer-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .drawer-sub {
+      font-size: 11px;
+      color: var(--text-subtle);
+    }
+
+    .drawer-close-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
+      padding: 4px 10px;
+      color: var(--text-subtle);
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .drawer-body {
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .drawer-section {
+      margin-bottom: 12px;
+      border-radius: 12px;
+      background: rgba(15,23,42,0.92);
+      border: 1px solid rgba(31,41,55,0.9);
+      padding: 8px 9px;
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      font-size: 11px;
+    }
+
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .summary-label {
+      color: var(--text-muted);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .summary-value {
+      color: #e5e7eb;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .chart-placeholder {
+      height: 180px;
+      border-radius: 10px;
+      background: repeating-linear-gradient(
+        135deg,
+        rgba(30,64,175,0.12),
+        rgba(30,64,175,0.12) 1px,
+        rgba(15,23,42,0.9) 1px,
+        rgba(15,23,42,0.9) 6px
+      );
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #9ca3af;
+      overflow: hidden;
+    }
+
+    .chart-line {
+      position: absolute;
+      inset: 16px 10px 10px;
+      border-radius: 999px;
+      border: 1px dashed rgba(129,140,248,0.7);
+      opacity: 0.6;
+    }
+
+    .chart-dots {
+      position: absolute;
+      inset: 20px 18px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .chart-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 999px;
+      background: rgba(129,140,248,0.9);
+      box-shadow: 0 0 0 4px rgba(79,70,229,0.5);
+    }
+
+    .drawer-list {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      font-size: 11px;
+      color: #e5e7eb;
+    }
+
+    .drawer-list-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+
+    .drawer-list-bullet {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.8);
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <!-- Selector: full-width, with date controlling funnel + symbols -->
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span>Universe Selector</span>
+          <span class="pill">
+            <span class="pill-dot"></span>
+            Pre-filter · Pluggable
+          </span>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="selector-date-row">
+          <div class="selector-date-label">
+            <span>Last 7 Days · Selection Snapshot</span>
+          </div>
+          <div class="selector-history-dates">
+            <button class="selector-date-btn active" data-day="2025-11-14">Today · 11-14</button>
+            <button class="selector-date-btn" data-day="2025-11-13">11-13</button>
+            <button class="selector-date-btn" data-day="2025-11-12">11-12</button>
+            <button class="selector-date-btn" data-day="2025-11-11">11-11</button>
+            <button class="selector-date-btn" data-day="2025-11-10">11-10</button>
+            <button class="selector-date-btn" data-day="2025-11-09">11-09</button>
+            <button class="selector-date-btn" data-day="2025-11-08">11-08</button>
+          </div>
+        </div>
+
+        <div class="selector-layout">
+          <!-- Left: funnel -->
+          <div>
+            <div class="drawer-section-title">Filter Funnel</div>
+            <div class="funnel">
+              <div class="funnel-step" data-step="0">
+                <div class="funnel-label">Total universe</div>
+                <div class="funnel-count" data-funnel-count></div>
+                <div class="funnel-drop" data-funnel-drop></div>
+              </div>
+              <div class="funnel-step" data-step="1">
+                <div class="funnel-label" data-funnel-label>MktCap &gt; 10B</div>
+                <div class="funnel-count" data-funnel-count></div>
+                <div class="funnel-drop" data-funnel-drop></div>
+              </div>
+              <div class="funnel-step" data-step="2">
+                <div class="funnel-label" data-funnel-label>Liquidity &gt; P70</div>
+                <div class="funnel-count" data-funnel-count></div>
+                <div class="funnel-drop" data-funnel-drop></div>
+              </div>
+              <div class="funnel-step" data-step="3">
+                <div class="funnel-label" data-funnel-label>Momentum score &gt; 0.6</div>
+                <div class="funnel-count" data-funnel-count></div>
+                <div class="funnel-drop" data-funnel-drop></div>
+              </div>
+              <div class="funnel-step" data-step="4">
+                <div class="funnel-label" data-funnel-label>Final selected</div>
+                <div class="funnel-count" data-funnel-count></div>
+                <div class="funnel-drop" data-funnel-drop></div>
+              </div>
+            </div>
+            <div class="mini-label">
+              · Funnel view is synced with the selected date: explain inclusion/exclusion step by step.
+            </div>
+          </div>
+
+          <!-- Right: symbol sets -->
+          <div>
+            <div class="drawer-section-title">Selected Symbols (per day)</div>
+            <div class="selector-history">
+              <div class="selector-history-header">
+                <span>Exactly tradable names for this strategy on the selected day.</span>
+              </div>
+              <div class="selector-symbols-wrapper">
+                <!-- day: 14 -->
+                <div class="selector-symbols active collapsed" data-symbols-day="2025-11-14">
+                  <span class="symbol-chip main">BTC</span>
+                  <span class="symbol-chip">ETH</span>
+                  <span class="symbol-chip">SOL</span>
+                  <span class="symbol-chip">AVAX</span>
+                  <span class="symbol-chip">LINK</span>
+                  <span class="symbol-chip">ARB</span>
+                  <span class="symbol-chip">OP</span>
+                  <span class="symbol-chip">TIA</span>
+                  <span class="symbol-chip trim">PERP hedge · ETH</span>
+                </div>
+
+                <!-- day: 13 -->
+                <div class="selector-symbols collapsed" data-symbols-day="2025-11-13">
+                  <span class="symbol-chip main">BTC</span>
+                  <span class="symbol-chip">ETH</span>
+                  <span class="symbol-chip">SOL</span>
+                  <span class="symbol-chip">TON</span>
+                  <span class="symbol-chip">LINK</span>
+                  <span class="symbol-chip trim">DOGE</span>
+                </div>
+
+                <!-- day: 12 -->
+                <div class="selector-symbols collapsed" data-symbols-day="2025-11-12">
+                  <span class="symbol-chip main">ETH</span>
+                  <span class="symbol-chip">BTC</span>
+                  <span class="symbol-chip">LDO</span>
+                  <span class="symbol-chip">RPL</span>
+                  <span class="symbol-chip trim">stETH hedge</span>
+                </div>
+
+                <!-- day: 11 -->
+                <div class="selector-symbols collapsed" data-symbols-day="2025-11-11">
+                  <span class="symbol-chip main">BTC</span>
+                  <span class="symbol-chip">SOL</span>
+                  <span class="symbol-chip">JTO</span>
+                  <span class="symbol-chip">PYTH</span>
+                  <span class="symbol-chip">W</span>
+                  <span class="symbol-chip trim">SOL hedge basket</span>
+                </div>
+
+                <!-- day: 10 -->
+                <div class="selector-symbols collapsed" data-symbols-day="2025-11-10">
+                  <span class="symbol-chip main">BTC</span>
+                  <span class="symbol-chip">ETH</span>
+                  <span class="symbol-chip">BNB</span>
+                  <span class="symbol-chip">XRP</span>
+                  <span class="symbol-chip trim">Index overlay</span>
+                </div>
+
+                <!-- day: 09 -->
+                <div class="selector-symbols collapsed" data-symbols-day="2025-11-09">
+                  <span class="symbol-chip main">BTC</span>
+                  <span class="symbol-chip">SOL</span>
+                  <span class="symbol-chip">TIA</span>
+                  <span class="symbol-chip">INJ</span>
+                </div>
+
+                <!-- day: 08 -->
+                <div class="selector-symbols collapsed" data-symbols-day="2025-11-08">
+                  <span class="symbol-chip main">BTC</span>
+                  <span class="symbol-chip">ETH</span>
+                  <span class="symbol-chip">OP</span>
+                  <span class="symbol-chip">ARB</span>
+                  <span class="symbol-chip">BASE memecoins</span>
+                </div>
+              </div>
+
+              <div class="selector-toggle">
+                <button class="selector-toggle-btn" id="selector-toggle-btn">Show all</button>
+              </div>
+            </div>
+            <div class="mini-label">
+              · Collapse/expand when symbol set is long; keep the daily footprint visible.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features grid: time-series + cross-section + slow + event -->
+    <section class="panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <span>Features</span>
+          <span class="pill">
+            <span class="pill-dot"></span>
+            17 Active
+          </span>
+        </div>
+        <div class="feature-header-actions">
+          <button class="feature-btn primary">
+            <span class="feature-btn-icon">＋</span>
+            <span>New Feature</span>
+          </button>
+          <button class="feature-btn">
+            <span class="feature-btn-icon">📚</span>
+            <span>Feature Library</span>
+          </button>
+          <div class="feature-filters">
+            <button class="feature-filter-btn is-active" data-filter="all">All</button>
+            <button class="feature-filter-btn" data-filter="time">Time-Series</button>
+            <button class="feature-filter-btn" data-filter="cross">Cross-Section</button>
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div class="feature-grid">
+          <!-- Time-Series: Funding Rate Trend -->
+          <article class="feature-card" data-feature="funding_rate_trend" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Funding Rate Trend</span>
+                <small>Perp funding vs spot · 8h</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">+0.032%</span>
+                <span class="feature-value-sub">24h Δ +0.018%</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Strong Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:2px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:8px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:16px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:10px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.73</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.31 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Time-Series: BTC / ETH Spread Overlay (merged type) -->
+          <article class="feature-card" data-feature="btc_eth_spread_overlay" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>BTC / ETH Spread Overlay</span>
+                <small>Overlay hedge ratio · 1d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">1.24×</span>
+                <span class="feature-value-sub">vs neutral 1.10×</span>
+                <span class="feature-state-chip state-neutral">
+                  <span class="state-dot"></span>
+                  Neutral
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:10px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:6px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:8px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:9px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val muted">+0.08</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val muted">Risk trim only</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cross-Section: Momentum Rank -->
+          <article class="feature-card" data-feature="momentum_cross_section" data-type="cross">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Momentum Rank (Top 20%)</span>
+                <small>7d return vs universe</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Cross-Section</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Rank #6 / 120</span>
+                <span class="feature-value-sub">Score 0.68</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--cross">
+                <div class="mini-sparkline">
+                  <div class="mini-bar-row">
+                    <span class="mini-bar" style="height:10px;opacity:0.35;"></span>
+                    <span class="mini-bar" style="height:16px;opacity:0.45;"></span>
+                    <span class="mini-bar" style="height:24px;opacity:0.6;"></span>
+                    <span class="mini-bar" style="height:30px;opacity:0.9;"></span>
+                    <span class="mini-bar" style="height:18px;opacity:0.55;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.52</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.22 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Time-Series: Derivative Sentiment -->
+          <article class="feature-card" data-feature="sentiment_score" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Derivative Sentiment</span>
+                <small>Funding + skew + OI</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">-0.14</span>
+                <span class="feature-value-sub">24h drift -0.09</span>
+                <span class="feature-state-chip state-bear">
+                  <span class="state-dot"></span>
+                  Mild Bearish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:8px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:5px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:3px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:4px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:2px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val negative">-0.27</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val negative">-0.03 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Time-Series: Whale Flow Δ -->
+          <article class="feature-card" data-feature="whale_flow" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Whale Flow Δ</span>
+                <small>Net inflow to CEX · 24h</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">+3,120 BTC</span>
+                <span class="feature-value-sub">z-score +1.9</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Accumulation
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:6px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:10px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:14px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:20px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:18px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.59</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.28 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cross-Section: Risk Regime Filter -->
+          <article class="feature-card" data-feature="risk_filter" data-type="cross">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Risk Regime Filter</span>
+                <small>Macro & vol cluster</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Cross-Section</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Regime: Neutral</span>
+                <span class="feature-value-sub">No override</span>
+                <span class="feature-state-chip state-neutral">
+                  <span class="state-dot"></span>
+                  Neutral
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--cross">
+                <div class="mini-sparkline">
+                  <div class="mini-bar-row">
+                    <span class="mini-bar" style="height:14px;opacity:0.3;"></span>
+                    <span class="mini-bar" style="height:9px;opacity:0.35;"></span>
+                    <span class="mini-bar" style="height:16px;opacity:0.4;"></span>
+                    <span class="mini-bar" style="height:11px;opacity:0.35;"></span>
+                    <span class="mini-bar" style="height:15px;opacity:0.38;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val muted">0.00</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val muted">No change</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Time-Series: Trend Strength (ADX 14) -->
+          <article class="feature-card" data-feature="trend_strength" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Trend Strength (ADX 14)</span>
+                <small>Directional movement · 1d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">ADX 27</span>
+                <span class="feature-value-sub">DMI+ > DMI-</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:6px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:10px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:15px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:18px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.47</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.18 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Time-Series: Volatility Breakout -->
+          <article class="feature-card" data-feature="volatility_breakout" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Volatility Breakout</span>
+                <small>ATR band · 20d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Breakout +1.5σ</span>
+                <span class="feature-value-sub">Band breach</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:8px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:20px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:16px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:14px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.42</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.16 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Time-Series: Mean Reversion Alert -->
+          <article class="feature-card" data-feature="mean_reversion" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Mean Reversion Alert</span>
+                <small>RSI(2) · 1d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">RSI 18</span>
+                <span class="feature-value-sub">Oversold zone</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Reversion Setup
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:4px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:8px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:6px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:9px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.31</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.12 → BUY</span>
+            </div>
+          </div>
+        </article>
+
+          <article class="feature-card" data-feature="ma_stack_signal" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>MA Stack Signal (20/50/200)</span>
+                <small>Golden stack check · 1d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Aligned</span>
+                <span class="feature-value-sub">MA20 > MA50 > MA200</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:8px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:16px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:20px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:18px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.44</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.16 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature-card" data-feature="price_volume_confirmation" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Price–Volume Confirmation</span>
+                <small>Up volume vs down · 5d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Confirming</span>
+                <span class="feature-value-sub">UpVol 1.3×</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:6px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:9px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:14px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:16px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:12px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.33</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.12 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="feature-card" data-feature="money_flow_composite" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Money Flow Composite</span>
+                <small>Netflow + funding + OI · 1d</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Score 0.57</span>
+                <span class="feature-value-sub">Improving</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Accumulation
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--time">
+                <div class="mini-sparkline">
+                  <div class="mini-sparkline-dots">
+                    <span class="mini-sparkline-dot" style="margin-bottom:7px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:10px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:13px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:17px;"></span>
+                    <span class="mini-sparkline-dot" style="margin-bottom:15px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.49</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.19 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cross-Section: Liquidity Percentile -->
+          <article class="feature-card" data-feature="liquidity_percentile" data-type="cross">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Liquidity Percentile</span>
+                <small>30d avg volume rank</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Cross-Section</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">P88</span>
+                <span class="feature-value-sub">Deep book</span>
+                <span class="feature-state-chip state-neutral">
+                  <span class="state-dot"></span>
+                  Tradable
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--cross">
+                <div class="mini-sparkline">
+                  <div class="mini-bar-row">
+                    <span class="mini-bar" style="height:12px;opacity:0.35;"></span>
+                    <span class="mini-bar" style="height:18px;opacity:0.5;"></span>
+                    <span class="mini-bar" style="height:26px;opacity:0.75;"></span>
+                    <span class="mini-bar" style="height:20px;opacity:0.6;"></span>
+                    <span class="mini-bar" style="height:16px;opacity:0.45;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val muted">0.00</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val muted">No change</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cross-Section: Funding Cost Rank -->
+          <article class="feature-card" data-feature="funding_cost_rank" data-type="cross">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Funding Cost Rank</span>
+                <small>Avg funding vs peers</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Cross-Section</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Top 15%</span>
+                <span class="feature-value-sub">Cheaper to long</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--cross">
+                <div class="mini-sparkline">
+                  <div class="mini-bar-row">
+                    <span class="mini-bar" style="height:14px;opacity:0.4;"></span>
+                    <span class="mini-bar" style="height:22px;opacity:0.65;"></span>
+                    <span class="mini-bar" style="height:28px;opacity:0.85;"></span>
+                    <span class="mini-bar" style="height:18px;opacity:0.55;"></span>
+                    <span class="mini-bar" style="height:20px;opacity:0.6;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.26</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.10 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Cross-Section: On-chain Activity Rank -->
+          <article class="feature-card" data-feature="onchain_activity_rank" data-type="cross">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>On-chain Activity Rank</span>
+                <small>New addresses growth</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Cross-Section</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Top 10%</span>
+                <span class="feature-value-sub">↑ 12% WoW</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Bullish
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--cross">
+                <div class="mini-sparkline">
+                  <div class="mini-bar-row">
+                    <span class="mini-bar" style="height:10px;opacity:0.35;"></span>
+                    <span class="mini-bar" style="height:16px;opacity:0.5;"></span>
+                    <span class="mini-bar" style="height:24px;opacity:0.75;"></span>
+                    <span class="mini-bar" style="height:30px;opacity:0.9;"></span>
+                    <span class="mini-bar" style="height:22px;opacity:0.6;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Strength</span>
+                <span class="meta-val positive">+0.45</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">+0.17 → BUY</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Slow-updating fundamental factor -->
+          <article class="feature-card" data-feature="valuation_growth" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Valuation & Growth Composite</span>
+                <small>PE, PS, EPS, revenue · quarterly</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Score 0.62</span>
+                <span class="feature-value-sub">Last update: Q3 2025</span>
+                <span class="feature-state-chip state-bull">
+                  <span class="state-dot"></span>
+                  Attractive vs history
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--slow">
+                <div class="mini-sparkline">
+                  <div class="mini-step-row">
+                    <span class="mini-step" style="height:12px;"></span>
+                    <span class="mini-step" style="height:18px;"></span>
+                    <span class="mini-step" style="height:22px;"></span>
+                    <span class="mini-step" style="height:26px;"></span>
+                    <span class="mini-step" style="height:24px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Update cadence</span>
+                <span class="meta-val muted">Quarterly earnings</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val positive">Bias toward long</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Event-based factor with pulses -->
+          <article class="feature-card" data-feature="event_pulse" data-type="time">
+            <header class="feature-card-header">
+              <div class="feature-name">
+                <span>Event Pulse (On-chain & Macro)</span>
+                <small>Listings, unlocks, CPI, FOMC</small>
+              </div>
+              <div class="feature-tags">
+                <span class="tag tag--type">Time-Series</span>
+              </div>
+            </header>
+            <div class="feature-main">
+              <div class="feature-value">
+                <span class="feature-value-main">Next: CPI in 2d</span>
+                <span class="feature-value-sub">Last major: Token unlock -3d</span>
+                <span class="feature-state-chip state-bear">
+                  <span class="state-dot"></span>
+                  Cautious
+                </span>
+              </div>
+              <div class="feature-mini-chart feature-mini-chart--event">
+                <div class="mini-sparkline">
+                  <div class="mini-pulse-row">
+                    <span class="mini-pulse" style="height:26px;"></span>
+                    <span class="mini-pulse" style="height:16px;"></span>
+                    <span class="mini-pulse" style="height:32px;"></span>
+                    <span class="mini-pulse" style="height:20px;"></span>
+                    <span class="mini-pulse" style="height:14px;"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="feature-meta">
+              <div class="feature-meta-left">
+                <span class="meta-label">Impact</span>
+                <span class="meta-val negative">Cooldown before big unlocks</span>
+              </div>
+              <div class="feature-meta-right">
+                <span class="meta-label">Contribution</span>
+                <span class="meta-val negative">Cap position size</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- Feature Detail Drawer -->
+  <div class="drawer-backdrop" id="drawer-backdrop">
+    <aside class="feature-drawer">
+      <header class="drawer-header">
+        <div class="drawer-title-block">
+          <div class="drawer-title" id="drawer-title">Funding Rate Trend</div>
+          <div class="drawer-sub" id="drawer-sub">
+            Time-Series · 8h window
+          </div>
+        </div>
+        <button class="drawer-close-btn" id="drawer-close">Close</button>
+      </header>
+      <div class="drawer-body">
+        <!-- Summary -->
+        <section class="drawer-section">
+          <div class="drawer-section-title">Summary</div>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <span class="summary-label">Current Value</span>
+              <span class="summary-value" id="summary-current">+0.032%</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Δ / Latest change</span>
+              <span class="summary-value" id="summary-delta">+0.018%</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">State</span>
+              <span class="summary-value" id="summary-state">Strong Bullish</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Strength</span>
+              <span class="summary-value" id="summary-strength">+0.73</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Contribution</span>
+              <span class="summary-value" id="summary-contrib">+0.31 → BUY</span>
+            </div>
+            <div class="summary-item">
+              <span class="summary-label">Last Updated</span>
+              <span class="summary-value" id="summary-updated">08:00 UTC</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Visualization -->
+        <section class="drawer-section" id="drawer-section-visual">
+          <div class="drawer-section-title">Visualization</div>
+          <div class="chart-placeholder">
+            <div class="chart-line"></div>
+            <div class="chart-dots">
+              <span class="chart-dot"></span>
+              <span class="chart-dot"></span>
+              <span class="chart-dot"></span>
+              <span class="chart-dot"></span>
+              <span class="chart-dot"></span>
+            </div>
+            <span>Full-size chart aligned with the mini view: curve/steps/pulses + thresholds + signal markers.</span>
+          </div>
+        </section>
+
+        <!-- Signal impact -->
+        <section class="drawer-section">
+          <div class="drawer-section-title">Signal Impact Traceback</div>
+          <div class="drawer-list">
+            <div class="drawer-list-item">
+              <span class="drawer-list-bullet"></span>
+              <div>
+                Example: last <strong>BUY</strong> at 08:00 UTC · this feature contributed <strong>+0.31</strong> to score 0.78.
+              </div>
+            </div>
+            <div class="drawer-list-item">
+              <span class="drawer-list-bullet"></span>
+              <div>
+                Non-trigger scenario: if state flips to <strong>bearish</strong> and strength &lt; -0.4, new longs are blocked.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="drawer-section" id="drawer-section-comp">
+          <div class="drawer-section-title">Computation & Data Source</div>
+          <div class="drawer-list" id="drawer-comp-list"></div>
+        </section>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    // Feature filter
+    const filterButtons = document.querySelectorAll('.feature-filter-btn');
+    const featureCards = document.querySelectorAll('.feature-card');
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter;
+        filterButtons.forEach(b => b.classList.remove('is-active'));
+        btn.classList.add('is-active');
+
+        featureCards.forEach(card => {
+          const type = card.dataset.type;
+          if (filter === 'all' || type === filter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Selector date & symbol sets + funnel
+    const dateButtons = document.querySelectorAll('.selector-date-btn');
+    const symbolSets = document.querySelectorAll('.selector-symbols');
+    const toggleBtn = document.getElementById('selector-toggle-btn');
+    const funnelSteps = document.querySelectorAll('.funnel-step');
+
+    const funnelConfigByDay = {
+      "2025-11-14": [ // today
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'MktCap > 10B', count: 120, drop: '24%' },
+        { label: 'Liquidity > P70', count: 65, drop: '13%' },
+        { label: 'Momentum score > 0.6', count: 22, drop: '4.4%' },
+        { label: 'Final selected', count: 18, drop: '3.6%' }
+      ],
+      "2025-11-13": [
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'MktCap > 5B', count: 160, drop: '32%' },
+        { label: 'Liquidity > P60', count: 90, drop: '18%' },
+        { label: 'Momentum score > 0.55', count: 30, drop: '6%' },
+        { label: 'Final selected', count: 20, drop: '4%' }
+      ],
+      "2025-11-12": [
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'Growth > median', count: 210, drop: '42%' },
+        { label: 'Quality score > 0.5', count: 95, drop: '19%' },
+        { label: 'Risk filter passed', count: 40, drop: '8%' },
+        { label: 'Final selected', count: 15, drop: '3%' }
+      ],
+      "2025-11-11": [
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'SOL ecosystem', count: 60, drop: '12%' },
+        { label: 'Liquidity > P70', count: 35, drop: '7%' },
+        { label: 'Momentum > 0.6', count: 18, drop: '3.6%' },
+        { label: 'Final selected', count: 12, drop: '2.4%' }
+      ],
+      "2025-11-10": [
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'Top 50 by mktcap', count: 50, drop: '10%' },
+        { label: 'Volatility in band', count: 32, drop: '6.4%' },
+        { label: 'Event risk ok', count: 26, drop: '5.2%' },
+        { label: 'Final selected', count: 16, drop: '3.2%' }
+      ],
+      "2025-11-09": [
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'High beta', count: 90, drop: '18%' },
+        { label: 'Liquidity > P60', count: 55, drop: '11%' },
+        { label: 'Trend filter', count: 24, drop: '4.8%' },
+        { label: 'Final selected', count: 10, drop: '2%' }
+      ],
+      "2025-11-08": [
+        { label: 'Total universe', count: 500, drop: '100%' },
+        { label: 'Base chain universe', count: 40, drop: '8%' },
+        { label: 'Daily volume > 5M', count: 18, drop: '3.6%' },
+        { label: 'Momentum > 0.5', count: 11, drop: '2.2%' },
+        { label: 'Final selected', count: 8, drop: '1.6%' }
+      ]
+    };
+
+    function updateFunnelForDay(day) {
+      const cfg = funnelConfigByDay[day] || funnelConfigByDay["2025-11-14"];
+      funnelSteps.forEach((stepEl, idx) => {
+        const labelEl = stepEl.querySelector('[data-funnel-label]');
+        const countEl = stepEl.querySelector('[data-funnel-count]');
+        const dropEl = stepEl.querySelector('[data-funnel-drop]');
+        const stepCfg = cfg[idx];
+        if (!stepCfg) return;
+        if (labelEl) labelEl.textContent = stepCfg.label;
+        if (countEl) countEl.textContent = stepCfg.count;
+        if (dropEl) dropEl.textContent = stepCfg.drop;
+      });
+    }
+
+    function setActiveDay(day) {
+      dateButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.day === day);
+      });
+      symbolSets.forEach(set => {
+        const isActive = set.dataset.symbolsDay === day;
+        set.classList.toggle('active', isActive);
+        if (isActive) {
+          set.classList.remove('expanded');
+          set.classList.add('collapsed');
+        }
+      });
+      toggleBtn.textContent = 'Show all';
+      updateFunnelForDay(day);
+    }
+
+    dateButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        setActiveDay(btn.dataset.day);
+      });
+    });
+
+    toggleBtn.addEventListener('click', () => {
+      const activeSet = document.querySelector('.selector-symbols.active');
+      if (!activeSet) return;
+      const isCollapsed = activeSet.classList.contains('collapsed');
+      activeSet.classList.toggle('collapsed', !isCollapsed);
+      activeSet.classList.toggle('expanded', isCollapsed);
+      toggleBtn.textContent = isCollapsed ? 'Collapse' : 'Show all';
+    });
+
+    // initialize funnel for default day
+    updateFunnelForDay("2025-11-14");
+
+    // Drawer logic
+    const drawerBackdrop = document.getElementById('drawer-backdrop');
+    const drawerClose = document.getElementById('drawer-close');
+    const drawerTitle = document.getElementById('drawer-title');
+    const drawerSub = document.getElementById('drawer-sub');
+
+    const summaryCurrent = document.getElementById('summary-current');
+    const summaryDelta = document.getElementById('summary-delta');
+    const summaryState = document.getElementById('summary-state');
+    const summaryStrength = document.getElementById('summary-strength');
+    const summaryContrib = document.getElementById('summary-contrib');
+    const summaryUpdated = document.getElementById('summary-updated');
+
+    const featureConfig = {
+      funding_rate_trend: {
+        title: 'Funding Rate Trend',
+        sub: 'Time-Series · 8h window',
+        current: '+0.032%',
+        delta: '+0.018%',
+        state: 'Strong Bullish',
+        strength: '+0.73',
+        contrib: '+0.31 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [0.012,0.014,0.016,0.019,0.018,0.021,0.024,0.026,0.032] , thresholds: [0.015] },
+        comp: {
+          calc: [
+            '加权资金费率：按各交易所 OI 权重聚合 perp funding',
+            '8h EMA 平滑后与 60d 历史做 z-score',
+            '强度 = clamp(z/2, -1, 1)，贡献按阈值映射'
+          ],
+          sources: [
+            'Perp 资金费率与 OI（Binance/OKX/Bybit 等）'
+          ]
+        }
+      },
+      btc_eth_spread_overlay: {
+        title: 'BTC / ETH Spread Overlay',
+        sub: 'Time-Series · 1d hedge ratio',
+        current: '1.24×',
+        delta: 'vs neutral 1.10×',
+        state: 'Neutral',
+        strength: '+0.08',
+        contrib: 'Risk trim only',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [1.08,1.12,1.09,1.11,1.16,1.20,1.18,1.22,1.24], thresholds: [1.10] },
+        comp: {
+          calc: [
+            '90d 日收益回归：beta = Cov(r_btc, r_eth) / Var(r_eth)',
+            '对比中性值（历史中位数或 1.10）计算偏离',
+            '贡献 = 偏离 × 风险缩放（目标波动）'
+          ],
+          sources: [
+            'BTC/ETH 日收盘价（现货或指数）'
+          ]
+        }
+      },
+      momentum_cross_section: {
+        title: 'Momentum Rank (Top 20%)',
+        sub: 'Cross-Section · 7d returns',
+        current: 'Rank #6 / 120',
+        delta: 'Score 0.68',
+        state: 'Bullish',
+        strength: '+0.52',
+        contrib: '+0.22 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'bars', bars: [0.35,0.42,0.55,0.68,0.52] },
+        comp: {
+          calc: [
+            '计算 7d 总回报，对极值 winsorize',
+            '按全市场做 z-score 并排序得到 Rank',
+            'Score = 分位数映射（Top20% 为强势）'
+          ],
+          sources: [
+            '全市场价格时间序列'
+          ]
+        }
+      },
+      sentiment_score: {
+        title: 'Derivative Sentiment',
+        sub: 'Time-Series · funding + skew + OI',
+        current: '-0.14',
+        delta: '24h drift -0.09',
+        state: 'Mild Bearish',
+        strength: '-0.27',
+        contrib: '-0.03 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [-0.02,-0.04,-0.06,-0.08,-0.12,-0.10,-0.11,-0.13,-0.14], thresholds: [-0.10] },
+        comp: {
+          calc: [
+            '资金费率、持仓量变动、订单簿偏度分别做 z-score',
+            '加权组合：w = [0.4, 0.3, 0.3] 得到情绪分数',
+            '强度与贡献按阈值映射（如 z < -1 观察期）'
+          ],
+          sources: [
+            'Perp funding、Open Interest、盘口/成交偏度'
+          ]
+        }
+      },
+      whale_flow: {
+        title: 'Whale Flow Δ',
+        sub: 'Time-Series · net CEX inflow · 24h',
+        current: '+3,120 BTC',
+        delta: 'z-score +1.9',
+        state: 'Accumulation',
+        strength: '+0.59',
+        contrib: '+0.28 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [520,860,1260,1600,1880,2200,2500,2940,3120] },
+        comp: {
+          calc: [
+            '识别大额地址（阈值 10 BTC）到交易所的净流入',
+            '24h 聚合并对 180d 历史做 z-score',
+            '强度 = z 映射，积极累积时贡献为正'
+          ],
+          sources: [
+            '链上流入/流出标记、交易所归属地址'
+          ]
+        }
+      },
+      risk_filter: {
+        title: 'Risk Regime Filter',
+        sub: 'Cross-Section · macro & vol regime',
+        current: 'Regime: Neutral',
+        delta: 'No override',
+        state: 'Neutral',
+        strength: '0.00',
+        contrib: 'No change',
+        updated: '08:00 UTC',
+        chart: { type: 'bars', bars: [0.1,0.12,0.08,0.11,0.09] },
+        comp: {
+          calc: [
+            '用 20d 实现波动、相关性、回撤做特征',
+            'k-means/HMM 聚类为 Risk-On/Neutral/Risk-Off',
+            '根据 regime 控制杠杆/仓位上限'
+          ],
+          sources: [
+            '价格与波动率时间序列、相关性矩阵、宏观指标'
+          ]
+        }
+      },
+      trend_strength: {
+        title: 'Trend Strength (ADX 14)',
+        sub: 'Time-Series · 1d window',
+        current: 'ADX 27',
+        delta: 'DMI+ > DMI-',
+        state: 'Bullish',
+        strength: '+0.47',
+        contrib: '+0.18 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [16,18,19,21,22,24,25,26,27], thresholds: [20] },
+        comp: {
+          calc: [
+            '根据高低价计算 +DM/-DM 与 TR，做 Wilder 平滑',
+            'DI+、DI- → DX = |DI+-DI-|/(DI++DI-)，ADX=EMA(DX,14)',
+            'ADX>25 判定趋势，强度随 ADX 映射'
+          ],
+          sources: [
+            'OHLC 日线数据'
+          ]
+        }
+      },
+      volatility_breakout: {
+        title: 'Volatility Breakout',
+        sub: 'Time-Series · ATR band · 20d',
+        current: 'Breakout +1.5σ',
+        delta: 'Band breach',
+        state: 'Bullish',
+        strength: '+0.42',
+        contrib: '+0.16 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [0.3,0.4,0.5,0.7,0.9,1.1,1.3,1.4,1.5], thresholds: [1.0] },
+        comp: {
+          calc: [
+            'ATR(20) 计算真实波动，MA20 为中枢',
+            '突破比率 = (Close - MA20) / ATR(20)',
+            '强度与突破比率线性映射，超 1σ 认定有效'
+          ],
+          sources: [
+            'OHLC 日线数据'
+          ]
+        }
+      },
+      mean_reversion: {
+        title: 'Mean Reversion Alert',
+        sub: 'Time-Series · RSI(2) · 1d',
+        current: 'RSI 18',
+        delta: 'Oversold zone',
+        state: 'Reversion Setup',
+        strength: '+0.31',
+        contrib: '+0.12 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [42,38,34,28,24,20,22,19,18], thresholds: [30] },
+        comp: {
+          calc: [
+            '用 Wilder RSI(2) 测度短期超买超卖',
+            '信号条件：RSI<20 进入反转观察，<10 强信号',
+            '强度 = (20 - RSI)/20，上限 1'
+          ],
+          sources: [
+            'OHLC 日线数据'
+          ]
+        }
+      },
+      liquidity_percentile: {
+        title: 'Liquidity Percentile',
+        sub: 'Cross-Section · 30d avg volume rank',
+        current: 'P88',
+        delta: 'Deep book',
+        state: 'Tradable',
+        strength: '0.00',
+        contrib: 'No change',
+        updated: '08:00 UTC',
+        chart: { type: 'bars', bars: [0.55,0.62,0.7,0.78,0.88] },
+        comp: {
+          calc: [
+            '计算 30d 平均成交额（价格×成交量）',
+            '对全市场做百分位排名（P0–P100）',
+            '阈值 P60 以上视为可交易流动性'
+          ],
+          sources: [
+            '成交量与价格时间序列'
+          ]
+        }
+      },
+      funding_cost_rank: {
+        title: 'Funding Cost Rank',
+        sub: 'Cross-Section · avg funding vs peers',
+        current: 'Top 15%',
+        delta: 'Cheaper to long',
+        state: 'Bullish',
+        strength: '+0.26',
+        contrib: '+0.10 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'bars', bars: [0.35,0.4,0.5,0.7,0.85] },
+        comp: {
+          calc: [
+            '统计 7d 平均资金费率，按对手盘成本方向统一符号',
+            '全市场做百分位排名，成本低者靠前',
+            '贡献与排名分位线性映射'
+          ],
+          sources: [
+            '各交易所资金费率时间序列'
+          ]
+        }
+      },
+      onchain_activity_rank: {
+        title: 'On-chain Activity Rank',
+        sub: 'Cross-Section · new addresses growth',
+        current: 'Top 10%',
+        delta: '↑ 12% WoW',
+        state: 'Bullish',
+        strength: '+0.45',
+        contrib: '+0.17 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'bars', bars: [0.4,0.5,0.65,0.8,0.9] },
+        comp: {
+          calc: [
+            '统计新地址数及活跃地址，计算 WoW 增长率',
+            '对全市场做 z-score 并排名',
+            '分位靠前视为链上增长强，贡献为正'
+          ],
+          sources: [
+            '链上活跃度数据（新/活跃地址等）'
+          ]
+        }
+      },
+      valuation_growth: {
+        title: 'Valuation & Growth Composite',
+        sub: 'Time-Series · quarterly fundamentals',
+        current: 'Score 0.62',
+        delta: 'Last update: Q3 2025',
+        state: 'Attractive vs history',
+        strength: '+0.41',
+        contrib: 'Bias toward long',
+        updated: 'Q3 2025',
+        chart: { type: 'line', data: [0.45,0.5,0.52,0.55,0.6,0.62] },
+        comp: {
+          calc: [
+            '估值倒数与成长指标标准化：PE^-1, PS^-1, EPS YoY, Rev YoY',
+            '加权组合：w=[0.25,0.25,0.25,0.25] 或调参后权重',
+            '对历史做 z-score，生成长期偏好分数'
+          ],
+          sources: [
+            '财报与基础数据（季度）'
+          ]
+        }
+      },
+      event_pulse: {
+        title: 'Event Pulse (On-chain & Macro)',
+        sub: 'Time-Series',
+        current: 'Next: CPI in 2d',
+        delta: 'Last major: token unlock -3d',
+        state: 'Cautious',
+        strength: '-0.35',
+        contrib: 'Cap position size',
+        updated: 'Latest event: -3d',
+        chart: { type: 'pulses', pulses: [0.1,0.3,0.55,0.78,0.9], heights: [26,16,32,20,14] },
+        comp: {
+          calc: [
+            '事件时间轴：上市、解锁、宏观（CPI/FOMC）等打点',
+            '脉冲核：事件强度×时间衰减（±7d 窗）',
+            'Score = 脉冲叠加，强负时限制仓位'
+          ],
+          sources: [
+            '链上/交易所日程、宏观事件日历'
+          ]
+        }
+      },
+      ma_stack_signal: {
+        title: 'MA Stack Signal (20/50/200)',
+        sub: 'Time-Series · 1d',
+        current: 'Aligned',
+        delta: 'MA20 > MA50 > MA200',
+        state: 'Bullish',
+        strength: '+0.44',
+        contrib: '+0.16 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'multiLine', lines: [
+          [102,104,105,106,108,110,112,114,116],
+          [98,99,100,101,102,103,104,105,106],
+          [92,92,93,93,94,94,95,95,96]
+        ] , thresholds: [] },
+        comp: {
+          calc: [
+            '计算 SMA20/50/200 或 EMA20/50/200',
+            '栈条件：MA20>MA50>MA200，反向则减弱',
+            '强度 = 条件满足度与斜率综合'
+          ],
+          sources: [
+            'OHLC 日线数据'
+          ]
+        }
+      },
+      price_volume_confirmation: {
+        title: 'Price–Volume Confirmation',
+        sub: 'Time-Series · 5d',
+        current: 'Confirming',
+        delta: 'UpVol 1.3×',
+        state: 'Bullish',
+        strength: '+0.33',
+        contrib: '+0.12 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'dual', data: [101,102,103,104,105,106,107,108,109], bars: [0.8,0.9,1.1,1.3,1.2,1.25,1.15,1.2,1.3], thresholds: [] },
+        comp: {
+          calc: [
+            '统计 5d 上涨日与下跌日成交量，计算 UpVol/DownVol',
+            '同时检测价格是否处于上行结构',
+            '确认条件：比率>1.2 且价格向上，强度随比率'
+          ],
+          sources: [
+            'OHLC 与成交量时间序列'
+          ]
+        }
+      },
+      money_flow_composite: {
+        title: 'Money Flow Composite',
+        sub: 'Time-Series · 1d',
+        current: 'Score 0.57',
+        delta: 'Improving',
+        state: 'Accumulation',
+        strength: '+0.49',
+        contrib: '+0.19 → BUY',
+        updated: '08:00 UTC',
+        chart: { type: 'line', data: [0.32,0.36,0.38,0.41,0.46,0.5,0.53,0.55,0.57] },
+        comp: {
+          calc: [
+            '净流、资金费率、持仓量分别 z-score 标准化',
+            '加权组合：w=[0.4,0.3,0.3] 生成资金流分数',
+            '强度与贡献按阈值映射（持续改善为正）'
+          ],
+          sources: [
+            '链上流量、Perp funding、Open Interest'
+          ]
+        }
+      }
+    };
+
+    let lastFeatureId = null;
+    function renderChart(info) {
+      const chartEl = document.querySelector('#drawer-section-visual .chart-placeholder');
+      chartEl.innerHTML = '';
+      const w = chartEl.clientWidth || 360;
+      const h = 180;
+      const dpr = window.devicePixelRatio || 1;
+      const cvs = document.createElement('canvas');
+      cvs.width = w * dpr;
+      cvs.height = h * dpr;
+      cvs.style.width = w + 'px';
+      cvs.style.height = h + 'px';
+      chartEl.appendChild(cvs);
+      const ctx = cvs.getContext('2d');
+      ctx.scale(dpr, dpr);
+      ctx.fillStyle = 'rgba(15,23,42,0.98)';
+      ctx.fillRect(0, 0, w, h);
+      if (!info.chart) return;
+      const pad = 10;
+      function norm(val, min, max) {
+        if (max === min) return h/2;
+        return h - pad - (val - min) / (max - min) * (h - pad*2);
+      }
+      if (info.chart.type === 'line') {
+        const data = info.chart.data;
+        const min = Math.min.apply(null, data);
+        const max = Math.max.apply(null, data);
+        ctx.strokeStyle = 'rgba(59,130,246,0.9)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        data.forEach((v,i)=>{
+          const x = pad + (w - pad*2) * (i/(data.length-1));
+          const y = norm(v, min, max);
+          if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        if (info.chart.thresholds && info.chart.thresholds.length) {
+          ctx.setLineDash([4,4]);
+          ctx.strokeStyle = 'rgba(148,163,184,0.6)';
+          info.chart.thresholds.forEach(t=>{
+            const y = norm(t, min, max);
+            ctx.beginPath();
+            ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke();
+          });
+          ctx.setLineDash([]);
+        }
+      } else if (info.chart.type === 'bars') {
+        const bars = info.chart.bars;
+        const min = 0;
+        const max = Math.max.apply(null, bars);
+        const bw = (w - pad*2) / bars.length;
+        bars.forEach((v,i)=>{
+          const x = pad + i*bw + 2;
+          const y = norm(v, min, max);
+          ctx.fillStyle = 'rgba(59,130,246,0.75)';
+          ctx.fillRect(x, y, bw-4, h - pad - y);
+        });
+      } else if (info.chart.type === 'pulses') {
+        const pulses = info.chart.pulses;
+        const heights = info.chart.heights || pulses.map(()=>20);
+        pulses.forEach((p,i)=>{
+          const x = pad + (w - pad*2) * p;
+          const y1 = h - pad;
+          const y0 = y1 - heights[i];
+          ctx.strokeStyle = 'rgba(236,72,153,0.9)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(x,y0); ctx.lineTo(x,y1); ctx.stroke();
+        });
+      } else if (info.chart.type === 'multiLine') {
+        const lines = info.chart.lines;
+        const flat = [].concat.apply([], lines);
+        const min = Math.min.apply(null, flat);
+        const max = Math.max.apply(null, flat);
+        const colors = ['rgba(56,189,248,0.9)','rgba(59,130,246,0.9)','rgba(129,140,248,0.9)'];
+        lines.forEach((data,idx)=>{
+          ctx.strokeStyle = colors[idx % colors.length];
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          data.forEach((v,i)=>{
+            const x = pad + (w - pad*2) * (i/(data.length-1));
+            const y = norm(v, min, max);
+            if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+          });
+          ctx.stroke();
+        });
+      } else if (info.chart.type === 'dual') {
+        const data = info.chart.data;
+        const bars = info.chart.bars;
+        const min = Math.min.apply(null, data);
+        const max = Math.max.apply(null, data);
+        ctx.strokeStyle = 'rgba(59,130,246,0.9)';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        data.forEach((v,i)=>{
+          const x = pad + (w - pad*2) * (i/(data.length-1));
+          const y = norm(v, min, max);
+          if (i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+        });
+        ctx.stroke();
+        const maxBar = Math.max.apply(null, bars);
+        const bw = (w - pad*2) / bars.length;
+        bars.forEach((v,i)=>{
+          const x = pad + i*bw + 2;
+          const y = h - pad - (v/maxBar) * (h - pad*2) * 0.5;
+          ctx.fillStyle = 'rgba(59,130,246,0.35)';
+          ctx.fillRect(x, y, bw-4, h - pad - y);
+        });
+      }
+    }
+    function openDrawerForFeature(featureId) {
+      const info = featureConfig[featureId] || featureConfig['funding_rate_trend'];
+      drawerTitle.textContent = info.title;
+      drawerSub.textContent = info.sub;
+      summaryCurrent.textContent = info.current;
+      summaryDelta.textContent = info.delta;
+      summaryState.textContent = info.state;
+      summaryStrength.textContent = info.strength;
+      summaryContrib.textContent = info.contrib;
+      summaryUpdated.textContent = info.updated;
+      drawerBackdrop.classList.add('is-open');
+      lastFeatureId = featureId;
+      renderChart(info);
+      const compList = document.getElementById('drawer-comp-list');
+      compList.innerHTML = '';
+      if (info.comp && Array.isArray(info.comp.calc)) {
+        info.comp.calc.forEach(text => {
+          const item = document.createElement('div');
+          item.className = 'drawer-list-item';
+          item.innerHTML = '<span class="drawer-list-bullet"></span><div>' + text + '</div>';
+          compList.appendChild(item);
+        });
+      }
+      if (info.comp && Array.isArray(info.comp.sources)) {
+        info.comp.sources.forEach(text => {
+          const item = document.createElement('div');
+          item.className = 'drawer-list-item';
+          item.innerHTML = '<span class="drawer-list-bullet"></span><div>数据源：' + text + '</div>';
+          compList.appendChild(item);
+        });
+      }
+    }
+
+    featureCards.forEach(card => {
+      card.addEventListener('click', () => {
+        openDrawerForFeature(card.dataset.feature);
+      });
+    });
+
+    drawerClose.addEventListener('click', () => {
+      drawerBackdrop.classList.remove('is-open');
+    });
+
+    drawerBackdrop.addEventListener('click', (e) => {
+      if (e.target === drawerBackdrop) {
+        drawerBackdrop.classList.remove('is-open');
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (!lastFeatureId) return;
+      if (!drawerBackdrop.classList.contains('is-open')) return;
+      const info = featureConfig[lastFeatureId];
+      if (info) renderChart(info);
+    });
+  </script>
+</body>
+</html>

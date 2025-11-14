@@ -319,35 +319,44 @@
       justify-content: flex-end;
     }
 
-    .feature-filters {
+    .positions-list {
       display: inline-flex;
+      align-items: center;
       gap: 6px;
-      background: rgba(15,23,42,0.85);
-      border-radius: 999px;
-      padding: 2px;
-      border: 1px solid rgba(148,163,184,0.3);
+      flex-wrap: wrap;
     }
 
-    .feature-filter-btn {
+    .position-chip {
       font-size: 11px;
       padding: 4px 9px;
       border-radius: 999px;
-      border: none;
-      background: transparent;
+      border: 1px solid rgba(148,163,184,0.4);
+      background: rgba(15,23,42,0.9);
       color: var(--text-muted);
       cursor: pointer;
       transition: all 0.16s ease-out;
       white-space: nowrap;
     }
 
-    .feature-filter-btn.is-active {
-      background: rgba(59,130,246,0.18);
-      color: var(--text-main);
-      box-shadow: 0 0 0 1px rgba(59,130,246,0.5);
+    .position-chip.active {
+      background: rgba(59,130,246,0.25);
+      border-color: rgba(59,130,246,0.9);
+      color: #dbeafe;
+      box-shadow: 0 0 0 1px rgba(59,130,246,0.6);
     }
 
-    .feature-filters .feature-filter-btn:not(.is-active):hover {
-      background: rgba(15,23,42,0.95);
+    .holdings-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: flex-start;
+      padding: 4px 0 2px;
+    }
+
+    .holdings-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
       color: var(--text-subtle);
     }
 
@@ -1057,11 +1066,16 @@
             <span class="feature-btn-icon">📚</span>
             <span>Feature Library</span>
           </button>
-          <div class="feature-filters">
-            <button class="feature-filter-btn is-active" data-filter="all">All</button>
-            <button class="feature-filter-btn" data-filter="time">Time-Series</button>
-            <button class="feature-filter-btn" data-filter="cross">Cross-Section</button>
-          </div>
+        </div>
+      </div>
+      <div class="holdings-row">
+        <span class="holdings-label">Holdings</span>
+        <div class="positions-list" id="positions-list">
+          <button class="position-chip active" data-symbol="BTC">BTC</button>
+          <button class="position-chip" data-symbol="ETH">ETH</button>
+          <button class="position-chip" data-symbol="SOL">SOL</button>
+          <button class="position-chip" data-symbol="AVAX">AVAX</button>
+          <button class="position-chip" data-symbol="LINK">LINK</button>
         </div>
       </div>
       <div class="panel-body">
@@ -1903,26 +1917,101 @@
   </div>
 
   <script>
-    // Feature filter
-    const filterButtons = document.querySelectorAll('.feature-filter-btn');
     const featureCards = document.querySelectorAll('.feature-card');
+    const positionChips = document.querySelectorAll('.position-chip');
+    let activeSymbol = 'BTC';
+    const featureDataBySymbol = {
+      BTC: {
+        funding_rate_trend: { main: '+0.032%', sub: '24h Δ +0.018%', state: { label: 'Strong Bullish', class: 'state-bull' }, strength: { value: '+0.73', class: 'positive' }, contrib: { value: '+0.31 → BUY', class: 'positive' } },
+        btc_eth_spread_overlay: { main: '1.24×', sub: 'vs neutral 1.10×', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.08', class: 'muted' }, contrib: { value: 'Risk trim only', class: 'muted' } },
+        momentum_cross_section: { main: 'Rank #6 / 120', sub: 'Score 0.68', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.52', class: 'positive' }, contrib: { value: '+0.22 → BUY', class: 'positive' } },
+        sentiment_score: { main: '-0.14', sub: '24h drift -0.09', state: { label: 'Mild Bearish', class: 'state-bear' }, strength: { value: '-0.27', class: 'negative' }, contrib: { value: '-0.03 → BUY', class: 'negative' } },
+        whale_flow: { main: '+3,120 BTC', sub: 'z-score +1.9', state: { label: 'Accumulation', class: 'state-bull' }, strength: { value: '+0.59', class: 'positive' }, contrib: { value: '+0.28 → BUY', class: 'positive' } },
+        risk_filter: { main: 'Regime: Neutral', sub: 'No override', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        trend_strength: { main: 'ADX 27', sub: 'DMI+ > DMI-', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.47', class: 'positive' }, contrib: { value: '+0.18 → BUY', class: 'positive' } },
+        liquidity_percentile: { main: 'P88', sub: 'Deep book', state: { label: 'Tradable', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        onchain_activity_rank: { main: 'Top 10%', sub: '↑ 12% WoW', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.45', class: 'positive' }, contrib: { value: '+0.17 → BUY', class: 'positive' } }
+      },
+      ETH: {
+        funding_rate_trend: { main: '+0.021%', sub: '24h Δ +0.012%', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.52', class: 'positive' }, contrib: { value: '+0.21 → BUY', class: 'positive' } },
+        btc_eth_spread_overlay: { main: '0.92×', sub: 'vs neutral 1.10×', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.05', class: 'muted' }, contrib: { value: 'Risk trim only', class: 'muted' } },
+        momentum_cross_section: { main: 'Rank #14 / 120', sub: 'Score 0.58', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.28', class: 'muted' }, contrib: { value: '+0.08 → BUY', class: 'muted' } },
+        sentiment_score: { main: '-0.08', sub: '24h drift -0.03', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '-0.12', class: 'negative' }, contrib: { value: '-0.01 → BUY', class: 'negative' } },
+        whale_flow: { main: '+68k ETH', sub: 'z-score +1.2', state: { label: 'Accumulation', class: 'state-bull' }, strength: { value: '+0.41', class: 'positive' }, contrib: { value: '+0.18 → BUY', class: 'positive' } },
+        risk_filter: { main: 'Regime: Neutral', sub: 'No override', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        trend_strength: { main: 'ADX 23', sub: 'DMI+ > DMI-', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.38', class: 'positive' }, contrib: { value: '+0.14 → BUY', class: 'positive' } },
+        liquidity_percentile: { main: 'P92', sub: 'Deep book', state: { label: 'Tradable', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        onchain_activity_rank: { main: 'Top 18%', sub: '↑ 6% WoW', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.22', class: 'muted' }, contrib: { value: '+0.07 → BUY', class: 'muted' } }
+      },
+      SOL: {
+        funding_rate_trend: { main: '+0.054%', sub: '24h Δ +0.025%', state: { label: 'Strong Bullish', class: 'state-bull' }, strength: { value: '+0.81', class: 'positive' }, contrib: { value: '+0.36 → BUY', class: 'positive' } },
+        momentum_cross_section: { main: 'Rank #3 / 120', sub: 'Score 0.81', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.68', class: 'positive' }, contrib: { value: '+0.28 → BUY', class: 'positive' } },
+        sentiment_score: { main: '+0.06', sub: '24h drift +0.04', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.19', class: 'positive' }, contrib: { value: '+0.08 → BUY', class: 'positive' } },
+        whale_flow: { main: '+4.8M SOL', sub: 'z-score +2.1', state: { label: 'Accumulation', class: 'state-bull' }, strength: { value: '+0.64', class: 'positive' }, contrib: { value: '+0.29 → BUY', class: 'positive' } },
+        risk_filter: { main: 'Regime: Neutral', sub: 'No override', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        trend_strength: { main: 'ADX 31', sub: 'DMI+ > DMI-', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.55', class: 'positive' }, contrib: { value: '+0.22 → BUY', class: 'positive' } },
+        liquidity_percentile: { main: 'P76', sub: 'Adequate', state: { label: 'Tradable', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        onchain_activity_rank: { main: 'Top 12%', sub: '↑ 8% WoW', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.41', class: 'positive' }, contrib: { value: '+0.16 → BUY', class: 'positive' } }
+      },
+      AVAX: {
+        funding_rate_trend: { main: '+0.018%', sub: '24h Δ +0.010%', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.22', class: 'muted' }, contrib: { value: '+0.06 → BUY', class: 'muted' } },
+        momentum_cross_section: { main: 'Rank #28 / 120', sub: 'Score 0.44', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.12', class: 'muted' }, contrib: { value: '+0.03 → BUY', class: 'muted' } },
+        sentiment_score: { main: '-0.02', sub: '24h drift -0.01', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '-0.05', class: 'negative' }, contrib: { value: '0.00', class: 'muted' } },
+        whale_flow: { main: '+1.2M AVAX', sub: 'z-score +0.9', state: { label: 'Accumulation', class: 'state-bull' }, strength: { value: '+0.28', class: 'positive' }, contrib: { value: '+0.11 → BUY', class: 'positive' } },
+        risk_filter: { main: 'Regime: Neutral', sub: 'No override', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        trend_strength: { main: 'ADX 19', sub: 'DI mixed', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.21', class: 'muted' }, contrib: { value: '+0.07 → BUY', class: 'muted' } },
+        liquidity_percentile: { main: 'P62', sub: 'Adequate', state: { label: 'Tradable', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        onchain_activity_rank: { main: 'Top 30%', sub: '↑ 2% WoW', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.08', class: 'muted' }, contrib: { value: '+0.02 → BUY', class: 'muted' } }
+      },
+      LINK: {
+        funding_rate_trend: { main: '+0.026%', sub: '24h Δ +0.014%', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.49', class: 'positive' }, contrib: { value: '+0.19 → BUY', class: 'positive' } },
+        momentum_cross_section: { main: 'Rank #9 / 120', sub: 'Score 0.64', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.47', class: 'positive' }, contrib: { value: '+0.19 → BUY', class: 'positive' } },
+        sentiment_score: { main: '+0.02', sub: '24h drift +0.01', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.06', class: 'muted' }, contrib: { value: '+0.02 → BUY', class: 'muted' } },
+        whale_flow: { main: '+8.4M LINK', sub: 'z-score +1.3', state: { label: 'Accumulation', class: 'state-bull' }, strength: { value: '+0.38', class: 'positive' }, contrib: { value: '+0.16 → BUY', class: 'positive' } },
+        risk_filter: { main: 'Regime: Neutral', sub: 'No override', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        trend_strength: { main: 'ADX 24', sub: 'DMI+ > DMI-', state: { label: 'Bullish', class: 'state-bull' }, strength: { value: '+0.42', class: 'positive' }, contrib: { value: '+0.16 → BUY', class: 'positive' } },
+        liquidity_percentile: { main: 'P68', sub: 'Adequate', state: { label: 'Tradable', class: 'state-neutral' }, strength: { value: '0.00', class: 'muted' }, contrib: { value: 'No change', class: 'muted' } },
+        onchain_activity_rank: { main: 'Top 22%', sub: '↑ 4% WoW', state: { label: 'Neutral', class: 'state-neutral' }, strength: { value: '+0.18', class: 'muted' }, contrib: { value: '+0.06 → BUY', class: 'muted' } }
+      }
+    };
 
-    filterButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-        filterButtons.forEach(b => b.classList.remove('is-active'));
-        btn.classList.add('is-active');
+    function renderFeaturesForSymbol(symbol) {
+      featureCards.forEach(card => {
+        const id = card.dataset.feature;
+        const data = featureDataBySymbol[symbol] && featureDataBySymbol[symbol][id];
+        if (!data) return;
+        const vMain = card.querySelector('.feature-value-main');
+        const vSub = card.querySelector('.feature-value-sub');
+        const chip = card.querySelector('.feature-state-chip');
+        const metaLeftVal = card.querySelector('.feature-meta-left .meta-val');
+        const metaRightVal = card.querySelector('.feature-meta-right .meta-val');
+        if (vMain) vMain.textContent = data.main;
+        if (vSub) vSub.textContent = data.sub;
+        if (chip && data.state) {
+          chip.classList.remove('state-bull','state-neutral','state-bear');
+          chip.classList.add(data.state.class);
+          chip.innerHTML = '<span class="state-dot"></span>' + data.state.label;
+        }
+        if (metaLeftVal && data.strength) {
+          metaLeftVal.textContent = data.strength.value;
+          metaLeftVal.className = 'meta-val ' + (data.strength.class || '');
+        }
+        if (metaRightVal && data.contrib) {
+          metaRightVal.textContent = data.contrib.value;
+          metaRightVal.className = 'meta-val ' + (data.contrib.class || '');
+        }
+      });
+    }
 
-        featureCards.forEach(card => {
-          const type = card.dataset.type;
-          if (filter === 'all' || type === filter) {
-            card.style.display = '';
-          } else {
-            card.style.display = 'none';
-          }
-        });
+    positionChips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        positionChips.forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        activeSymbol = chip.dataset.symbol;
+        renderFeaturesForSymbol(activeSymbol);
       });
     });
+    renderFeaturesForSymbol(activeSymbol);
 
     // Selector date & symbol sets + funnel
     const dateButtons = document.querySelectorAll('.selector-date-btn');

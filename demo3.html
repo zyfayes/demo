@@ -48,6 +48,12 @@
       gap: 16px;
     }
 
+    .page-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
     .panel {
       background: radial-gradient(circle at top left, rgba(37,99,235,0.14), transparent 55%),
                   radial-gradient(circle at bottom right, rgba(14,165,233,0.08), transparent 65%),
@@ -877,10 +883,11 @@
     }
   </style>
 </head>
-<body>
-  <div class="app-shell">
-    <!-- Selector: full-width, with date controlling funnel + symbols -->
-    <section class="panel">
+  <body>
+    <div class="app-shell">
+      <div class="page-title">Trading Strategy -> Features</div>
+      <!-- Selector: full-width, with date controlling funnel + symbols -->
+      <section class="panel">
       <div class="panel-header">
         <div class="panel-title">
           <span>Universe Selector</span>

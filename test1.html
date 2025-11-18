@@ -111,6 +111,7 @@
   .panel-body { padding: 12px; }
   .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
   @media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(1, minmax(0,1fr)); } }
+  .feature-grid--report { grid-template-columns: repeat(1, minmax(0,1fr)); }
   .feature-card { position: relative; background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.88)); border: 1px solid var(--border); border-radius: 14px; padding: 12px; cursor: pointer; transition: transform .15s ease, border-color .15s ease; }
   .feature-card:hover { transform: translateY(-1px); border-color: rgba(59,130,246,0.65); }
   .feature-card-header { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
@@ -661,7 +662,20 @@
     dashboard: ['earnings_watch_insight','macro_liquidity_insight','ai_infra_theme_insight','earnings_calendar_events']
   };
 
-  const playbooks = [playbook, dashPlaybook];
+  const reportPlaybook = {
+    id: 'pb-3',
+    name: 'AI Ecosystem Weekly Report',
+    type: 'report',
+    status: 'running',
+    objective: 'Stack AI-related insights and macro liquidity into a readable weekly report for monitoring, without trading execution.',
+    strategy: {
+      features: ['earnings_watch_insight','ai_infra_theme_insight','macro_liquidity_insight','earnings_calendar_events'],
+      executionRules: []
+    },
+    dashboard: ['earnings_watch_insight','ai_infra_theme_insight','macro_liquidity_insight','earnings_calendar_events']
+  };
+
+  const playbooks = [playbook, dashPlaybook, reportPlaybook];
 
   const thread = [];
 
@@ -744,6 +758,12 @@
       card.addEventListener('click', () => openDrawer(f));
       grid.appendChild(card);
     });
+  }
+
+  function renderVisualization() {
+    const isReport = playbook.type === 'report';
+    if (grid) grid.classList.toggle('feature-grid--report', isReport);
+    renderGrid();
   }
 
   function renderChart(f) {
@@ -830,7 +850,7 @@
     document.getElementById('tab-'+t).classList.add('is-active');
     document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.classList.toggle('is-active', b.dataset.tab===t));
     localStorage.setItem('activeBuildTab', t);
-    if (t==='dashboard') renderGrid();
+    if (t==='dashboard') renderVisualization();
   }
 
   document.querySelectorAll('.nav-btn').forEach(btn=>{
@@ -904,7 +924,8 @@
       const actions = document.createElement('div'); actions.style.marginTop='6px'; const btn=document.createElement('button'); btn.className='send-btn'; btn.textContent = (f.type==='insight'?'Prompt':'Code'); const codeEl=document.createElement('div'); codeEl.className='code-block'; codeEl.style.display='none'; codeEl.textContent = (f.type==='insight'?generateFeaturePrompt(f):generateFeatureCode(f)); actions.appendChild(btn); li.appendChild(actions); li.appendChild(codeEl); btn.addEventListener('click', ()=>{ codeEl.style.display = codeEl.style.display==='none' ? 'block' : 'none'; });
     });
     const rulesPanel = document.getElementById('overview-rules')?.closest('.panel');
-    if (playbook.type === 'dashboard') {
+    const pure = (playbook.type === 'dashboard' || playbook.type === 'report');
+    if (pure) {
       if (rulesPanel) rulesPanel.style.display = 'none';
     } else {
       if (rulesPanel) rulesPanel.style.display = '';
@@ -1092,7 +1113,7 @@ function renderBuildHeader() {
     });
   }
 
-  function getPlaybookTypeLabel(t){ if(t==='agentic') return 'Agentic Research'; if(t==='dashboard') return 'Dashboard'; return 'Trading Strategy'; }
+  function getPlaybookTypeLabel(t){ if(t==='agentic') return 'Agentic Research'; if(t==='dashboard') return 'Dashboard'; if(t==='report') return 'Report'; return 'Trading Strategy'; }
   function toTitleCase(s){ return s.replace(/\w\S*/g, (w)=> w.charAt(0).toUpperCase() + w.slice(1)); }
 
   function renderPositionsTable() {
@@ -1133,22 +1154,23 @@ function renderBuildHeader() {
   const savedTab = localStorage.getItem('activeBuildTab') || 'overview'; setActiveTab(savedTab);
   renderOverview(); renderGrid(); renderPerformance(); renderPosts(); renderPositions(); renderPositionsTable(); renderLibrary(); renderAsk(); seedChat(); updateBuildTabsForPlaybook();
   function updateBuildTabsForPlaybook(){
-    const isDash = playbook.type === 'dashboard';
+    const isPure = (playbook.type === 'dashboard' || playbook.type === 'report');
     ['performance','post','position'].forEach(t=>{
       const btn = document.querySelector('.tab-btn[data-tab="'+t+'"]');
       const content = document.getElementById('tab-'+t);
-      if (btn) btn.style.display = isDash ? 'none' : '';
-      if (content) content.style.display = isDash ? 'none' : '';
+      if (btn) btn.style.display = isPure ? 'none' : '';
+      if (content) content.style.display = isPure ? 'none' : '';
     });
     const tabOv = document.getElementById('tab-overview');
-    const featuresPanel = document.getElementById('overview-features')?.closest('.panel');
-    const strategyPanel = featuresPanel?.parentElement?.closest('.panel');
-    if (isDash) {
+    const panelsOv = Array.from(tabOv.querySelectorAll('.panel'));
+    const featuresPanel = panelsOv.find(p=> p.querySelector('.panel-title')?.textContent === 'Features');
+    const strategyPanel = panelsOv.find(p=> p.querySelector('.panel-title')?.textContent === 'Strategy');
+    if (isPure) {
       if (strategyPanel) strategyPanel.style.display = 'none';
       if (featuresPanel && tabOv) {
-        const firstPanel = tabOv.querySelector('.panel');
+        const objectivePanel = panelsOv.find(p=> p.querySelector('.panel-title')?.textContent === 'Objective');
         if (featuresPanel.parentElement !== tabOv) {
-          if (firstPanel) firstPanel.after(featuresPanel); else tabOv.appendChild(featuresPanel);
+          if (objectivePanel) objectivePanel.after(featuresPanel); else tabOv.appendChild(featuresPanel);
         }
       }
     } else {

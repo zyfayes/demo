@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alva · MVP</title>
+<style>
+  :root {
+    --bg: #0b1220;
+    --panel: rgba(15,23,42,0.96);
+    --border: rgba(31,41,55,0.9);
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+  }
+  body { margin: 0; background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  .app-shell { max-width: 1240px; margin: 0 auto; padding: 12px; display: flex; flex-direction: column; gap: 10px; }
+  .top-nav { display: flex; gap: 8px; align-items: center; }
+  .nav-btn { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; }
+  .nav-btn.is-active { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.9); color: #dbeafe; }
+  .page { display: none; gap: 10px; }
+  .page.is-active { display: grid; }
+  .page-build { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: start; }
+  .preview-area { display: flex; flex-direction: column; gap: 10px; }
+  .right-pane { display: flex; flex-direction: column; gap: 10px; }
+  .tabs-bar { display: flex; gap: 6px; }
+  .tab-btn { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; }
+  .tab-btn.is-active { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.9); color: #dbeafe; }
+  .tab-content { display: none; }
+  .tab-content.is-active { display: block; }
+  .dialog-area { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; position: relative; height: 100%; }
+  .dialog-header { padding: 10px; border-bottom: 1px solid rgba(148,163,184,0.2); display: flex; justify-content: space-between; align-items: center; }
+  .dialog-body { padding: 10px; display: flex; flex-direction: column; gap: 8px; overflow: auto; }
+  .msg { display: flex; gap: 8px; align-items: flex-start; }
+  .msg .bubble { padding: 8px 10px; border-radius: 12px; border: 1px solid rgba(148,163,184,0.2); background: rgba(2,6,23,0.5); }
+  .msg.user .bubble { background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.5); }
+  .input-area { display: flex; gap: 6px; padding: 10px; border-top: 1px solid rgba(148,163,184,0.2); }
+  .text-input { flex: 1; padding: 8px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; }
+  .send-btn { padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(148,163,184,0.35); background: rgba(59,130,246,0.25); color: #dbeafe; cursor: pointer; }
+  .btn-primary { padding: 8px 12px; border-radius: 10px; border: 1px solid rgba(16,185,129,0.7); background: rgba(16,185,129,0.35); color: #d1fae5; cursor: pointer; }
+  .overview-list { list-style: none; padding-left: 0; display: grid; gap: 8px; }
+  .overview-item { background: rgba(2,6,23,0.4); border: 1px solid rgba(148,163,184,0.25); border-radius: 12px; padding: 10px; display: grid; gap: 6px; }
+  .overview-item-header { display: flex; align-items: center; justify-content: space-between; }
+  .overview-item-title { display: flex; flex-direction: column; gap: 2px; }
+  .overview-item-title span { font-size: 14px; font-weight: 600; }
+  .overview-item-title small { font-size: 11px; color: #9ca3af; }
+  .overview-item-detail { font-size: 12px; color: #cbd5e1; }
+  .overview-item-detail .label { color: #94a3b8; margin-right: 6px; }
+  .code-chip { background: rgba(15,23,42,0.85); border: 1px solid rgba(148,163,184,0.35); border-radius: 6px; padding: 2px 6px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; font-size: 12px; }
+  .mention-box { position: absolute; background: var(--panel); border: 1px solid var(--border); border-radius: 8px; min-width: 260px; max-height: 200px; overflow: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.35); display: none; z-index: 20; }
+  .mention-item { padding: 8px 10px; border-bottom: 1px solid rgba(148,163,184,0.15); display: flex; align-items: center; justify-content: space-between; cursor: pointer; }
+  .mention-item:hover { background: rgba(59,130,246,0.12); }
+  .page-build { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); align-items: stretch; }
+  .preview-area > .panel { height: 100%; display: flex; flex-direction: column; }
+  .preview-area > .panel > .panel-body { flex: 1; }
+  .metrics-grid { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 8px; }
+  .metric-item { background: rgba(2,6,23,0.4); border: 1px solid rgba(148,163,184,0.25); border-radius: 10px; padding: 8px; display: flex; flex-direction: column; gap: 2px; }
+  .chart-box { background: rgba(10,14,29,0.9); border: 1px solid rgba(148,163,184,0.25); border-radius: 12px; height: 180px; }
+  .posts-list { display: flex; flex-direction: column; gap: 8px; }
+  .post-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 10px; display: grid; gap: 4px; }
+  .post-card:hover { border-color: rgba(59,130,246,0.65); background: rgba(2,6,23,0.55); transform: translateY(-1px); cursor: pointer; }
+  .card-head { display: flex; justify-content: space-between; align-items: center; }
+  .more-btn { padding: 4px 8px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; }
+  .card-meta { display: flex; gap: 6px; align-items: center; }
+  .tag--status { border-color: rgba(34,197,94,0.6); color: #86efac; }
+  .tag--pbtype { border-color: rgba(234,179,8,0.6); color: #fde68a; }
+  .pill-dot { width: 6px; height: 6px; border-radius: 999px; display: inline-block; margin-right: 6px; background: #22c55e; }
+  .status-draft .pill-dot { background: #94a3b8; }
+  .positions-wrap { display: grid; grid-template-columns: 190px minmax(0,1fr); gap: 10px; }
+  .positions-side { display: flex; flex-direction: column; gap: 6px; }
+  .symbol-btn { padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; font-size: 12px; text-align: left; }
+  .symbol-btn.is-active { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.9); color: #dbeafe; }
+  .toggle-row { display: flex; gap: 6px; }
+  .library-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+  .library-header { display: flex; justify-content: space-between; align-items: center; }
+  .filter-input { padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; }
+  .ask-card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 10px; display: grid; gap: 8px; }
+  .ask-actions { display: flex; gap: 8px; }
+  .ask-chart-block { margin-top: 8px; display: flex; flex-direction: column; gap: 8px; padding: 8px; border-radius: 12px; border: 1px solid var(--border); background: rgba(2,6,23,0.6); }
+  .preview-card { background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.5); border-radius: 10px; padding: 10px; margin-top: 8px; }
+  #lib-playbooks { display: grid; grid-template-columns: 1fr; gap: 10px; }
+  .feature-card--insight { padding: 16px; }
+  .feature-card--insight .feature-main { grid-template-columns: minmax(0,1fr); }
+  .insight-box { min-height: 120px; border: 1px dashed rgba(148,163,184,0.25); border-radius: 10px; background: rgba(15,23,42,0.6); padding: 8px; color: #cbd5e1; font-size: 12px; }
+  .insight-toggle { display: flex; gap: 6px; margin-bottom: 6px; }
+  .insight-btn { font-size: 12px; padding: 6px 10px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.35); background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; }
+  .insight-btn.is-active { background: rgba(59,130,246,0.25); border-color: rgba(59,130,246,0.9); color: #dbeafe; }
+  .insight-list { display: grid; gap: 6px; }
+  .insight-item { background: rgba(2,6,23,0.4); border: 1px solid rgba(148,163,184,0.25); border-radius: 10px; padding: 8px; font-size: 12px; color: #cbd5e1; }
+  .insight-panel { display: grid; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 12px; background: rgba(2,6,23,0.6); width: 100%; max-width: 100%; box-sizing: border-box; }
+  .insight-date-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .insight-date-head { font-size: 12px; color: #94a3b8; }
+  .preview-card .preview-header { font-weight: 600; color: #d1fae5; margin-bottom: 6px; }
+  .preview-card .preview-body { font-size: 12px; color: #cbd5e1; }
+  .code-block { height: auto; padding: 10px; background: rgba(2,6,23,0.7); border: 1px solid rgba(148,163,184,0.35); border-radius: 10px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas; white-space: pre; overflow: auto; }
+  .pulse-highlight { animation: pulse 0.8s ease-in-out 3; background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.6); }
+  @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(59,130,246,0.6); } 50% { box-shadow: 0 0 0 8px rgba(59,130,246,0.0); } 100% { box-shadow: 0 0 0 0 rgba(59,130,246,0.0); } }
+  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; color: #cbd5e1; display: flex; align-items: center; gap: 10px; box-shadow: 0 8px 20px rgba(0,0,0,0.35); z-index: 50; }
+  .toast .toast-action { color: #dbeafe; background: rgba(59,130,246,0.25); border: 1px solid rgba(59,130,246,0.5); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+  .playbook-menu { position: absolute; background: var(--panel); border: 1px solid var(--border); border-radius: 10px; padding: 6px; box-shadow: 0 8px 20px rgba(0,0,0,0.35); display: grid; gap: 6px; z-index: 40; }
+  .playbook-menu .menu-item { padding: 6px 8px; border-radius: 8px; border: 1px solid rgba(148,163,184,0.25); background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; }
+  .playbook-menu .menu-item:hover { background: rgba(59,130,246,0.12); }
+  .library-header { margin: 6px 0 10px; }
+  .lib-tab-content { display: none; }
+  .lib-tab-content.is-active { display: block; }
+  .positions-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .positions-table th, .positions-table td { border: 1px solid rgba(148,163,184,0.25); padding: 6px 8px; font-size: 12px; }
+  .positions-table th { background: rgba(2,6,23,0.5); color: #94a3b8; text-align: left; }
+  .panel { background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .panel-header { display: flex; justify-content: space-between; align-items: center; padding: 12px 12px; border-bottom: 1px solid rgba(148,163,184,0.2); }
+  .panel-title { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+  .panel-body { padding: 12px; }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; }
+  @media (max-width: 900px) { .feature-grid { grid-template-columns: repeat(1, minmax(0,1fr)); } }
+  .feature-card { position: relative; background: linear-gradient(135deg, rgba(15,23,42,0.96), rgba(15,23,42,0.88)); border: 1px solid var(--border); border-radius: 14px; padding: 12px; cursor: pointer; transition: transform .15s ease, border-color .15s ease; }
+  .feature-card:hover { transform: translateY(-1px); border-color: rgba(59,130,246,0.65); }
+  .feature-card-header { display: flex; align-items: center; justify-content: space-between; gap: 6px; margin-bottom: 6px; }
+  .feature-name { display: flex; flex-direction: column; gap: 2px; }
+  .feature-name span { font-size: 14px; font-weight: 600; }
+  .feature-name small { font-size: 11px; color: #9ca3af; }
+  .feature-tags { display: flex; flex-wrap: wrap; gap: 4px; justify-content: flex-end; }
+  .tag { font-size: 10px; padding: 2px 6px; border-radius: 999px; border: 1px solid rgba(148,163,184,0.35); color: #cbd5e1; background: rgba(15,23,42,0.85); }
+  .tag--type { border-color: rgba(59,130,246,0.6); color: #93c5fd; }
+  .tag--category { border-color: rgba(234,179,8,0.65); color: #fde68a; }
+  .feature-main { display: grid; grid-template-columns: minmax(0,1.2fr) minmax(0,0.8fr); gap: 8px; align-items: center; }
+  .feature-value { display: flex; flex-direction: column; gap: 4px; }
+  .feature-value-main { font-size: 20px; font-weight: 700; }
+  .feature-value-sub { font-size: 12px; color: #cbd5e1; }
+  .feature-state-chip { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; padding: 2px 8px; border-radius: 999px; border: 1px solid rgba(148,163,184,0.35); }
+  .state-dot { width: 6px; height: 6px; border-radius: 999px; background: #22c55e; }
+  .state-bull .state-dot { background: #22c55e; }
+  .state-neutral .state-dot { background: #94a3b8; }
+  .state-bear .state-dot { background: #ef4444; }
+  .mini { height: 54px; border: 1px dashed rgba(148,163,184,0.25); border-radius: 10px; overflow: hidden; }
+  .mini canvas { display: block; }
+  .drawer-backdrop { position: fixed; inset: 0; background: rgba(2,6,23,0.6); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 50; }
+  .drawer-backdrop.is-open { display: flex; }
+  .drawer { width: min(820px, 92vw); max-height: 86vh; background: var(--panel); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; }
+  .drawer-header { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-bottom: 1px solid rgba(148,163,184,0.2); }
+  .drawer-title-block { display: flex; flex-direction: column; gap: 4px; }
+  .drawer-title { font-weight: 700; }
+  .drawer-sub { font-size: 12px; color: #cbd5e1; }
+  .drawer-body { padding: 12px; display: grid; gap: 12px; overflow: auto; }
+  .drawer-section-title { font-size: 11px; color: #9ca3af; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px; }
+  .summary-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 8px; }
+  .summary-item { display: flex; flex-direction: column; gap: 2px; background: rgba(2,6,23,0.4); border: 1px solid rgba(148,163,184,0.25); border-radius: 10px; padding: 8px; }
+  .summary-label { font-size: 11px; color: #94a3b8; }
+  .summary-value { font-size: 13px; }
+  .chart-placeholder { position: relative; background: rgba(10,14,29,0.9); border: 1px solid rgba(148,163,184,0.25); border-radius: 12px; height: 200px; display: flex; align-items: center; justify-content: center; padding: 8px; box-sizing: border-box; overflow: hidden; }
+  .config-list { display: flex; flex-direction: column; gap: 6px; font-size: 12px; }
+  .config-item { display: flex; gap: 6px; align-items: flex-start; }
+  .bullet { width: 6px; height: 6px; border-radius: 999px; background: rgba(59,130,246,0.8); margin-top: 4px; }
+  .close-btn { font-size: 12px; padding: 6px 10px; border: 1px solid rgba(148,163,184,0.35); border-radius: 8px; background: rgba(2,6,23,0.6); color: #cbd5e1; cursor: pointer; }
+</style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="top-nav">
+      <button class="nav-btn is-active" data-page="build">Build</button>
+      <button class="nav-btn" data-page="library">Library</button>
+      <button class="nav-btn" data-page="ask">Ask</button>
+    </div>
+
+    <div class="page page-build is-active" id="page-build">
+      <div class="preview-area">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title" id="build-playbook-title"></div>
+          </div>
+          <div class="panel-body">
+            <div class="tabs-bar">
+              <button class="tab-btn is-active" data-tab="overview">Overview</button>
+              <button class="tab-btn" data-tab="dashboard">Visualization</button>
+              <button class="tab-btn" data-tab="performance">Performance</button>
+              <button class="tab-btn" data-tab="post">Post</button>
+              <button class="tab-btn" data-tab="position">Position</button>
+            </div>
+            <div class="tab-content is-active" id="tab-overview">
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Objective</div></div>
+                <div class="panel-body"><div id="objective-text"></div></div>
+              </div>
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Strategy</div></div>
+                <div class="panel-body">
+                  <div class="panel" style="margin-top:8px;">
+                    <div class="panel-header"><div class="panel-title">Features</div></div>
+                    <div class="panel-body"><ul class="overview-list" id="overview-features"></ul></div>
+                  </div>
+                  <div class="panel" style="margin-top:8px;">
+                    <div class="panel-header"><div class="panel-title">Execution Rules</div></div>
+                    <div class="panel-body"><ul id="overview-rules" style="padding-left:16px"></ul></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-dashboard">
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Features</div></div>
+                <div class="panel-body"><div class="feature-grid" id="feature-grid"></div></div>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-performance">
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Metrics</div></div>
+                <div class="panel-body">
+                  <div class="metrics-grid" id="metrics-grid"></div>
+                </div>
+              </div>
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Equity Curve</div></div>
+                <div class="panel-body"><div class="chart-box" id="equity-chart"></div></div>
+              </div>
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Drawdown</div></div>
+                <div class="panel-body"><div class="chart-box" id="dd-chart"></div></div>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-post">
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Signal Feed</div></div>
+                <div class="panel-body"><div class="posts-list" id="posts-list"></div></div>
+              </div>
+            </div>
+            <div class="tab-content" id="tab-position">
+              <div class="panel" style="margin-top:8px;">
+                <div class="panel-header"><div class="panel-title">Positions</div></div>
+                <div class="panel-body">
+                  <div class="toggle-row"><button class="tab-btn is-active" id="pos-view-current">Current</button><button class="tab-btn" id="pos-view-all">All Traded</button></div>
+                  <div class="positions-wrap" style="margin-top:8px;">
+                    <div class="positions-side" id="positions-side"></div>
+                    <div class="chart-box" id="positions-chart"></div>
+                  </div>
+                  <table class="positions-table" id="positions-table"><thead><tr><th>Symbol</th><th>Last</th><th>Change</th></tr></thead><tbody></tbody></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-pane">
+        <div class="dialog-area">
+          <div class="dialog-header"><div>Chat</div></div>
+          <div class="dialog-body" id="dialog-body"></div>
+          <div class="mention-box" id="mention-box"></div>
+          <div class="input-area"><input class="text-input" id="dialog-input" placeholder="e.g. objective: Balanced growth; @relative_valuation_rank; create feature: Custom Momentum"/><button class="send-btn" id="dialog-send">Send</button></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-library" style="grid-template-columns: minmax(0,1fr);">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Library</div>
+        </div>
+        <div class="panel-body">
+          <div class="tabs-bar" id="lib-tabs" style="margin-bottom:8px;">
+            <button class="tab-btn is-active" data-libtab="features">Features</button>
+            <button class="tab-btn" data-libtab="playbooks">Playbooks</button>
+            <button class="tab-btn" data-libtab="thread">Thread</button>
+          </div>
+          <div class="lib-tab-content is-active" id="lib-tab-features">
+            <div class="library-header" style="gap:10px; padding:4px 0;">
+              <input class="filter-input" id="lib-filter" placeholder="Search"/>
+              <select class="filter-input" id="lib-type"><option value="">All types</option><option value="time">Time-Series</option><option value="cross">Cross-Sectional</option><option value="event">Event</option><option value="insight">Insight</option></select>
+              <select class="filter-input" id="lib-style"><option value="">All styles</option><option value="value">Value</option><option value="momentum">Momentum</option><option value="quality">Quality</option><option value="growth">Growth</option><option value="volatility">Volatility</option><option value="liquidity">Liquidity</option><option value="size">Size</option><option value="sentiment">Sentiment</option></select>
+              <select class="filter-input" id="lib-time"><option value="">All time</option><option value="1d">Last 24h</option><option value="7d">Last 7d</option><option value="30d">Last 30d</option></select>
+              <select class="filter-input" id="lib-sort"><option value="new">Newest</option><option value="old">Oldest</option></select>
+            </div>
+            <div class="library-grid" id="lib-features"></div>
+          </div>
+          <div class="lib-tab-content" id="lib-tab-playbooks"><div id="lib-playbooks"></div></div>
+          <div class="lib-tab-content" id="lib-tab-thread"><div class="posts-list" id="lib-thread"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page" id="page-ask" style="grid-template-columns: minmax(0,1fr);">
+      <div class="panel">
+        <div class="panel-header"><div class="panel-title">Ask</div></div>
+        <div class="panel-body" style="display:flex; flex-direction:column; gap:8px; min-height: 60vh;">
+          <div class="dialog-body" id="ask-body"></div>
+          <div class="input-area"><input class="text-input" id="ask-input" placeholder="Ask a trading question and get an answer with a chart"/><button class="send-btn" id="ask-send">Send</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="drawer-backdrop" id="drawer-backdrop">
+    <aside class="drawer">
+      <header class="drawer-header">
+        <div class="drawer-title-block">
+          <div class="drawer-title" id="drawer-title"></div>
+          <div class="drawer-sub" id="drawer-sub"></div>
+        </div>
+        <button class="close-btn" id="drawer-close">Close</button>
+      </header>
+      <div class="drawer-body">
+        <section>
+          <div class="drawer-section-title">Summary</div>
+          <div class="summary-grid">
+            <div class="summary-item"><span class="summary-label">Current Value</span><span class="summary-value" id="summary-current"></span></div>
+            <div class="summary-item"><span class="summary-label">Δ / Latest change</span><span class="summary-value" id="summary-delta"></span></div>
+            <div class="summary-item"><span class="summary-label">State</span><span class="summary-value" id="summary-state"></span></div>
+            <div class="summary-item"><span class="summary-label">Category</span><span class="summary-value" id="summary-category" title=""></span></div>
+            <div class="summary-item"><span class="summary-label">Source</span><span class="summary-value" id="summary-source"></span></div>
+            <div class="summary-item"><span class="summary-label">Last Updated</span><span class="summary-value" id="summary-updated"></span></div>
+          </div>
+        </section>
+        <section>
+          <div class="drawer-section-title">Visualization</div>
+          <div class="chart-placeholder" id="chart-placeholder"></div>
+        </section>
+        <section>
+          <div class="drawer-section-title">Config & Data Source</div>
+          <div class="config-list" id="config-list"></div>
+        </section>
+      </div>
+    </aside>
+  </div>
+
+<script>
+  const CATEGORY_INFO = {
+    value: 'PE, PB, Cash flow yield',
+    momentum: '12M momentum, short-term reversal',
+    quality: 'ROE, margins, low accruals',
+    growth: 'EPS growth, sales growth',
+    volatility: 'Vol, beta, idiosyncratic vol',
+    liquidity: 'Volume, turnover, spread',
+    size: 'Market cap',
+    sentiment: 'News/analyst sentiment',
+    events: 'Earnings surprise, corporate actions'
+  };
+
+  const libraryFeatures = [
+    {
+      id: 'funding_rate_trend',
+      name: 'Funding Rate Trend',
+      description: 'Perp funding vs spot · 8h',
+      type: 'time',
+      category: 'sentiment',
+      source: 'library',
+      summary: { current: '+0.032%', delta: '+0.018%', state: 'Strong Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [0.012,0.014,0.016,0.019,0.018,0.021,0.024,0.026,0.032], thresholds: [0.015] },
+      config: { calc: ['Weighted funding and OI aggregation', 'EMA(8h) smoothing and 60d z-score'], sources: ['Perp funding and OI (multi-exchange)'] }
+    },
+    {
+      id: 'relative_valuation_rank',
+      name: 'Relative Valuation Rank (PE/PB)',
+      description: 'Valuation vs peers · quarterly',
+      type: 'cross',
+      category: 'value',
+      source: 'library',
+      summary: { current: 'Top 20%', delta: 'Cheapest quintile', state: 'Attractive', updated: 'Q3 2025' },
+      chartData: { type: 'bars', bars: [0.35,0.5,0.6,0.8,0.85] },
+      config: { calc: ['Standardize PE/PB and compute composite score', 'Percentile rank; cheaper ranks higher'], sources: ['Quarterly fundamentals and valuation'] }
+    },
+    {
+      id: 'cash_flow_yield',
+      name: 'Cash Flow Yield (FCF / Market Cap)',
+      description: 'Quarterly fundamentals',
+      type: 'time',
+      category: 'value',
+      source: 'playbook',
+      summary: { current: 'Yield 5.2%', delta: 'Above median', state: 'Attractive vs history', updated: 'Q3 2025' },
+      chartData: { type: 'line', data: [3.2,3.5,4.0,4.6,5.2], thresholds: [4.0] },
+      config: { calc: ['FCF/MCap as cash flow yield', 'Historical percentile or z-score'], sources: ['Quarterly free cash flow and market cap'] }
+    },
+    {
+      id: 'onchain_activity_rank',
+      name: 'On-chain Activity Rank',
+      description: 'New addresses growth',
+      type: 'cross',
+      category: 'growth',
+      source: 'ask',
+      summary: { current: 'Top 10%', delta: '↑ 12% WoW', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'bars', bars: [0.4,0.5,0.65,0.8,0.9] },
+      config: { calc: ['New and active addresses WoW growth', 'z-score and ranking'], sources: ['On-chain activity metrics'] }
+    },
+    {
+      id: 'btc_eth_spread_overlay',
+      name: 'BTC / ETH Spread Overlay',
+      description: '1d hedge ratio',
+      type: 'time',
+      category: 'volatility',
+      source: 'library',
+      summary: { current: '1.24×', delta: 'vs neutral 1.10×', state: 'Neutral', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [1.08,1.12,1.09,1.11,1.16,1.20,1.18,1.22,1.24], thresholds: [1.10] },
+      config: { calc: ['90d rolling regression beta', 'Deviation vs neutral (1.10)', 'Contribution scaled by target vol'], sources: ['BTC/ETH daily close (spot or index)'] }
+    },
+    {
+      id: 'momentum_cross_section',
+      name: 'Momentum Rank (Top 20%)',
+      description: '7d returns rank',
+      type: 'cross',
+      category: 'momentum',
+      source: 'library',
+      summary: { current: 'Rank #6 / 120', delta: 'Score 0.68', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'bars', bars: [0.35,0.42,0.55,0.68,0.52] },
+      config: { calc: ['Compute 7d total return (winsorized)', 'z-score vs market and rank', 'Percentile mapping (Top20% strong)'], sources: ['Market price time-series'] }
+    },
+    {
+      id: 'sentiment_score',
+      name: 'Derivative Sentiment',
+      description: 'funding + skew + OI',
+      type: 'time',
+      category: 'sentiment',
+      source: 'library',
+      summary: { current: '-0.14', delta: '24h drift -0.09', state: 'Mild Bearish', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [-0.02,-0.04,-0.06,-0.08,-0.12,-0.10,-0.11,-0.13,-0.14], thresholds: [-0.10] },
+      config: { calc: ['Funding, OI change, orderbook skew z-scores', 'Weighted composite w=[0.4,0.3,0.3]', 'Threshold mapping'], sources: ['Perp funding, Open Interest, orderbook/trade skew'] }
+    },
+    {
+      id: 'whale_flow',
+      name: 'Whale Flow Δ',
+      description: 'net CEX inflow · 24h',
+      type: 'time',
+      category: 'liquidity',
+      source: 'library',
+      summary: { current: '+3,120 BTC', delta: 'z-score +1.9', state: 'Accumulation', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [520,860,1260,1600,1880,2200,2500,2940,3120] },
+      config: { calc: ['Detect large addresses net inflow', '24h aggregate z-score vs 180d', 'Positive accumulation mapping'], sources: ['On-chain flows and exchange address labels'] }
+    },
+    {
+      id: 'risk_filter',
+      name: 'Risk Regime Filter',
+      description: 'macro & vol regime',
+      type: 'cross',
+      category: 'volatility',
+      source: 'library',
+      summary: { current: 'Regime: Neutral', delta: 'No override', state: 'Neutral', updated: '08:00 UTC' },
+      chartData: { type: 'bars', bars: [0.1,0.12,0.08,0.11,0.09] },
+      config: { calc: ['20d realized vol, correlation, drawdown features', 'k-means/HMM cluster regimes', 'Control leverage/position cap by regime'], sources: ['Price & vol time-series, correlation matrices, macro indicators'] }
+    },
+    {
+      id: 'trend_strength',
+      name: 'Trend Strength (ADX 14)',
+      description: '1d window',
+      type: 'time',
+      category: 'momentum',
+      source: 'library',
+      summary: { current: 'ADX 27', delta: 'DMI+ > DMI-', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [16,18,19,21,22,24,25,26,27], thresholds: [20] },
+      config: { calc: ['Compute +DM/-DM and TR; Wilder smoothing', 'ADX threshold >25 indicates trend'], sources: ['Daily OHLC'] }
+    },
+    {
+      id: 'volatility_breakout',
+      name: 'Volatility Breakout',
+      description: 'ATR band · 20d',
+      type: 'time',
+      category: 'volatility',
+      source: 'library',
+      summary: { current: 'Breakout +1.5σ', delta: 'Band breach', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [0.3,0.4,0.5,0.7,0.9,1.1,1.3,1.4,1.5], thresholds: [1.0] },
+      config: { calc: ['ATR(20) volatility; MA20 center', 'Breakout ratio (Close - MA20) / ATR(20)', 'Valid if > 1σ'], sources: ['Daily OHLC'] }
+    },
+    {
+      id: 'mean_reversion',
+      name: 'Mean Reversion Alert',
+      description: 'RSI(2) · 1d',
+      type: 'time',
+      category: 'momentum',
+      source: 'library',
+      summary: { current: 'RSI 18', delta: 'Oversold zone', state: 'Reversion Setup', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [42,38,34,28,24,20,22,19,18], thresholds: [30] },
+      config: { calc: ['Wilder RSI(2) for short-term OB/OS', 'Signal when RSI < 20; <10 strong'], sources: ['Daily OHLC'] }
+    },
+    {
+      id: 'liquidity_percentile',
+      name: 'Liquidity Percentile',
+      description: '30d avg volume rank',
+      type: 'cross',
+      category: 'liquidity',
+      source: 'library',
+      summary: { current: 'P88', delta: 'Deep book', state: 'Tradable', updated: '08:00 UTC' },
+      chartData: { type: 'bars', bars: [0.55,0.62,0.7,0.78,0.88] },
+      config: { calc: ['Compute 30d average turnover', 'Percentile rank across market', 'Threshold P60+ considered tradable'], sources: ['Volume and price time-series'] }
+    },
+    {
+      id: 'funding_cost_rank',
+      name: 'Funding Cost Rank',
+      description: 'avg funding vs peers',
+      type: 'cross',
+      category: 'liquidity',
+      source: 'library',
+      summary: { current: 'Top 15%', delta: 'Cheaper to long', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'bars', bars: [0.35,0.4,0.5,0.7,0.85] },
+      config: { calc: ['7d average funding, unified sign by cost direction', 'Percentile rank; lower cost ranks higher'], sources: ['Exchange funding rate time-series'] }
+    },
+    {
+      id: 'valuation_growth',
+      name: 'Valuation & Growth Composite',
+      description: 'quarterly fundamentals',
+      type: 'time',
+      category: 'value',
+      source: 'library',
+      summary: { current: 'Score 0.62', delta: 'Last update: Q3 2025', state: 'Attractive vs history', updated: 'Q3 2025' },
+      chartData: { type: 'line', data: [0.45,0.5,0.52,0.55,0.6,0.62] },
+      config: { calc: ['Normalize PE^-1, PS^-1, EPS YoY, Rev YoY', 'Weighted composite w=[0.25,0.25,0.25,0.25]', 'z-score vs history'], sources: ['Quarterly financial statements'] }
+    },
+    {
+      id: 'event_pulse',
+      name: 'Event Pulse (On-chain & Macro)',
+      description: 'Event pulses',
+      type: 'event',
+      category: 'events',
+      source: 'library',
+      summary: { current: 'Next: CPI in 2d', delta: 'Last major: token unlock -3d', state: 'Cautious', updated: 'Latest event: -3d' },
+      chartData: { type: 'bars', bars: [0.1,0.3,0.55,0.78,0.9] },
+      config: { calc: ['Timeline: listings, unlocks, macro events (CPI/FOMC)', 'Pulse kernel: strength × time decay (±7d window)', 'Score = pulse sum; strong negative caps position'], sources: ['On-chain/exchange schedules; macro calendar'] }
+    },
+    {
+      id: 'money_flow_composite',
+      name: 'Money Flow Composite',
+      description: '1d composite',
+      type: 'time',
+      category: 'liquidity',
+      source: 'library',
+      summary: { current: 'Score 0.57', delta: 'Improving', state: 'Accumulation', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [0.32,0.36,0.38,0.41,0.46,0.5,0.53,0.55,0.57] },
+      config: { calc: ['Normalize net flow, funding, OI individually', 'Weighted composite w=[0.4,0.3,0.3]', 'Threshold mapping'], sources: ['On-chain flow, funding, OI'] }
+    },
+    {
+      id: 'price_volume_confirmation',
+      name: 'Price–Volume Confirmation',
+      description: 'Up volume vs down · 5d',
+      type: 'time',
+      category: 'momentum',
+      source: 'library',
+      summary: { current: 'Confirming', delta: 'UpVol 1.3×', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [101,102,103,104,105,106,107,108,109] },
+      config: { calc: ['UpVol/DownVol ratio over 5d', 'Confirm price structure trending up', 'Strength scales with ratio'], sources: ['OHLC and volume time-series'] }
+    },
+    {
+      id: 'ma_stack_signal',
+      name: 'MA Stack Signal',
+      description: 'MA20/MA50/MA200',
+      type: 'time',
+      category: 'momentum',
+      source: 'library',
+      summary: { current: 'Stacked', delta: 'MA20>MA50>MA200', state: 'Bullish', updated: '08:00 UTC' },
+      chartData: { type: 'line', data: [98,100,102,105,107,110,113,115,118], thresholds: [] },
+      config: { calc: ['Compute MA20, MA50, MA200', 'Signal when MA20>MA50>MA200'], sources: ['Daily close'] }
+    },
+    {
+      id: 'earnings_watch_insight',
+      name: 'Earnings Watch Insight',
+      description: 'LLM synthesis across filings, analyst notes, news',
+      type: 'insight',
+      category: 'insight',
+      source: 'research',
+      summary: { current: 'Focus: NVDA/AMD Q4 guide; hyperscaler capex holding', delta: 'Last 5: beats quality varies', state: 'Neutral', updated: 'Today' },
+      chartData: { type: 'line', data: [0.1,0.12,0.11,0.13,0.12] },
+      config: { calc: ['Aggregate 10-Q/10-K highlights', 'Sell-side revisions', 'Top headlines sentiment'], sources: ['SEC filings, analyst notes, major newswires'] },
+      insights: [
+        { date: '2025-11-18', text: 'Earnings revisions mixed; management guides cautious on margins. NVDA/AMD datapoints suggest hyperscaler capex remains intact.' },
+        { date: '2025-11-17', text: 'Consumer hardware seeing softer demand; services resilient. Watch FX impacts and macro sensitivity on discretionary spending.' },
+        { date: '2025-11-16', text: 'Upstream supply easing in GPU/networking; potential normalization into next half. Monitor lead times and backlog quality.' },
+        { date: '2025-11-15', text: 'Select names revising revenue mix toward services; margin commentary points to stabilization in 1H. Monitor inventory adjustments.' },
+        { date: '2025-11-14', text: 'Analyst tone balanced; watch guidance quality and capex plans across AI-adjacent exposures.' }
+      ]
+    },
+    {
+      id: 'macro_liquidity_insight',
+      name: 'Macro Liquidity Insight',
+      description: 'Fed balance sheet/TGA/ON RRP qualitative summary',
+      type: 'insight',
+      category: 'insight',
+      source: 'research',
+      summary: { current: 'Liquidity mildly supportive; RRP down, TGA stable', delta: 'QT pace steady', state: 'Constructive', updated: 'Today' },
+      chartData: { type: 'line', data: [0.2,0.22,0.21,0.23,0.24] },
+      config: { calc: ['Weekly H.4.1', 'TGA/RRP trajectory', 'Risk-on/off synthesis'], sources: ['Federal Reserve, Treasury'] },
+      insights: [
+        { date: '2025-11-18', text: 'ON RRP continues to drain; net liquidity mildly supportive for risk assets. QT pace steady; balance sheet contraction gradual.' },
+        { date: '2025-11-17', text: 'TGA range-bound; limited near-term supply pressures. Funding markets stable; no stress signals observed.' },
+        { date: '2025-11-16', text: 'Liquidity impulse likely modest; watch CPI/PCE prints for policy path confirmation.' },
+        { date: '2025-11-15', text: 'Bill issuance steady; marginal duration supply absorbed. Monitor auction metrics for stress signals.' },
+        { date: '2025-11-14', text: 'Credit spreads stable; funding conditions benign. No material tightening observed.' }
+      ]
+    },
+    {
+      id: 'ai_infra_theme_insight',
+      name: 'AI Infrastructure Theme Insight',
+      description: 'Social/news/dev updates consolidated for AI infra',
+      type: 'insight',
+      category: 'insight',
+      source: 'research',
+      summary: { current: 'Theme: GPU supply easing; networking bottlenecks', delta: 'Vendors: NVDA, AVGO, ANET', state: 'Bullish narrative', updated: 'Today' },
+      chartData: { type: 'line', data: [0.5,0.52,0.55,0.53,0.56] },
+      config: { calc: ['Aggregate social signals', 'Vendor roadmap notes', 'Deal pipeline mentions'], sources: ['X, Reddit, company releases'] },
+      insights: [
+        { date: '2025-11-18', text: 'Hyperscaler GPU deployments expanding; networking remains bottleneck. Vendors indicate sustained demand visibility.' },
+        { date: '2025-11-17', text: 'Elevated pipeline across AI infra stack: compute, interconnect, memory. Watch supply-chain normalization risks.' },
+        { date: '2025-11-16', text: 'Incremental signals point to stronger 1H; capex prioritization favors AI workloads.' },
+        { date: '2025-11-15', text: 'Lead times easing for select components; monitor backlog conversion and pricing dynamics.' },
+        { date: '2025-11-14', text: 'Partner updates suggest stable demand; watch regional mix and export constraints.' }
+      ]
+    },
+    {
+      id: 'earnings_calendar_events',
+      name: 'Earnings Calendar Events',
+      description: 'Upcoming earnings dates and watch flags',
+      type: 'event',
+      category: 'events',
+      source: 'library',
+      summary: { current: 'Upcoming: NVDA 11/21, AAPL 11/05', delta: 'Guidance focus: margins', state: 'Watch', updated: 'This week' },
+      chartData: { type: 'bars', bars: [0.2,0.6,0.3,0.8,0.5] },
+      config: { calc: ['Event pulse per proximity/importance'], sources: ['Company calendars, newswires'] }
+    }
+  ];
+
+  const grid = document.getElementById('feature-grid');
+  const backdrop = document.getElementById('drawer-backdrop');
+  const drawerTitle = document.getElementById('drawer-title');
+  const drawerSub = document.getElementById('drawer-sub');
+  const summaryCurrent = document.getElementById('summary-current');
+  const summaryDelta = document.getElementById('summary-delta');
+  const summaryState = document.getElementById('summary-state');
+  const summaryCategory = document.getElementById('summary-category');
+  const summarySource = document.getElementById('summary-source');
+  const summaryUpdated = document.getElementById('summary-updated');
+  const drawerClose = document.getElementById('drawer-close');
+  const chartPlaceholder = document.getElementById('chart-placeholder');
+  const configList = document.getElementById('config-list');
+
+  let playbook = {
+    id: 'pb-1',
+    name: 'Balanced Long-Only Crypto Playbook',
+    type: 'trading',
+    status: 'running',
+    objective: 'Achieve steady excess returns with controlled drawdown',
+    strategy: {
+      features: ['funding_rate_trend','relative_valuation_rank','cash_flow_yield','event_pulse'],
+      executionRules: [
+        '当风险过滤为 Risk-Off 时降杠杆',
+        '动量与资金流一致时扩仓'
+      ],
+      code: 'def zscore(x):\n  return (x - mean(x)) / std(x)\n\ndef compute_signals(inputs):\n  fr = zscore(ema(inputs["funding"], 8))\n  fcfy = percentile(inputs["fcf_yield"])\n  mom = percentile(inputs["momentum_7d"])\n  risk = inputs["risk_regime"]\n  s = 0.0\n  if fr > 0.5: s += 0.25\n  if fcfy >= 0.5: s += 0.25\n  if mom >= 0.6: s += 0.25\n  if risk == "off": s -= 0.5\n  return s\n\ndef sizing(score):\n  base = 0.03\n  add = 0.05 if score > 0.75 else (0.02 if score > 0.5 else 0.0)\n  return base + add\n\ndef decision(inputs):\n  score = compute_signals(inputs)\n  size = sizing(score)\n  return {"score": score, "size": size}'
+    },
+    dashboard: ['funding_rate_trend','relative_valuation_rank','cash_flow_yield','onchain_activity_rank','event_pulse'],
+    performance: { metrics: {}, charts: {} },
+    posts: [
+      { id:'post-1', timestamp:'2025-11-14 08:00', reason:'Momentum aligns with money flow', adjustments:{ symbol:'BTC', action:'BUY', weightDelta:'+5%' }, contrib:'Momentum + Money Flow' },
+      { id:'post-2', timestamp:'2025-11-13 20:00', reason:'Valuation attractiveness increased', adjustments:{ symbol:'ETH', action:'BUY', weightDelta:'+3%' }, contrib:'Value composite' }
+    ],
+    positions: {
+      current: [ {symbol:'BTC', prices:[101,103,106,110,115,118,122,126]}, {symbol:'ETH', prices:[72,74,76,80,83,85,88,92]}, {symbol:'SOL', prices:[42,45,47,49,52,55,58,60]} ],
+      history: [ {symbol:'AVAX', prices:[16,17,18,17,16,18,19,20]}, {symbol:'LINK', prices:[9,10,10,11,12,12,13,14]} ]
+    }
+  };
+
+  const dashPlaybook = {
+    id: 'pb-2',
+    name: 'US Equities Fundamentals Dashboard',
+    type: 'dashboard',
+    status: 'running',
+    objective: 'Continuously monitor US equities fundamentals and thematic developments to produce structured insights for research tracking.',
+    strategy: {
+      features: ['earnings_watch_insight','macro_liquidity_insight','ai_infra_theme_insight','earnings_calendar_events'],
+      executionRules: []
+    },
+    dashboard: ['earnings_watch_insight','macro_liquidity_insight','ai_infra_theme_insight','earnings_calendar_events']
+  };
+
+  const playbooks = [playbook, dashPlaybook];
+
+  const thread = [];
+
+  function typeLabel(t){ if(t==='time') return 'Time-Series'; if(t==='cross') return 'Cross-Sectional'; if(t==='event') return 'Event'; if(t==='insight') return 'Insight'; return 'Unknown'; }
+
+  function escStr(s){ return String(s).replace(/\\/g,'\\\\').replace(/"/g,'\\"'); }
+  function generateFeatureCode(f){ const name = String(f.id||'feature').replace(/[^a-zA-Z0-9_]/g,'_'); const calc = Array.isArray(f.config?.calc)?f.config.calc:[]; const src = Array.isArray(f.config?.sources)?f.config.sources:[]; let out = 'def feature_'+name+'():\n'; calc.forEach(c=>{ out += '  step("'+escStr(c)+'")\n'; }); src.forEach(s=>{ out += '  source("'+escStr(s)+'")\n'; }); out += '  return True'; return out; }
+  function generateRulesCode(ids){ const arr = generateRulesFromFeatures(ids); let out = 'def execution_rules():\n'; arr.forEach(r=>{ out += '  rule("'+escStr(r)+'")\n'; }); out += '  return True'; return out; }
+  function generateFeaturePrompt(f){ const calc = Array.isArray(f.config?.calc)?f.config.calc:[]; const src = Array.isArray(f.config?.sources)?f.config.sources:[]; const date = (f.summary&&f.summary.updated)||new Date().toISOString().slice(0,10); let p='You are a buy-side research analyst.\n'; p+='Objective: Synthesize '+escStr(f.name)+' into a structured insight for US equities.\n'; p+='Sources: '+escStr(src.join('; '))+'\n'; p+='Focus: '+escStr(calc.join('; '))+'\n'; p+='Requirements: 120–180 words; include key drivers, risks, and watch items; date '+escStr(date)+'.\n'; p+='Output: A concise paragraph summarizing the latest view.'; return p; }
+
+  function mapStyleForFeature(f){
+    const allowed = ['value','momentum','quality','growth','volatility','liquidity','size','sentiment'];
+    const base = (f.name+' '+(f.description||'')+' '+(Array.isArray(f.config?.sources)?f.config.sources.join(' '):'')).toLowerCase();
+    if (f.type==='event' || f.type==='insight') {
+      if (/(liquid|liquidity|on[- ]?chain|unlock|listing|balance sheet|tga|rrp)/.test(base)) return 'liquidity';
+      if (/(earnings|eps|revenue|sales|guide|guidance)/.test(base)) return 'growth';
+      if (/(volatility|macro|cpi|fomc|risk)/.test(base)) return 'volatility';
+      if (/(sentiment|news|analyst|social|reddit|x\b)/.test(base)) return 'sentiment';
+      if (/(quality|margin|roe|accrual)/.test(base)) return 'quality';
+      return 'sentiment';
+    }
+    return allowed.includes(f.category)? f.category : 'sentiment';
+  }
+
+  function renderGrid() {
+    grid.innerHTML = '';
+    const feats = playbook.strategy.features.map(id => libraryFeatures.find(x=>x.id===id)).filter(Boolean);
+    feats.forEach(f => {
+      const card = document.createElement('article');
+      card.className = 'feature-card' + (f.type==='insight' ? ' feature-card--insight' : '');
+      card.dataset.featureId = f.id;
+      const typeLabelStr = typeLabel(f.type);
+      const styleCat = mapStyleForFeature(f);
+      const catLabel = styleCat.charAt(0).toUpperCase() + styleCat.slice(1);
+      const catInfo = CATEGORY_INFO[styleCat] || '';
+      if (f.type==='insight') {
+        const insightText = Array.isArray(f.insights) && f.insights.length ? (typeof f.insights[0]==='string'?f.insights[0]:f.insights[0].text) : (f.description || 'Insight');
+        card.innerHTML = (
+          '<header class="feature-card-header">'
+          + '<div class="feature-name">'
+          + '<span>' + f.name + '</span><small>' + f.description + '</small>'
+          + '</div>'
+          + '<div class="feature-tags">'
+          + '<span class="tag tag--type">' + typeLabelStr + '</span>'
+          + '<span class="tag tag--category" title="' + catInfo + '">' + catLabel + '</span>'
+          + '</div>'
+          + '</header>'
+          + '<div class="feature-main">'
+          + '<div class="feature-value">'
+          + '<span class="feature-value-main">' + f.summary.current + '</span>'
+          + '<span class="feature-value-sub">' + f.summary.delta + '</span>'
+          + '<span class="feature-state-chip ' + (f.summary.state.includes('Bear')?'state-bear':(f.summary.state.includes('Neutral')?'state-neutral':'state-bull')) + '"><span class="state-dot"></span>' + f.summary.state + '</span>'
+          + '</div>'
+          + '<div class="insight-box">' + insightText + '</div>'
+          + '</div>'
+        );
+      } else {
+        card.innerHTML = (
+          '<header class="feature-card-header">'
+          + '<div class="feature-name">'
+          + '<span>' + f.name + '</span><small>' + f.description + '</small>'
+          + '</div>'
+          + '<div class="feature-tags">'
+          + '<span class="tag tag--type">' + typeLabelStr + '</span>'
+          + '<span class="tag tag--category" title="' + catInfo + '">' + catLabel + '</span>'
+          + '</div>'
+          + '</header>'
+          + '<div class="feature-main">'
+          + '<div class="feature-value">'
+          + '<span class="feature-value-main">' + f.summary.current + '</span>'
+          + '<span class="feature-value-sub">' + f.summary.delta + '</span>'
+          + '<span class="feature-state-chip ' + (f.summary.state.includes('Bear')?'state-bear':(f.summary.state.includes('Neutral')?'state-neutral':'state-bull')) + '"><span class="state-dot"></span>' + f.summary.state + '</span>'
+          + '</div>'
+          + '<div class="mini"><canvas></canvas></div>'
+          + '</div>'
+        );
+        const mini = card.querySelector('.mini canvas');
+        drawCardMini(mini, f);
+      }
+      card.addEventListener('click', () => openDrawer(f));
+      grid.appendChild(card);
+    });
+  }
+
+  function renderChart(f) {
+    chartPlaceholder.innerHTML = '';
+    const w = chartPlaceholder.clientWidth || 360;
+    const h = 200;
+    const dpr = window.devicePixelRatio || 1;
+    const cvs = document.createElement('canvas');
+    cvs.width = w * dpr; cvs.height = h * dpr; cvs.style.width = w + 'px'; cvs.style.height = h + 'px';
+    chartPlaceholder.appendChild(cvs);
+    const ctx = cvs.getContext('2d');
+    ctx.scale(dpr, dpr);
+    ctx.fillStyle = 'rgba(15,23,42,0.98)';
+    ctx.fillRect(0,0,w,h);
+    const pad = 10;
+    const markers = [];
+    function addMarker(x,y){ markers.push({x,y}); }
+    function drawMarkers(){ ctx.strokeStyle='rgba(239,68,68,0.95)'; ctx.fillStyle='rgba(239,68,68,0.25)'; markers.forEach(m=>{ ctx.beginPath(); ctx.arc(m.x,m.y,4.5,0,Math.PI*2); ctx.fill(); ctx.stroke(); }); }
+    function norm(val,min,max){ if(max===min) return h/2; return h - pad - (val-min)/(max-min)*(h-pad*2); }
+    const cd = f.chartData;
+    if (cd.type==='line') {
+      const data = cd.data; const min=Math.min.apply(null,data); const max=Math.max.apply(null,data);
+      ctx.strokeStyle='rgba(59,130,246,0.9)'; ctx.lineWidth=2; ctx.beginPath();
+      data.forEach((v,i)=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const y=norm(v,min,max); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }); ctx.stroke();
+      if (cd.thresholds && cd.thresholds.length) {
+        ctx.setLineDash([4,4]); ctx.strokeStyle='rgba(148,163,184,0.6)';
+        cd.thresholds.forEach(t=>{ const y=norm(t,min,max); ctx.beginPath(); ctx.moveTo(pad,y); ctx.lineTo(w-pad,y); ctx.stroke(); }); ctx.setLineDash([]);
+        let count=0; cd.thresholds.forEach(t=>{ for(let i=1;i<data.length;i++){ const p=data[i-1]; const c=data[i]; if((p-t)*(c-t)<=0 && p!==c){ const x=pad+(w-pad*2)*(i/(data.length-1)); const y=norm(c,min,max); addMarker(x,y); count++; if(count>=3) break; } } });
+      } else {
+        const idxs = data.map((v,i)=>({v,i})).sort((a,b)=>b.v-a.v).slice(0,2).map(o=>o.i);
+        idxs.forEach(i=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const y=norm(data[i],min,max); addMarker(x,y); });
+      }
+    } else if (cd.type==='bars') {
+      const bars = cd.bars; const min=0; const max=Math.max.apply(null,bars); const bw=(w-pad*2)/bars.length;
+      bars.forEach((v,i)=>{ const x=pad+i*bw+2; const y=norm(v,min,max); ctx.fillStyle='rgba(59,130,246,0.75)'; ctx.fillRect(x,y,bw-4,h-pad-y); });
+      const thresh = max*0.8; bars.forEach((v,i)=>{ if(v>=thresh){ const cx=pad+i*bw+2+(bw-4)/2; const cy=norm(v,min,max); addMarker(cx,cy); } });
+    }
+    drawMarkers();
+  }
+
+  function openDrawer(f) {
+    drawerTitle.textContent = f.name;
+    drawerSub.textContent = typeLabel(f.type) + ' · ' + f.description;
+    summaryCurrent.textContent = f.summary.current;
+    summaryDelta.textContent = f.summary.delta;
+    summaryState.textContent = f.summary.state;
+    const styleCat = mapStyleForFeature(f);
+    summaryCategory.textContent = styleCat.charAt(0).toUpperCase() + styleCat.slice(1);
+    summaryCategory.title = CATEGORY_INFO[styleCat] || '';
+    summarySource.textContent = f.source;
+    summaryUpdated.textContent = f.summary.updated;
+    configList.innerHTML = '';
+    if (f.config && Array.isArray(f.config.calc)) { f.config.calc.forEach(t=>{ const el=document.createElement('div'); el.className='config-item'; el.innerHTML='<span class="bullet"></span><div>'+t+'</div>'; configList.appendChild(el); }); }
+    if (f.config && Array.isArray(f.config.sources)) { f.config.sources.forEach(s=>{ const el=document.createElement('div'); el.className='config-item'; el.innerHTML='<span class="bullet"></span><div>Data source: '+s+'</div>'; configList.appendChild(el); }); }
+    const cfgSection = configList.parentElement; if (cfgSection) { const exist = cfgSection.querySelector('#drawer-feature-code'); if (exist) exist.remove(); const existBtn = cfgSection.querySelector('#drawer-feature-toggle'); if (existBtn) existBtn.remove(); const actions=document.createElement('div'); actions.style.marginTop='8px'; actions.id='drawer-feature-toggle'; const btn=document.createElement('button'); btn.className='send-btn'; btn.textContent = (f.type==='insight'?'Prompt':'Code'); const codeEl=document.createElement('div'); codeEl.className='code-block'; codeEl.id='drawer-feature-code'; codeEl.style.display='none'; codeEl.textContent = (f.type==='insight'?generateFeaturePrompt(f):generateFeatureCode(f)); actions.appendChild(btn); cfgSection.appendChild(actions); cfgSection.appendChild(codeEl); btn.addEventListener('click', ()=>{ codeEl.style.display = codeEl.style.display==='none' ? 'block' : 'none'; }); }
+    if (f.type==='insight') {
+      const entries = Array.isArray(f.insights) ? f.insights.slice() : [];
+      const dates = entries.map(e=> e.date).filter(Boolean).sort((a,b)=> b.localeCompare(a)).slice(0,5);
+      chartPlaceholder.innerHTML = '<div class="insight-panel"><div class="insight-toggle"><div class="insight-date-row">'+(dates.length?dates.map((d,i)=>'<button class="insight-btn'+(i===0?' is-active':'')+'" data-date="'+d+'">'+d+'</button>').join(''):'')+'</div></div><div class="insight-content"></div></div>';
+      const content = chartPlaceholder.querySelector('.insight-content');
+      const btns = chartPlaceholder.querySelectorAll('.insight-btn');
+      function renderForDate(d){ const ent = entries.find(e=> e.date===d); content.innerHTML = '<div class="insight-date-head">'+(d||'')+'</div><div class="insight-box">'+(ent?ent.text:'No insight for selected date')+'</div>'; }
+      const initial = dates[0] || '';
+      renderForDate(initial);
+      btns.forEach(b=> b.addEventListener('click', ()=>{ btns.forEach(x=>x.classList.remove('is-active')); b.classList.add('is-active'); renderForDate(b.dataset.date); }));
+    }
+    else { renderChart(f); }
+    backdrop.classList.add('is-open');
+  }
+
+  drawerClose.addEventListener('click', ()=>{ backdrop.classList.remove('is-open'); });
+  backdrop.addEventListener('click', (e)=>{ if(e.target===backdrop){ backdrop.classList.remove('is-open'); } });
+
+  function setActivePage(p) {
+    document.querySelectorAll('.page').forEach(el=>el.classList.remove('is-active'));
+    document.getElementById('page-'+p).classList.add('is-active');
+    document.querySelectorAll('.nav-btn').forEach(b=>b.classList.toggle('is-active', b.dataset.page===p));
+    localStorage.setItem('activePage', p);
+    if (p==='library') setLibraryTab('features');
+  }
+
+  function setActiveTab(t) {
+    document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('is-active'));
+    document.getElementById('tab-'+t).classList.add('is-active');
+    document.querySelectorAll('.tab-btn[data-tab]').forEach(b=>b.classList.toggle('is-active', b.dataset.tab===t));
+    localStorage.setItem('activeBuildTab', t);
+    if (t==='dashboard') renderGrid();
+  }
+
+  document.querySelectorAll('.nav-btn').forEach(btn=>{
+    btn.addEventListener('click', ()=> setActivePage(btn.dataset.page));
+  });
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(btn=>{
+    btn.addEventListener('click', ()=> setActiveTab(btn.dataset.tab));
+  });
+
+  function generateRulesFromFeatures(ids) {
+    const idT = {
+      funding_rate_trend: 'Funding Rate Trend: if EMA8h z-score > 0.5 → BUY; < -0.5 → block longs',
+      relative_valuation_rank: 'Relative Valuation Rank (PE/PB): percentile ≤ 20% → overweight; ≥ 80% → underweight',
+      cash_flow_yield: 'Cash Flow Yield (FCF/MCap): yield > median and rising → overweight; bottom quartile → cap position',
+      onchain_activity_rank: 'On-chain Activity Rank: WoW z-score > 1 → BUY; < -1 → SELL',
+      btc_eth_spread_overlay: 'BTC/ETH Spread Overlay: deviation > +σ → favor BTC; < -σ → favor ETH',
+      momentum_cross_section: 'Momentum Rank: top 20% → overweight; bottom 20% → underweight',
+      sentiment_score: 'Derivative Sentiment: score < -1 → reduce longs; > +1 → allow adds',
+      whale_flow: 'Whale Flow Δ: strong net inflow → accumulate; strong outflow → de-risk',
+      risk_filter: 'Risk Regime Filter: Risk-Off → reduce leverage and cap positions',
+      trend_strength: 'Trend Strength (ADX): ADX > 25 → trend-follow; ADX < 20 → avoid breakouts',
+      volatility_breakout: 'Volatility Breakout: breakout ratio > 1σ → enter; < 0 → exit',
+      mean_reversion: 'Mean Reversion Alert: RSI(2) < 20 → watch for reversal; < 10 → scale-in',
+      liquidity_percentile: 'Liquidity Percentile: P < 60 → avoid; P ≥ 60 → tradable',
+      funding_cost_rank: 'Funding Cost Rank: cheaper funding percentile → prefer longs',
+      valuation_growth: 'Valuation & Growth Composite: composite rising → overweight; falling → underweight',
+      event_pulse: 'Event Pulse: negative macro/unlock pulse → cap positions; positive event → allow adds',
+      money_flow_composite: 'Money Flow Composite: rising composite → accumulate; falling → reduce',
+      price_volume_confirmation: 'Price–Volume Confirmation: UpVol/DownVol > 1.2 with uptrend → confirm longs',
+      ma_stack_signal: 'MA Stack Signal: MA20>MA50>MA200 → allow trend adds; else avoid'
+    };
+    const catT = {
+      momentum: 'Momentum: strength rising → overweight; weakness → underweight',
+      value: 'Value: cheaper percentile → overweight; expensive → underweight',
+      liquidity: 'Liquidity: illiquid → avoid; liquid → tradable',
+      volatility: 'Volatility: Risk-Off or high vol → cap; stable → allow',
+      sentiment: 'Sentiment: negative → reduce longs; positive → allow adds',
+      growth: 'Growth: strong on-chain/metrics → overweight; weak → underweight',
+      size: 'Size: small caps riskier; large caps more stable'
+    };
+    const res = [];
+    ids.forEach(id=>{
+      const f = libraryFeatures.find(x=>x.id===id);
+      const byId = idT[id];
+      if (byId) res.push(byId);
+      else if (f) { const styleCat = mapStyleForFeature(f); if (catT[styleCat]) res.push(f.name+': '+catT[styleCat]); }
+    });
+    const uniq = Array.from(new Set(res));
+    return uniq;
+  }
+
+  function renderOverview() {
+    renderBuildHeader();
+    document.getElementById('objective-text').textContent = playbook.objective;
+    const cont = document.getElementById('overview-features'); cont.innerHTML='';
+    playbook.strategy.features.forEach(id=>{
+      const f = libraryFeatures.find(x=>x.id===id); if(!f) return;
+      const li = document.createElement('li'); li.className='overview-item'; li.dataset.id = f.id;
+      li.innerHTML = (
+        '<div class="overview-item-header">'
+        + '<div class="overview-item-title"><span>'+f.name+'</span></div>'
+        + '</div>'
+        + '<div class="overview-item-detail"><span class="label">Computation</span>'
+        + (Array.isArray(f.config.calc) ? f.config.calc.join('; ') : '')
+        + '</div>'
+        + '<div class="overview-item-detail"><span class="label">Data source</span>'
+        + (Array.isArray(f.config.sources) ? f.config.sources.join('; ') : '')
+        + '</div>'
+      );
+      cont.appendChild(li);
+      const actions = document.createElement('div'); actions.style.marginTop='6px'; const btn=document.createElement('button'); btn.className='send-btn'; btn.textContent = (f.type==='insight'?'Prompt':'Code'); const codeEl=document.createElement('div'); codeEl.className='code-block'; codeEl.style.display='none'; codeEl.textContent = (f.type==='insight'?generateFeaturePrompt(f):generateFeatureCode(f)); actions.appendChild(btn); li.appendChild(actions); li.appendChild(codeEl); btn.addEventListener('click', ()=>{ codeEl.style.display = codeEl.style.display==='none' ? 'block' : 'none'; });
+    });
+    const rulesPanel = document.getElementById('overview-rules')?.closest('.panel');
+    if (playbook.type === 'dashboard') {
+      if (rulesPanel) rulesPanel.style.display = 'none';
+    } else {
+      if (rulesPanel) rulesPanel.style.display = '';
+      playbook.strategy.executionRules = generateRulesFromFeatures(playbook.strategy.features);
+      const ulR = document.getElementById('overview-rules'); ulR.innerHTML='';
+      playbook.strategy.executionRules.forEach(r=>{ const li=document.createElement('li'); const idx = r.indexOf(':'); const name = idx>0 ? r.slice(0, idx) : ''; const rest = idx>0 ? r.slice(idx) : r; li.innerHTML = (name?('<code class="code-chip">'+name+'</code>'):'') + rest; ulR.appendChild(li); });
+      const rulesBody = ulR.parentElement; if (rulesBody && !rulesBody.querySelector('#rules-code-box')) { const btn=document.createElement('button'); btn.className='send-btn'; btn.textContent='Code'; btn.style.marginTop='8px'; const box=document.createElement('div'); box.className='code-block'; box.id='rules-code-box'; box.style.display='none'; box.textContent = generateRulesCode(playbook.strategy.features); rulesBody.appendChild(btn); rulesBody.appendChild(box); btn.addEventListener('click', ()=>{ box.style.display = box.style.display==='none' ? 'block' : 'none'; }); }
+    }
+  }
+
+function renderBuildHeader() {
+  const t = document.getElementById('build-playbook-title');
+  if (t) {
+    const label = getPlaybookTypeLabel(playbook.type);
+    t.innerHTML = '<span>'+playbook.name+'</span><span class="tag tag--pbtype"><span class="pill-dot"></span>'+label+'</span>';
+    t.style.cursor = 'pointer';
+    t.onclick = ()=>{ setActivePage('library'); setLibraryTab('playbooks'); };
+  }
+}
+
+  function highlightFeatureInOverview(id) {
+    const items = document.querySelectorAll('#overview-features .overview-item');
+    items.forEach(el=>{ if (el.dataset.id === id) { el.classList.add('pulse-highlight'); setTimeout(()=> el.classList.remove('pulse-highlight'), 2400); } });
+  }
+
+  function syncDashboard() {
+    playbook.dashboard = Array.from(new Set(playbook.strategy.features));
+  }
+
+  
+
+  function renderPerformance() {
+    const metrics = [
+      {k:'Total Return', v:'+42.3%'},
+      {k:'Sharpe', v:'1.42'},
+      {k:'Volatility', v:'18.5%'},
+      {k:'Max Drawdown', v:'-12.8%'},
+      {k:'Turnover', v:'0.9x'}
+    ];
+    const mg = document.getElementById('metrics-grid'); mg.innerHTML='';
+    metrics.forEach(m=>{ const el=document.createElement('div'); el.className='metric-item'; el.innerHTML='<div style="color:#94a3b8; font-size:11px;">'+m.k+'</div><div style="font-size:14px;">'+m.v+'</div>'; mg.appendChild(el); });
+    drawSimpleLine('equity-chart', [100,102,104,107,111,115,120,126]);
+    drawSimpleLine('dd-chart', [-2,-1,-3,-4,-2,-1,-3,-2], true);
+  }
+
+  function drawSimpleLine(id, data, isDD) {
+    const el = document.getElementById(id); el.innerHTML=''; const w=el.clientWidth||360; const h=180; const dpr=window.devicePixelRatio||1; const cvs=document.createElement('canvas'); cvs.width=w*dpr; cvs.height=h*dpr; cvs.style.width=w+'px'; cvs.style.height=h+'px'; el.appendChild(cvs); const ctx=cvs.getContext('2d'); ctx.scale(dpr,dpr); ctx.fillStyle='rgba(15,23,42,0.98)'; ctx.fillRect(0,0,w,h); const pad=10; const min=Math.min.apply(null,data); const max=Math.max.apply(null,data); function y(v){ if(max===min) return h/2; return h - pad - (v-min)/(max-min)*(h-pad*2);} ctx.strokeStyle=isDD?'rgba(244,63,94,0.9)':'rgba(59,130,246,0.9)'; ctx.lineWidth=2; ctx.beginPath(); data.forEach((v,i)=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const yy=y(v); if(i===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy); }); ctx.stroke(); }
+
+  function drawCardMini(canvas, f) {
+    const el = canvas; const parent = el.parentElement; const w = parent.clientWidth || 140; const h = parent.clientHeight || 54; const dpr = window.devicePixelRatio || 1; el.width = w*dpr; el.height = h*dpr; el.style.width = w+'px'; el.style.height = h+'px'; const ctx = el.getContext('2d'); ctx.scale(dpr,dpr); ctx.fillStyle='rgba(15,23,42,0.98)'; ctx.fillRect(0,0,w,h); const pad=6; function norm(v,min,max){ if(max===min) return h/2; return h - pad - (v-min)/(max-min)*(h-pad*2);} const cd = f.chartData||{};
+    if (f.category==='events') {
+      const arr = cd.bars || cd.pulses || [0.1,0.3,0.6,0.2,0.5]; const min=0; const max=Math.max.apply(null,arr)||1; ctx.strokeStyle='rgba(234,179,8,0.9)'; ctx.fillStyle='rgba(234,179,8,0.5)'; arr.forEach((v,i)=>{ const x = pad + (w-pad*2)*(i/(arr.length-1)); const y = norm(v,min,max); ctx.beginPath(); ctx.arc(x,y,3,0,Math.PI*2); ctx.fill(); ctx.stroke(); });
+    } else if (f.type==='cross') {
+      const bars = cd.bars || [0.3,0.5,0.7,0.6,0.8]; const min=0; const max=Math.max.apply(null,bars)||1; const bw=(w-pad*2)/bars.length; ctx.fillStyle='rgba(59,130,246,0.75)'; bars.forEach((v,i)=>{ const x=pad+i*bw+1; const y=norm(v,min,max); ctx.fillRect(x,y,bw-2,h-pad-y); });
+    } else {
+      const data = cd.data || [1,1.2,1.1,1.3,1.4]; const min=Math.min.apply(null,data); const max=Math.max.apply(null,data); ctx.strokeStyle='rgba(59,130,246,0.9)'; ctx.lineWidth=1.6; ctx.beginPath(); data.forEach((v,i)=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const y=norm(v,min,max); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }); ctx.stroke();
+    }
+  }
+
+  function renderPosts() {
+    const list = document.getElementById('posts-list'); list.innerHTML='';
+    playbook.posts.forEach(p=>{ const el=document.createElement('div'); el.className='post-card'; el.innerHTML='<div style="font-size:12px; color:#94a3b8;">'+p.timestamp+'</div><div>'+p.reason+'</div><div style="font-size:12px; color:#cbd5e1;">'+p.adjustments.symbol+' · '+p.adjustments.action+' · '+p.adjustments.weightDelta+'</div><div style="font-size:12px; color:#94a3b8;">Feature contribution: '+p.contrib+'</div>'; list.appendChild(el); });
+  }
+
+  let posView = 'current'; let activeSymbol = 'BTC';
+  function renderPositions() {
+    const side = document.getElementById('positions-side'); side.innerHTML='';
+    const arr = posView==='current' ? playbook.positions.current : playbook.positions.history;
+    arr.forEach(s=>{ const b=document.createElement('button'); b.className='symbol-btn'+(s.symbol===activeSymbol?' is-active':''); b.textContent=s.symbol; b.addEventListener('click', ()=>{ activeSymbol=s.symbol; renderPositions(); }); side.appendChild(b); });
+    const target = arr.find(x=>x.symbol===activeSymbol) || arr[0]; const el = document.getElementById('positions-chart'); el.innerHTML=''; const w=el.clientWidth||360; const h=180; const dpr=window.devicePixelRatio||1; const cvs=document.createElement('canvas'); cvs.width=w*dpr; cvs.height=h*dpr; cvs.style.width=w+'px'; cvs.style.height=h+'px'; el.appendChild(cvs); const ctx=cvs.getContext('2d'); ctx.scale(dpr,dpr); ctx.fillStyle='rgba(15,23,42,0.98)'; ctx.fillRect(0,0,w,h); const pad=10; const data=target.prices; const min=Math.min.apply(null,data); const max=Math.max.apply(null,data); function y(v){ if(max===min) return h/2; return h - pad - (v-min)/(max-min)*(h-pad*2);} ctx.strokeStyle='rgba(59,130,246,0.9)'; ctx.lineWidth=2; ctx.beginPath(); data.forEach((v,i)=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const yy=y(v); if(i===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy); }); ctx.stroke(); }
+
+  document.getElementById('pos-view-current').addEventListener('click', ()=>{ posView='current'; document.getElementById('pos-view-current').classList.add('is-active'); document.getElementById('pos-view-all').classList.remove('is-active'); renderPositions(); });
+  document.getElementById('pos-view-all').addEventListener('click', ()=>{ posView='history'; document.getElementById('pos-view-all').classList.add('is-active'); document.getElementById('pos-view-current').classList.remove('is-active'); renderPositions(); });
+
+  function pushThread(role, text) { thread.push({role, text, ts: Date.now()}); const body=document.getElementById('dialog-body'); const el=document.createElement('div'); el.className='msg '+(role==='user'?'user':'assistant'); el.innerHTML='<div class="bubble">'+text+'</div>'; body.appendChild(el); body.scrollTop = body.scrollHeight; document.getElementById('lib-thread').appendChild(el.cloneNode(true)); }
+
+  function handleDialog(text) {
+    if (/objective\s*:/i.test(text)) { const val = text.split(/objective\s*:/i)[1].trim(); if (val) { playbook.objective = val; renderOverview(); } }
+    const atMatches = text.match(/@([\w_\-]+)/g) || [];
+    atMatches.forEach(m=>{ const id = m.slice(1); const f = libraryFeatures.find(x=>x.id===id || x.name.replace(/\s+/g,'_').toLowerCase()===id.toLowerCase()); if (f) { if (!playbook.strategy.features.includes(f.id)) playbook.strategy.features.push(f.id); syncDashboard(); renderOverview(); renderGrid(); playbook.posts.unshift({ id:'post-'+Math.random().toString(36).slice(2,7), timestamp:new Date().toISOString(), reason:'Added via @ '+f.name, adjustments:{ symbol:'BTC', action:'BUY', weightDelta:'+2%' }, contrib:f.name }); renderPosts(); setActiveTab('dashboard'); } });
+    if (/create\s*feature\s*:/i.test(text)) { const seg = text.split(/create\s*feature\s*:/i)[1]||''; const name = seg.split(/,/)[0].trim()||('Feature '+Date.now()); const f = { id: name.replace(/\s+/g,'_').toLowerCase(), name, description:'User defined', type:'time', category:'momentum', source:'playbook', createdAt: new Date().toISOString(), summary:{ current:'Score 0.50', delta:'Neutral', state:'Neutral', updated: new Date().toISOString().slice(0,10) }, chartData:{ type:'line', data:[0.1,0.2,0.3,0.25,0.35,0.4], thresholds:[0.3] }, config:{ calc:['User-defined'], sources:['User input'] } }; libraryFeatures.push(f); if (!playbook.strategy.features.includes(f.id)) playbook.strategy.features.push(f.id); syncDashboard(); renderOverview(); renderGrid(); renderLibrary(); }
+    const body=document.getElementById('dialog-body'); const a=document.createElement('div'); a.className='msg assistant'; const bubble=document.createElement('div'); bubble.className='bubble'; bubble.innerHTML='<div><strong>Thinking</strong>: Evaluate objective and feature set; reconcile changes.</div><div style="margin-top:6px;"><strong>Planning</strong>: Sync dashboard with features and update overview.</div><div style="margin-top:6px;"><strong>Coding</strong>: Applied changes to playbook and UI.</div>'; const prev=document.createElement('div'); prev.className='preview-card'; prev.innerHTML='<div class="preview-header">Playbook Preview</div><div class="preview-body">Execution Interval: Daily 08:00 UTC<br/>Backtest Result: Return +48%, Sharpe 1.32</div><div style="margin-top:8px; display:flex; gap:8px;"><button class="btn-primary">Activate</button><button class="send-btn">Run Once</button></div>'; bubble.appendChild(prev); a.appendChild(bubble); body.appendChild(a); body.scrollTop = body.scrollHeight;
+  }
+
+  document.getElementById('dialog-send').addEventListener('click', ()=>{ const inp=document.getElementById('dialog-input'); const text=inp.value.trim(); if(!text) return; pushThread('user', text); handleDialog(text); inp.value=''; });
+
+  const dialogInput = document.getElementById('dialog-input');
+  const mentionBox = document.getElementById('mention-box');
+  if (dialogInput) {
+    dialogInput.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('dialog-send').click(); } });
+  }
+  function showToast(text, actionText, actionHandler) { const t=document.createElement('div'); t.className='toast'; t.innerHTML='<div>'+text+'</div><button class="toast-action">'+actionText+'</button>'; document.body.appendChild(t); const btn=t.querySelector('.toast-action'); btn.addEventListener('click', ()=>{ actionHandler&&actionHandler(); document.body.removeChild(t); }); setTimeout(()=>{ if(document.body.contains(t)) document.body.removeChild(t); }, 3500); }
+  function positionMentionBox() {
+    const inpRect = dialogInput.getBoundingClientRect();
+    const areaRect = mentionBox.parentElement.getBoundingClientRect();
+    const left = inpRect.left - areaRect.left;
+    const top = inpRect.top - areaRect.top - 8;
+    mentionBox.style.left = left + 'px';
+    mentionBox.style.top = (top - mentionBox.offsetHeight) + 'px';
+  }
+  function showMention(items) {
+    mentionBox.innerHTML = items.map(f=>{ const styleCat=mapStyleForFeature(f); return '<div class="mention-item" data-id="'+f.id+'"><div>'+f.name+'</div><div class="feature-tags"><span class="tag tag--type">'+typeLabel(f.type)+'</span><span class="tag tag--category">'+styleCat.charAt(0).toUpperCase()+styleCat.slice(1)+'</span></div></div>'; }).join('');
+    mentionBox.style.display = 'block';
+    positionMentionBox();
+  }
+  function hideMention() { mentionBox.style.display = 'none'; }
+  function handleMention() {
+    const caret = dialogInput.selectionStart;
+    const sub = dialogInput.value.slice(0, caret);
+    const m = sub.match(/@([\w_\-]*)$/);
+    if (m) {
+      const q = m[1].toLowerCase();
+      const items = libraryFeatures.filter(f=> f.id.toLowerCase().includes(q) || f.name.toLowerCase().includes(q)).slice(0, 8);
+      if (items.length) showMention(items); else hideMention();
+    } else {
+      hideMention();
+    }
+  }
+  mentionBox.addEventListener('click', (e)=>{
+    const item = e.target.closest('.mention-item'); if(!item) return;
+    const id = item.dataset.id;
+    const caret = dialogInput.selectionStart;
+    const sub = dialogInput.value.slice(0, caret);
+    const m = sub.match(/@([\w_\-]*)$/);
+    const start = m ? caret - m[0].length : caret;
+    const before = dialogInput.value.slice(0, start);
+    const after = dialogInput.value.slice(caret);
+    const ins = '@'+id+' ';
+    dialogInput.value = before + ins + after;
+    const pos = (before + ins).length; dialogInput.setSelectionRange(pos, pos);
+    dialogInput.focus(); hideMention();
+  });
+  document.addEventListener('click', (e)=>{ if(!mentionBox.contains(e.target) && e.target!==dialogInput) hideMention(); });
+  dialogInput.addEventListener('keydown', (e)=>{ if(e.key==='Escape') hideMention(); });
+  dialogInput.addEventListener('input', ()=>{ renderOverview(); handleMention(); });
+
+  function ensureCreatedAt() { libraryFeatures.forEach(f=>{ if(!f.createdAt) f.createdAt = new Date(Date.now() - Math.floor(Math.random()*7)*86400000).toISOString(); }); }
+
+  function getFilteredFeatures() {
+    ensureCreatedAt();
+    const q = (document.getElementById('lib-filter')?.value || '').toLowerCase();
+    const type = document.getElementById('lib-type')?.value || '';
+    const style = document.getElementById('lib-style')?.value || '';
+    const time = document.getElementById('lib-time')?.value || '';
+    const sort = document.getElementById('lib-sort')?.value || 'new';
+    let arr = libraryFeatures.filter(f=>{
+      const t = (f.name+' '+(f.description||'')+' '+(f.category||'')).toLowerCase();
+      const okq = !q || t.includes(q);
+      const oktype = !type || f.type===type;
+      const normalized = mapStyleForFeature(f);
+      const okstyle = !style || normalized===style;
+      const created = new Date(f.createdAt || Date.now());
+      const now = Date.now();
+      const oktime = !time || (time==='1d' ? (now-created.getTime()<=86400000) : (time==='7d' ? (now-created.getTime()<=604800000) : (time==='30d' ? (now-created.getTime()<=2592000000) : true)));
+      return okq && oktype && okstyle && oktime;
+    });
+    arr = arr.sort((a,b)=> sort==='new' ? (new Date(b.createdAt) - new Date(a.createdAt)) : (new Date(a.createdAt) - new Date(b.createdAt)) );
+    return arr;
+  }
+
+  function renderLibrary() {
+    const feats = document.getElementById('lib-features'); feats.innerHTML='';
+    getFilteredFeatures().forEach(f=>{ const styleCat=mapStyleForFeature(f); const card=document.createElement('article'); card.className='feature-card'; card.innerHTML='<header class="feature-card-header"><div class="feature-name"><span>'+f.name+'</span><small>'+f.description+'</small></div><div class="feature-tags"><span class="tag tag--type">'+typeLabel(f.type)+'</span><span class="tag tag--category" title="'+(CATEGORY_INFO[styleCat]||'')+'">'+styleCat.charAt(0).toUpperCase()+styleCat.slice(1)+'</span></div></header>'; card.addEventListener('click', ()=> openDrawer(f)); feats.appendChild(card); });
+    const filterText = document.getElementById('lib-filter'); if (filterText) filterText.addEventListener('input', ()=> renderLibrary());
+    const selType = document.getElementById('lib-type'); if (selType) selType.addEventListener('change', ()=> renderLibrary());
+    const selStyle = document.getElementById('lib-style'); if (selStyle) selStyle.addEventListener('change', ()=> renderLibrary());
+    const selTime = document.getElementById('lib-time'); if (selTime) selTime.addEventListener('change', ()=> renderLibrary());
+    const selSort = document.getElementById('lib-sort'); if (selSort) selSort.addEventListener('change', ()=> renderLibrary());
+    const pb = document.getElementById('lib-playbooks'); pb.innerHTML='';
+    playbooks.forEach(p=>{ 
+      const card=document.createElement('div'); card.className='post-card'; card.dataset.pbname=p.name; 
+      const head=document.createElement('div'); head.className='card-head'; head.innerHTML='<div style="font-size:14px; font-weight:600;">'+p.name+'</div>';
+      const more=document.createElement('button'); more.className='more-btn'; more.textContent='...'; head.appendChild(more);
+      const meta=document.createElement('div'); meta.className='card-meta'; const statusCls = (p.status==='running'?'':' status-draft'); meta.innerHTML='<span class="tag tag--status'+statusCls+'"><span class="pill-dot"></span>'+(p.status==='running'?'Running':'Draft')+'</span><span class="tag tag--pbtype">'+getPlaybookTypeLabel(p.type)+'</span>';
+      const desc=document.createElement('div'); desc.style.cssText='font-size:12px; color:#94a3b8;'; desc.textContent='Features: '+p.strategy.features.length;
+      card.appendChild(head); card.appendChild(meta); card.appendChild(desc);
+      card.addEventListener('click', ()=>{ playbook = p; setActivePage('build'); setActiveTab('overview'); updateBuildTabsForPlaybook(); renderOverview(); renderGrid(); renderBuildHeader(); });
+      more.addEventListener('click', (e)=>{ e.stopPropagation(); const rect=more.getBoundingClientRect(); const menu=document.createElement('div'); menu.className='playbook-menu'; menu.style.left=(rect.left+window.scrollX)+'px'; menu.style.top=(rect.bottom+window.scrollY+6)+'px'; const pauseLabel=(p.status==='running'?'Pause':'Resume'); menu.innerHTML='<div class="menu-item" data-action="pause">'+pauseLabel+'</div><div class="menu-item" data-action="edit">Edit</div><div class="menu-item" data-action="delete">Delete</div>'; document.body.appendChild(menu);
+        const onPick=(act)=>{ if(act==='pause'){ p.status = (p.status==='running'?'draft':'running'); renderLibrary(); } else if(act==='edit'){ const nv = prompt('Edit Playbook Name', p.name)||p.name; p.name = toTitleCase(nv); renderLibrary(); renderBuildHeader(); } else if(act==='delete'){ const idx=playbooks.indexOf(p); if(idx>=0){ playbooks.splice(idx,1); renderLibrary(); } } };
+        const onDocClick=(ev)=>{ if(!menu.contains(ev.target) && ev.target!==more){ if(document.body.contains(menu)) document.body.removeChild(menu); document.removeEventListener('click', onDocClick); } };
+        menu.addEventListener('click', (ev)=>{ const it=ev.target.closest('.menu-item'); if(!it) return; if(document.body.contains(menu)) document.body.removeChild(menu); document.removeEventListener('click', onDocClick); onPick(it.dataset.action); });
+        document.addEventListener('click', onDocClick);
+      });
+      pb.appendChild(card);
+    });
+  }
+
+  function getPlaybookTypeLabel(t){ if(t==='agentic') return 'Agentic Research'; if(t==='dashboard') return 'Dashboard'; return 'Trading Strategy'; }
+  function toTitleCase(s){ return s.replace(/\w\S*/g, (w)=> w.charAt(0).toUpperCase() + w.slice(1)); }
+
+  function renderPositionsTable() {
+    const tbl = document.getElementById('positions-table'); if (!tbl) return; const tbody = tbl.querySelector('tbody'); if (!tbody) return; tbody.innerHTML='';
+    const arr = posView==='current' ? playbook.positions.current : playbook.positions.history;
+    arr.forEach(s=>{ const last = s.prices[s.prices.length-1]; const prev = s.prices[s.prices.length-2] || last; const chg = prev?(((last-prev)/prev*100).toFixed(2)+'%'):'0.00%'; const tr=document.createElement('tr'); tr.innerHTML='<td>'+s.symbol+'</td><td>'+last+'</td><td>'+chg+'</td>'; tbody.appendChild(tr); });
+  }
+
+  function setLibraryTab(t) {
+    document.querySelectorAll('.tab-btn[data-libtab]').forEach(b=>b.classList.toggle('is-active', b.dataset.libtab===t));
+    document.querySelectorAll('.lib-tab-content').forEach(el=>el.classList.toggle('is-active', el.id==='lib-tab-'+t));
+  }
+  document.querySelectorAll('.tab-btn[data-libtab]').forEach(btn=>{ btn.addEventListener('click', ()=>{ setLibraryTab(btn.dataset.libtab); }); });
+
+  function renderAsk() {
+    const body = document.getElementById('ask-body'); body.innerHTML='';
+    const u = document.createElement('div'); u.className='msg user'; u.innerHTML='<div class="bubble">Should we increase BTC allocation given rising funding rate and strong cash flow yield?</div>';
+    const a = document.createElement('div'); a.className='msg assistant'; const bubble=document.createElement('div'); bubble.className='bubble'; bubble.innerHTML='<div><strong>Answer</strong>: Signals are supportive for a modest overweight. Funding Rate Trend shows a rising EMA(8h) z-score, while Cash Flow Yield (FCF/MCap) sits above the rolling median and is improving.</div><div style="margin-top:6px;">Sizing: add +3–5% to BTC within risk caps. If Risk Regime Filter turns Risk-Off, pause adds and reduce leverage.</div><div style="margin-top:6px;">Entry conditions: 1) Funding z-score > 0.5 and rising; 2) Cash flow yield above median and trending up; 3) No negative Event Pulse in next 3 days.</div><div style="margin-top:6px;">Exit/Reduce: 1) Funding z-score falls below 0; 2) Yield drops below median; 3) Volatility Breakout reverses (breakout ratio < 0) or large negative event pulse.</div><div style="margin-top:6px;">Scenario check: If momentum rank deteriorates to bottom 40% while whale net flow flips negative, cap position and wait for confirmation.</div>';
+    const block=document.createElement('div'); block.className='ask-chart-block'; const chart=document.createElement('div'); chart.className='chart-box'; chart.id='ask-chart-ans'; block.appendChild(chart); const actions=document.createElement('div'); actions.className='ask-actions'; const btnAdd=document.createElement('button'); btnAdd.className='send-btn'; btnAdd.textContent='Add to Playbook'; const btnSave=document.createElement('button'); btnSave.className='send-btn'; btnSave.textContent='Save to Library'; actions.appendChild(btnAdd); actions.appendChild(btnSave); block.appendChild(actions); bubble.appendChild(block); a.appendChild(bubble); body.appendChild(u); body.appendChild(a);
+    const el = document.getElementById('ask-chart-ans'); el.innerHTML=''; const w=el.clientWidth||360; const h=180; const dpr=window.devicePixelRatio||1; const cvs=document.createElement('canvas'); cvs.width=w*dpr; cvs.height=h*dpr; cvs.style.width=w+'px'; cvs.style.height=h+'px'; el.appendChild(cvs); const ctx=cvs.getContext('2d'); ctx.scale(dpr,dpr); ctx.fillStyle='rgba(15,23,42,0.98)'; ctx.fillRect(0,0,w,h); const pad=10; const data=[0.45,0.48,0.52,0.55,0.58,0.61]; const min=Math.min.apply(null,data); const max=Math.max.apply(null,data); function y(v){ if(max===min) return h/2; return h-pad-(v-min)/(max-min)*(h-pad*2);} ctx.strokeStyle='rgba(59,130,246,0.9)'; ctx.lineWidth=2; ctx.beginPath(); data.forEach((v,i)=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const yy=y(v); if(i===0) ctx.moveTo(x,yy); else ctx.lineTo(x,yy); }); ctx.stroke();
+    btnAdd.addEventListener('click', ()=>{ const rect = btnAdd.getBoundingClientRect(); const menu=document.createElement('div'); menu.className='playbook-menu'; menu.style.left = (rect.left + window.scrollX) + 'px'; menu.style.top = (rect.bottom + window.scrollY + 6) + 'px'; const items = playbooks.map(p=>'<div class="menu-item" data-name="'+p.name+'">'+p.name+'</div>').join('') + '<div class="menu-item" data-new="1">New Playbook</div>'; menu.innerHTML = items; document.body.appendChild(menu); const onPick = (target)=>{ const nf = { id:'ask_alpha', name:'Ask Alpha Composite', description:'Q&A generated', type:'cross', category:'momentum', source:'ask', createdAt:new Date().toISOString(), summary:{ current:'Top 30%', delta:'Improving', state:'Bullish', updated:new Date().toISOString().slice(0,10) }, chartData:{ type:'bars', bars:[0.3,0.4,0.5,0.6,0.7] }, config:{ calc:['Composite of funding, yield, momentum'], sources:['Q&A synthesis'] } }; if(!libraryFeatures.find(x=>x.id===nf.id)) libraryFeatures.push(nf); if(!playbook.strategy.features.includes(nf.id)) playbook.strategy.features.push(nf.id); syncDashboard(); renderOverview(); renderGrid(); renderLibrary(); setActivePage('build'); setActiveTab('overview'); setTimeout(()=> highlightFeatureInOverview(nf.id), 150); };
+      const onDocClick = (ev)=>{ if (!menu.contains(ev.target) && ev.target!==btnAdd) { if (document.body.contains(menu)) document.body.removeChild(menu); document.removeEventListener('click', onDocClick); } };
+      menu.addEventListener('click', (e)=>{ const it=e.target.closest('.menu-item'); if(!it) return; if (document.body.contains(menu)) document.body.removeChild(menu); document.removeEventListener('click', onDocClick); onPick(it.dataset.name || (it.dataset.new ? 'New Playbook' : '')); });
+      document.addEventListener('click', onDocClick);
+    });
+    btnSave.addEventListener('click', ()=>{ const nf = { id:'ask_feature_'+Math.random().toString(36).slice(2,7), name:'Ask Feature', description:'Q&A generated', type:'time', category:'sentiment', source:'ask', createdAt:new Date().toISOString(), summary:{ current:'Score 0.61', delta:'↑ 0.05', state:'Bullish', updated:new Date().toISOString().slice(0,10) }, chartData:{ type:'line', data:[0.2,0.25,0.3,0.35,0.33,0.38], thresholds:[0.3] }, config:{ calc:['Generated from Q&A'], sources:['Ask'] } }; libraryFeatures.push(nf); renderLibrary(); showToast('Saved to Library', 'View in Library', ()=>{ setActivePage('library'); setLibraryTab('features'); }); });
+  }
+
+  document.getElementById('ask-send').addEventListener('click', ()=>{ const inp=document.getElementById('ask-input'); const text=inp.value.trim(); if(!text) return; const body=document.getElementById('ask-body'); const u=document.createElement('div'); u.className='msg user'; u.innerHTML='<div class="bubble">'+text+'</div>'; body.appendChild(u); const a=document.createElement('div'); a.className='msg assistant'; const bubble=document.createElement('div'); bubble.className='bubble'; bubble.innerHTML='<div><strong>Answer</strong>: Momentum and value support a modest overweight. Ensure risk caps are respected.</div><div style="margin-top:6px;">Signals: Funding Rate Trend improving; Cash Flow Yield above median; Risk Regime Filter Neutral.</div><div style="margin-top:6px;">Action: Add +3% BTC; reevaluate if sentiment turns negative or event pulse spikes.</div>'; const block=document.createElement('div'); block.className='ask-chart-block'; const chart=document.createElement('div'); chart.className='chart-box'; const cid='ask-chart-'+Math.random().toString(36).slice(2,7); chart.id=cid; const actions=document.createElement('div'); actions.className='ask-actions'; const btnAdd=document.createElement('button'); btnAdd.className='send-btn'; btnAdd.textContent='Add to Playbook'; const btnSave=document.createElement('button'); btnSave.className='send-btn'; btnSave.textContent='Save to Library'; actions.appendChild(btnAdd); actions.appendChild(btnSave); block.appendChild(chart); block.appendChild(actions); bubble.appendChild(block); a.appendChild(bubble); body.appendChild(a); const el=document.getElementById(cid); el.innerHTML=''; const w=el.clientWidth||360; const h=180; const dpr=window.devicePixelRatio||1; const cvs=document.createElement('canvas'); cvs.width=w*dpr; cvs.height=h*dpr; cvs.style.width=w+'px'; cvs.style.height=h+'px'; el.appendChild(cvs); const ctx=cvs.getContext('2d'); ctx.scale(dpr,dpr); ctx.fillStyle='rgba(15,23,42,0.98)'; ctx.fillRect(0,0,w,h); const pad=10; const data=[100,102,104,107,111,115,120]; const min=Math.min.apply(null,data); const max=Math.max.apply(null,data); function yy(v){ if(max===min) return h/2; return h-pad-(v-min)/(max-min)*(h-pad*2);} ctx.strokeStyle='rgba(59,130,246,0.9)'; ctx.lineWidth=2; ctx.beginPath(); data.forEach((v,i)=>{ const x=pad+(w-pad*2)*(i/(data.length-1)); const y=yy(v); if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }); ctx.stroke(); btnAdd.addEventListener('click', ()=>{ const rect = btnAdd.getBoundingClientRect(); const menu=document.createElement('div'); menu.className='playbook-menu'; menu.style.left = (rect.left + window.scrollX) + 'px'; menu.style.top = (rect.bottom + window.scrollY + 6) + 'px'; const items = playbooks.map(p=>'<div class="menu-item" data-name="'+p.name+'">'+p.name+'</div>').join('') + '<div class="menu-item" data-new="1">New Playbook</div>'; menu.innerHTML = items; document.body.appendChild(menu); const onPick = (target)=>{ const nf = { id:'ask_alpha', name:'Ask Alpha Composite', description:'Q&A generated', type:'cross', category:'momentum', source:'ask', createdAt:new Date().toISOString(), summary:{ current:'Top 30%', delta:'Improving', state:'Bullish', updated:new Date().toISOString().slice(0,10) }, chartData:{ type:'bars', bars:[0.3,0.4,0.5,0.6,0.7] }, config:{ calc:['Composite of funding, yield, momentum'], sources:['Q&A synthesis'] } }; if(!libraryFeatures.find(x=>x.id===nf.id)) libraryFeatures.push(nf); if(!playbook.strategy.features.includes(nf.id)) playbook.strategy.features.push(nf.id); syncDashboard(); renderOverview(); renderGrid(); renderLibrary(); setActivePage('build'); setActiveTab('overview'); setTimeout(()=> highlightFeatureInOverview(nf.id), 150); }; const onDocClick = (ev)=>{ if (!menu.contains(ev.target) && ev.target!==btnAdd) { if (document.body.contains(menu)) document.body.removeChild(menu); document.removeEventListener('click', onDocClick); } }; menu.addEventListener('click', (e)=>{ const it=e.target.closest('.menu-item'); if(!it) return; if (document.body.contains(menu)) document.body.removeChild(menu); document.removeEventListener('click', onDocClick); onPick(it.dataset.name || (it.dataset.new ? 'New Playbook' : '')); }); document.addEventListener('click', onDocClick); }); btnSave.addEventListener('click', ()=>{ const nf = { id:'ask_feature_'+Math.random().toString(36).slice(2,7), name:'Ask Feature', description:'Q&A generated', type:'time', category:'sentiment', source:'ask', createdAt:new Date().toISOString(), summary:{ current:'Score 0.61', delta:'↑ 0.05', state:'Bullish', updated:new Date().toISOString().slice(0,10) }, chartData:{ type:'line', data:[0.2,0.25,0.3,0.35,0.33,0.38], thresholds:[0.3] }, config:{ calc:['Generated from Q&A'], sources:['Ask'] } }; libraryFeatures.push(nf); renderLibrary(); showToast('Saved to Library', 'View in Library', ()=>{ setActivePage('library'); setLibraryTab('features'); }); }); inp.value=''; });
+  const askInputEl = document.getElementById('ask-input'); if (askInputEl) { askInputEl.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); document.getElementById('ask-send').click(); } }); }
+
+  function seedChat() {
+    pushThread('user', 'Construct a balanced long-only crypto playbook with momentum, value and on-chain growth factors.');
+    const body=document.getElementById('dialog-body'); const a=document.createElement('div'); a.className='msg assistant'; const bubble=document.createElement('div'); bubble.className='bubble'; bubble.innerHTML='<div><strong>Thinking</strong>: Assess stability and complementarity of momentum, value and growth signals.</div><div style="margin-top:6px;"><strong>Planning</strong>: Add Funding Rate Trend, Relative Valuation Rank, Cash Flow Yield, On-chain Activity Rank. Sync dashboard with overview.</div><div style="margin-top:6px;"><strong>Coding</strong>: Implement config, markers and rule generation.</div>'; const prev=document.createElement('div'); prev.className='preview-card'; prev.innerHTML='<div class="preview-header">Playbook Preview</div><div class="preview-body">Execution Interval: Daily 08:00 UTC<br/>Backtest Result: Return +48%, Sharpe 1.32</div><div style="margin-top:8px; display:flex; gap:8px;"><button class="btn-primary">Activate</button><button class="send-btn">Run Once</button></div>'; bubble.appendChild(prev); a.appendChild(bubble); body.appendChild(a);
+  }
+
+  const savedPage = localStorage.getItem('activePage') || 'build'; setActivePage(savedPage);
+  const savedTab = localStorage.getItem('activeBuildTab') || 'overview'; setActiveTab(savedTab);
+  renderOverview(); renderGrid(); renderPerformance(); renderPosts(); renderPositions(); renderPositionsTable(); renderLibrary(); renderAsk(); seedChat(); updateBuildTabsForPlaybook();
+  function updateBuildTabsForPlaybook(){
+    const isDash = playbook.type === 'dashboard';
+    ['performance','post','position'].forEach(t=>{
+      const btn = document.querySelector('.tab-btn[data-tab="'+t+'"]');
+      const content = document.getElementById('tab-'+t);
+      if (btn) btn.style.display = isDash ? 'none' : '';
+      if (content) content.style.display = isDash ? 'none' : '';
+    });
+    const tabOv = document.getElementById('tab-overview');
+    const featuresPanel = document.getElementById('overview-features')?.closest('.panel');
+    const strategyPanel = featuresPanel?.parentElement?.closest('.panel');
+    if (isDash) {
+      if (strategyPanel) strategyPanel.style.display = 'none';
+      if (featuresPanel && tabOv) {
+        const firstPanel = tabOv.querySelector('.panel');
+        if (featuresPanel.parentElement !== tabOv) {
+          if (firstPanel) firstPanel.after(featuresPanel); else tabOv.appendChild(featuresPanel);
+        }
+      }
+    } else {
+      if (strategyPanel) strategyPanel.style.display = '';
+      const spBody = strategyPanel?.querySelector('.panel-body');
+      if (featuresPanel && spBody && featuresPanel.parentElement !== spBody) spBody.insertBefore(featuresPanel, spBody.firstChild);
+    }
+  }
+  if (savedPage==='library') setLibraryTab('features');
+</script>
+</body>
+</html>

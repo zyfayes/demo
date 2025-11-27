@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Kline – Zoom Lock Right</title>
+  <style>
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #0d1117;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+    }
+    #main {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+
+<script>
+  const chart = echarts.init(document.getElementById('main'));
+
+  // ===== 生成简单 K 线 + 成交量数据 =====
+  function genData(n = 400) {
+    const dates = [];
+    const ohlc = [];
+    const vol = [];
+    let base = +new Date(2023, 0, 1);
+    let price = 100;
+
+    for (let i = 0; i < n; i++) {
+      base += 86400000;
+      const open = price + (Math.random() - 0.5) * 2;
+      const close = open + (Math.random() - 0.5) * 4;
+      const high = Math.max(open, close) + Math.random() * 2;
+      const low = Math.min(open, close) - Math.random() * 2;
+      price = close;
+
+      dates.push(echarts.format.formatTime('yyyy-MM-dd', base));
+      ohlc.push([
+        +open.toFixed(2),
+        +close.toFixed(2),
+        +low.toFixed(2),
+        +high.toFixed(2)
+      ]);
+      vol.push(Math.floor(Math.random() * 600 + 200));
+    }
+    return { dates, ohlc, vol };
+  }
+
+  const data = genData();
+
+  // 简单 MA
+  function MA(day) {
+    const res = [];
+    for (let i = 0; i < data.ohlc.length; i++) {
+      if (i < day) {
+        res.push(null);
+        continue;
+      }
+      let sum = 0;
+      for (let j = 0; j < day; j++) {
+        sum += data.ohlc[i - j][1]; // 收盘价
+      }
+      res.push(+ (sum / day).toFixed(2));
+    }
+    return res;
+  }
+
+  // 初始区间：右侧锁最新，只看最后 10%
+  let startPercent = 90;  // 0–100
+  const endPercent = 100;
+
+  const option = {
+    backgroundColor: '#0d1117',
+    animation: false,
+
+    axisPointer: {
+      link: [{ xAxisIndex: [0, 1] }],
+      snap: true
+    },
+
+    grid: [
+      { left: 55, right: 45, top: 40, height: '63%' },  // 主K线
+      { left: 55, right: 45, top: '76%', height: '18%' } // 成交量
+    ],
+
+    xAxis: [
+      {
+        type: 'category',
+        data: data.dates,
+        scale: true,
+        boundaryGap: false,
+        axisLabel: { color: '#999' },
+        axisLine: { lineStyle: { color: '#444' } },
+        axisTick: { show: false },
+        min: 'dataMin',
+        max: 'dataMax'
+      },
+      {
+        type: 'category',
+        gridIndex: 1,
+        data: data.dates,
+        scale: true,
+        boundaryGap: false,
+        axisLabel: { color: '#777' },
+        axisLine: { lineStyle: { color: '#444' } },
+        axisTick: { show: false },
+        min: 'dataMin',
+        max: 'dataMax'
+      }
+    ],
+
+    yAxis: [
+      {
+        scale: true,
+        axisLabel: { color: '#aaa' },
+        axisLine: { lineStyle: { color: '#444' } },
+        splitLine: { lineStyle: { color: '#333' } }
+      },
+      {
+        scale: true,
+        gridIndex: 1,
+        axisLabel: { color: '#666' },
+        axisLine: { lineStyle: { color: '#444' } },
+        splitLine: { show: false }
+      }
+    ],
+
+    // 核心：inside 只负责“拖动”，不负责“滚轮缩放”
+    dataZoom: [
+      {
+        type: 'inside',
+        xAxisIndex: [0, 1],
+        zoomOnMouseWheel: false,   // 关闭默认缩放
+        moveOnMouseMove: true,     // 按住拖动平移
+        moveOnMouseWheel: false,   // 滚轮不横移
+        start: startPercent,
+        end: endPercent,
+        throttle: 25
+      },
+      {
+        type: 'slider',
+        xAxisIndex: [0, 1],
+        bottom: 0,
+        height: 18,
+        start: startPercent,
+        end: endPercent
+      }
+    ],
+
+    tooltip: {
+      trigger: 'axis',
+      axisPointer: { type: 'cross' }
+    },
+
+    series: [
+      {
+        name: 'K',
+        type: 'candlestick',
+        data: data.ohlc,
+        itemStyle: {
+          color: '#26A69A',
+          color0: '#ef5350',
+          borderColor: '#26A69A',
+          borderColor0: '#ef5350'
+        }
+      },
+      {
+        name: 'MA5',
+        type: 'line',
+        data: MA(5),
+        smooth: true,
+        showSymbol: false,
+        lineStyle: { width: 1, color: '#9ccc65' }
+      },
+      {
+        name: 'MA20',
+        type: 'line',
+        data: MA(20),
+        smooth: true,
+        showSymbol: false,
+        lineStyle: { width: 1, color: '#ffb74d' }
+      },
+      {
+        name: 'Volume',
+        type: 'bar',
+        xAxisIndex: 1,
+        yAxisIndex: 1,
+        data: data.vol,
+        itemStyle: {
+          color: function (p) {
+            const o = data.ohlc[p.dataIndex];
+            return o[1] >= o[0] ? '#26A69A' : '#ef5350';
+          }
+        }
+      }
+    ]
+  };
+
+  chart.setOption(option);
+
+  // ===== 自定义滚轮缩放：右侧固定在最新K线 =====
+  const zr = chart.getZr();
+  const zoomFactor = 0.18;      // 缩放速度，可微调 0.1–0.25
+  const minSpan = 2;            // 最小可视宽度（百分比）
+  const maxSpan = 100;          // 最大可视宽度（百分比）
+
+  zr.on('mousewheel', function (ev) {
+    // 使用原生事件，兼容不同浏览器
+    const native = ev.event || ev;
+    let delta = 0;
+    if (native.wheelDelta != null) {
+      delta = native.wheelDelta;
+    } else if (native.deltaY != null) {
+      delta = -native.deltaY;
+    }
+
+    // 当前 span
+    const dzOpt = chart.getOption().dataZoom[0];
+    let curStart = dzOpt.start != null ? dzOpt.start : startPercent;
+    const curEnd = endPercent; // 固定 100
+    let span = curEnd - curStart;
+
+    if (delta > 0) {
+      // 缩小：查看更多历史
+      span = span * (1 + zoomFactor);
+    } else if (delta < 0) {
+      // 放大：看得更细
+      span = span * (1 - zoomFactor);
+    } else {
+      return;
+    }
+
+    // 限制 span 范围
+    if (span < minSpan) span = minSpan;
+    if (span > maxSpan) span = maxSpan;
+
+    const newStart = Math.max(0, endPercent - span);
+    startPercent = newStart;  // 记录一份，方便后续使用
+
+    chart.setOption({
+      dataZoom: [
+        {
+          ...dzOpt,
+          start: newStart,
+          end: endPercent       // 永远锁定 100
+        },
+        chart.getOption().dataZoom[1]
+      ]
+    }, false, true);
+  });
+
+  window.addEventListener('resize', () => chart.resize());
+</script>
+</body>
+</html>

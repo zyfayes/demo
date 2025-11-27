@@ -1,260 +1,113 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <title>Kline – Zoom Lock Right</title>
-  <style>
-    html, body {
-      margin: 0;
-      height: 100%;
-      background: #0d1117;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-    }
-    #main {
-      width: 100%;
-      height: 100%;
-    }
-  </style>
-  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<meta charset="utf-8" />
+<title>TradingView-Style Kline (Y-Fixed Final)</title>
+<style>
+  html,body{margin:0;background:#0d1117;height:100%;}
+  #main{width:100%;height:100%;}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 </head>
 <body>
 <div id="main"></div>
 
 <script>
-  const chart = echarts.init(document.getElementById('main'));
-
-  // ===== 生成简单 K 线 + 成交量数据 =====
-  function genData(n = 400) {
-    const dates = [];
-    const ohlc = [];
-    const vol = [];
-    let base = +new Date(2023, 0, 1);
-    let price = 100;
-
-    for (let i = 0; i < n; i++) {
-      base += 86400000;
-      const open = price + (Math.random() - 0.5) * 2;
-      const close = open + (Math.random() - 0.5) * 4;
-      const high = Math.max(open, close) + Math.random() * 2;
-      const low = Math.min(open, close) - Math.random() * 2;
-      price = close;
-
-      dates.push(echarts.format.formatTime('yyyy-MM-dd', base));
-      ohlc.push([
-        +open.toFixed(2),
-        +close.toFixed(2),
-        +low.toFixed(2),
-        +high.toFixed(2)
-      ]);
-      vol.push(Math.floor(Math.random() * 600 + 200));
-    }
-    return { dates, ohlc, vol };
+// ======= 1) 生成 K 线数据 =======
+function gen(n=500){
+  let d=[],o=[]; let t=+new Date(2023,0,1),p=100;
+  for(let i=0;i<n;i++){
+    t+=86400000;
+    let op=p+(Math.random()-0.5)*3;
+    let cl=op+(Math.random()-0.5)*4;
+    let hi=Math.max(op,cl)+Math.random()*2;
+    let lo=Math.min(op,cl)-Math.random()*2;
+    p=cl;
+    d.push(echarts.format.formatTime("yyyy-MM-dd",t));
+    o.push([+op.toFixed(2),+cl.toFixed(2),+lo.toFixed(2),+hi.toFixed(2)]);
   }
+  return {d,o};
+}
+const data=gen();
 
-  const data = genData();
+// ======= 2) 预计算全局最高/最低（真正固定Y轴关键） =======
+const globalHigh = Math.max(...data.o.map(v=>v[3]));
+const globalLow  = Math.min(...data.o.map(v=>v[2]));
+const pad = (globalHigh - globalLow)*0.08; // 推荐 5~10%
 
-  // 简单 MA
-  function MA(day) {
-    const res = [];
-    for (let i = 0; i < data.ohlc.length; i++) {
-      if (i < day) {
-        res.push(null);
-        continue;
-      }
-      let sum = 0;
-      for (let j = 0; j < day; j++) {
-        sum += data.ohlc[i - j][1]; // 收盘价
-      }
-      res.push(+ (sum / day).toFixed(2));
+// ======= 3) X轴始终锁右侧最新K =======
+let start=88,end=100; // 显示右侧末段
+
+const chart=echarts.init(document.getElementById("main"));
+
+// ======= 4) 主渲染（Y轴已永久固定） =======
+function render(){
+chart.setOption({
+  animation:false,
+  backgroundColor:"#0d1117",
+
+  grid:[{left:55,right:40,top:40,bottom:60}],
+
+  xAxis:[{
+    type:"category",data:data.d,boundaryGap:false,
+    min:start+"%",max:end+"%",
+    axisLabel:{color:"#aaa"},
+    axisLine:{lineStyle:{color:"#444"}},
+  }],
+
+  // ======= 🔥 Y轴永不再随缩放变动 =======
+  yAxis:[{
+    min: globalLow - pad,
+    max: globalHigh + pad,
+    scale:false,                    // 绝对禁止自适应
+    axisLabel:{color:"#aaa"},
+    splitLine:{lineStyle:{color:"#333"}},
+    axisLine:{lineStyle:{color:"#444"}},
+  }],
+
+  // ======= 仅保留 inside 拖动，不交给系统缩放 =======
+  dataZoom:[{
+    type:"inside",
+    zoomOnMouseWheel:false,  // ❗关闭系统缩放
+    moveOnMouseMove:true,    // 允许拖动看历史
+    moveOnMouseWheel:false,
+    start:start,end:end
+  }],
+
+  series:[{
+    type:"candlestick",
+    data:data.o,
+    itemStyle:{
+      color:"#26a69a",color0:"#ef5350",
+      borderColor:"#26a69a",borderColor0:"#ef5350",
+      borderWidth:1.2
     }
-    return res;
-  }
+  }]
+});
+}
+render();
 
-  // 初始区间：右侧锁最新，只看最后 10%
-  let startPercent = 90;  // 0–100
-  const endPercent = 100;
 
-  const option = {
-    backgroundColor: '#0d1117',
-    animation: false,
+// ======= 5) 自定义缩放（永锁右侧） =======
+const zr=chart.getZr();
+const zoom = 0.18;        // 缩放速度可调
+const minSpan=2,maxSpan=100;
 
-    axisPointer: {
-      link: [{ xAxisIndex: [0, 1] }],
-      snap: true
-    },
+zr.on("mousewheel",(ev)=>{
+  const e=ev.event||ev;
+  let d=e.wheelDelta!=null?e.wheelDelta:-e.deltaY;
+  let span=end-start;
 
-    grid: [
-      { left: 55, right: 45, top: 40, height: '63%' },  // 主K线
-      { left: 55, right: 45, top: '76%', height: '18%' } // 成交量
-    ],
+  if(d>0) span*=1+zoom;   // 缩小 → 扩大视图
+  if(d<0) span*=1-zoom;   // 放大 → 缩小视图
 
-    xAxis: [
-      {
-        type: 'category',
-        data: data.dates,
-        scale: true,
-        boundaryGap: false,
-        axisLabel: { color: '#999' },
-        axisLine: { lineStyle: { color: '#444' } },
-        axisTick: { show: false },
-        min: 'dataMin',
-        max: 'dataMax'
-      },
-      {
-        type: 'category',
-        gridIndex: 1,
-        data: data.dates,
-        scale: true,
-        boundaryGap: false,
-        axisLabel: { color: '#777' },
-        axisLine: { lineStyle: { color: '#444' } },
-        axisTick: { show: false },
-        min: 'dataMin',
-        max: 'dataMax'
-      }
-    ],
+  span=Math.max(minSpan,Math.min(maxSpan,span));
 
-    yAxis: [
-      {
-        scale: true,
-        axisLabel: { color: '#aaa' },
-        axisLine: { lineStyle: { color: '#444' } },
-        splitLine: { lineStyle: { color: '#333' } }
-      },
-      {
-        scale: true,
-        gridIndex: 1,
-        axisLabel: { color: '#666' },
-        axisLine: { lineStyle: { color: '#444' } },
-        splitLine: { show: false }
-      }
-    ],
+  start=100-span;         // 🔥永远锁右侧最新K
+  render();               // → Y轴不会再变
+});
 
-    // 核心：inside 只负责“拖动”，不负责“滚轮缩放”
-    dataZoom: [
-      {
-        type: 'inside',
-        xAxisIndex: [0, 1],
-        zoomOnMouseWheel: false,   // 关闭默认缩放
-        moveOnMouseMove: true,     // 按住拖动平移
-        moveOnMouseWheel: false,   // 滚轮不横移
-        start: startPercent,
-        end: endPercent,
-        throttle: 25
-      },
-      {
-        type: 'slider',
-        xAxisIndex: [0, 1],
-        bottom: 0,
-        height: 18,
-        start: startPercent,
-        end: endPercent
-      }
-    ],
-
-    tooltip: {
-      trigger: 'axis',
-      axisPointer: { type: 'cross' }
-    },
-
-    series: [
-      {
-        name: 'K',
-        type: 'candlestick',
-        data: data.ohlc,
-        itemStyle: {
-          color: '#26A69A',
-          color0: '#ef5350',
-          borderColor: '#26A69A',
-          borderColor0: '#ef5350'
-        }
-      },
-      {
-        name: 'MA5',
-        type: 'line',
-        data: MA(5),
-        smooth: true,
-        showSymbol: false,
-        lineStyle: { width: 1, color: '#9ccc65' }
-      },
-      {
-        name: 'MA20',
-        type: 'line',
-        data: MA(20),
-        smooth: true,
-        showSymbol: false,
-        lineStyle: { width: 1, color: '#ffb74d' }
-      },
-      {
-        name: 'Volume',
-        type: 'bar',
-        xAxisIndex: 1,
-        yAxisIndex: 1,
-        data: data.vol,
-        itemStyle: {
-          color: function (p) {
-            const o = data.ohlc[p.dataIndex];
-            return o[1] >= o[0] ? '#26A69A' : '#ef5350';
-          }
-        }
-      }
-    ]
-  };
-
-  chart.setOption(option);
-
-  // ===== 自定义滚轮缩放：右侧固定在最新K线 =====
-  const zr = chart.getZr();
-  const zoomFactor = 0.18;      // 缩放速度，可微调 0.1–0.25
-  const minSpan = 2;            // 最小可视宽度（百分比）
-  const maxSpan = 100;          // 最大可视宽度（百分比）
-
-  zr.on('mousewheel', function (ev) {
-    // 使用原生事件，兼容不同浏览器
-    const native = ev.event || ev;
-    let delta = 0;
-    if (native.wheelDelta != null) {
-      delta = native.wheelDelta;
-    } else if (native.deltaY != null) {
-      delta = -native.deltaY;
-    }
-
-    // 当前 span
-    const dzOpt = chart.getOption().dataZoom[0];
-    let curStart = dzOpt.start != null ? dzOpt.start : startPercent;
-    const curEnd = endPercent; // 固定 100
-    let span = curEnd - curStart;
-
-    if (delta > 0) {
-      // 缩小：查看更多历史
-      span = span * (1 + zoomFactor);
-    } else if (delta < 0) {
-      // 放大：看得更细
-      span = span * (1 - zoomFactor);
-    } else {
-      return;
-    }
-
-    // 限制 span 范围
-    if (span < minSpan) span = minSpan;
-    if (span > maxSpan) span = maxSpan;
-
-    const newStart = Math.max(0, endPercent - span);
-    startPercent = newStart;  // 记录一份，方便后续使用
-
-    chart.setOption({
-      dataZoom: [
-        {
-          ...dzOpt,
-          start: newStart,
-          end: endPercent       // 永远锁定 100
-        },
-        chart.getOption().dataZoom[1]
-      ]
-    }, false, true);
-  });
-
-  window.addEventListener('resize', () => chart.resize());
+window.onresize=()=>chart.resize();
 </script>
 </body>
 </html>

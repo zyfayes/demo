@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alva · Playbook Detail</title>
+    <style>
+      :root { --bg: #0f172a; --panel: #111827; --text: #e5e7eb; --muted: #9ca3af; --accent: #22c55e; --border: #1f2937; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body { margin: 0; display: grid; grid-template-columns: 260px 1fr; grid-template-rows: 1fr; grid-template-areas: "sidebar main"; background: var(--bg); color: var(--text); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif; }
+      body.subnav-open { grid-template-columns: 260px 220px 1fr; grid-template-rows: 1fr; grid-template-areas: "sidebar subnav main"; }
+      body.sidebar-collapsed { grid-template-columns: 60px 1fr; }
+      body.sidebar-collapsed.subnav-open { grid-template-columns: 60px 220px 1fr; }
+      body.sidebar-collapsed .name, body.sidebar-collapsed .nav-top, body.sidebar-collapsed .nav-scroll, body.sidebar-collapsed .nav-bottom { display: none; }
+      body.sidebar-collapsed .icon-rail { display: flex; }
+
+      aside { grid-area: sidebar; height: 100vh; position: sticky; top: 0; border-right: 1px solid var(--border); background: var(--panel); padding: 12px 10px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+      nav { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+      .nav-top { padding: 4px 0; }
+      .nav-scroll { flex: 1; overflow-y: auto; padding-right: 4px; }
+      .nav-bottom { padding-top: 12px; border-top: 1px solid #182030; position: sticky; bottom: 0; background: var(--panel); }
+      .side-brand { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-weight: 800; letter-spacing: 0.8px; }
+      .side-brand .logo { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), #16a34a); box-shadow: 0 0 0 1px #0b5d31 inset; }
+      .side-brand .name { font-size: 13px; }
+      .collapse-btn { margin-left: auto; border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 8px; width: 24px; height: 24px; line-height: 22px; text-align: center; cursor: pointer; }
+      .collapse-btn:hover { border-color: #14532d; }
+      .icon-rail { display: none; flex-direction: column; gap: 6px; padding: 0 6px; }
+      .rail-btn { height: 36px; border-radius: 8px; border: 1px solid var(--border); background: linear-gradient(135deg, #0b1220, #0e1626); cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+      .rail-btn:hover { border-color: #24513b; }
+      .rail-btn svg { width: 18px; height: 18px; fill: #a7f3d0; opacity: 0.9; }
+      .section { display: flex; flex-direction: column; gap: 6px; }
+      .section-title { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.6px; padding: 0 6px; }
+      .section-title-row { display: flex; align-items: center; justify-content: space-between; }
+      .title-plus { border: 1px solid var(--border); background: #0e1626; color: #a7f3d0; border-radius: 6px; width: 20px; height: 20px; font-size: 14px; line-height: 18px; text-align: center; cursor: pointer; }
+      .title-plus:hover { border-color: #14532d; color: #eafff1; }
+      .with-divider { border-top: 1px solid #182030; padding-top: 8px; margin-top: 4px; }
+      ul { list-style: none; margin: 0; padding: 0; }
+      li { display: block; }
+      a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; margin: 1px 0; border-radius: 8px; color: var(--text); text-decoration: none; transition: background 0.2s ease, color 0.2s ease; }
+      a:hover { background: #0b1220; }
+      .badge { margin-left: auto; font-size: 10px; color: var(--muted); }
+      .more { color: var(--muted); }
+      .more:hover { color: var(--text); }
+      .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; margin-left: 6px; box-shadow: 0 0 0 2px #0b1220; }
+
+      .subnav { grid-area: subnav; height: 100vh; position: sticky; top: 0; border-right: 1px solid var(--border); background: #0b1220; display: none; flex-direction: column; }
+      body.subnav-open .subnav { display: flex; }
+      .subnav-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+      .subnav-title { font-size: 13px; font-weight: 600; }
+      .subnav-content { flex: 1; overflow-y: auto; padding: 8px 10px; }
+      .subnav-content ul { display: flex; flex-direction: column; gap: 4px; }
+      .subnav-close { border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 6px; padding: 4px 8px; }
+
+      main { grid-area: main; padding: 16px; }
+      .detail { display: grid; grid-template-columns: 1fr 360px; gap: 16px; }
+      .paper { background: #0b1220; border: 1px solid var(--border); border-radius: 12px; }
+      .paper .hd { padding: 12px 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+      .paper .bd { padding: 12px 14px; }
+      .tabs { display: flex; gap: 8px; }
+      .tab { padding: 6px 10px; border-radius: 999px; border: 1px solid var(--border); background: #0e1626; color: var(--text); font-size: 12px; cursor: pointer; }
+      .tab.active { border-color: #14532d; color: #a7f3d0; }
+      .title { font-weight: 700; }
+      .objective { margin-bottom: 12px; }
+      .feat-list { display: grid; gap: 8px; }
+      .feat-item { display: grid; grid-template-columns: 1fr 28px 28px; align-items: center; gap: 8px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; }
+      .feat-name { font-weight: 600; }
+      .feat-desc { color: var(--muted); font-size: 12px; }
+      .icon-btn { border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 8px; height: 28px; }
+      .section-title-line { font-weight: 700; margin: 12px 0 8px; }
+      .kv { display: grid; grid-template-columns: 160px 1fr; gap: 8px; margin: 6px 0; }
+      .kv .k { color: var(--muted); }
+      .bullet { margin: 6px 0; }
+      .cfg-card { background: #0e1626; border: 1px solid #14532d; border-radius: 12px; padding: 12px; }
+      .cfg-card h3 { margin: 0 0 6px; font-size: 16px; }
+      .btn-activate { width: 100%; border: 1px solid #14532d; background: #0d1f16; color: #a7f3d0; border-radius: 8px; padding: 10px; margin-top: 8px; }
+      .toggle { border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 8px; padding: 6px 10px; }
+      .paper.collapsed .bd { display: none; }
+      .detail.right-collapsed { grid-template-columns: 1fr max-content; }
+      .detail.right-collapsed #configPanel { overflow: visible; background: transparent; border: 0; box-shadow: none; }
+      .detail.right-collapsed #configPanel .title { display: none; }
+      .detail.right-collapsed #configPanel .bd { display: none; }
+      .detail.right-collapsed #configPanel .hd { padding: 12px 14px; justify-content: center; }
+      .detail.right-collapsed #configPanel .toggle { padding: 4px; border: 0; background: transparent; position: relative; }
+      .detail.right-collapsed #configPanel .toggle:hover::after { content: attr(data-tip); position: absolute; left: 50%; top: calc(100% + 8px); transform: translateX(-50%); background: #0e1626; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 6px 8px; white-space: nowrap; box-shadow: 0 8px 16px rgba(0,0,0,0.35); z-index: 10; }
+      .orb { display: inline-block; width: 28px; height: 28px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #a7f3d0 0%, #22c55e 35%, #16a34a 65%, #0b1220 100%); box-shadow: 0 0 12px rgba(34,197,94,0.6), inset 0 0 8px rgba(11,93,49,0.6); }
+      @keyframes orbPulse { from { box-shadow: 0 0 8px rgba(34,197,94,0.4), inset 0 0 4px rgba(11,93,49,0.4); } to { box-shadow: 0 0 14px rgba(34,197,94,0.8), inset 0 0 8px rgba(11,93,49,0.7); } }
+      .orb { animation: orbPulse 2.6s ease-in-out infinite alternate; }
+      .chat-list { display: flex; flex-direction: column; gap: 8px; max-height: 32vh; overflow: auto; margin-top: 8px; }
+      .chat-msg { display: grid; grid-template-columns: 64px 1fr; gap: 10px; padding: 8px; border: 1px solid var(--border); border-radius: 10px; }
+      .chat-role { color: var(--muted); }
+      .msg-ai { background: #0e1626; }
+      .msg-you { background: #0b1220; }
+      #configPanel .bd { display: flex; flex-direction: column; }
+      .chat-box { display: flex; flex-direction: column; margin-top: auto; }
+      .chat-compose { display: grid; grid-template-columns: 1fr 110px; gap: 10px; margin-top: 8px; padding: 8px; background: #0b1220; border-top: 1px solid var(--border); border-radius: 0 0 12px 12px; }
+      .chat-input { width: 100%; border: 1px solid var(--border); border-radius: 10px; background: #0e1626; color: var(--text); padding: 13px 14px; }
+      .chat-send { border: 1px solid #14532d; background: #0d1f16; color: #a7f3d0; border-radius: 8px; }
+
+      .hidden { display: none; }
+      .feature-analytics { display: grid; gap: 10px; }
+      .last-updated { color: var(--muted); font-size: 12px; }
+      .chart-container { background: #0e1626; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+      .chart-container h4 { margin: 0 0 6px; font-size: 14px; }
+      .chart-skeleton { height: 160px; border-radius: 8px; background: linear-gradient(90deg, #0b1220 25%, #0d1422 37%, #0b1220 63%); background-size: 400% 100%; animation: shimmer 1.8s ease-in-out infinite; }
+      @keyframes shimmer { 0% { background-position: 100% 0; } 100% { background-position: 0 0; } }
+      .overview-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+      .metrics-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin: 8px 0 12px; }
+      .metric-card { background: #0e1626; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+      .metric-title { color: var(--muted); font-size: 12px; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+      .metric-value { font-weight: 700; color: #22c55e; margin-bottom: 6px; }
+      .sparkline-skel { height: 42px; border-radius: 8px; background: linear-gradient(90deg, #0b1220 25%, #0d1422 37%, #0b1220 63%); background-size: 400% 100%; animation: shimmer 1.8s ease-in-out infinite; }
+      .equity-card { background: #0e1626; border: 1px solid var(--border); border-radius: 10px; padding: 10px; }
+      .equity-hd { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+      .equity-title { font-weight: 700; }
+      .currency-dd { border: 1px solid var(--border); background: #0b1220; color: var(--text); border-radius: 8px; padding: 4px 8px; font-size: 12px; }
+      .equity-legend { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+      .legend-item { display: flex; align-items: center; gap: 6px; }
+      .legend-swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+      .swatch-gray { background: #6b7280; }
+      .swatch-purple { background: #7c3aed; }
+      .swatch-orange { background: #f59e0b; }
+      .equity-skeleton { height: 280px; border-radius: 8px; background: linear-gradient(90deg, #0b1220 25%, #0d1422 37%, #0b1220 63%); background-size: 400% 100%; animation: shimmer 1.8s ease-in-out infinite; }
+      .traded-symbols { margin-top: 12px; }
+      .symbol-row { display: grid; grid-template-columns: 1fr max-content; align-items: center; gap: 8px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: #0e1626; }
+      .symbol-name { font-weight: 700; }
+      .symbol-extra { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+      .feed-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+      .asset-left { display: flex; align-items: center; gap: 8px; }
+      .asset-pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: #0e1626; color: #a7f3d0; border-radius: 999px; padding: 4px 8px; font-size: 12px; }
+      .asset-name { font-weight: 700; }
+      .asset-extra { color: var(--muted); font-size: 12px; }
+      .asset-right { color: var(--muted); font-size: 12px; display: flex; align-items: center; gap: 6px; }
+      .kline-card { background: #0e1626; border: 1px solid var(--border); border-radius: 10px; height: 320px; display: flex; align-items: center; justify-content: center; }
+      .spinner { width: 44px; height: 44px; border: 4px solid #0b1220; border-top-color: #a7f3d0; border-right-color: #a7f3d0; border-radius: 50%; animation: spin 1s linear infinite; }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      .feed-list { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+      .feed-item { display: grid; grid-template-columns: 40px 1fr max-content; gap: 10px; padding: 10px; border: 1px solid var(--border); border-radius: 10px; background: #0e1626; }
+      .avatar { width: 28px; height: 28px; border-radius: 50%; background: #1f2937; }
+      .feed-title { font-weight: 700; }
+      .feed-tag { display: flex; align-items: center; gap: 8px; margin: 6px 0; }
+      .feed-change { color: #22c55e; font-weight: 700; }
+      .feed-sub { color: var(--muted); font-size: 12px; }
+      .feed-time { color: var(--muted); font-size: 12px; }
+    
+      .search-overlay { position: fixed; inset: 0; background: rgba(2,8,23,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+      .search-overlay.open { display: flex; }
+      .search-modal { width: min(760px, 92vw); border-radius: 12px; background: #0b1220; border: 1px solid var(--border); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+      .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+      .modal-title { font-weight: 700; }
+      .modal-close { border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 8px; padding: 6px 10px; }
+      .modal-body { padding: 12px 14px; }
+      .modal-input { width: 100%; border: 1px solid var(--border); border-radius: 10px; background: #0e1626; color: #fff; padding: 10px 12px; margin-bottom: 12px; }
+      .entity-list { display: flex; flex-direction: column; gap: 6px; max-height: 60vh; overflow: auto; }
+      .entity-row { display: grid; grid-template-columns: 80px 1fr 90px 100px; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; }
+      .entity-row:hover { background: #0e1626; }
+      .sym { font-weight: 600; letter-spacing: 0.4px; }
+      .type { color: var(--muted); font-size: 12px; }
+      .exch { color: #a7f3d0; font-size: 12px; }
+      .me-icons .icon-btn { width: 28px; height: 28px; display: inline-flex; align-items: center; justify-content: center; }
+      .icon-btn svg { width: 16px; height: 16px; fill: #a7f3d0; opacity: 0.9; }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="side-brand"><div class="logo"></div><div class="name">ALVA</div><button id="sidebarToggle" class="collapse-btn" aria-label="Collapse Navigation">«</button></div>
+      <div class="icon-rail">
+        <a class="rail-btn" href="index.html" title="Home" aria-label="Home">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg>
+        </a>
+        <a class="rail-btn" href="community.html" title="Community" aria-label="Community">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm-8 0c1.657 0 3-1.343 3-3S9.657 5 8 5 5 6.343 5 8s1.343 3 3 3zm0 2c-2.761 0-5 1.79-5 4v2h10v-2c0-2.21-2.239-4-5-4zm8 0c-.738 0-1.429.131-2.061.362A5.97 5.97 0 0119 17v2h5v-2c0-2.21-2.239-4-5-4z"/></svg>
+        </a>
+      <a class="rail-btn" href="#search" title="Search" aria-label="Search">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
+      </a>
+      <a class="rail-btn" href="playbook.html" title="Starred" aria-label="Starred">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+      </a>
+      <a class="rail-btn" href="playbook.html" title="Playbooks" aria-label="Playbooks">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12V2zm-2 14H8v-2h8v2zm0-4H8V8h8v4z"/></svg>
+      </a>
+      <a class="rail-btn" href="#threads-more" title="Threads" aria-label="Threads">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 4h16v10H5.17L4 15.17V4zm0 12h12v4H4v-4z"/></svg>
+      </a>
+      </div>
+      <nav>
+        <div class="nav-top">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="#search">Search</a></li>
+          </ul>
+        </div>
+        <div class="nav-scroll">
+          <div class="section with-divider">
+            <div class="section-title">Starred</div>
+            <ul>
+              <li><a href="playbook.html">Dashboard-Playbook A</a></li>
+              <li><a href="playbook.html">Strategy-Playbook B</a></li>
+              <li><a href="playbook.html">Research-Playbook C</a></li>
+              <li><a class="more" href="#starred-more">··· More</a></li>
+            </ul>
+          </div>
+          <div class="section with-divider">
+            <div class="section-title section-title-row"><span>Playbooks</span><button class="title-plus" title="New Playbook" aria-label="New Playbook">+</button></div>
+            <ul>
+              <li><a href="playbook.html">Dashboard-Playbook A</a></li>
+              <li><a href="playbook.html">Strategy-Playbook B</a></li>
+              <li><a href="playbook.html">Research-Playbook C</a></li>
+              <li><a class="more" href="#library-playbooks-more">··· More</a></li>
+            </ul>
+          </div>
+          <div class="section with-divider">
+            <div class="section-title section-title-row"><span>Threads</span><button class="title-plus" title="New Thread" aria-label="New Thread">+</button></div>
+            <ul>
+              <li><a href="#threads-a">Thread A</a></li>
+              <li><a href="#threads-b">Thread B</a></li>
+              <li><a href="#threads-c">Thread C</a></li>
+              <li><a class="more" href="#threads-more">··· More</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="nav-bottom">
+          <div class="me-icons">
+            <button class="icon-btn" title="Profile" aria-label="Profile">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.866 0-7 2.239-7 5v2h14v-2c0-2.761-3.134-5-7-5z"/></svg>
+            </button>
+            <button class="icon-btn" title="Settings" aria-label="Settings">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.14 12.936a7.97 7.97 0 000-1.872l2.037-1.58a.5.5 0 00.12-.64l-1.93-3.343a.5.5 0 00-.6-.22l-2.4.96a7.968 7.968 0 00-1.62-.94l-.36-2.54a.5.5 0 00-.5-.43h-3.86a.5.5 0 00-.5.43l-.36 2.54a7.968 7.968 0 00-1.62.94l-2.4-.96a.5.5 0 00-.6.22L2.7 8.844a.5.5 0 00.12.64l2.037 1.58a7.97 7.97 0 000 1.872L2.82 14.516a.5.5 0 00-.12.64l1.93 3.343a.5.5 0 00.6.22l2.4-.96c.5.38 1.05.7 1.62.94l.36 2.54a.5.5 0 00.5.43h3.86a.5.5 0 00.5-.43l.36-2.54c.57-.24 1.12-.56 1.62-.94l2.4.96a.5.5 0 00.6-.22l1.93-3.343a.5.5 0 00-.12-.64l-2.037-1.58zM12 15a3 3 0 110-6 3 3 0 010 6z"/></svg>
+            </button>
+          </div>
+        </div>
+      </nav>
+    </aside>
+    <aside class="subnav">
+      <div class="subnav-header"><div class="subnav-title">More</div><button class="subnav-close" type="button">Close</button></div>
+      <div id="subnav-content" class="subnav-content"></div>
+    </aside>
+    <main>
+      <div class="detail">
+        <div class="paper">
+          <div class="hd">
+            <div class="title">BTC Weekly MA7—MA25 Crossover Allocator</div>
+            <div class="tabs"><span class="tab active" data-target="overview">Overview</span><span class="tab" data-target="analytics">Analytics</span><span class="tab" data-target="strategy">Strategy</span><span class="tab" data-target="feed">Feed</span></div>
+          </div>
+          <div class="bd">
+            <div id="pane-overview" class="tab-pane">
+              <div class="overview-header">
+                <div class="section-title-line">Performance Overview</div>
+                <div class="last-updated">Last Updated: 11/28/2025 · Interval: 1w</div>
+              </div>
+              <div class="metrics-grid">
+                <div class="metric-card"><div class="metric-title">Total Return</div><div class="metric-value">7.06%</div><div class="sparkline-skel"></div></div>
+                <div class="metric-card"><div class="metric-title">Annualized Return</div><div class="metric-value">3.48%</div><div class="sparkline-skel"></div></div>
+                <div class="metric-card"><div class="metric-title">Volatility</div><div class="metric-value">67.64%</div><div class="sparkline-skel"></div></div>
+                <div class="metric-card"><div class="metric-title">Sharpe Ratio</div><div class="metric-value">0.68</div><div class="sparkline-skel"></div></div>
+                <div class="metric-card"><div class="metric-title">Sortino Ratio</div><div class="metric-value">1.04</div><div class="sparkline-skel"></div></div>
+                <div class="metric-card"><div class="metric-title">Max Drawdown</div><div class="metric-value">25.27%</div><div class="sparkline-skel"></div></div>
+              </div>
+              <div class="equity-card">
+                <div class="equity-hd"><div class="equity-title">Equity Curve</div><div class="currency-dd">USD ▾</div></div>
+                <div class="equity-legend">
+                  <div class="legend-item"><span class="legend-swatch swatch-gray"></span>Initial Amount</div>
+                  <div class="legend-item"><span class="legend-swatch swatch-purple"></span>This Playbook</div>
+                  <div class="legend-item"><span class="legend-swatch swatch-orange"></span>BTC</div>
+                </div>
+                <div class="equity-skeleton"></div>
+              </div>
+              <div class="traded-symbols">
+                <div class="section-title-line">Traded Symbols</div>
+                <div class="symbol-row"><div><div class="symbol-name">Bitcoin</div><div class="symbol-extra">0 USD</div></div><div class="symbol-extra">Binance ↗</div></div>
+              </div>
+            </div>
+            <div id="pane-analytics" class="tab-pane hidden">
+              <div class="feature-analytics">
+                <div class="section-title-line">Feature Analytics</div>
+                <div class="last-updated">Last Updated: 12/6/2025 · Interval: 1w</div>
+                <div class="chart-container">
+                  <h4>Btc Ma25 Prev</h4>
+                  <div class="chart-skeleton"></div>
+                </div>
+                <div class="chart-container">
+                  <h4>Btc Ma25 W</h4>
+                  <div class="chart-skeleton"></div>
+                </div>
+              </div>
+            </div>
+            <div id="pane-strategy" class="tab-pane hidden">
+              <div class="objective">Capture medium-term BTC/USD trends using weekly MA7/MA25 crossovers, switching between 100% long and cash-only exposure at weekly closes.</div>
+              <div class="section-title-line">Features</div>
+              <div class="feat-list">
+                <div class="feat-item"><div><div class="feat-name">Btc Ma25 Prev</div><div class="feat-desc">Previous week value of the 25-period weekly SMA for detecting crossovers.</div></div><button class="icon-btn">=</button><button class="icon-btn">≡</button></div>
+                <div class="feat-item"><div><div class="feat-name">Btc Ma25 W</div><div class="feat-desc">25-period simple moving average of weekly closing prices to represent medium-term trend.</div></div><button class="icon-btn">=</button><button class="icon-btn">≡</button></div>
+                <div class="feat-item"><div><div class="feat-name">Btc Ma7 Prev</div><div class="feat-desc">Previous week value of the 7-period weekly SMA for detecting crossovers.</div></div><button class="icon-btn">=</button><button class="icon-btn">≡</button></div>
+                <div class="feat-item"><div><div class="feat-name">Btc Ma7 W</div><div class="feat-desc">7-period simple moving average of weekly closing prices to represent short-term trend.</div></div><button class="icon-btn">=</button><button class="icon-btn">≡</button></div>
+              </div>
+              <div class="section-title-line">Strategy</div>
+              <div class="kv"><div class="k">Trading Pairs</div><div>BINANCE_SPOT_BTC_USDT</div></div>
+              <div class="kv"><div class="k">Interval</div><div>Weekly (1w) candles</div></div>
+              <div class="kv"><div class="k">Backtest Period</div><div>1 year (up to 2 years for MA25 warm-up)</div></div>
+              <div class="section-title-line">Signal Generation</div>
+              <div class="bullet">Entry when short-term (MA7) bullishly crosses above medium-term (MA25) on weekly close.</div>
+              <div class="bullet">Exit when MA7 bearishly crosses below MA25 on weekly close.</div>
+            </div>
+            <div id="pane-feed" class="tab-pane hidden">
+              <div class="feed-header">
+                <div class="asset-left">
+                  <span class="asset-pill">BTC</span>
+                  <div>
+                    <div class="asset-name">Bitcoin</div>
+                    <div class="asset-extra">0 USD</div>
+                  </div>
+                </div>
+                <div class="asset-right">Binance ↗</div>
+              </div>
+              <div class="kline-card"><div class="spinner"></div></div>
+              <div class="feed-list">
+                <div class="feed-item">
+                  <div class="avatar"></div>
+                  <div>
+                    <div class="feed-title">Leoz · BTC Weekly MA7—MA25 Crossover</div>
+                    <div class="feed-tag"><span class="asset-pill">BTC</span><span class="feed-change">Increase from 0% → 100.00%</span><span>↗</span></div>
+                    <div class="feed-sub">Bullish MA7/MA25 crossover</div>
+                  </div>
+                  <div class="feed-time">05/29/2025 08:00</div>
+                </div>
+                <div class="feed-item">
+                  <div class="avatar"></div>
+                  <div>
+                    <div class="feed-title">Leoz · BTC Weekly MA7—MA25 Crossover</div>
+                    <div class="feed-tag"><span class="asset-pill">BTC</span><span class="feed-change">Add & short from 0 → 100.00%</span></div>
+                    <div class="feed-sub">Bullish MA7/MA25 crossover</div>
+                  </div>
+                  <div class="feed-time">10/31/2024 08:00</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="configPanel" class="paper">
+          <div class="hd"><div class="title">chat</div><div><button id="panelToggle" class="toggle">▾</button></div></div>
+          <div class="bd">
+            <div class="bullet">Schedule: 00:00 UTC every Sunday on new weekly candle.</div>
+            <div class="bullet">Start timestamp: 1701302400000</div>
+            <div class="bullet">Initial capital: 1,000,000 (base currency)</div>
+            <div class="bullet">Changelog: Initial strategy based on specified rules.</div>
+            <div class="cfg-card">
+              <h3>BTC Weekly MA7—MA25 Crossover Allocator</h3>
+              <div class="bullet">Execution interval: 12:00 AM, only on Sunday</div>
+              <div class="bullet">Backtest Results: totalReturn 70.6%, sharpeRatio 0.68</div>
+              <button class="btn-activate">Activate</button>
+            </div>
+            <div class="chat-box">
+              <div id="cfgChatList" class="chat-list"></div>
+              <div class="chat-compose">
+                <input id="cfgChatInput" class="chat-input" placeholder="Ask about this playbook" />
+                <button id="cfgChatSend" class="chat-send">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="searchOverlay" class="search-overlay">
+      <div class="search-modal">
+        <div class="modal-header"><div class="modal-title">Search</div><button id="searchClose" class="modal-close">X</button></div>
+        <div class="modal-body"><input id="searchInput" class="modal-input" placeholder="Try symbol, e.g. AAPL" /><div id="entityList" class="entity-list"></div></div>
+      </div>
+    </div>
+    <script>
+      const moreHandlers = {
+        '#starred-more': { title: 'Starred · More', items: Array.from({length: 12}, (_, i) => `Starred Item ${i+1}`) },
+        '#library-playbooks-more': { title: 'Playbooks · More', items: Array.from({length: 12}, (_, i) => `Playbook Item ${i+1}`) },
+        '#threads-more': { title: 'Threads · More', items: Array.from({length: 12}, (_, i) => `Thread Item ${i+1}`) },
+      };
+      document.querySelectorAll('a.more').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isOpen = document.body.classList.contains('subnav-open');
+          if (isOpen) { document.body.classList.remove('subnav-open'); return; }
+          const key = a.getAttribute('href');
+          const cfg = moreHandlers[key] || { title: 'More', items: [] };
+          document.body.classList.add('subnav-open');
+          const container = document.getElementById('subnav-content');
+          container.innerHTML = `<ul>${cfg.items.map(item => `<li><a href=\"#\">${item}</a></li>`).join('')}</ul>`;
+          document.querySelector('.subnav-title').textContent = cfg.title;
+        });
+      });
+      document.querySelector('.subnav-close').addEventListener('click', () => { document.body.classList.remove('subnav-open'); });
+
+      const searchOverlay = document.getElementById('searchOverlay');
+      const searchClose = document.getElementById('searchClose');
+      const entityList = document.getElementById('entityList');
+      const searchInput = document.getElementById('searchInput');
+      const searchLink = document.querySelector('a[href="#search"]');
+      const entities = [
+        { sym: 'ETH', name: 'Ethereum', type: 'CRYPTO', exch: 'Binance' },
+        { sym: 'BTC', name: 'Bitcoin', type: 'CRYPTO', exch: 'Binance' },
+        { sym: 'MARA', name: 'Marathon Digital Holdings, Inc.', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'NVDA', name: 'NVIDIA Corporation', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'AMZN', name: 'Amazon.com, Inc.', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'AC', name: 'Associated Capital Group, Inc.', type: 'STOCK', exch: 'NYSE' },
+        { sym: 'META', name: 'Meta Platforms, Inc.', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'ARB', name: 'Arbitrum', type: 'CRYPTO', exch: 'Binance' },
+        { sym: 'TSM', name: 'Taiwan Semiconductor Company Limited', type: 'STOCK', exch: 'NYSE' },
+        { sym: 'AVAX', name: 'Avalanche', type: 'CRYPTO', exch: 'Binance' }
+      ];
+      function renderEntities(filter = '') {
+        const q = filter.trim().toLowerCase();
+        const data = entities.filter(e => !q || e.sym.toLowerCase().includes(q) || e.name.toLowerCase().includes(q));
+        entityList.innerHTML = data.map(e => `<div class=\"entity-row\"><div class=\"sym\">${e.sym}</div><div class=\"name\">${e.name}</div><div class=\"type\">${e.type}</div><div class=\"exch\">${e.exch}</div></div>`).join('');
+      }
+      function openSearch() { searchOverlay.classList.add('open'); renderEntities(''); searchInput.value=''; searchInput.focus(); }
+      function closeSearch() { searchOverlay.classList.remove('open'); }
+      if (searchLink) searchLink.addEventListener('click', (e) => { e.preventDefault(); openSearch(); });
+      searchClose.addEventListener('click', closeSearch);
+      searchOverlay.addEventListener('click', (e) => { if (e.target === searchOverlay) closeSearch(); });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSearch(); });
+      searchInput.addEventListener('input', (e) => renderEntities(e.target.value));
+      const configPanel = document.getElementById('configPanel');
+      const panelToggle = document.getElementById('panelToggle');
+      const detailGrid = document.querySelector('.detail');
+      panelToggle.addEventListener('click', () => {
+        const collapsed = detailGrid.classList.toggle('right-collapsed');
+        if (collapsed) {
+          panelToggle.innerHTML = '<span class="orb" aria-hidden="true"></span>';
+          panelToggle.setAttribute('aria-label', 'Expand chat panel');
+          panelToggle.setAttribute('data-tip', 'Chat with Alva！');
+        } else {
+          panelToggle.textContent = '▾';
+          panelToggle.setAttribute('aria-label', 'Collapse chat panel');
+          panelToggle.removeAttribute('data-tip');
+        }
+      });
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      sidebarToggle.addEventListener('click', () => {
+        const collapsed = document.body.classList.toggle('sidebar-collapsed');
+        sidebarToggle.textContent = collapsed ? '»' : '«';
+      });
+      document.querySelectorAll('.icon-rail .rail-btn[aria-label="Starred"], .icon-rail .rail-btn[aria-label="Playbooks"], .icon-rail .rail-btn[aria-label="Threads"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const cfg = moreHandlers['#threads-more'];
+          document.body.classList.add('subnav-open');
+          const container = document.getElementById('subnav-content');
+          container.innerHTML = `<ul>${cfg.items.map(item => `<li><a href=\"#\">${item}</a></li>`).join('')}</ul>`;
+          document.querySelector('.subnav-title').textContent = cfg.title;
+        });
+      });
+      document.querySelectorAll('.title-plus').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (detailGrid.classList.contains('right-collapsed')) {
+            detailGrid.classList.remove('right-collapsed');
+            panelToggle.textContent = '▾';
+            panelToggle.setAttribute('aria-label', 'Collapse chat panel');
+            panelToggle.removeAttribute('data-tip');
+          }
+        });
+      });
+      const cfgChatList = document.getElementById('cfgChatList');
+      const cfgChatInput = document.getElementById('cfgChatInput');
+      const cfgChatSend = document.getElementById('cfgChatSend');
+      cfgChatSend.addEventListener('click', () => {
+        const text = cfgChatInput.value.trim();
+        if (!text) return;
+        const you = document.createElement('div');
+        you.className = 'chat-msg msg-you';
+        you.innerHTML = '<div class="chat-role">You</div><div>' + text + '</div>';
+        cfgChatList.appendChild(you);
+        cfgChatInput.value = '';
+        setTimeout(() => {
+          const ai = document.createElement('div');
+          ai.className = 'chat-msg msg-ai';
+          ai.innerHTML = '<div class="chat-role">AI</div><div>Noted. This box is for chatting about the current playbook.</div>';
+          cfgChatList.appendChild(ai);
+          cfgChatList.scrollTop = cfgChatList.scrollHeight;
+        }, 500);
+      });
+      const tabsEls = document.querySelectorAll('.tabs .tab');
+      const panes = {
+        overview: document.getElementById('pane-overview'),
+        analytics: document.getElementById('pane-analytics'),
+        strategy: document.getElementById('pane-strategy'),
+        feed: document.getElementById('pane-feed')
+      };
+      tabsEls.forEach(tab => {
+        tab.addEventListener('click', () => {
+          tabsEls.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          Object.values(panes).forEach(p => p.classList.add('hidden'));
+          const key = tab.getAttribute('data-target');
+          const pane = panes[key];
+          if (pane) pane.classList.remove('hidden');
+        });
+      });
+    </script>
+  </body>
+</html>

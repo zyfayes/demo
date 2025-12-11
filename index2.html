@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Alva Navbar Prototype · Plan B</title>
+    <style>
+      :root { --bg: #0f172a; --panel: #111827; --text: #e5e7eb; --muted: #9ca3af; --accent: #22c55e; --border: #1f2937; }
+      * { box-sizing: border-box; }
+      html, body { height: 100%; }
+      body { margin: 0; display: grid; grid-template-columns: 260px 1fr; grid-template-rows: 1fr; grid-template-areas: "sidebar main"; background: var(--bg); color: var(--text); font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif; }
+      body.subnav-open { grid-template-columns: 260px 220px 1fr; grid-template-rows: 1fr; grid-template-areas: "sidebar subnav main"; }
+      body.sidebar-collapsed { grid-template-columns: 60px 1fr; }
+      body.sidebar-collapsed.subnav-open { grid-template-columns: 60px 220px 1fr; }
+      body.sidebar-collapsed .name, body.sidebar-collapsed .nav-top, body.sidebar-collapsed .nav-scroll, body.sidebar-collapsed .nav-bottom { display: none; }
+      body.sidebar-collapsed .icon-rail { display: flex; }
+
+      aside { grid-area: sidebar; height: 100vh; position: sticky; top: 0; border-right: 1px solid var(--border); background: var(--panel); padding: 12px 10px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
+      nav { display: flex; flex-direction: column; gap: 12px; height: 100%; }
+      .nav-top { padding: 4px 0; }
+      .nav-scroll { flex: 1; overflow-y: auto; padding-right: 4px; }
+      .nav-bottom { padding-top: 12px; border-top: 1px solid #182030; position: sticky; bottom: 0; background: var(--panel); }
+      .side-brand { display: flex; align-items: center; gap: 8px; padding: 6px 8px; font-weight: 800; letter-spacing: 0.8px; }
+      .side-brand .logo { width: 20px; height: 20px; border-radius: 6px; background: linear-gradient(135deg, var(--accent), #16a34a); box-shadow: 0 0 0 1px #0b5d31 inset; }
+      .side-brand .name { font-size: 13px; }
+      .collapse-btn { margin-left: auto; border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 8px; width: 24px; height: 24px; line-height: 22px; text-align: center; cursor: pointer; }
+      .collapse-btn:hover { border-color: #14532d; }
+      .icon-rail { display: none; flex-direction: column; gap: 6px; padding: 0 6px; }
+      .rail-btn { height: 36px; border-radius: 8px; border: 1px solid var(--border); background: linear-gradient(135deg, #0b1220, #0e1626); cursor: pointer; display: flex; align-items: center; justify-content: center; text-decoration: none; }
+      .rail-btn:hover { border-color: #24513b; }
+      .rail-btn svg { width: 18px; height: 18px; fill: #a7f3d0; opacity: 0.9; }
+      .section { display: flex; flex-direction: column; gap: 6px; }
+      .section-title { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.6px; padding: 0 6px; }
+      .section-title-row { display: flex; align-items: center; justify-content: space-between; }
+      .title-plus { border: 1px solid var(--border); background: #0e1626; color: #a7f3d0; border-radius: 6px; width: 20px; height: 20px; font-size: 14px; line-height: 18px; text-align: center; cursor: pointer; }
+      .title-plus:hover { border-color: #14532d; color: #eafff1; }
+      .with-divider { border-top: 1px solid #182030; padding-top: 8px; margin-top: 4px; }
+      ul { list-style: none; margin: 0; padding: 0; }
+      li { display: block; }
+      a { display: flex; align-items: center; gap: 8px; padding: 6px 8px; margin: 1px 0; border-radius: 8px; color: var(--text); text-decoration: none; transition: background 0.2s ease, color 0.2s ease; }
+      a:hover { background: #0b1220; }
+      .badge { margin-left: auto; font-size: 10px; color: var(--muted); }
+      .more { color: var(--muted); }
+      .more:hover { color: var(--text); }
+      .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; margin-left: 6px; box-shadow: 0 0 0 2px #0b1220; }
+
+      .nav-star { display: inline-flex; align-items: center; }
+      .nav-star svg { width: 12px; height: 12px; fill: #f59e0b; }
+      .nav-star--spacer { width: 12px; height: 12px; display: inline-block; }
+      .nav-avatar { display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; }
+      .nav-avatar svg { width: 14px; height: 14px; fill: #a7f3d0; }
+      .badge { display: inline-flex; align-items: center; }
+
+      .me-icons { display: grid; grid-template-columns: repeat(2, 1fr); gap: 6px; padding: 0 6px; }
+      .icon-btn { height: 32px; border-radius: 8px; border: 1px solid var(--border); background: linear-gradient(135deg, #0b1220, #0e1626); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+      .icon-btn:hover { border-color: #24513b; }
+      .icon-btn svg { width: 18px; height: 18px; fill: #a7f3d0; opacity: 0.9; }
+
+      .subnav { grid-area: subnav; height: 100vh; position: sticky; top: 0; border-right: 1px solid var(--border); background: #0b1220; display: none; flex-direction: column; }
+      body.subnav-open .subnav { display: flex; }
+      .subnav-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid var(--border); }
+      .subnav-title { font-size: 13px; font-weight: 600; }
+      .subnav-content { flex: 1; overflow-y: auto; padding: 8px 10px; }
+      .subnav-content ul { display: flex; flex-direction: column; gap: 4px; }
+      .subnav-close { border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 6px; padding: 4px 8px; }
+
+      .hidden { display: none; }
+      .search-overlay { position: fixed; inset: 0; background: rgba(2,8,23,0.6); display: none; align-items: center; justify-content: center; z-index: 1000; }
+      .search-overlay.open { display: flex; }
+      .search-modal { width: min(760px, 92vw); border-radius: 12px; background: #0b1220; border: 1px solid var(--border); box-shadow: 0 12px 32px rgba(0,0,0,0.35); }
+      .modal-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+      .modal-title { font-weight: 700; }
+      .modal-close { border: 1px solid var(--border); background: #0e1626; color: var(--text); border-radius: 6px; padding: 6px 10px; }
+      .modal-body { padding: 12px 14px; }
+      .modal-input { width: 100%; border: 1px solid var(--border); border-radius: 10px; background: #0e1626; color: var(--text); padding: 10px 12px; }
+      .entity-list { display: flex; flex-direction: column; gap: 6px; max-height: 60vh; overflow: auto; }
+      .entity-row { display: grid; grid-template-columns: 80px 1fr 90px 100px; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; }
+      .entity-row:hover { background: #0e1626; }
+      .sym { font-weight: 600; letter-spacing: 0.4px; }
+      .type { color: var(--muted); font-size: 12px; }
+      .exch { color: #a7f3d0; font-size: 12px; }
+
+      main { grid-area: main; padding: 16px; }
+      .home { max-width: 1100px; margin: 0 auto; padding: 8px 6px; }
+      .hero { text-align: center; margin: 8px 0 12px; }
+      .headline { margin: 0; font-size: 22px; font-weight: 700; letter-spacing: 0.1px; }
+      .highlight { color: var(--accent); }
+      .subtext { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+      .prompt { display: grid; gap: 6px; justify-items: center; }
+      .prompt-input { width: 70%; min-height: 72px; resize: vertical; border: 1px solid var(--border); border-radius: 10px; background: #0b1220; color: var(--text); padding: 8px 10px; font-size: 13px; }
+      .prompt-actions { width: 70%; display: flex; align-items: center; justify-content: space-between; }
+      .cta-left { display: flex; gap: 6px; }
+      .btn-ask { border: 1px solid #14532d; background: #0d1f16; color: #a7f3d0; border-radius: 6px; padding: 6px 8px; font-size: 12px; }
+      .btn-build { border: 1px solid #334155; background: #0e1626; color: #cbd5e1; border-radius: 6px; padding: 6px 8px; font-size: 12px; }
+      .btn-tools { border: 1px solid var(--border); background: #0e1626; color: var(--muted); border-radius: 6px; padding: 6px 8px; font-size: 12px; }
+      .sample-queries { width: 70%; margin: 2px auto 10px; color: var(--muted); font-size: 12px; }
+      .sample-queries li { margin: 4px 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .featured { margin-top: 4px; max-width: 100%; padding: 0; border: none; border-radius: 0; background: transparent; box-shadow: none; }
+      .featured-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; font-weight: 700; }
+      .view-all { color: #a7f3d0; text-decoration: none; }
+      .pill-group { display: flex; gap: 6px; flex-wrap: wrap; }
+      .pill { display: inline-flex; align-items: center; padding: 5px 8px; border-radius: 999px; border: 1px solid var(--border); background: #0e1626; color: var(--text); font-size: 11px; }
+      .pill.active { background: #0d1f16; border-color: #14532d; color: #a7f3d0; box-shadow: 0 0 0 2px rgba(20,83,45,0.25); }
+      .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 10px; }
+      .tile { background: #0b1220; border: 1px solid #14532d; border-radius: 14px; padding: 12px; }
+      .tile .meta { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; color: var(--muted); font-size: 12px; }
+      .avatar { width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #22c55e, #16a34a); box-shadow: 0 0 0 1px #0b5d31 inset; }
+      .tile h3 { margin: 0 0 6px; font-size: 16px; color: #e5ffe9; }
+      .tile p { margin: 0; color: var(--muted); font-size: 12px; }
+
+      .search-cta-wrap { max-width: 1100px; margin: 0 auto; padding: 8px 6px; }
+      .search-cta { display: flex; align-items: center; justify-content: space-between; gap: 6px; border: 1px solid #e5e7eb; background: #f8fafc; color: #111827; border-radius: 999px; padding: 4px 8px; text-decoration: none; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+      .search-cta .left { display: flex; align-items: center; gap: 4px; }
+      .search-cta .icon svg { width: 12px; height: 12px; fill: #6b7280; }
+      .search-cta .placeholder { font-size: 12px; color: #6b7280; }
+      .search-cta .kbd { border: 1px solid #e5e7eb; background: #ffffff; color: #374151; border-radius: 6px; padding: 1px 5px; font-size: 10px; }
+      .side-search { padding: 0 6px; margin-bottom: 6px; }
+      .side-search .search-cta { width: 100%; }
+
+      @media (max-width: 960px) {
+        body { grid-template-columns: 76px 1fr; }
+        .section-title { display: none; }
+        a { gap: 0; justify-content: center; }
+      }
+    </style>
+  </head>
+  <body>
+    <aside>
+      <div class="side-brand"><div class="logo"></div><div class="name">ALVA</div><button id="sidebarToggle" class="collapse-btn" aria-label="Collapse Navigation">«</button></div>
+      <div class="icon-rail">
+        <a class="rail-btn" href="index2.html" title="Home" aria-label="Home"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 3l9 8h-3v9h-5v-6H11v6H6v-9H3l9-8z"/></svg></a>
+        <a class="rail-btn" href="community.html" title="Community" aria-label="Community"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M16 11c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm-8 0c1.657 0 3-1.343 3-3S9.657 5 8 5 5 6.343 5 8s1.343 3 3 3zm0 2c-2.761 0-5 1.79-5 4v2h10v-2c0-2.21-2.239-4-5-4zm8 0c-.738 0-1.429.131-2.061.362A5.97 5.97 0 0119 17v2h5v-2c0-2.21-2.239-4-5-4z"/></svg></a>
+        <a class="rail-btn" href="#search" title="Search" aria-label="Search"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg></a>
+        <a class="rail-btn" href="playbook.html" title="Starred" aria-label="Starred"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></a>
+        <a class="rail-btn" href="playbook.html" title="Playbooks" aria-label="Playbooks"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12V2zm-2 14H8v-2h8v2zm0-4H8V8h8v4z"/></svg></a>
+        <a class="rail-btn" href="#threads-more" title="Threads" aria-label="Threads"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 4h16v10H5.17L4 15.17V4zm0 12h12v4H4v-4z"/></svg></a>
+      </div>
+      <nav>
+        <div class="side-search">
+          <a href="#search" class="search-cta" aria-label="Search ticker">
+            <span class="left"><span class="icon"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg></span><span class="placeholder">Search ticker</span></span>
+            <span class="kbd">⌘K</span>
+          </a>
+        </div>
+        <div class="nav-top">
+          <ul>
+            <li><a class="active" href="#home">Home</a></li>
+            <li><a href="community.html">Community</a></li>
+            <li><a href="#search">Search</a></li>
+          </ul>
+        </div>
+        <div class="nav-scroll">
+          <div class="section with-divider">
+            <div class="section-title section-title-row"><span>Playbooks</span><button class="title-plus" title="New Playbook" aria-label="New Playbook">+</button></div>
+            <ul>
+              <li><a href="playbook.html"><span class="nav-star"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>Dashboard-Playbook A</a></li>
+              <li><a href="playbook.html"><span class="nav-star"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>Strategy-Playbook B<span class="dot" aria-label="更新"></span></a></li>
+              <li><a href="playbook.html"><span class="nav-star"><svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></span>Research-Playbook C<span class="badge"><span class="nav-avatar" aria-label="来自社区"><svg viewBox="0 0 24 24"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"/></svg></span></span></a></li>
+              <li><a href="playbook.html"><span class="nav-star nav-star--spacer"></span>Risk Monitor Suite</a></li>
+              <li><a href="playbook.html"><span class="nav-star nav-star--spacer"></span>Momentum Tracker<span class="badge"><span class="nav-avatar" aria-label="来自社区"><svg viewBox="0 0 24 24"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"/></svg></span></span></a></li>
+              <li><a href="playbook.html"><span class="nav-star nav-star--spacer"></span>Macro Dashboard<span class="badge"><span class="nav-avatar" aria-label="来自社区"><svg viewBox="0 0 24 24"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"/></svg></span></span></a></li>
+              <li><a href="playbook.html"><span class="nav-star nav-star--spacer"></span>Portfolio Optimizer</a></li>
+              <li><a href="playbook.html"><span class="nav-star nav-star--spacer"></span>Crypto Sentiment Radar<span class="badge"><span class="nav-avatar" aria-label="来自社区"><svg viewBox="0 0 24 24"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"/></svg></span></span></a></li>
+              <li><a class="more" href="#library-playbooks-more">··· More</a></li>
+            </ul>
+          </div>
+          <div class="section with-divider">
+            <div class="section-title section-title-row"><span>Threads</span><button class="title-plus" title="New Thread" aria-label="New Thread">+</button></div>
+            <ul>
+              <li><a href="#threads-a">Thread A</a></li>
+              <li><a href="#threads-b">Thread B</a></li>
+              <li><a href="#threads-c">Thread C</a></li>
+              <li><a class="more" href="#threads-more">··· More</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="nav-bottom">
+          <div class="me-icons">
+            <button class="icon-btn" title="Profile" aria-label="Profile"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-4.418 0-8 2.239-8 5v2h16v-2c0-2.761-3.582-5-8-5z"/></svg></button>
+            <button class="icon-btn" title="Settings" aria-label="Settings"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M19.14 12.936a7.997 7.997 0 0 0 .06-1.936 7.997 7.997 0 0 0-.06-1.936l2.037-1.585a.5.5 0 0 0 .12-.643l-1.93-3.343a.5.5 0 0 0-.6-.219l-2.4.967a7.992 7.992 0 0 0-3.35-1.936l-.36-2.54A.5.5 0 0 0 12.197 0h-3.394a.5.5 0 0 0-.497.431l-.36 2.54a7.992 7.992 0 0 0-3.35 1.936l-2.4-.967a.5.5 0 0 0-.6.219L-.333 7.003a.5.5 0 0 0 .12.643l2.037 1.585a7.997 7.997 0 0 0-.06 1.936c0 .66.07 1.296.06 1.936l-2.037 1.585a.5.5 0 0 0-.12.643l1.93 3.343a.5.5 0 0 0 .6.219l2.4-.967a7.992 7.992 0 0 0 3.35 1.936l.36 2.54a.5.5 0 0 0 .497.431h3.394a.5.5 0 0 0 .497-.431l.36-2.54a7.992 7.992 0 0 0 3.35-1.936l2.4.967a.5.5 0 0 0 .6-.219l1.93-3.343a.5.5 0 0 0-.12-.643l-2.037-1.585ZM12 15a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/></svg></button>
+          </div>
+        </div>
+      </nav>
+    </aside>
+    <aside class="subnav">
+      <div class="subnav-header"><div class="subnav-title">More</div><button class="subnav-close" type="button">Close</button></div>
+      <div id="subnav-content" class="subnav-content"></div>
+    </aside>
+
+    <main>
+      <section id="home" class="home">
+        <div class="hero"><h1 class="headline">Ideas in. <span class="highlight">Alpha</span> out.</h1><p class="subtext">Unlock Smart Investing for Everyone. Alva is Your Quantamental Investing AI Agent.</p></div>
+        <div class="prompt"><textarea class="prompt-input" placeholder="According to LVMH's Q1 2025 revenue report, what was the year-over-year revenue g"></textarea><div class="prompt-actions"><div class="cta-left"><button class="btn-ask">Ask</button><button class="btn-build">Build</button></div><button class="btn-tools">Tools</button></div></div>
+        <ul class="sample-queries"><li>In the 48h after Meta's potential large-scale purchases of Google Cloud TPUs, how did NVDA's 7-day IV, option OI skew, and SOXX ETF flows react? Please chart the 48h NVDA—SOXX divergence.</li><li>If I had invested 100 USDT in BTC every day since January 1, 2025, what would its value be now?</li></ul>
+        <div class="featured"><div class="featured-header"><div>Recent Visited</div><a class="view-all" href="#">View All</a></div><div class="cards"><div class="tile"><div class="meta"><div class="avatar"></div><div>you</div></div><h3>Portfolio Lens · Factor Tilt</h3><p>Analyze portfolio tilts across value, growth, quality, and size.</p></div><div class="tile"><div class="meta"><div class="avatar"></div><div>you</div></div><h3>Smart Screener · AI Exposed</h3><p>Screen tech stocks by AI revenue exposure and momentum.</p></div><div class="tile"><div class="meta"><div class="avatar"></div><div>you</div></div><h3>Risk Monitors · Tail Risk</h3><p>Tail risk indicators and skew for major indices.</p></div></div></div>
+        <div class="featured"><div class="featured-header"><div>Featured Playbooks</div><a class="view-all" href="#">View All</a></div><div class="pill-group"><span class="pill active">Asset Tracker</span><span class="pill">Portfolio Lens</span><span class="pill">Social Insight</span><span class="pill">Smart Screener</span><span class="pill">Risk Monitors</span><span class="pill">Macro Pulse</span><span class="pill">Quant Signals</span><span class="pill">Crypto Intel</span></div><div class="cards"><div class="tile"><div class="meta"><div class="avatar"></div><div>WongNgai</div></div><h3>US Crypto DAT Companies Monitor</h3><p>Monitor US cryptocurrency-connected companies including data centers (like PWR-SMR), miners, hardware suppliers, and megacap with BTC accounting signaling.</p></div><div class="tile"><div class="meta"><div class="avatar"></div><div>WongNgai</div></div><h3>AI Leaders · NVDA—TSMC</h3><p>Track valuation changes and risk metrics for AI leaders across supply chain.</p></div><div class="tile"><div class="meta"><div class="avatar"></div><div>WongNgai</div></div><h3>Macro Pulse · CPI—Rates</h3><p>Key macro indicators like inflation, rates, and growth across regions.</p></div></div></div>
+      </section>
+    </main>
+
+    <div id="searchOverlay" class="search-overlay"><div class="search-modal"><div class="modal-header"><div class="modal-title">Search</div><button id="searchClose" class="modal-close">X</button></div><div class="modal-body"><input id="searchInput" class="modal-input" placeholder="Try symbol, e.g. AAPL" /><div id="entityList" class="entity-list"></div></div></div></div>
+
+    <script>
+      const moreHandlers = {
+        '#starred-more': { title: 'Starred · More', items: Array.from({length: 12}, (_, i) => `Starred Item ${i+1}`) },
+        '#library-playbooks-more': { title: 'Playbooks · More', items: Array.from({length: 12}, (_, i) => `Playbook Item ${i+1}`) },
+        '#threads-more': { title: 'Threads · More', items: Array.from({length: 12}, (_, i) => `Thread Item ${i+1}`) },
+      };
+      document.querySelectorAll('a.more').forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const isOpen = document.body.classList.contains('subnav-open');
+          if (isOpen) { document.body.classList.remove('subnav-open'); return; }
+          const key = a.getAttribute('href');
+          const cfg = moreHandlers[key] || { title: 'More', items: [] };
+          document.body.classList.add('subnav-open');
+          const container = document.getElementById('subnav-content');
+          container.innerHTML = `<ul>${cfg.items.map(item => `<li><a href=\"#\">${item}</a></li>`).join('')}</ul>`;
+          document.querySelector('.subnav-title').textContent = cfg.title;
+        });
+      });
+      document.querySelector('.subnav-close').addEventListener('click', () => { document.body.classList.remove('subnav-open'); });
+
+      const searchOverlay = document.getElementById('searchOverlay');
+      const searchClose = document.getElementById('searchClose');
+      const entityList = document.getElementById('entityList');
+      const searchInput = document.getElementById('searchInput');
+      const searchLinks = Array.from(document.querySelectorAll('a[href="#search"]'));
+      const entities = [
+        { sym: 'ETH', name: 'Ethereum', type: 'CRYPTO', exch: 'Binance' },
+        { sym: 'BTC', name: 'Bitcoin', type: 'CRYPTO', exch: 'Binance' },
+        { sym: 'MARA', name: 'Marathon Digital Holdings, Inc.', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'NVDA', name: 'NVIDIA Corporation', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'AMZN', name: 'Amazon.com, Inc.', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'AC', name: 'Associated Capital Group, Inc.', type: 'STOCK', exch: 'NYSE' },
+        { sym: 'META', name: 'Meta Platforms, Inc.', type: 'STOCK', exch: 'NASDAQ' },
+        { sym: 'ARB', name: 'Arbitrum', type: 'CRYPTO', exch: 'Binance' },
+        { sym: 'TSM', name: 'Taiwan Semiconductor Company Limited', type: 'STOCK', exch: 'NYSE' },
+        { sym: 'AVAX', name: 'Avalanche', type: 'CRYPTO', exch: 'Binance' }
+      ];
+      function renderEntities(filter = '') {
+        const q = filter.trim().toLowerCase();
+        const data = entities.filter(e => !q || e.sym.toLowerCase().includes(q) || e.name.toLowerCase().includes(q));
+        entityList.innerHTML = data.map(e => `<div class=\"entity-row\"><div class=\"sym\">${e.sym}</div><div class=\"name\">${e.name}</div><div class=\"type\">${e.type}</div><div class=\"exch\">${e.exch}</div></div>`).join('');
+      }
+      function openSearch() { searchOverlay.classList.add('open'); renderEntities(''); searchInput.value=''; searchInput.focus(); }
+      function closeSearch() { searchOverlay.classList.remove('open'); }
+      searchLinks.forEach(link => link.addEventListener('click', (e) => { e.preventDefault(); openSearch(); }));
+      searchClose.addEventListener('click', closeSearch);
+      searchOverlay.addEventListener('click', (e) => { if (e.target === searchOverlay) closeSearch(); });
+      document.addEventListener('keydown', (e) => { if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); openSearch(); } if (e.key === 'Escape') closeSearch(); });
+      searchInput.addEventListener('input', (e) => renderEntities(e.target.value));
+      const sidebarToggle = document.getElementById('sidebarToggle');
+      sidebarToggle.addEventListener('click', () => {
+        const collapsed = document.body.classList.toggle('sidebar-collapsed');
+        sidebarToggle.textContent = collapsed ? '»' : '«';
+      });
+      document.querySelectorAll('.icon-rail .rail-btn[aria-label="Starred"], .icon-rail .rail-btn[aria-label="Playbooks"], .icon-rail .rail-btn[aria-label="Threads"]').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const cfg = moreHandlers['#threads-more'];
+          document.body.classList.add('subnav-open');
+          const container = document.getElementById('subnav-content');
+          container.innerHTML = `<ul>${cfg.items.map(item => `<li><a href=\"#\">${item}</a></li>`).join('')}</ul>`;
+          document.querySelector('.subnav-title').textContent = cfg.title;
+        });
+      });
+    </script>
+  </body>
+</html>

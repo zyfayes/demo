@@ -9,40 +9,68 @@
       * { box-sizing: border-box; }
       html, body { height: 100%; }
       body { margin: 0; background: #fff; color: #111827; font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", sans-serif; }
-      .wrap { max-width: 980px; margin: 28px auto; padding: 0 16px; }
+      .wrap { max-width: 1200px; margin: 28px auto; padding: 0 16px; }
       .chart-header { display: flex; align-items: baseline; gap: 10px; color: #111827; }
       .chart-header .title { font-weight: 700; font-size: 18px; }
       .chart-header .currency { color: #6b7280; font-size: 12px; }
       .chart { height: 300px; margin-top: 8px; background:
         radial-gradient(circle, var(--grid) 1px, transparent 1px) 0 0/12px 12px; }
+      .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+      .chart-block { display: flex; flex-direction: column; }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <div class="chart-header"><span class="title">Daily P&amp;L</span><span class="currency">USD ▾</span></div>
-      <div id="chart" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Outline</span><span class="currency">USD ▾</span></div>
-      <div id="chartOutline" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Capsule</span><span class="currency">USD ▾</span></div>
-      <div id="chartCapsule" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Lollipop</span><span class="currency">USD ▾</span></div>
-      <div id="chartLollipop" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Dots</span><span class="currency">USD ▾</span></div>
-      <div id="chartDots" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Glow</span><span class="currency">USD ▾</span></div>
-      <div id="chartGlow" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Polar</span><span class="currency">USD ▾</span></div>
-      <div id="chartPolar" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Micro</span><span class="currency">USD ▾</span></div>
-      <div id="chartMicro" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Mirror</span><span class="currency">USD ▾</span></div>
-      <div id="chartMirror" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Notched</span><span class="currency">USD ▾</span></div>
-      <div id="chartNotched" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Ribbon</span><span class="currency">USD ▾</span></div>
-      <div id="chartRibbon" class="chart"></div>
-      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Glassmorphism</span><span class="currency">USD ▾</span></div>
-      <div id="chartGlass" class="chart"></div>
+      <div class="grid">
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L</span><span class="currency">USD ▾</span></div>
+          <div id="chart" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Outline</span><span class="currency">USD ▾</span></div>
+          <div id="chartOutline" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Capsule</span><span class="currency">USD ▾</span></div>
+          <div id="chartCapsule" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Lollipop</span><span class="currency">USD ▾</span></div>
+          <div id="chartLollipop" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Dots</span><span class="currency">USD ▾</span></div>
+          <div id="chartDots" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Glow</span><span class="currency">USD ▾</span></div>
+          <div id="chartGlow" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Polar</span><span class="currency">USD ▾</span></div>
+          <div id="chartPolar" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Micro</span><span class="currency">USD ▾</span></div>
+          <div id="chartMicro" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Mirror</span><span class="currency">USD ▾</span></div>
+          <div id="chartMirror" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Notched</span><span class="currency">USD ▾</span></div>
+          <div id="chartNotched" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Ribbon</span><span class="currency">USD ▾</span></div>
+          <div id="chartRibbon" class="chart"></div>
+        </div>
+        <div class="chart-block">
+          <div class="chart-header"><span class="title">Daily P&amp;L · Glassmorphism</span><span class="currency">USD ▾</span></div>
+          <div id="chartGlass" class="chart"></div>
+        </div>
+      </div>
     </div>
     <script src="https://unpkg.com/echarts@5/dist/echarts.min.js"></script>
     <script>
@@ -75,7 +103,8 @@
           axisLabel: {
             color: '#6b7280',
             formatter: (val, idx) => val,
-            interval: 1
+            interval: 2,
+            hideOverlap: true
           }
         },
         yAxis: {
@@ -147,7 +176,7 @@
           data: dates,
           axisLine: { show: false },
           axisTick: { show: false },
-          axisLabel: { color: '#6b7280', interval: 1 }
+          axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true }
         },
         yAxis: {
           type: 'value',
@@ -228,13 +257,14 @@
       const capsule = echarts.init(document.getElementById('chartCapsule'), null, { renderer: 'canvas' });
       const capsuleOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
             type: 'bar',
             data: values.map(v => v || null),
-            barWidth: 20,
+            barMaxWidth: 14,
+            barCategoryGap: '40%',
             itemStyle: {
               color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#14b8a6' }, { offset: 1, color: '#0d9488' }]),
               borderRadius: 9,
@@ -259,13 +289,14 @@
       const lollipop = echarts.init(document.getElementById('chartLollipop'), null, { renderer: 'canvas' });
       const lollipopOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
             type: 'bar',
             data: values.map(v => v || null),
             barWidth: 3,
+            barCategoryGap: '45%',
             itemStyle: { color: 'rgba(20,184,166,0.45)' }
           },
           {
@@ -286,7 +317,7 @@
       const dots = echarts.init(document.getElementById('chartDots'), null, { renderer: 'canvas' });
       const dotsOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
@@ -310,20 +341,21 @@
       const glow = echarts.init(document.getElementById('chartGlow'), null, { renderer: 'canvas' });
       const glowOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
             type: 'bar',
             data: values.map(v => v || null),
-            barWidth: 28,
+            barMaxWidth: 22,
             z: 0,
             itemStyle: { color: 'rgba(20,184,166,0.12)', borderRadius: 12, shadowBlur: 22, shadowColor: 'rgba(20,184,166,0.45)' }
           },
           {
             type: 'bar',
             data: values.map(v => v || null),
-            barWidth: 18,
+            barMaxWidth: 12,
+            barCategoryGap: '40%',
             z: 1,
             itemStyle: { color: '#14b8a6', borderRadius: 9 },
             emphasis: { itemStyle: { color: '#0d9488', shadowBlur: 12, shadowColor: 'rgba(20,184,166,0.35)' } }
@@ -337,7 +369,7 @@
 
       const polar = echarts.init(document.getElementById('chartPolar'), null, { renderer: 'canvas' });
       const polarOpt = {
-        angleAxis: { type: 'category', data: dates, axisLine: { show: false }, axisLabel: { color: '#6b7280' }, axisTick: { show: false } },
+        angleAxis: { type: 'category', data: dates, axisLine: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true }, axisTick: { show: false } },
         radiusAxis: { type: 'value', min: 0, max: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' }, splitLine: { show: false } },
         polar: {},
         series: [
@@ -357,7 +389,7 @@
       const micro = echarts.init(document.getElementById('chartMicro'), null, { renderer: 'canvas' });
       const microOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
@@ -381,19 +413,21 @@
       const mirror = echarts.init(document.getElementById('chartMirror'), null, { renderer: 'canvas' });
       const mirrorOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
             type: 'bar',
             data: values.map(v => v ? -v : null),
-            barWidth: 10,
+            barMaxWidth: 10,
+            barCategoryGap: '45%',
             itemStyle: { color: 'rgba(20,184,166,0.4)' }
           },
           {
             type: 'bar',
             data: values.map(v => v || null),
-            barWidth: 10,
+            barMaxWidth: 10,
+            barCategoryGap: '45%',
             itemStyle: { color: '#14b8a6' }
           },
           { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
@@ -406,7 +440,7 @@
       const notched = echarts.init(document.getElementById('chartNotched'), null, { renderer: 'canvas' });
       const notchedOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
@@ -461,6 +495,7 @@
             type: 'bar',
             data: values.map(v => v || null),
             barWidth: 8,
+            barCategoryGap: '45%',
             itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#16c1b1' }, { offset: 1, color: '#0d9488' }]), borderRadius: 999, shadowBlur: 10, shadowColor: 'rgba(20,184,166,0.25)' }
           },
           {
@@ -481,19 +516,20 @@
       const glass = echarts.init(document.getElementById('chartGlass'), null, { renderer: 'canvas' });
       const glassOpt = {
         grid: { left: 40, right: 24, top: 18, bottom: 36 },
-        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', interval: 2, hideOverlap: true } },
         yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
         series: [
           {
             type: 'bar',
             data: values.map(v => v || null),
-            barWidth: 22,
+            barMaxWidth: 18,
             itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(255,255,255,0.45)' }, { offset: 1, color: 'rgba(255,255,255,0.2)' }]), borderColor: 'rgba(255,255,255,0.5)', borderWidth: 1, borderRadius: 10, shadowBlur: 18, shadowColor: 'rgba(255,255,255,0.6)' }
           },
           {
             type: 'bar',
             data: values.map(v => v || null),
-            barWidth: 12,
+            barMaxWidth: 12,
+            barCategoryGap: '40%',
             itemStyle: { color: 'rgba(20,184,166,0.28)', borderRadius: 8 }
           },
           { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }

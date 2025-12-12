@@ -23,6 +23,26 @@
       <div id="chart" class="chart"></div>
       <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Outline</span><span class="currency">USD ▾</span></div>
       <div id="chartOutline" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Capsule</span><span class="currency">USD ▾</span></div>
+      <div id="chartCapsule" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Lollipop</span><span class="currency">USD ▾</span></div>
+      <div id="chartLollipop" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Dots</span><span class="currency">USD ▾</span></div>
+      <div id="chartDots" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Glow</span><span class="currency">USD ▾</span></div>
+      <div id="chartGlow" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Polar</span><span class="currency">USD ▾</span></div>
+      <div id="chartPolar" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Micro</span><span class="currency">USD ▾</span></div>
+      <div id="chartMicro" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Mirror</span><span class="currency">USD ▾</span></div>
+      <div id="chartMirror" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Notched</span><span class="currency">USD ▾</span></div>
+      <div id="chartNotched" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Ribbon</span><span class="currency">USD ▾</span></div>
+      <div id="chartRibbon" class="chart"></div>
+      <div class="chart-header" style="margin-top:20px;"><span class="title">Daily P&amp;L · Glassmorphism</span><span class="currency">USD ▾</span></div>
+      <div id="chartGlass" class="chart"></div>
     </div>
     <script src="https://unpkg.com/echarts@5/dist/echarts.min.js"></script>
     <script>
@@ -204,6 +224,284 @@
       };
       chart2.setOption(option2);
       window.addEventListener('resize', chart2.resize);
+
+      const capsule = echarts.init(document.getElementById('chartCapsule'), null, { renderer: 'canvas' });
+      const capsuleOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 20,
+            itemStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#14b8a6' }, { offset: 1, color: '#0d9488' }]),
+              borderRadius: 9,
+              shadowBlur: 10,
+              shadowColor: 'rgba(20,184,166,0.25)'
+            },
+            emphasis: {
+              itemStyle: {
+                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#16c1b1' }, { offset: 1, color: '#0f9e93' }]),
+                shadowBlur: 14,
+                shadowColor: 'rgba(20,184,166,0.35)'
+              }
+            }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      capsule.setOption(capsuleOpt);
+      window.addEventListener('resize', capsule.resize);
+
+      const lollipop = echarts.init(document.getElementById('chartLollipop'), null, { renderer: 'canvas' });
+      const lollipopOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 3,
+            itemStyle: { color: 'rgba(20,184,166,0.45)' }
+          },
+          {
+            type: 'scatter',
+            data: values.map((v, i) => v ? [dates[i], v] : [dates[i], null]),
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: { color: '#14b8a6' },
+            emphasis: { itemStyle: { color: '#0d9488', shadowBlur: 10, shadowColor: 'rgba(20,184,166,0.30)' } }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      lollipop.setOption(lollipopOpt);
+      window.addEventListener('resize', lollipop.resize);
+
+      const dots = echarts.init(document.getElementById('chartDots'), null, { renderer: 'canvas' });
+      const dotsOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'pictorialBar',
+            data: values,
+            symbol: 'circle',
+            symbolSize: [7, 7],
+            symbolMargin: 3,
+            symbolRepeat: true,
+            symbolBoundingData: 1000,
+            itemStyle: { color: '#14b8a6' },
+            emphasis: { itemStyle: { color: '#0d9488', shadowBlur: 10, shadowColor: 'rgba(20,184,166,0.25)' } }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      dots.setOption(dotsOpt);
+      window.addEventListener('resize', dots.resize);
+
+      const glow = echarts.init(document.getElementById('chartGlow'), null, { renderer: 'canvas' });
+      const glowOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 28,
+            z: 0,
+            itemStyle: { color: 'rgba(20,184,166,0.12)', borderRadius: 12, shadowBlur: 22, shadowColor: 'rgba(20,184,166,0.45)' }
+          },
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 18,
+            z: 1,
+            itemStyle: { color: '#14b8a6', borderRadius: 9 },
+            emphasis: { itemStyle: { color: '#0d9488', shadowBlur: 12, shadowColor: 'rgba(20,184,166,0.35)' } }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 2 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      glow.setOption(glowOpt);
+      window.addEventListener('resize', glow.resize);
+
+      const polar = echarts.init(document.getElementById('chartPolar'), null, { renderer: 'canvas' });
+      const polarOpt = {
+        angleAxis: { type: 'category', data: dates, axisLine: { show: false }, axisLabel: { color: '#6b7280' }, axisTick: { show: false } },
+        radiusAxis: { type: 'value', min: 0, max: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' }, splitLine: { show: false } },
+        polar: {},
+        series: [
+          {
+            type: 'bar',
+            coordinateSystem: 'polar',
+            data: values.map(v => v || null),
+            roundCap: true,
+            itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{ offset: 0, color: '#14b8a6' }, { offset: 1, color: '#0d9488' }]) }
+          }
+        ],
+        tooltip: { show: true, trigger: 'item' }
+      };
+      polar.setOption(polarOpt);
+      window.addEventListener('resize', polar.resize);
+
+      const micro = echarts.init(document.getElementById('chartMicro'), null, { renderer: 'canvas' });
+      const microOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'pictorialBar',
+            data: values,
+            symbol: 'roundRect',
+            symbolSize: [8, 4],
+            symbolMargin: 4,
+            symbolRepeat: true,
+            symbolBoundingData: 1000,
+            itemStyle: { color: '#14b8a6' },
+            emphasis: { itemStyle: { color: '#0d9488', shadowBlur: 10, shadowColor: 'rgba(20,184,166,0.30)' } }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      micro.setOption(microOpt);
+      window.addEventListener('resize', micro.resize);
+
+      const mirror = echarts.init(document.getElementById('chartMirror'), null, { renderer: 'canvas' });
+      const mirrorOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'bar',
+            data: values.map(v => v ? -v : null),
+            barWidth: 10,
+            itemStyle: { color: 'rgba(20,184,166,0.4)' }
+          },
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 10,
+            itemStyle: { color: '#14b8a6' }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      mirror.setOption(mirrorOpt);
+      window.addEventListener('resize', mirror.resize);
+
+      const notched = echarts.init(document.getElementById('chartNotched'), null, { renderer: 'canvas' });
+      const notchedOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'custom',
+            data: dates.map((d, i) => [d, values[i]]),
+            renderItem: (params, api) => {
+              const cat = api.value(0);
+              const val = api.value(1);
+              if (!val) return null;
+              const p0 = api.coord([cat, 0]);
+              const p1 = api.coord([cat, val]);
+              const cx = p0[0];
+              const y0 = p0[1];
+              const y1 = p1[1];
+              const topY = Math.min(y0, y1);
+              const height = Math.abs(y0 - y1);
+              const band = api.size([1, 0])[0];
+              const w = Math.min(18, band - 10);
+              const left = cx - w / 2;
+              const right = cx + w / 2;
+              const notchW = Math.max(6, Math.floor(w * 0.4));
+              const notchD = 6;
+              const mid = cx;
+              const path = [
+                'M', left, topY,
+                'L', mid - notchW / 2, topY,
+                'L', mid - notchW / 2, topY + notchD,
+                'L', mid + notchW / 2, topY + notchD,
+                'L', mid + notchW / 2, topY,
+                'L', right, topY,
+                'L', right, topY + height,
+                'L', left, topY + height,
+                'Z'
+              ];
+              return { type: 'path', shape: { pathData: path.join(' ') }, style: { fill: '#14b8a6' }, emphasis: { style: { fill: '#0d9488', shadowBlur: 12, shadowColor: 'rgba(20,184,166,0.35)' } } };
+            }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      notched.setOption(notchedOpt);
+      window.addEventListener('resize', notched.resize);
+
+      const ribbon = echarts.init(document.getElementById('chartRibbon'), null, { renderer: 'canvas' });
+      const ribbonOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 8,
+            itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: '#16c1b1' }, { offset: 1, color: '#0d9488' }]), borderRadius: 999, shadowBlur: 10, shadowColor: 'rgba(20,184,166,0.25)' }
+          },
+          {
+            type: 'scatter',
+            data: values.map((v, i) => v ? [dates[i], v] : [dates[i], null]),
+            symbol: 'circle',
+            symbolSize: 10,
+            itemStyle: { color: '#14b8a6' },
+            emphasis: { itemStyle: { color: '#0d9488', shadowBlur: 10, shadowColor: 'rgba(20,184,166,0.30)' } }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      ribbon.setOption(ribbonOpt);
+      window.addEventListener('resize', ribbon.resize);
+
+      const glass = echarts.init(document.getElementById('chartGlass'), null, { renderer: 'canvas' });
+      const glassOpt = {
+        grid: { left: 40, right: 24, top: 18, bottom: 36 },
+        xAxis: { type: 'category', data: dates, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280' } },
+        yAxis: { type: 'value', min: -1000, max: 1000, interval: 1000, axisLine: { show: false }, axisTick: { show: false }, axisLabel: { color: '#6b7280', formatter: (v) => v === 0 ? '0' : (v > 0 ? '1K' : '-1K') }, splitLine: { show: false } },
+        series: [
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 22,
+            itemStyle: { color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{ offset: 0, color: 'rgba(255,255,255,0.45)' }, { offset: 1, color: 'rgba(255,255,255,0.2)' }]), borderColor: 'rgba(255,255,255,0.5)', borderWidth: 1, borderRadius: 10, shadowBlur: 18, shadowColor: 'rgba(255,255,255,0.6)' }
+          },
+          {
+            type: 'bar',
+            data: values.map(v => v || null),
+            barWidth: 12,
+            itemStyle: { color: 'rgba(20,184,166,0.28)', borderRadius: 8 }
+          },
+          { type: 'line', data: values.map(() => 0), lineStyle: { color: '#9ca3af', width: 2, type: 'dashed' }, symbol: 'none', z: 1 }
+        ],
+        tooltip: { show: true, trigger: 'axis', axisPointer: { type: 'shadow', shadowStyle: { color: 'rgba(20,184,166,0.08)' } } }
+      };
+      glass.setOption(glassOpt);
+      window.addEventListener('resize', glass.resize);
     </script>
   </body>
 </html>

@@ -1,0 +1,96 @@
+{
+  "date": "2026-02-16",
+  "summary": "OpenClaw 作者加入 OpenAI 并计划转型基金会；Anthropic 与 OpenAI 在快速推理上的不同技术路线揭示行业趋势；认知债务概念浮出水面，AI 时代的核心挑战从代码转向开发者心智负担；Agent 疲劳与倦怠成为新的讨论焦点。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "OpenClaw 作者加入 OpenAI",
+      "url": "https://steipete.me/posts/2026/openclaw",
+      "source": "Personal Blog",
+      "tldr": "Peter Steinberger 宣布加入 OpenAI，专注于将 agent 带给普通用户；OpenClaw 将转为独立基金会，保持开源；强调「改变世界」比「建立大公司」更重要。",
+      "excerpt": "OpenClaw 作者 Peter Steinberger 在经历了一个月的旋风式洽谈后，最终决定加入 OpenAI，目标是让 AI agent 变得「连妈妈都能用」。他坦言可以把 OpenClaw 做成大公司，但那不是他想要的——13 年创业经历已经教会他足够。加入 OpenAI 能获得最新模型和研究的访问权，这是最快将 agent 普及的路径。OpenClaw 将转为基金会运作，保持开源和独立性，成为「思考者、黑客和拥有数据主权者」的家园。OpenAI 已承诺赞助项目并让 Peter 继续投入社区。他在旧金山与各大实验室交谈后，发现 OpenAI 最契合他的愿景。「The claw is the law」——这只龙虾的故事还在继续。",
+      "tags": ["人物动态", "开源", "OpenAI"]
+    },
+    {
+      "num": 2,
+      "title": "快速 LLM 推理的两种截然不同路径",
+      "url": "https://www.seangoedecke.com/fast-llm-inference/",
+      "source": "seangoedecke.com",
+      "tldr": "Anthropic 用低批次推理获得 2.5x 提速（真 Opus 4.6），OpenAI 用 Cerebras 巨型芯片获得 15x 提速（新蒸馏模型 Spark）。一个保证质量但贵 6 倍，一个极快但能力打折，背后是两种不同的技术哲学。",
+      "excerpt": "Anthropic 和 OpenAI 的 fast mode 看似相似，实则天差地别。Anthropic 的 2.5x 提速来自「降低批次大小」——就像公交车一上人就走，不等满员，代价是 6 倍价格，但模型还是真正的 Opus 4.6。OpenAI 的 15x 提速来自 Cerebras 70 平方英寸的巨型芯片（普通 H100 才 1 平方英寸），整块晶圆刻成一个芯片，44GB SRAM 让推理完全在片内进行，但因为装不下 GPT-5.3-Codex，只能跑蒸馏版 Spark，能力明显下降。作者认为 Anthropic 可能是为了抢先 OpenAI 发布而仓促推出，而「更快但更笨」的模型对 agent 用处不大——大部分时间都在修 bug，不是在等模型。批次、内存带宽、芯片架构、持续批处理、延迟——这些底层权衡决定了 AI 推理的经济学和产品形态。",
+      "tags": ["技术深度", "推理优化", "Anthropic", "OpenAI"]
+    },
+    {
+      "num": 3,
+      "title": "OpenClaw 三个月：从首次提交到 19.6 万 star",
+      "url": "https://simonwillison.net/2026/Feb/15/openclaw/#atom-everything",
+      "source": "Simon Willison",
+      "tldr": "2025 年 11 月 25 日首次提交，不到三个月获得 10,000 次提交、600 贡献者、19.6 万 star，还登上超级碗广告。开源项目达到这种热度的速度前所未有。",
+      "excerpt": "Simon Willison 感叹 OpenClaw 的增长速度：首次提交到现在不到三个月，已经 10,000 commits、600 contributors、196,000 GitHub stars，甚至被 AI.com（史上最贵域名 7000 万美元）的超级碗广告含糊提及。AI.com 创始人称其为「世界上第一个易用且安全的 OpenClaw 实现」，但目前只能预约用户名，看起来像是蒸发件（vaporware）。尽管如此，一个开源项目在如此短时间内达到这种炒作级别是史无前例的。更新：OpenClaw 作者刚宣布加入 OpenAI，并计划把项目转给新的独立基金会。",
+      "tags": ["开源", "OpenClaw", "深度分析"]
+    },
+    {
+      "num": 4,
+      "title": "AI Vampire：被 AI 榨干的开发者",
+      "url": "https://simonwillison.net/2026/Feb/15/the-ai-vampire/#atom-everything",
+      "source": "Simon Willison (via Steve Yegge)",
+      "tldr": "Steve Yegge 创造新术语描述 AI 时代的倦怠：用 10x 生产力工作 8 小时，公司拿走全部价值，你什么也没得到，还累得半死——欢迎来到「AI 吸血鬼」时代。",
+      "excerpt": "Steve Yegge 提出「AI Vampire」概念：假设你用 AI 达到 10x 生产力工作 8 小时，你的雇主捕获 100% 的价值，而你得不到 9 倍工资，还被所有人讨厌，并且精疲力竭。用 AI 让公司榨干你变得前所未有地容易。Yegge 报告称需要更多睡眠来应对认知负担，每天只能舒服地用 agent 工作 4 小时左右，即使练习很多也是如此。他认为 AI 把我们都变成了贝索斯——自动化了简单工作，留给我们的全是艰难决策、总结和问题解决。Simon Willison 总结：这是 agent 疲劳与倦怠的关系。",
+      "tags": ["观点", "倦怠", "agent"]
+    },
+    {
+      "num": 5,
+      "title": "认知债务：AI 时代比技术债务更危险的东西",
+      "url": "https://margaretstorey.com/blog/2026/02/09/cognitive-debt/",
+      "source": "Margaret-Anne Storey",
+      "tldr": "技术债务活在代码里，认知债务活在开发者脑子里。AI 让代码生成飞快，但团队的「共享理论」正在消失——没人知道系统为什么这样设计、怎么改，这才是真正的危机。",
+      "excerpt": "Margaret-Anne Storey 提出认知债务（cognitive debt）概念：技术债务是代码的属性，认知债务是开发者心智的负担。Peter Naur 提醒我们「程序不只是源码，而是活在开发者脑中的理论」——包括程序做什么、意图如何实现、如何修改。AI agent 加速开发后，这个共享理论正在碎片化或消失。她在创业课上观察到：一个团队到第 7-8 周无法做任何改动而不破坏东西，起初归咎于技术债务，但深挖后发现真正问题是没人能解释设计决策或系统如何工作——认知债务比技术债务更快积累，最终让他们瘫痪。警示信号：团队成员因害怕意外后果而犹豫改动、依赖少数人的「部落知识」、系统变成黑盒。应对策略：要求至少一个人完全理解 AI 生成的每个改动、记录变化的原因而非仅记录内容、定期重建共享理解。这可能是我们这个领域面临的最重要挑战之一。",
+      "tags": ["深度分析", "工程文化", "AI"]
+    },
+    {
+      "num": 6,
+      "title": "为什么 OpenAI 应该做 Slack",
+      "url": "https://www.latent.space/p/ainews-why-openai-should-build-slack",
+      "source": "Latent Space (swyx)",
+      "tldr": "Sam Altman 说「告诉我们该做什么，我们就做」。答案：做 Slack。它符合你的标准——很难但影响大，是企业和编码的自然延伸，能建立永久护城河。Slack 已被 Salesforce 搞残，是时候了。",
+      "excerpt": "swyx 直接给 Sam Altman 出主意：OpenAI 应该做 Slack。理由很充分：Slack 被 Salesforce 以 277 亿美元收购后陷入涨价、AI 功能鸡肋、频繁宕机的困境，NPS 低但科技公司都在用。开发者抱怨 API 成本和权限，创始人抱怨定价，用户抱怨通道疲劳和通知垃圾。ChatGPT 3 个月前推出群聊但使用率不佳，不代表做不好企业社交网络——微软的 Teams 就成功了。OpenAI 现在桌面端战略混乱：聊天 app、浏览器 app、编码 app 各自登录，远不如 Anthropic 的统一 Claude app。「OpenAI Slack」是重夺主动权的机会：多人 agent UX、企业社交图谱和工作图谱分层到 ChatGPT 上，网络效应让用户难以离开。关键：这还是你一直想要的编码 agent 多人界面——设计师和开发者通过聊天让 agent 群协作，这才是 AGI 该有的编排界面。很难、影响大、有护城河——符合你所有标准。",
+      "tags": ["观点", "OpenAI", "产品策略"]
+    },
+    {
+      "num": 7,
+      "title": "Wagon 算法：用 Python 实现素数的两平方和分解",
+      "url": "https://www.johndcook.com/blog/2026/02/14/wagons-algorithm-in-python/",
+      "source": "John D. Cook",
+      "tldr": "形如 4k+1 的素数可以表示为两个平方和。Gauss 有公式但不实用，Wagon 算法用二次非剩余 + 改良欧几里得算法优雅解决，Python 实现只需几行代码。",
+      "excerpt": "John D. Cook 用系列文章讲解 Stan Wagon 算法：给定形如 4k+1 的素数 p，找到 x² + y² = p。Gauss 给出了公式但对大素数不实用。Wagon 算法分两步：1）找到二次非剩余（一个数 c 使得 c ≠ d² mod p）；2）用它计算 -1 的模平方根 x = c^(p/4) mod p；3）对 x 和 p 运行改良的欧几里得算法，在两个数都小于 √p 时停止。关键技巧是用 Python 3.8 引入的 isqrt 函数计算大整数平方根——它返回平方根下取整的整数，避免浮点精度问题（浮点只有 53 位精度，超过 2^53 的整数无法完全准确表示）。最后用 p = 2^255 - 19（密码学常用素数）演示，几毫秒内得到答案。代码简洁优雅，展示了数论算法的实用美感。",
+      "tags": ["数学", "算法", "Python"]
+    },
+    {
+      "num": 8,
+      "title": "MemFly：用信息瓶颈原理优化 LLM 长期记忆",
+      "url": "https://arxiv.org/abs/2602.07885",
+      "source": "arXiv",
+      "tldr": "LLM agent 的长期记忆面临压缩效率与检索精度的两难。MemFly 用信息瓶颈原理在压缩时最小化熵、最大化相关性，构建分层记忆结构，配合语义+符号+拓扑混合检索大幅超越基线。",
+      "excerpt": "这篇论文解决 LLM agent 长期记忆的核心矛盾：如何在高效压缩冗余信息的同时保持下游任务的精确检索。MemFly 基于信息瓶颈（information bottleneck）原理，在压缩过程中通过无梯度优化器最小化压缩熵、最大化相关性熵，构建分层记忆结构以实现高效存储。为了充分利用这种结构，研究者开发了混合检索机制，无缝集成语义（semantic）、符号（symbolic）和拓扑（topological）三条路径，并引入迭代优化来处理复杂的多跳查询。实验表明 MemFly 在记忆连贯性、响应保真度和准确性上大幅超越 SOTA 基线。这对需要长期上下文的 agent 应用（如个人助理、企业知识库）有重要意义——不是无限扩展上下文窗口，而是智能地「忘记」不重要的、精准「记住」关键的。",
+      "tags": ["研究", "记忆管理", "agent"]
+    },
+    {
+      "num": 9,
+      "title": "Composition-RL：组合问题提升可验证 RL 训练效率",
+      "url": "https://arxiv.org/abs/2602.12036",
+      "source": "arXiv",
+      "tldr": "可验证奖励 RL（RLVR）依赖大量验证提示，但很多已经太简单（通过率 100%）失去训练价值。Composition-RL 自动把多个简单问题组合成新的可验证问题，持续扩充有效数据，跨模型尺寸一致提升推理能力。",
+      "excerpt": "可验证奖励强化学习（RLVR）的成功依赖大规模可验证提示（如数学题、编程题），但这些数据集包含大量无信息样本且扩展成本高。现有研究关注通过率为 0 的困难提示，但随训练推进，通过率为 1 的简单提示也越来越多，降低有效数据规模。Composition-RL 针对这些「太简单」的提示：自动将多个问题组合成新的可验证问题，用于 RL 训练。在 4B 到 30B 参数模型上的广泛实验显示，Composition-RL 在原始数据集上训练的 RL 基础上持续提升推理能力。性能还能通过课程学习变体进一步提升——随训练逐渐增加组合深度。此外，Composition-RL 通过组合不同领域的提示实现更有效的跨域 RL。代码、数据集和模型已开源。这为扩展 RL 训练数据提供了「组合式数据增强」的新思路——不是收集更多原始数据，而是从现有数据中生成更难的挑战。",
+      "tags": ["研究", "强化学习", "推理"]
+    },
+    {
+      "num": 10,
+      "title": "MicroGPT：可在浏览器中可视化的 GPT",
+      "url": "https://microgpt.boratto.ca",
+      "source": "Show HN",
+      "tldr": "一个可以在浏览器中实时可视化 Transformer 推理过程的项目，让你看到每一层、每个 token、每个注意力头的计算细节，是理解 GPT 工作原理的绝佳教学工具。",
+      "excerpt": "MicroGPT 是一个 Show HN 项目，允许你在浏览器中可视化 GPT 模型的推理过程。虽然 web_fetch 没能抓取到详细内容（可能是纯前端应用），但从 HN 讨论和项目名称判断，这是一个教学导向的工具，旨在让人们直观理解 Transformer 架构的工作机制。类似项目通常会展示：输入 token 如何编码、注意力机制如何在各层计算、残差连接和归一化如何作用、最终如何生成输出 token。这类可视化工具对 AI 教育极有价值——比阅读论文或代码更直观，能快速建立对模型内部运作的直觉。对想深入理解 GPT 而非只是调用 API 的人来说，这是不可多得的学习资源。建议直接访问网站体验交互式演示。",
+      "tags": ["工具", "可视化", "教育"]
+    }
+  ]
+}

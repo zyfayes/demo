@@ -1,0 +1,86 @@
+{
+  "date": "2026-02-17",
+  "summary": "Qwen3.5 主打 native multimodal agent 能力，直接叫板 GPT-5.2 和 Claude；研究发现 Agent 自生成的 skill 在跨任务迁移时基本没用；Dario Amodei 最新播客确认 AI 进展符合预期，coding 进展超预期；AI 对开源生态的破坏正在加速；硬盘因 AI 需求全年售罄；Steipete 加入 OpenAI 引发大讨论。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Qwen3.5: Towards Native Multimodal Agents",
+      "url": "https://qwen.ai/blog?id=qwen3.5",
+      "source": "Alibaba/通义 · HN 377↑",
+      "tldr": "阿里发布 Qwen3.5，主打「原生多模态 Agent」概念——不是在 LLM 上缝合视觉模块，而是从预训练阶段就联合训练文本/图像/代码/工具调用。号称在 agent benchmark 上超过 GPT-5.2 和 Claude。开源权重。中国大模型竞争进入 agent-native 新阶段。",
+      "tags": ["模型发布", "开源", "Agent"]
+    },
+    {
+      "num": 2,
+      "title": "SkillsBench: Self-generated Agent Skills are Useless",
+      "url": "https://arxiv.org/abs/2602.12670",
+      "source": "arXiv · HN 238↑",
+      "tldr": "Agent 自己总结出的「技能」（skill library）跨任务迁移效果极差，和没有 skill 几乎没区别。论文提出 SkillsBench 基准，系统测试了多种 skill 提取/复用方案。结论：当前 LLM agent 的自我进化还是幻觉居多。对 Voyager 式 skill accumulation 路线是当头一棒。",
+      "tags": ["Agent", "研究", "Benchmark"]
+    },
+    {
+      "num": 3,
+      "title": "Zvi 解读 Dario Amodei 最新 Dwarkesh 播客",
+      "url": "https://thezvi.substack.com/p/on-dwarkesh-patels-2026-podcast-with",
+      "source": "Zvi Mowshowitz",
+      "tldr": "Dario 重申 AI 进展基本符合他 2017 年以来的 scaling 预期，coding 能力进展甚至超预期。「数据中心里的天才」可能今年就会出现。但值得注意的是：整场访谈几乎没讨论 alignment，Zvi 称之为「夜里没叫的狗」。Anthropic 的实际投资姿态比言论保守得多。",
+      "tags": ["深度分析", "Anthropic", "Scaling"]
+    },
+    {
+      "num": 4,
+      "title": "AI 正在摧毁开源，而它甚至还不够好",
+      "url": "https://www.jeffgeerling.com/blog/2026/ai-is-destroying-open-source/",
+      "source": "Jeff Geerling · HN 42↑",
+      "tldr": "Ars Technica 撤回了一篇文章，因为写作者用的 AI 凭空捏造了一位开源维护者的引用。讽刺的是这位维护者正是因为拒绝了一个 AI 生成的低质量 PR 而被写进文章。Jeff Geerling 以此为切口分析 AI 对开源生态的多重伤害：垃圾 PR 泛滥、维护者被 AI 生成的 hit piece 攻击、信任崩塌。",
+      "tags": ["开源", "观点", "AI伦害"]
+    },
+    {
+      "num": 5,
+      "title": "AI 导致硬盘全年售罄",
+      "url": "https://mashable.com/article/ai-hard-drive-hdd-shortages-western-digital-sold-out",
+      "source": "Mashable · HN 338↑",
+      "tldr": "WD 宣布 HDD 今年产能已全部预售完毕，主因是 AI 训练和推理的海量数据存储需求。这不是 GPU 短缺的故事重演——是存储层的瓶颈开始显现。对基础设施投资者来说是个信号。",
+      "tags": ["基础设施", "产业"]
+    },
+    {
+      "num": 6,
+      "title": "Steipete 加入 OpenAI（曾创 OpenClaw）",
+      "url": "https://steipete.me/posts/2026/openclaw",
+      "source": "steipete.me · HN 1387↑",
+      "tldr": "Peter Steinberger（PSPDFKit 创始人、OpenClaw 重要贡献者）宣布加入 OpenAI。HN 1387 分 + 1071 条评论，引发了关于 OpenAI 人才虹吸效应的大讨论。OpenClaw 三个月就到了 196k stars 和 600 贡献者，Simon Willison 专门写了回顾文。",
+      "tags": ["人物", "OpenAI"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic 试图隐藏 Claude 的 AI 操作，开发者不买账",
+      "url": "https://www.theregister.com/2026/02/16/anthropic_claude_ai_edits/",
+      "source": "The Register · HN 354↑",
+      "tldr": "Anthropic 被发现试图让 Claude 的编辑操作在 UI 中不那么显眼，开发者社区反应强烈。核心争议：AI 透明度 vs 用户体验简洁。354 分 220 评论说明这触到了行业敏感神经——谁有权决定用户「需要知道多少」？",
+      "tags": ["Anthropic", "透明度", "争议"]
+    },
+    {
+      "num": 8,
+      "title": "Steve Yegge: The AI Vampire",
+      "url": "https://steve-yegge.medium.com/the-ai-vampire-eda6e4f07163",
+      "source": "Steve Yegge via Simon Willison",
+      "tldr": "Yegge 提出「AI 吸血鬼」概念：如果你用 AI 做到 10x 生产力，你面临两个选择——8 小时干完 80 小时的活然后被要求干更多，或者 1 小时干完然后摸鱼。两种都通向 burnout。这是对 agent fatigue 最精准的心理学分析。",
+      "tags": ["观点", "Agent疲劳"]
+    },
+    {
+      "num": 9,
+      "title": "Simon Willison: Showboat 新工具 Chartroom + datasette-showboat",
+      "url": "https://simonwillison.net/2026/Feb/17/chartroom-and-datasette-showboat/",
+      "source": "Simon Willison",
+      "tldr": "Simon 围绕 Showboat（帮 coding agent 生成演示文档的 CLI）又发布了两个配套工具。Chartroom 是 CLI 图表工具，datasette-showboat 把数据库查询结果直接嵌入 Showboat 文档。这套工具链的思路值得关注：不是让 AI 写更多代码，而是让 AI 更好地展示它写了什么。",
+      "tags": ["开源工具", "Coding Agent"]
+    },
+    {
+      "num": 10,
+      "title": "Cognitive Debt: 从技术债到认知债",
+      "url": "https://margaretstorey.com/blog/2026/02/09/cognitive-debt/",
+      "source": "Margaret-Anne Storey via Simon Willison",
+      "tldr": "当 AI 帮你写了代码但你不理解它，你积累的不是技术债而是「认知债」。作者系统定义了这个概念：开发者越来越多地维护自己不理解的系统，debug 能力退化，知识传承断裂。这可能是 AI coding 时代最被低估的长期风险。",
+      "tags": ["深度分析", "软件工程"]
+    }
+  ]
+}

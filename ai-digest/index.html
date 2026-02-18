@@ -306,7 +306,8 @@
 </div>
 
 <script>
-const BASE = './data?_=' + Date.now();
+const BASE = './data';
+const CACHE_BUST = () => `?_=${Date.now()}`;
 let manifest = [];
 let currentIdx = 0;
 
@@ -354,7 +355,7 @@ async function loadDate(date) {
   content.innerHTML = '<div class="loading"><div class="spinner"></div>正在加载...</div>';
 
   try {
-    const res = await fetch(`${BASE}/${date}.json`);
+    const res = await fetch(`${BASE}/${date}.json${CACHE_BUST()}`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     document.title = `AI 日报 ${date}`;
@@ -394,7 +395,7 @@ function updateDropdown() {
 // ── Init ──
 async function init() {
   try {
-    const res = await fetch(`${BASE}/manifest.json`);
+    const res = await fetch(`${BASE}/manifest.json${CACHE_BUST()}`);
     manifest = await res.json();
     if (!manifest.length) {
       document.getElementById('content').innerHTML = '<div class="error-state">暂无数据</div>';

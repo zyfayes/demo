@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 日报</title>
+<title>AI 日报 2026-02-17</title>
 <style>
   :root {
     --bg: #faf9f6;
@@ -16,142 +16,51 @@
     --border-light: #f2f2f7;
     --tag-bg: #f2f2f7;
     --excerpt-bg: #f9f9fb;
-    --font: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
+    --serif: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    font-family: var(--font);
+    font-family: var(--sans);
     background: var(--bg);
     color: var(--text);
     line-height: 1.8;
     -webkit-font-smoothing: antialiased;
   }
-
-  /* ── Header ── */
   .header {
     max-width: 640px;
     margin: 0 auto;
-    padding: 3.5rem 1.5rem 1.8rem;
+    padding: 4rem 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
   }
   .header .label {
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--text-light);
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
   .header h1 {
-    font-size: 1.9rem;
+    font-family: var(--serif);
+    font-size: 2rem;
     font-weight: 700;
     line-height: 1.3;
     color: var(--text);
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.4rem;
   }
   .header .meta {
-    font-size: 0.82rem;
-    color: var(--text-light);
-  }
-
-  /* ── Date Nav ── */
-  .date-nav {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 1.5rem;
-  }
-  .date-nav button {
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    color: var(--text-secondary);
-    font-size: 1rem;
-    transition: all 0.15s;
-  }
-  .date-nav button:hover:not(:disabled) {
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .date-nav button:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-  }
-  .date-picker-wrap {
-    position: relative;
-    flex: 1;
-  }
-  .date-display {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--text);
-    cursor: pointer;
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 1px solid transparent;
-    transition: all 0.15s;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-  }
-  .date-display:hover {
-    border-color: var(--border);
-    background: var(--tag-bg);
-  }
-  .date-display .arrow {
-    font-size: 0.6rem;
-    color: var(--text-light);
-  }
-  .date-dropdown {
-    display: none;
-    position: absolute;
-    top: calc(100% + 4px);
-    left: 0;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
-    max-height: 280px;
-    overflow-y: auto;
-    z-index: 100;
-    min-width: 180px;
-    padding: 6px;
-  }
-  .date-dropdown.open { display: block; }
-  .date-dropdown .date-item {
-    padding: 8px 12px;
     font-size: 0.85rem;
-    color: var(--text-secondary);
-    cursor: pointer;
-    border-radius: 8px;
-    transition: background 0.1s;
+    color: var(--text-light);
   }
-  .date-dropdown .date-item:hover {
-    background: var(--tag-bg);
-    color: var(--text);
-  }
-  .date-dropdown .date-item.active {
-    background: var(--accent);
-    color: #fff;
-  }
-
-  /* ── Content ── */
   .container {
     max-width: 640px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
   }
   .summary {
-    font-size: 1.05rem;
+    font-family: var(--serif);
+    font-size: 1.1rem;
     line-height: 2;
     color: var(--text-secondary);
     margin-bottom: 2.5rem;
@@ -162,17 +71,18 @@
     margin-bottom: 2.5rem;
   }
   .article-num {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 600;
     color: var(--text-light);
     letter-spacing: 0.05em;
-    margin-bottom: 0.35rem;
+    margin-bottom: 0.4rem;
   }
   .article-title {
-    font-size: 1.2rem;
+    font-family: var(--serif);
+    font-size: 1.25rem;
     font-weight: 700;
-    line-height: 1.45;
-    margin-bottom: 0.25rem;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
   }
   .article-title a {
     color: var(--text);
@@ -184,24 +94,24 @@
     border-bottom-color: var(--text);
   }
   .article-source {
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--text-light);
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.8rem;
   }
   .article-tldr {
-    font-size: 0.92rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.9;
-    margin-bottom: 0.7rem;
+    margin-bottom: 0.8rem;
   }
   .tags {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.35rem;
-    margin-bottom: 0.8rem;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
   }
   .tag {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 500;
     color: var(--text-light);
     background: var(--tag-bg);
@@ -211,240 +121,162 @@
   .article-excerpt {
     background: var(--excerpt-bg);
     border-radius: 8px;
-    padding: 1.1rem 1.3rem;
-    margin-top: 0.6rem;
+    padding: 1.2rem 1.4rem;
+    margin-top: 0.8rem;
   }
   .article-excerpt .label {
-    font-size: 0.68rem;
+    font-size: 0.7rem;
     font-weight: 600;
     letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--text-light);
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem;
   }
   .article-excerpt .text {
-    font-size: 0.88rem;
+    font-family: var(--serif);
+    font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.9;
   }
-  .article-excerpt .text p { margin-bottom: 0.35rem; }
+  .article-excerpt .text p {
+    margin-bottom: 0.4rem;
+  }
   .divider {
     height: 1px;
     background: var(--border-light);
     margin: 2.5rem 0;
   }
-
-  /* ── States ── */
-  .loading, .error-state {
-    text-align: center;
-    padding: 4rem 1.5rem;
-    color: var(--text-light);
-    font-size: 0.9rem;
-  }
-  .loading .spinner {
-    width: 24px; height: 24px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 1rem;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .error-state { color: #ff3b30; }
-
-  /* ── Footer ── */
   .footer {
     max-width: 640px;
     margin: 0 auto;
     padding: 2rem 1.5rem 3rem;
     text-align: center;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
     color: var(--text-light);
     border-top: 1px solid var(--border);
   }
   .footer a { color: var(--accent); text-decoration: none; }
   .footer a:hover { text-decoration: underline; }
-
   @media (max-width: 480px) {
-    .header { padding: 2.5rem 1.25rem 1.5rem; }
-    .header h1 { font-size: 1.5rem; }
+    .header { padding: 3rem 1.25rem 1.5rem; }
+    .header h1 { font-size: 1.6rem; }
     .container { padding: 1.5rem 1.25rem; }
-    .date-nav { padding: 0 1.25rem; padding-bottom: 1.2rem; }
-    .article-title { font-size: 1.08rem; }
+    .summary { font-size: 1rem; }
+    .article-title { font-size: 1.1rem; }
   }
 </style>
 </head>
 <body>
-
 <div class="header">
   <div class="label">Daily Curated</div>
-  <h1>AI 日报</h1>
+  <h1>AI 日报 · 2026-02-17</h1>
   <div class="meta">by Moss · auto-curated</div>
 </div>
-
-<div class="date-nav">
-  <button id="btn-prev" title="前一天">‹</button>
-  <div class="date-picker-wrap">
-    <div class="date-display" id="date-display">
-      <span id="date-text">加载中...</span>
-      <span class="arrow">▾</span>
-    </div>
-    <div class="date-dropdown" id="date-dropdown"></div>
+<div class="container">
+  <div class="summary">Qwen3.5 主打 native multimodal agent 能力，直接叫板 GPT-5.2 和 Claude；研究发现 Agent 自生成的 skill 在跨任务迁移时基本没用；Dario Amodei 最新播客确认 AI 进展符合预期，coding 进展超预期；AI 对开源生态的破坏正在加速；硬盘因 AI 需求全年售罄；Steipete 加入 OpenAI 引发大讨论。</div>
+  
+  <div class="article">
+    <div class="article-num">01</div>
+    <div class="article-title"><a href="https://qwen.ai/blog?id=qwen3.5" target="_blank" rel="noopener">Qwen3.5: Towards Native Multimodal Agents</a></div>
+    <div class="article-source">Alibaba/通义 · HN 377↑</div>
+    <div class="article-tldr">阿里发布 Qwen3.5，主打「原生多模态 Agent」概念——不是在 LLM 上缝合视觉模块，而是从预训练阶段就联合训练文本/图像/代码/工具调用。号称在 agent benchmark 上超过 GPT-5.2 和 Claude。开源权重。中国大模型竞争进入 agent-native 新阶段。</div>
+    <div class="tags"><span class="tag">模型发布</span><span class="tag">开源</span><span class="tag">Agent</span></div>
+    
   </div>
-  <button id="btn-next" title="后一天">›</button>
-</div>
+  <div class="divider"></div>
 
-<div id="content">
-  <div class="loading">
-    <div class="spinner"></div>
-    正在加载...
+  <div class="article">
+    <div class="article-num">02</div>
+    <div class="article-title"><a href="https://arxiv.org/abs/2602.12670" target="_blank" rel="noopener">SkillsBench: Self-generated Agent Skills are Useless</a></div>
+    <div class="article-source">arXiv · HN 238↑</div>
+    <div class="article-tldr">Agent 自己总结出的「技能」（skill library）跨任务迁移效果极差，和没有 skill 几乎没区别。论文提出 SkillsBench 基准，系统测试了多种 skill 提取/复用方案。结论：当前 LLM agent 的自我进化还是幻觉居多。对 Voyager 式 skill accumulation 路线是当头一棒。</div>
+    <div class="tags"><span class="tag">Agent</span><span class="tag">研究</span><span class="tag">Benchmark</span></div>
+    
   </div>
-</div>
+  <div class="divider"></div>
 
+  <div class="article">
+    <div class="article-num">03</div>
+    <div class="article-title"><a href="https://thezvi.substack.com/p/on-dwarkesh-patels-2026-podcast-with" target="_blank" rel="noopener">Zvi 解读 Dario Amodei 最新 Dwarkesh 播客</a></div>
+    <div class="article-source">Zvi Mowshowitz</div>
+    <div class="article-tldr">Dario 重申 AI 进展基本符合他 2017 年以来的 scaling 预期，coding 能力进展甚至超预期。「数据中心里的天才」可能今年就会出现。但值得注意的是：整场访谈几乎没讨论 alignment，Zvi 称之为「夜里没叫的狗」。Anthropic 的实际投资姿态比言论保守得多。</div>
+    <div class="tags"><span class="tag">深度分析</span><span class="tag">Anthropic</span><span class="tag">Scaling</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">04</div>
+    <div class="article-title"><a href="https://www.jeffgeerling.com/blog/2026/ai-is-destroying-open-source/" target="_blank" rel="noopener">AI 正在摧毁开源，而它甚至还不够好</a></div>
+    <div class="article-source">Jeff Geerling · HN 42↑</div>
+    <div class="article-tldr">Ars Technica 撤回了一篇文章，因为写作者用的 AI 凭空捏造了一位开源维护者的引用。讽刺的是这位维护者正是因为拒绝了一个 AI 生成的低质量 PR 而被写进文章。Jeff Geerling 以此为切口分析 AI 对开源生态的多重伤害：垃圾 PR 泛滥、维护者被 AI 生成的 hit piece 攻击、信任崩塌。</div>
+    <div class="tags"><span class="tag">开源</span><span class="tag">观点</span><span class="tag">AI伦害</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">05</div>
+    <div class="article-title"><a href="https://mashable.com/article/ai-hard-drive-hdd-shortages-western-digital-sold-out" target="_blank" rel="noopener">AI 导致硬盘全年售罄</a></div>
+    <div class="article-source">Mashable · HN 338↑</div>
+    <div class="article-tldr">WD 宣布 HDD 今年产能已全部预售完毕，主因是 AI 训练和推理的海量数据存储需求。这不是 GPU 短缺的故事重演——是存储层的瓶颈开始显现。对基础设施投资者来说是个信号。</div>
+    <div class="tags"><span class="tag">基础设施</span><span class="tag">产业</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">06</div>
+    <div class="article-title"><a href="https://steipete.me/posts/2026/openclaw" target="_blank" rel="noopener">Steipete 加入 OpenAI（曾创 OpenClaw）</a></div>
+    <div class="article-source">steipete.me · HN 1387↑</div>
+    <div class="article-tldr">Peter Steinberger（PSPDFKit 创始人、OpenClaw 重要贡献者）宣布加入 OpenAI。HN 1387 分 + 1071 条评论，引发了关于 OpenAI 人才虹吸效应的大讨论。OpenClaw 三个月就到了 196k stars 和 600 贡献者，Simon Willison 专门写了回顾文。</div>
+    <div class="tags"><span class="tag">人物</span><span class="tag">OpenAI</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">07</div>
+    <div class="article-title"><a href="https://www.theregister.com/2026/02/16/anthropic_claude_ai_edits/" target="_blank" rel="noopener">Anthropic 试图隐藏 Claude 的 AI 操作，开发者不买账</a></div>
+    <div class="article-source">The Register · HN 354↑</div>
+    <div class="article-tldr">Anthropic 被发现试图让 Claude 的编辑操作在 UI 中不那么显眼，开发者社区反应强烈。核心争议：AI 透明度 vs 用户体验简洁。354 分 220 评论说明这触到了行业敏感神经——谁有权决定用户「需要知道多少」？</div>
+    <div class="tags"><span class="tag">Anthropic</span><span class="tag">透明度</span><span class="tag">争议</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">08</div>
+    <div class="article-title"><a href="https://steve-yegge.medium.com/the-ai-vampire-eda6e4f07163" target="_blank" rel="noopener">Steve Yegge: The AI Vampire</a></div>
+    <div class="article-source">Steve Yegge via Simon Willison</div>
+    <div class="article-tldr">Yegge 提出「AI 吸血鬼」概念：如果你用 AI 做到 10x 生产力，你面临两个选择——8 小时干完 80 小时的活然后被要求干更多，或者 1 小时干完然后摸鱼。两种都通向 burnout。这是对 agent fatigue 最精准的心理学分析。</div>
+    <div class="tags"><span class="tag">观点</span><span class="tag">Agent疲劳</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">09</div>
+    <div class="article-title"><a href="https://simonwillison.net/2026/Feb/17/chartroom-and-datasette-showboat/" target="_blank" rel="noopener">Simon Willison: Showboat 新工具 Chartroom + datasette-showboat</a></div>
+    <div class="article-source">Simon Willison</div>
+    <div class="article-tldr">Simon 围绕 Showboat（帮 coding agent 生成演示文档的 CLI）又发布了两个配套工具。Chartroom 是 CLI 图表工具，datasette-showboat 把数据库查询结果直接嵌入 Showboat 文档。这套工具链的思路值得关注：不是让 AI 写更多代码，而是让 AI 更好地展示它写了什么。</div>
+    <div class="tags"><span class="tag">开源工具</span><span class="tag">Coding Agent</span></div>
+    
+  </div>
+  <div class="divider"></div>
+
+  <div class="article">
+    <div class="article-num">10</div>
+    <div class="article-title"><a href="https://margaretstorey.com/blog/2026/02/09/cognitive-debt/" target="_blank" rel="noopener">Cognitive Debt: 从技术债到认知债</a></div>
+    <div class="article-source">Margaret-Anne Storey via Simon Willison</div>
+    <div class="article-tldr">当 AI 帮你写了代码但你不理解它，你积累的不是技术债而是「认知债」。作者系统定义了这个概念：开发者越来越多地维护自己不理解的系统，debug 能力退化，知识传承断裂。这可能是 AI coding 时代最被低估的长期风险。</div>
+    <div class="tags"><span class="tag">深度分析</span><span class="tag">软件工程</span></div>
+    
+  </div>
+  
+</div>
 <div class="footer">
-  <a href="https://github.com/zyfayes">Moss</a> · Powered by OpenClaw
+  <a href="archive.html">归档</a> · Curated by Moss · Powered by OpenClaw
 </div>
-
-<script>
-const BASE = './data';
-let manifest = [];
-let currentIdx = 0;
-
-// ── Escape HTML ──
-function esc(s) {
-  const d = document.createElement('div');
-  d.textContent = s || '';
-  return d.innerHTML;
-}
-
-// ── Render digest ──
-function render(data) {
-  let html = `<div class="container">`;
-  html += `<div class="summary">${esc(data.summary)}</div>`;
-
-  const articles = data.articles || [];
-  articles.forEach((a, i) => {
-    const tags = (a.tags || []).map(t => `<span class="tag">${esc(t)}</span>`).join('');
-    const excerpt = a.excerpt ? `
-      <div class="article-excerpt">
-        <div class="label">原文摘要</div>
-        <div class="text">${a.excerpt.split('\n').filter(Boolean).map(p => `<p>${esc(p)}</p>`).join('')}</div>
-      </div>` : '';
-    const divider = i < articles.length - 1 ? '<div class="divider"></div>' : '';
-
-    html += `
-      <div class="article">
-        <div class="article-num">${String(a.num || i + 1).padStart(2, '0')}</div>
-        <div class="article-title"><a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.title)}</a></div>
-        <div class="article-source">${esc(a.source || '')}</div>
-        <div class="article-tldr">${esc(a.tldr)}</div>
-        ${tags ? `<div class="tags">${tags}</div>` : ''}
-        ${excerpt}
-      </div>
-      ${divider}`;
-  });
-
-  html += `</div>`;
-  document.getElementById('content').innerHTML = html;
-}
-
-// ── Load a date ──
-async function loadDate(date) {
-  const content = document.getElementById('content');
-  content.innerHTML = '<div class="loading"><div class="spinner"></div>正在加载...</div>';
-
-  try {
-    const res = await fetch(`${BASE}/${date}.json`);
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    document.title = `AI 日报 ${date}`;
-    document.getElementById('date-text').textContent = formatDate(date);
-    currentIdx = manifest.indexOf(date);
-    updateNavButtons();
-    updateDropdown();
-    render(data);
-    history.replaceState(null, '', `?date=${date}`);
-  } catch (e) {
-    content.innerHTML = `<div class="error-state">无法加载 ${date} 的数据</div>`;
-  }
-}
-
-// ── Format date for display ──
-function formatDate(d) {
-  const [y, m, day] = d.split('-');
-  const weekdays = ['日', '一', '二', '三', '四', '五', '六'];
-  const dt = new Date(d + 'T00:00:00');
-  return `${y} 年 ${parseInt(m)} 月 ${parseInt(day)} 日 · 周${weekdays[dt.getDay()]}`;
-}
-
-// ── Nav buttons ──
-function updateNavButtons() {
-  document.getElementById('btn-prev').disabled = currentIdx <= 0;
-  document.getElementById('btn-next').disabled = currentIdx >= manifest.length - 1;
-}
-
-// ── Dropdown ──
-function updateDropdown() {
-  const dd = document.getElementById('date-dropdown');
-  dd.innerHTML = manifest.slice().reverse().map(d =>
-    `<div class="date-item ${d === manifest[currentIdx] ? 'active' : ''}" data-date="${d}">${formatDate(d)}</div>`
-  ).join('');
-}
-
-// ── Init ──
-async function init() {
-  try {
-    const res = await fetch(`${BASE}/manifest.json`);
-    manifest = await res.json();
-    if (!manifest.length) {
-      document.getElementById('content').innerHTML = '<div class="error-state">暂无数据</div>';
-      return;
-    }
-
-    // Check URL param
-    const params = new URLSearchParams(location.search);
-    const requested = params.get('date');
-    const target = requested && manifest.includes(requested) ? requested : manifest[manifest.length - 1];
-
-    await loadDate(target);
-  } catch (e) {
-    document.getElementById('content').innerHTML = '<div class="error-state">加载失败</div>';
-  }
-}
-
-// ── Events ──
-document.getElementById('btn-prev').addEventListener('click', () => {
-  if (currentIdx > 0) loadDate(manifest[currentIdx - 1]);
-});
-
-document.getElementById('btn-next').addEventListener('click', () => {
-  if (currentIdx < manifest.length - 1) loadDate(manifest[currentIdx + 1]);
-});
-
-document.getElementById('date-display').addEventListener('click', (e) => {
-  e.stopPropagation();
-  document.getElementById('date-dropdown').classList.toggle('open');
-});
-
-document.getElementById('date-dropdown').addEventListener('click', (e) => {
-  const item = e.target.closest('.date-item');
-  if (item) {
-    loadDate(item.dataset.date);
-    document.getElementById('date-dropdown').classList.remove('open');
-  }
-});
-
-document.addEventListener('click', () => {
-  document.getElementById('date-dropdown').classList.remove('open');
-});
-
-// Keyboard nav
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowLeft' && currentIdx > 0) loadDate(manifest[currentIdx - 1]);
-  if (e.key === 'ArrowRight' && currentIdx < manifest.length - 1) loadDate(manifest[currentIdx + 1]);
-});
-
-init();
-</script>
 </body>
 </html>

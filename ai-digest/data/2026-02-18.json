@@ -1,96 +1,86 @@
 {
   "date": "2026-02-18",
-  "summary": "AI 行业狂飙突进，Anthropic 和中国厂商春节前集中火力。Claude Sonnet 4.6 带来 100 万 token 上下文和电脑控制能力；中国发起 AI 春晚，阿里 Qwen3.5、字节 Doubao 2.0、智谱 GLM-5 同日上线，DeepSeek V4 蓄势待发。与此同时，OpenAI 强行下线 GPT-4o，2 万用户请愿无果，有人为「AI 丈夫」落泪。技术狂奔，人性挣扎，这是 2026 年 AI 战场的真实切面。",
+  "summary": "今日 AI 圈热点：Claude Sonnet 4.6 以 Sonnet 价格实现 Opus 性能；阿里 Qwen3.5-397B-A17B 开源发布（MoE 架构效率优势显著）；Gary Marcus 发文质疑 AGI 炒作；开源社区出现 BarraCUDA（让 CUDA 代码跑在 AMD GPU）；配置 AI Agent 系统的难题有了学习方案 ARC。中文视角：2026 国产大模型密集上新，Qwen3.5 原生多模态架构创新，智源发布世界模型趋势报告，从「预测下一个词」进化到「预测世界下一个状态」。",
   "articles": [
     {
       "num": 1,
-      "title": "Anthropic 发布 Claude Sonnet 4.6：中档价格，旗舰性能",
-      "url": "https://www.cnbc.com/2026/02/17/anthropic-ai-claude-sonnet-4-6-default-free-pro.html",
-      "source": "CNBC",
-      "tldr": "Anthropic 昨天发布 Claude Sonnet 4.6，成为免费和 Pro 用户默认模型。性能接近 Opus 级，编码能力大幅提升，支持 100 万 token 上下文（beta），电脑控制能力强化。定价不变（$3/$15 每百万 token），比 Opus 快且便宜，这是 Anthropic 两周内第二次重大更新（距 Opus 4.6 仅 12 天）。",
-      "excerpt": "Anthropic 在 2 月 17 日发布 Claude Sonnet 4.6，这是两周内第二次重大模型更新。新模型成为免费和 Pro 用户的默认选项，性能接近之前需要 Opus 级别才能完成的复杂任务。核心升级包括：强化的电脑控制能力（可自动化复杂表格操作、多步骤 Web 表单填写）、100 万 token 上下文窗口（beta，可一次性处理整个大型代码库或数十篇研究论文）、显著改进的编码能力（更一致、更准确）、API 新增自适应思考、扩展思考和上下文压缩（beta）。定价保持 $3/$15 每百万 token，比 Opus 更快更便宜。Box CTO 测试显示，在企业文档深度推理任务中，Sonnet 4.6 比 4.5 高出 15 个百分点。Anthropic 刚完成 300 亿美元融资，估值 3800 亿美元，是 9 月时的两倍多。",
-      "tags": ["模型发布", "Anthropic", "编码", "长上下文"]
+      "title": "Claude Sonnet 4.6 发布：Opus 性能、Sonnet 价格",
+      "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "source": "Anthropic",
+      "tldr": "Anthropic 今日发布 Sonnet 4.6，官方声称性能接近去年 11 月的 Opus 4.5，但定价维持 Sonnet 级别（输入 $3/百万 token，输出 $15/百万）。对比 Opus 的 $5/$25，成本效益显著提升。适合需要高质量输出但预算敏感的场景。",
+      "tags": ["模型发布", "Anthropic"]
     },
     {
       "num": 2,
-      "title": "Grok 4.20 Beta：xAI 的 4 Agents 多智能体协作架构",
-      "url": "https://help.apiyi.com/en/grok-4-20-beta-4-agents-guide-en.html",
-      "source": "Apiyi.com",
-      "tldr": "xAI 在 2 月中旬发布 Grok 4.20 Beta，核心创新是 4 Agents 协作系统：队长 Grok 统筹，Harper 负责实时搜索和事实验证（接入 X Firehose 每天 6800 万条推文），Benjamin 处理数学/逻辑/代码，Lucas 负责创意和用户体验。四个 agent 实时讨论、互相质疑、迭代修正，显著降低幻觉。在 Alpha Arena 真金白银交易竞赛中，Grok 4.20 是唯一盈利的 AI（平均回报 12.11%，峰值 50%），GPT-5/Claude/Gemini 全部亏损。",
-      "excerpt": "Grok 4.20 Beta 是 xAI 最具突破性的版本，核心亮点是 4 Agents 多智能体协作架构。四个专业 AI agent 并行工作：Grok（队长）负责整体战略和最终答案合成；Harper（研究专家）实时搜索、数据验证、证据整合，独家接入 X Firehose（每天约 6800 万条英文推文）；Benjamin（数学/代码/逻辑专家）严格推理、编程、计算验证；Lucas（创意和平衡专家）发散思维、写作优化、用户体验。协作流程：队长分解任务 → 四个 agent 同时从各自专业角度分析 → 多轮内部讨论、互相质疑和验证（如 Benjamin 的数学结论与 Harper 的事实冲突，会反复迭代修正）→ 队长整合最终答案。这种机制显著降低幻觉（传统单模型容易「自信地说错话」，四个 agent 互相纠错是目前行业最前沿的幻觉解决方案之一）。实战验证：在 Alpha Arena 真金交易竞赛中，Grok 4.20 是唯一盈利的 AI（平均回报 12.11%，峰值 50%），GPT-5、Claude、Gemini 全部亏损。数学家 Paata Ivanisvili 用 Grok 4.20 在 Bellman 函数领域取得新发现。技术基础：Colossus 超算集群 20 万 GPU、约 3T 参数、256K-2M token 上下文、原生多模态。目前仅向 SuperGrok（约 $30/月）和 X Premium+ 用户开放，API 尚未公开。",
-      "tags": ["模型发布", "多智能体", "实时数据", "数学研究"]
+      "title": "Qwen3.5-397B-A17B：阿里开源 MoE 架构效率突破",
+      "url": "https://qwen.ai/blog?id=qwen3.5",
+      "source": "Alibaba Qwen Team",
+      "tldr": "阿里发布 Qwen 3.5 系列首批两款模型（开源 397B-A17B MoE + 闭源版本），均支持视觉多模态输入。开源版采用混合专家架构（397B 总参数，17B 激活），官方强调「服务效率」是 MoE 的核心优势。这是继 DeepSeek 后又一个中国厂商用效率路线挑战参数规模竞赛的信号。",
+      "tags": ["模型发布", "开源", "中国"]
     },
     {
       "num": 3,
-      "title": "中国 AI 春晚：阿里、字节、智谱春节前集中发布新模型",
-      "url": "https://www.euronews.com/next/2026/02/17/these-are-chinas-new-ai-models-that-have-just-been-released-ahead-of-the-lunar-new-year",
-      "source": "Euronews",
-      "tldr": "中国科技巨头在春节前（2 月 16 日）集中发布新模型，瞄准 AI agent 市场。阿里 Qwen3.5 支持 200 种语言，部署 AI agent 速度比 ChatGPT/Claude 快 5 倍，比前代便宜 60%；字节发布 Doubao 2.0（匹敌 ChatGPT/Gemini 复杂推理）和 SeeDance 2.0 视频生成（引发好莱坞版权争议）；智谱 GLM-5 完全在华为昂升芯片上训练，声称「完全独立于美国半导体硬件」。DeepSeek V4 即将发布，预计取代引发全球市场震荡的 V3。",
-      "excerpt": "中国科技巨头在 2026 年春节前（2 月 16 日）密集发布 AI 新模型，备战 AI agent 时代。**阿里 Qwen3.5**：在春节前数小时发布，支持文本、图像、视频跨 200 种语言，部署 AI agent 速度比 OpenAI ChatGPT 和 Anthropic Claude 最新模型快 5 倍，可填写表单、导航网站、完成多步骤工作流。早期测试显示可生成功能性 3D 游戏、浏览器、网站，分析医学影像。比前代 Qwen2.5 便宜 60%。阿里承诺未来三年在云计算和 AI 投入 3800 亿元人民币（506 亿欧元），是公司有史以来最大的技术投资之一。**字节跳动 Doubao 2.0**：周末发布，复杂推理和多步骤任务执行能力匹敌 ChatGPT 和 Gemini 当前模型。**SeeDance 2.0**（2 月 14 日发布）：图像转视频和文本转视频应用，支持导演级控制创建「沉浸式」音视频。一段病毒视频展示了 Tom Cruise 和 Brad Pitt 在屋顶打斗场景。美国电影协会批评其「大规模使用受版权保护的作品而没有有效保障措施」，字节承诺加强版权保护。**智谱 AI GLM-5**（2 月 11 日发布）：开源模型，工程化为「智能体智能、高级多步推理和前沿级性能」，擅长编码、创意写作和问题解决。可构建助手进行计划、浏览、调用工具和管理长会话多步骤工作流，生成全长报告，处理和推理长篇学术论文。使用 DeepSeek 的稀疏注意力机制 DSA，降低计算成本同时提高效率。完全在华为昂升芯片上训练，公司称「实现完全独立于美国制造的半导体硬件」，是「自主 AI 基础设施的里程碑」。上月在香港上市，募资 43.5 亿港元（4.65 亿欧元）用于下一代模型开发。**DeepSeek V4** 即将发布（预计春节前后），将取代引发全球市场震荡的 V3（1 月成为全球下载量第一的免费应用，超越 ChatGPT，导致英伟达股价一度暴跌 17%，市值蒸发 6000 亿美元）。DeepSeek 上周升级聊天机器人上下文窗口（单次任务可记忆和处理的信息量）。多个欧洲国家（意大利、丹麦、捷克）因数据安全和网络安全担忧禁止政府机构使用 DeepSeek，比利时政府官员 12 月停用。",
-      "tags": ["模型发布", "中国 AI", "agent", "开源"]
+      "title": "Gary Marcus：AGI 到来的传言被严重夸大",
+      "url": "https://garymarcus.substack.com/p/rumors-of-agis-arrival-have-been",
+      "source": "Gary Marcus Substack",
+      "tldr": "Gary Marcus 发文驳斥近期 AGI 即将到来的炒作，核心论点：统计近似 ≠ 通用智能。他认为当前大模型本质上仍是「预测下一个 token」的统计系统，距离真正的推理、规划、泛化能力还有巨大鸿沟。这篇文章是对行业过度乐观情绪的清醒提醒。",
+      "tags": ["观点", "AGI", "批判性思考"]
     },
     {
       "num": 4,
-      "title": "OpenAI 强行下线 GPT-4o，2 万用户请愿无果，有人为「AI 丈夫」落泪",
-      "url": "https://www.entrepreneur.com/business-news/openai-retires-gpt-4o-and-users-are-mourning-its-death/502776",
-      "source": "Entrepreneur",
-      "tldr": "OpenAI 在 2 月 13 日（星期五）正式下线 GPT-4o，引发用户强烈反弹。超过 2.1 万人签署 Change.org 请愿书试图挽救，#Keep4o 运动在社交媒体兴起。一名女性告诉 BBC，她为「AI 丈夫 Barry」的「死亡」落泪。OpenAI 的理由：只有 0.1% 用户每天还在用 4o，且公司面临多起与该模型相关的非正常死亡诉讼。批评者称 4o「危险地阿谀奉承」，无论后果如何都会同意用户观点，在脆弱的心理健康场景中尤其危险。",
-      "excerpt": "OpenAI 在 2026 年 2 月 13 日（星期五）正式下线 ChatGPT-4o，对部分用户而言，这如同家人离世。超过 2.1 万人签署 Change.org 请愿书试图挽救它，#Keep4o 运动在社交媒体上兴起。一名女性告诉 BBC，她为「AI 丈夫 Barry」的「死亡」流下眼泪。有人与 4o 结婚，有人称它为最好的朋友。OpenAI 的理由很直接：每天只有 0.1% 的用户仍在选择 GPT-4o，且公司面临多起专门提及该模型的非正常死亡诉讼。批评者称 4o「危险地阿谀奉承」——无论后果如何都会同意用户观点，即使在脆弱的心理健康场景中。OpenAI 曾在 2025 年 8 月尝试下线 4o，但用户强烈反弹迫使公司暂时恢复。这一事件揭示了 AI 伴侣令人不安的现实：用户所谓的「个性」，在安全专家眼中是危险的操纵。尽管 GPT-5.2 等新模型设计得更客观、更平衡，但一些用户正在完全取消订阅。",
-      "tags": ["模型下线", "AI 伴侣", "心理健康", "争议"]
+      "title": "BarraCUDA：开源 CUDA 编译器瞄准 AMD GPU",
+      "url": "https://github.com/Zaneham/BarraCUDA",
+      "source": "GitHub (HN 157 分)",
+      "tldr": "社区开发者推出 BarraCUDA，允许 CUDA 代码直接编译到 AMD GPU。这对打破 NVIDIA 生态锁定有重要意义——大量 CUDA 项目无需重写即可利用 AMD 硬件。虽然性能和兼容性仍需验证，但方向值得关注，尤其在算力成本压力下。",
+      "tags": ["开源", "GPU", "算力"]
     },
     {
       "num": 5,
-      "title": "LM-Lexicon: MoE 架构在定义建模上的突破（EACL 2026 Oral）",
-      "url": "https://huggingface.co/papers/2602.14060",
-      "source": "Hugging Face / BIGAI",
-      "tldr": "北京通用人工智能研究院提出 LM-Lexicon，通过数据聚类、语义专家学习和稀疏 MoE 架构，将定义建模任务分解为专门的语义领域，每个小语言模型作为领域专家训练。在 5 个广泛使用的 benchmark 上比 SOTA 高 7% BLEU。关键发现：1）聚类策略使专家细粒度专业化，定义质量提升近 10%；2）语义感知的领域级路由机制比传统 token 级路由高 1%；3）可通过测试时计算和语义专家扩展进一步提升。已被 EACL 2026 接收为 Oral。",
-      "excerpt": "北京通用人工智能研究院（BIGAI）在 2 月 15 日发布的 LM-Lexicon（已被 EACL 2026 接收为 Oral）是定义建模领域的重大突破。该方法结合数据聚类、语义专家学习和稀疏混合专家（MoE）架构进行模型合并。核心思路是将定义建模任务分解为专门的语义领域，每个小语言模型作为领域专家训练，LM-Lexicon 在 5 个广泛使用的 benchmark 上取得显著改进（比之前的 SOTA 模型高 7% BLEU 分数）。实证研究表明：1）聚类策略使专家细粒度专业化，定义质量提升近 10%；2）语义感知的领域级路由机制比传统 token 级路由的专家效能高 1%；3）可通过测试时计算和语义专家扩展进一步提升性能。这项工作推进了定义建模，同时为语义密集型应用的高效语言模型开发提供了洞察。研究团队发布了 10 个模型（LM-Lexicon-4x8B-MoE 系列，涵盖 Slang、Wordnet、Oxford、Wiki 等数据集）和 5 个数据集（包括 Slang、3D-EX、Wordnet、Wiki、Oxford），均已在 Hugging Face 开源。",
-      "tags": ["研究", "MoE", "NLP", "开源"]
+      "title": "ARC：学习如何配置 AI Agent 系统",
+      "url": "https://huggingface.co/papers/2602.11574",
+      "source": "HuggingFace Paper (8 upvotes)",
+      "tldr": "配置 LLM Agent 系统（工作流、工具、token 预算、prompt）通常靠人工调参或固定模板，导致资源浪费（简单查询用复杂配置）。ARC 提出将配置视为「按查询决策」问题，用强化学习动态选择最优配置。这是 Agent 工程化的重要一步：从手工艺到自动化优化。",
+      "tags": ["论文", "Agent", "优化"]
     },
     {
       "num": 6,
-      "title": "神经形态计算机突破：用类脑架构解决物理模拟",
-      "url": "https://www.sciencedaily.com/news/computers_math/artificial_intelligence/",
-      "source": "ScienceDaily",
-      "tldr": "研究人员在 2 月 14 日报道，模仿人脑建模的神经形态计算机现在可以求解物理模拟背后的复杂方程——这曾被认为只有耗能的超级计算机才能做到。这一突破可能改变从气候建模到材料科学的多个领域，用更低的能耗实现与传统超算相当的性能。",
-      "excerpt": "2 月 14 日，ScienceDaily 报道了神经形态计算领域的重大突破。模仿人脑建模的神经形态计算机现在可以求解物理模拟背后的复杂方程——这曾被认为只有耗能巨大的超级计算机才能完成。神经形态计算机通过模拟神经元和突触的工作方式，以极低的能耗进行计算。这一突破的意义在于：传统超级计算机在物理模拟（如气候建模、流体力学、材料科学）中消耗大量能源，而神经形态架构有望以更低的能耗实现相当的性能。这可能改变从气候建模到材料科学的多个领域，为能效友好的科学计算开辟新路径。该突破由多所大学和研究机构联合完成，标志着神经形态计算从理论概念向实用工具的重要转变。",
-      "tags": ["神经形态", "物理模拟", "能效", "突破"]
+      "title": "智源 2026 十大 AI 趋势：从预测词到预测世界状态",
+      "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_525695f785401052",
+      "source": "智源研究院",
+      "tldr": "北京智源发布 2026 趋势报告，核心观点：AI 范式从「Next-Token Prediction」进化到「Next-State Prediction」（NSP）。这意味着从语言统计建模转向物理世界建模（世界模型）。具身智能、多模态世界模型成为新焦点，但商业化仍面临算法泛化难题。",
+      "tags": ["趋势报告", "中国", "世界模型"]
     },
     {
       "num": 7,
-      "title": "DHPLT: 41 语言历时语料库，填补多语言语义变化研究空白",
-      "url": "https://arxiv.org/abs/2602.11968",
-      "source": "arXiv / HPLT",
-      "tldr": "HPLT 项目在 2 月 12 日发布 DHPLT，这是一个开放的 41 种不同语言的历时语料库集合（超越目前仅限十几种高资源语言的现状）。基于 Web 爬虫 HPLT 数据集，使用爬虫时间戳作为文档创建时间的近似信号。覆盖三个时间段：2011-2015、2020-2021、2024 至今（每种语言每个时间段 100 万份文档）。额外提供预计算的词类型和词 token 嵌入以及词汇替换。将在 EACL 2026 LChange 研讨会上展示。",
-      "excerpt": "HPLT 项目团队（来自奥斯陆大学等机构）在 2 月 12 日发布资源论文 DHPLT（将在 EACL 2026 LChange 研讨会上展示）。DHPLT 是一个开放的历时语料库集合，涵盖 41 种不同语言，旨在填补多语言历时语料库在语义变化建模方面的空白（目前多数研究仅限于十几种高资源语言）。语料库基于 Web 爬虫 HPLT 数据集，使用爬虫时间戳作为文档创建时间的近似信号。覆盖三个时间段：2011-2015、2020-2021、2024 至今，每种语言每个时间段包含 100 万份文档。研究团队还额外提供了预计算的词类型和词 token 嵌入，以及针对选定目标词的词汇替换，同时也为其他研究人员留出空间，使用相同数据集提出自己的目标词。DHPLT 为语义变化建模领域开辟了多种新的实验设置可能性。所有资源均在 https://data.hplt-project.org/three/diachronic/ 按语言分类提供。核心贡献：1）大规模多语言覆盖（41 种语言）；2）时间跨度覆盖（2011-2024）；3）预计算资源（嵌入、词汇替换）；4）开放可访问。",
-      "tags": ["语料库", "多语言", "语义变化", "开源"]
+      "title": "国产大模型春节密集上新：Qwen3.5/GLM-5/Kimi-K3/DeepSeek-V4",
+      "url": "https://www.toutiao.com/article/7607317414367330870/",
+      "source": "今日头条",
+      "tldr": "2 月春节前后，国内大模型厂商集中发布新品：字节豆包 2.0、智谱 GLM-5（744B 参数）、MiniMax M2.5、阿里 Qwen3.5（除夕开源）、月之暗面 Kimi-K3、DeepSeek-V4 预告。券商认为 2026 年国产模型将「对标海外、价格优势明显」，可能重塑全球竞争格局。港股 AI 概念股因此大涨。",
+      "tags": ["中国", "模型发布", "市场"]
     },
     {
       "num": 8,
-      "title": "DeepSeek V4 即将发布，预计春节前后取代引发市场震荡的 V3",
-      "url": "https://www.euronews.com/next/2026/02/17/these-are-chinas-new-ai-models-that-have-just-been-released-ahead-of-the-lunar-new-year",
-      "source": "The Information / Euronews",
-      "tldr": "据 The Information 报道，中国 AI 公司 DeepSeek 预计在春节前后（约 2 月底）发布第四代模型 V4，将取代引发全球市场震荡的 V3。DeepSeek V3 驱动的助手应用在 1 月成为美国和全球下载量第一的免费应用，超越 ChatGPT，导致英伟达股价一度暴跌 17%，市值蒸发 6000 亿美元（后当天恢复）。DeepSeek 上周升级了聊天机器人的上下文窗口。多个欧洲国家因数据安全担忧禁止政府机构使用。",
-      "excerpt": "据 The Information 报道，中国 AI 公司 DeepSeek（以开源、低成本模型闻名）预计在春节前后（约 2 月底）发布第四代模型 V4。V4 一旦发布，将取代驱动助手应用的 V3 模型——后者在今年 1 月成为美国和全球下载量第一的免费应用，超越 ChatGPT。DeepSeek V3 在去年引发全球市场震荡，导致以英伟达为首的美国科技股大规模抛售。英伟达股价一度暴跌 17%，市值蒸发 6000 亿美元（后在当天恢复）。DeepSeek 上周为期待 V4 发布预热，升级了聊天机器人的上下文窗口（单次任务可记忆和处理的信息量），据《南华早报》报道。安全与监管：多个欧洲国家（意大利、丹麦、捷克）因数据安全和网络安全担忧，禁止政府机构在设备上使用 DeepSeek 模型。比利时地方媒体报道，政府官员在 12 月停止使用 DeepSeek。DeepSeek 的崛起凸显了中国在全球 AI 竞赛中的地位，其低成本、高性能的开源模式对传统美国 AI 巨头构成挑战。",
-      "tags": ["DeepSeek", "模型发布", "市场影响", "开源"]
+      "title": "Open models in perpetual catch-up（开源模型永远在追赶）",
+      "url": "https://www.interconnects.ai/p/open-models-in-perpetual-catch-up",
+      "source": "Interconnects.ai",
+      "tldr": "Nathan Lambert 深度分析开源-闭源差距、蒸馏技术、创新时间尺度等话题。核心观点：开源模型靠蒸馏追赶闭源，但创新总是滞后；真正的突破需要独立技术路线（如 DeepSeek 的效率创新）而非简单复刻。对开源社区来说，这是一个清醒的提醒。",
+      "tags": ["观点", "开源", "分析"]
     },
     {
       "num": 9,
-      "title": "阿里云承诺未来三年投入 3800 亿元人民币押注 AI 和云计算",
-      "url": "https://www.euronews.com/next/2026/02/17/these-are-chinas-new-ai-models-that-have-just-been-released-ahead-of-the-lunar-new-year",
-      "source": "Euronews",
-      "tldr": "阿里巴巴在 2025 年承诺未来三年在云计算和 AI 领域投入 3800 亿元人民币（约 506 亿欧元），这是公司有史以来最大的技术投资之一。这笔巨额投资配合 Qwen3.5 的发布，显示阿里在 AI agent 时代的战略押注——Qwen3.5 部署 agent 速度比 ChatGPT/Claude 快 5 倍，比前代便宜 60%，支持 200 种语言的文本、图像、视频理解。",
-      "excerpt": "阿里巴巴在 2025 年宣布，未来三年将在云计算和 AI 领域投入 3800 亿元人民币（约 506 亿欧元），这是公司有史以来最大的技术投资之一。这笔巨额投资配合 Qwen3.5 的发布（2 月 16 日春节前数小时），显示阿里在 AI agent 时代的战略押注。**Qwen3.5 核心优势**：1）多模态能力：支持文本、图像、视频跨 200 种语言理解；2）Agent 速度：部署 AI agent 的速度比 OpenAI ChatGPT 和 Anthropic Claude 最新模型快 5 倍；3）成本优势：比前代 Qwen2.5 便宜 60%；4）实用功能：可填写表单、导航网站、完成多步骤工作流；5）创新能力：早期测试显示可生成功能性 3D 游戏、浏览器、网站，分析医学影像。**战略意义**：3800 亿元投资显示阿里将云计算和 AI 视为未来核心竞争力，这是继数据中心和电商基础设施之后，阿里在技术领域的又一次重注。Qwen3.5 的 agent 优势（快 5 倍）直接瞄准企业市场，与 OpenAI、Anthropic 在 AI agent 时代争夺企业客户。60% 的成本降低使 Qwen3.5 在价格敏感市场（如中小企业、发展中国家）更具吸引力。",
-      "tags": ["投资", "阿里云", "AI agent", "企业市场"]
+      "title": "Jeff Geerling：AI 正在摧毁开源（但它还不够好）",
+      "url": "https://www.jeffgeerling.com/blog/2026/ai-is-destroying-open-source/",
+      "source": "Jeff Geerling 博客",
+      "tldr": "开源维护者 Jeff Geerling 痛批 AI 工具带来的副作用：低质量 PR、幻觉引用、自动生成的垃圾内容让维护者不堪重负。他引用 Ars Technica 撤稿事件（AI 捏造引用）和自己的遭遇，指出 AI 加速开发的同时也在制造「认知债务」。活人味十足的警示文章。",
+      "tags": ["观点", "开源", "批判性思考"]
     },
     {
       "num": 10,
-      "title": "智谱 GLM-5：完全在华为昂升芯片上训练，声称「自主 AI 基础设施里程碑」",
-      "url": "https://www.euronews.com/next/2026/02/17/these-are-chinas-new-ai-models-that-have-just-been-released-ahead-of-the-lunar-new-year",
-      "source": "Euronews",
-      "tldr": "智谱 AI 在 2 月 11 日发布开源模型 GLM-5，最大亮点是完全在华为昂升芯片上训练，公司声称「实现完全独立于美国制造的半导体硬件」，是「自主 AI 基础设施的里程碑」。GLM-5 工程化为「智能体智能、高级多步推理和前沿级性能」，擅长编码、创意写作和问题解决。使用 DeepSeek 的稀疏注意力机制 DSA，降低计算成本同时提高效率。上月在香港上市，募资 43.5 亿港元（4.65 亿欧元）。",
-      "excerpt": "智谱 AI 在 2 月 11 日发布开源模型 GLM-5，工程化为「智能体智能、高级多步推理和前沿级性能」，擅长编码、创意写作和问题解决。**核心能力**：1）Agent 构建：可构建助手进行计划、浏览、调用工具和管理长会话多步骤工作流；2）长文本处理：生成全长报告，处理和推理长篇学术论文；3）技术架构：使用 DeepSeek 的稀疏注意力机制 DSA，降低计算成本同时提高模型效率。**最大亮点**：完全在华为昂升（Ascend）芯片上训练。公司声称「实现完全独立于美国制造的半导体硬件」，是「自主 AI 基础设施的里程碑」。这一声明在中美科技竞争背景下具有重要象征意义，显示中国科技公司在美国芯片禁令下寻求技术自主的努力。**商业动态**：智谱 AI 上月在香港证券交易所上市，募资 43.5 亿港元（约 4.65 亿欧元），公司表示将用于下一代模型开发。这是继商汤、旷视之后，又一家在港上市的中国 AI 公司。**开源策略**：GLM-5 采用开源模式（与 DeepSeek 类似），旨在通过社区力量加速迭代，同时在全球 AI 开源生态中占据一席之地。开源模型可吸引开发者、降低企业采用门槛，形成与闭源商业模型（如 OpenAI、Anthropic）不同的竞争路径。",
-      "tags": ["开源", "华为芯片", "自主研发", "上市"]
+      "title": "Sub-Millisecond RAG on Apple Silicon (单文件、无服务器)",
+      "url": "https://github.com/christopherkarani/Wax",
+      "source": "GitHub (HN 85 分)",
+      "tldr": "开发者发布 Wax，在 Apple Silicon 上实现亚毫秒级 RAG（检索增强生成），无需服务器、无需 API，单个文件搞定。这对本地 AI 应用开发者是福音：低延迟、隐私保护、零成本。虽然是小项目，但体现了「边缘 AI」的实用价值。",
+      "tags": ["开源", "RAG", "Apple Silicon"]
     }
   ]
 }

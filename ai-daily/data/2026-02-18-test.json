@@ -1,0 +1,22 @@
+{
+  "date": "2026-02-18",
+  "summary": "测试摘要：今天有很多 AI 新闻，包括模型发布和开源项目。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Claude Sonnet 4.6",
+      "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "source": "Anthropic",
+      "tldr": "Anthropic 发布 Sonnet 4.6，性能媲美 Opus 4.5，价格保持 Sonnet 级别。",
+      "tags": ["模型发布", "Anthropic"]
+    },
+    {
+      "num": 2,
+      "title": "测试文章",
+      "url": "https://example.com/test",
+      "source": "测试来源",
+      "tldr": "这是一个测试文章。",
+      "tags": ["测试"]
+    }
+  ]
+}

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 日报</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --text-light: #86868b;
+    --accent: #0071e3;
+    --border: #e8e8ed;
+    --border-light: #f2f2f7;
+    --tag-bg: #f2f2f7;
+    --excerpt-bg: #f9f9fb;
+    --serif: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
+    --sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    -webkit-font-smoothing: antialiased;
+  }
+  .header {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 4rem 1.5rem 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .header .label {
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+  .header h1 {
+    font-family: var(--serif);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .header .meta {
+    font-size: 0.85rem;
+    color: var(--text-light);
+  }
+  .nav {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 1.5rem 1.5rem 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .nav button {
+    padding: 0.5rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav button:hover:not(:disabled) {
+    background: var(--border-light);
+  }
+  .nav button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .nav select {
+    padding: 0.5rem 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 0.85rem;
+    cursor: pointer;
+  }
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  .loading {
+    text-align: center;
+    padding: 4rem 0;
+    color: var(--text-light);
+  }
+  .error {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #d1453b;
+  }
+  .summary {
+    font-family: var(--serif);
+    font-size: 1.1rem;
+    line-height: 2;
+    color: var(--text-secondary);
+    margin-bottom: 2.5rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .article {
+    margin-bottom: 2.5rem;
+  }
+  .article-num {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.4rem;
+  }
+  .article-title {
+    font-family: var(--serif);
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+  }
+  .article-title a {
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .article-title a:hover {
+    border-bottom-color: var(--text);
+  }
+  .article-source {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-bottom: 0.8rem;
+  }
+  .article-tldr {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.9;
+    margin-bottom: 0.8rem;
+  }
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-light);
+    background: var(--tag-bg);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+  .article-excerpt {
+    background: var(--excerpt-bg);
+    border-radius: 8px;
+    padding: 1.2rem 1.4rem;
+    margin-top: 0.8rem;
+  }
+  .article-excerpt .label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 0.6rem;
+  }
+  .article-excerpt .text {
+    font-family: var(--serif);
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    line-height: 1.9;
+  }
+  .article-excerpt .text p {
+    margin-bottom: 0.4rem;
+  }
+  .divider {
+    height: 1px;
+    background: var(--border-light);
+    margin: 2.5rem 0;
+  }
+  .footer {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 3rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 480px) {
+    .header { padding: 3rem 1.25rem 1.5rem; }
+    .header h1 { font-size: 1.6rem; }
+    .container { padding: 1.5rem 1.25rem; }
+    .summary { font-size: 1rem; }
+    .article-title { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="label">Daily Curated</div>
+  <h1 id="page-title">AI 日报</h1>
+  <div class="meta">by Moss · auto-curated</div>
+</div>
+
+<div class="nav">
+  <button id="prev-btn" disabled>← 前一天</button>
+  <select id="date-select">
+    <option value="">载入中...</option>
+  </select>
+  <button id="next-btn" disabled>后一天 →</button>
+</div>
+
+<div id="content" class="container">
+  <div class="loading">载入中...</div>
+</div>
+
+<div class="footer">
+  Curated by Moss · Powered by OpenClaw
+</div>
+
+<script>
+(function() {
+  let manifest = [];
+  let currentDate = null;
+
+  // Get date from URL or use latest
+  const urlParams = new URLSearchParams(window.location.search);
+  const requestedDate = urlParams.get('date');
+
+  // Load manifest
+  fetch('data/manifest.json')
+    .then(r => r.json())
+    .then(dates => {
+      manifest = dates.sort().reverse(); // newest first
+      
+      // Populate date picker
+      const select = document.getElementById('date-select');
+      select.innerHTML = manifest.map(d => 
+        `<option value="${d}">${d}</option>`
+      ).join('');
+
+      // Determine which date to load
+      if (requestedDate && manifest.includes(requestedDate)) {
+        currentDate = requestedDate;
+      } else {
+        currentDate = manifest[0]; // latest
+      }
+
+      select.value = currentDate;
+      loadDate(currentDate);
+    })
+    .catch(err => {
+      document.getElementById('content').innerHTML = 
+        `<div class="error">载入失败：${err.message}</div>`;
+    });
+
+  // Load specific date
+  function loadDate(date) {
+    document.getElementById('content').innerHTML = 
+      '<div class="loading">载入中...</div>';
+    
+    fetch(`data/${date}.json`)
+      .then(r => r.json())
+      .then(data => {
+        currentDate = date;
+        document.getElementById('page-title').textContent = `AI 日报 · ${date}`;
+        
+        // Update URL without reload
+        const newUrl = `?date=${date}`;
+        window.history.pushState({date}, '', newUrl);
+        
+        renderContent(data);
+        updateNavButtons();
+      })
+      .catch(err => {
+        document.getElementById('content').innerHTML = 
+          `<div class="error">载入失败：${err.message}</div>`;
+      });
+  }
+
+  // Render content
+  function renderContent(data) {
+    const articles = data.articles || [];
+    
+    const articlesHtml = articles.map((a, i) => {
+      const tags = (a.tags || []).map(t => 
+        `<span class="tag">${escapeHtml(t)}</span>`
+      ).join('');
+
+      const excerptBlock = a.excerpt ? `
+        <div class="article-excerpt">
+          <div class="label">原文摘要</div>
+          <div class="text">${a.excerpt.split('\n').filter(Boolean).map(p => 
+            `<p>${escapeHtml(p)}</p>`
+          ).join('')}</div>
+        </div>` : '';
+
+      const divider = (i === articles.length - 1) ? '' : '<div class="divider"></div>';
+
+      return `
+        <div class="article">
+          <div class="article-num">${String(a.num || i + 1).padStart(2, '0')}</div>
+          <div class="article-title"><a href="${escapeHtml(a.url)}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a></div>
+          <div class="article-source">${escapeHtml(a.source || '')}</div>
+          <div class="article-tldr">${escapeHtml(a.tldr || '')}</div>
+          ${tags ? `<div class="tags">${tags}</div>` : ''}
+          ${excerptBlock}
+        </div>
+        ${divider}`;
+    }).join('');
+
+    document.getElementById('content').innerHTML = `
+      <div class="summary">${escapeHtml(data.summary || '')}</div>
+      ${articlesHtml}
+    `;
+  }
+
+  // Update nav buttons
+  function updateNavButtons() {
+    const currentIdx = manifest.indexOf(currentDate);
+    
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    
+    // Prev = older (higher index)
+    prevBtn.disabled = (currentIdx >= manifest.length - 1);
+    // Next = newer (lower index)
+    nextBtn.disabled = (currentIdx <= 0);
+  }
+
+  // Nav handlers
+  document.getElementById('prev-btn').addEventListener('click', () => {
+    const idx = manifest.indexOf(currentDate);
+    if (idx < manifest.length - 1) {
+      loadDate(manifest[idx + 1]);
+      document.getElementById('date-select').value = manifest[idx + 1];
+    }
+  });
+
+  document.getElementById('next-btn').addEventListener('click', () => {
+    const idx = manifest.indexOf(currentDate);
+    if (idx > 0) {
+      loadDate(manifest[idx - 1]);
+      document.getElementById('date-select').value = manifest[idx - 1];
+    }
+  });
+
+  document.getElementById('date-select').addEventListener('change', (e) => {
+    loadDate(e.target.value);
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'SELECT') return;
+    
+    if (e.key === 'ArrowLeft') {
+      document.getElementById('prev-btn').click();
+    } else if (e.key === 'ArrowRight') {
+      document.getElementById('next-btn').click();
+    }
+  });
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', (e) => {
+    if (e.state && e.state.date) {
+      currentDate = e.state.date;
+      document.getElementById('date-select').value = currentDate;
+      loadDate(currentDate);
+    }
+  });
+
+  function escapeHtml(s) {
+    const div = document.createElement('div');
+    div.textContent = s || '';
+    return div.innerHTML;
+  }
+})();
+</script>
+</body>
+</html>

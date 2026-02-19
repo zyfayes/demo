@@ -1,0 +1,145 @@
+{
+  "date": "2026-02-19",
+  "summary": "今日聚焦 AI 在教育与工程领域的系统性应用。教育科技方面，AI 优化工具开始深入学校运营底层（排课、资源分配），而非仅停留在课堂辅助；OpenAI 与印度高等教育合作，NYC 推动职业评估工具，职业教育正重新定义「成功」的多元路径。技术侧，Claude Sonnet 4.6 实现 Opus 级能力下沉，Martin Fowler 与 Paul Ford 深度探讨 AI 对软件工程文化的重构，World Labs 获 $1B 融资押注空间智能。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Claude Sonnet 4.6 发布：性价比杀手级升级",
+      "url": "https://www.anthropic.com/news/claude-sonnet-4-6",
+      "source": "Anthropic",
+      "tldr": "Sonnet 4.6 在编码、计算机操作、长上下文推理上接近 Opus 4.5 水平，价格不变（$3/$15 per million tokens）。OSWorld 计算机操作能力 16 个月提升 4 倍，用户在 Claude Code 中 70% 偏好 Sonnet 4.6。",
+      "excerpt": "Claude Sonnet 4.6 是 Anthropic 迄今最强的 Sonnet 模型，全面升级了编码、计算机操作、长上下文推理、agent 规划、知识工作和设计能力，并在 beta 中支持 1M token 上下文窗口。它在 OSWorld 基准测试中展现了显著进步，该测试评估 AI 在真实软件（Chrome、LibreOffice、VS Code 等）中的计算机操作能力。16 个月来，Sonnet 系列模型在该基准上稳步提升，Sonnet 4.6 在复杂任务（如浏览多标签页、填写多步骤表单）中已接近人类水平。性能方面，Sonnet 4.6 在多个维度逼近 Opus 级别，包括 OfficeQA 文档理解、代码库搜索修复、bug 检测等，使得原本需要 Opus 的任务现在可以用更经济的 Sonnet 完成。早期用户在 Claude Code 中 70% 偏好 Sonnet 4.6 而非 Sonnet 4.5，甚至 59% 偏好它而非 Opus 4.5，原因是指令遵循更准确、更少过度工程化和懒惰行为。安全评估显示，Sonnet 4.6 在 prompt injection 抵抗力上较前代有重大提升。Lubbock 学区通过 Timely（基于 Sonnet 的排课工具）识别出 37 个可省略的教师岗位，节省 $2.2M，同时不影响班级规模和课程选择。",
+      "tags": [
+        "模型发布",
+        "编码",
+        "性价比",
+        "计算机操作"
+      ]
+    },
+    {
+      "num": 2,
+      "title": "AI 排课系统如何重塑学校资源分配",
+      "url": "https://www.the74million.org/article/ai-optimizations-impact-on-use-of-time-space-and-resources-in-schools/",
+      "source": "The 74 Million",
+      "tldr": "Timely 用 AI 优化将学校排课从数百小时压缩至 30 分钟，让学区识别出数百万美元的隐性低效。排课不再是 Excel 噩梦，而是系统性资源配置的入口。",
+      "excerpt": "Timely CEO Paymon Rouhanifard（前 Camden 学区总监）在播客中解释了 AI 排课工具如何解决学校最底层但最关键的问题。传统排课使用 Google Sheets、便利贴、白板，耗时数百小时，且无法系统化优化资源。Timely 使用 AI 优化技术（而非生成式 AI）将排课时间缩短至 30 分钟-2 小时，输入课程数据、学生选课、教师资质、教室信息后，系统求解混合整数线性规划问题。案例：Lubbock 学区（25,000 学生）通过 Timely 识别出 37 个不必要的空缺教师岗位，节省 $2.2M，同时保持平均班级规模和课程选择不变。Noble Schools（芝加哥最大 CMO）17 所学校中 11 所有新上任的运营主管，使用 Timely 后给出 10/10 的 NPS 评分，大幅降低职位流失率。排课是学校 80-85% 预算（人力）的治理工具，反映学区的价值观和战略优先级。Rouhanifard 观察到，当前学区因财政压力和入学率下降，创新步伐放缓，更多聚焦\"最小化伤害\"而非大胆变革。但 Timely 这类工具让学区能在资源紧张时更高效地实现战略目标。",
+      "tags": [
+        "教育科技",
+        "AI 优化",
+        "学校运营",
+        "资源分配"
+      ]
+    },
+    {
+      "num": 3,
+      "title": "Paul Ford：AI 颠覆终于来了，而且挺好玩",
+      "url": "https://www.nytimes.com/2026/02/18/opinion/ai-software.html",
+      "source": "New York Times",
+      "tldr": "Vibe coding 让十年积压的项目在地铁通勤时完成。软件股暴跌说明市场相信 AI 会吃掉大量白领工作，但作者认为这很可能为时过早。",
+      "excerpt": "Paul Ford 在纽约时报专栏中描述了他用 Claude Code 在地铁通勤时完成十年积压项目的体验：上传数据、写 prompt，地铁出隧道时看到网站已搭好。这种\"vibe coding\"（Andrej Karpathy 命名）让他重新审视软件成本——过去报价 $25,000 的个人网站重建和 $350,000 的数据转换项目，现在花半小时 + Claude 一小时就能完成。2025 年 11 月是转折点，AI 编码工具从\"有用但笨拙\"变成\"能独立运行一小时并交付可信产品\"。软件行业是基于技艺和技能的全球文化身份，这份中产工作可能正在滑落。市场反应剧烈：软件股（Monday.com、Salesforce、Adobe）暴跌，Nasdaq 100 两天蒸发 $0.5T，法律软件、金融服务、房地产服务股全线下挫，交易者预期自动化未来将减少对遗留软件和办公室人力的需求。Ford 认为这些反应可能为时过早，但他理解市场逻辑：当你看到 LLM 轻松解决昂贵问题（如数据迁移）时，地动山摇的感觉难以忽视。他曾是软件服务公司 CEO，深知成本估算。文章提出核心问题：如果 10 亿人都能制作任何软件，这是否意味着无与伦比的增长与机会？市场说\"不\"，但 Ford 自己在治疗中花了整节讨论这件事——既焦虑又兴奋。",
+      "tags": [
+        "观点",
+        "软件工程",
+        "经济影响",
+        "vibe coding"
+      ]
+    },
+    {
+      "num": 4,
+      "title": "Martin Fowler：AI 正在吃掉专业技能",
+      "url": "https://martinfowler.com/fragments/2026-02-18.html",
+      "source": "martinfowler.com",
+      "tldr": "LLM 让前后端专业技能边界模糊，Expert Generalists 角色可能崛起。TDD 成为最强 prompt engineering 形式，代码健康度对 AI 重构成功率影响达 30%。",
+      "excerpt": "Martin Fowler 在 Thoughtworks 未来软件开发闭门会后总结了多个关键洞察。核心观察：LLM 正在吞噬专业技能（specialty skills），前后端开发者的专业分工将减少，驱动 LLM 的技能比平台细节更重要。这是否会让 Expert Generalists（专家型通才）角色得到更多认可？还是 LLM 会绕过孤岛而非消除孤岛？AI 与工作流：演进式设计的价值是否被 LLM 帮助或阻碍？商业人士的自然冲动是\"做完再叫我\"，但 Fowler 认为 LLM 的承诺是提高迭代频率，而非回到瀑布式开发。代码健康度至关重要：Adam Tornhill 的研究显示，在健康代码库中，LLM 重构的缺陷风险降低 30%；在更差的遗留代码中，错误率可能呈非线性上升。TDD 的复兴：重度 LLM 用户反馈 TDD（测试驱动开发）对高效使用 LLM 至关重要。一位用户说：\"感谢你对 TDD 的倡导，TDD 对我们有效使用 LLM 必不可少。\"安全被忽视：安全专场参与人数少，反映行业\"先让它工作，再让它可靠，最后才考虑安全\"的惯性。Platform 团队需要创建\"快速但安全的路径\"（bullet trains）。成本不确定性：当 token 补贴消失后，LLM 是否比人类便宜？目前成本不透明，可能便宜到可以随意使用，也可能贵到需要精打细算。开放空间的力量：很多参与者第一次体验 Open Space 会议形式，发现这种非结构化讨论带来深度且尊重的对话，没有打断和少数人霸占话语权的问题。",
+      "tags": [
+        "深度分析",
+        "软件工程",
+        "TDD",
+        "代码健康"
+      ]
+    },
+    {
+      "num": 5,
+      "title": "OpenAI 进军印度高等教育系统",
+      "url": "https://techcrunch.com/2026/02/18/openai-pushes-into-higher-education-as-india-seeks-to-scale-ai-skills/",
+      "source": "TechCrunch",
+      "tldr": "OpenAI 与印度 6 所顶尖院校合作（IIT Delhi、IIM Ahmedabad、AIIMS 等），目标一年内覆盖 10 万师生。印度 ChatGPT 月活 1 亿，仅次于美国。",
+      "excerpt": "OpenAI 宣布与印度 6 所顶尖高等教育机构合作，包括 IIT Delhi、IIM Ahmedabad、AIIMS New Delhi 等，目标一年内覆盖超过 10 万名学生、教师和员工。这不是面向消费者，而是将 AI 集成到核心学术功能，影响 AI 在全球最大高等教育系统之一中的教学、治理和常态化方式。印度已是 OpenAI 第二大用户市场，ChatGPT 月活超 1 亿（Sam Altman 数据），仅次于美国。合作内容包括全校访问 ChatGPT Edu、教师培训、负责任使用框架，重点是将 AI 嵌入编码、研究、分析、案例分析等核心学术工作流，而非提供独立工具。IIM Ahmedabad 和 Manipal Academy 将推出 OpenAI 认证课程。OpenAI 还将与 Physics Wallah、upGrad、HCL GUVI 等印度在线教育平台合作，推出 AI 基础和 ChatGPT 用例的结构化课程，面向学生和早期职业人士。OpenAI 印度与亚太教育负责人 Raghav Gupta（前 Coursera APAC 董事总经理）表示，教育机构是缩小快速发展的 AI 工具与实际使用方式之间差距的\"关键路径\"。这反映出 AI 公司越来越多地将目光投向塑造技能、规范和长期采用的机构，而非仅关注消费者工具和企业客户。对印度而言，竞争不仅是 AI 访问权，更是谁来定义 AI 的教学、治理和大规模嵌入方式。",
+      "tags": [
+        "教育科技",
+        "印度",
+        "高等教育",
+        "AI 技能"
+      ]
+    },
+    {
+      "num": 6,
+      "title": "NYC 家长呼吁为高中生推行职业能力评估",
+      "url": "https://www.the74million.org/article/nyc-parents-want-career-aptitude-assessments-for-all-high-schoolers/",
+      "source": "The 74 Million",
+      "tldr": "纽约市高中家长委员会通过决议，要求为 9 年级和 11 年级学生提供职业能力评估。130+ CTE 学校和 260+ 项目存在，但学生缺乏指导将其与长期目标对齐。",
+      "excerpt": "纽约市高中家长委员会（Citywide Council on High Schools）通过决议，呼吁教育局为所有 9 年级（秋季）和 11 年级（春季）学生实施\"基于研究的、符合发展阶段的\"职业能力评估。背景：NYC 有超过 130 所职业技术学校和 260+ CTE 项目提供实习、学徒和职业课程，但学生常在复杂的申请流程中缺乏指导，不清楚各种项目、选修课、实习、职业路径和升学路径如何与长期目标对齐。决议发起人 Lawrence Lee 说：\"这帮助回答长大后想做什么这个永恒问题。世界很大，选择很多，但很多人只看到身边能见到的选择。\"教育局回应称已使用提供互动职业探索活动的平台，并通过 1:1 咨询为每位高中生提供个性化支持。但家长委员会认为系统化评估能更好地服务历史上服务不足的社区和英语学习者。职业评估工具行业爆发式增长：47% 的高中和 40% 的初中使用现成的咨询工具（来自 20+ 家公司）。研究显示这些工具能帮助学生了解优势、接触未曾考虑的职业可能性、减少性别和其他偏见，但 MDRC 研究员 Rachel Rosen 指出，工具效果证据稀缺，且需要成人辅导才能有效——\"学生常觉得自己比工具更了解自己\"，需要\"好的成人指导配合工具\"。MDRC 正进行长期分析，预计夏季发布结果。",
+      "tags": [
+        "教育科技",
+        "职业评估",
+        "NYC",
+        "CTE"
+      ]
+    },
+    {
+      "num": 7,
+      "title": "职业技术教育的四个扩展路径",
+      "url": "https://www.the74million.org/article/career-and-technical-ed-benefits-all-students-4-ways-to-expand-this-opportunity/",
+      "source": "The 74 Million",
+      "tldr": "CTE 不再是\"安慰奖\"，而是机会多元主义的核心。K-12 CTE 入学率同比增 10%，社区大学证书项目入学率涨 28.3%。需劳动力对齐、学术技术融合、工作本位学习、可迁移学分。",
+      "excerpt": "美国正在重新思考教育与工作的连接。传统\"上大学=机会\"的公式正在减弱：大学完成率不均、学生债务普遍、很多毕业生没有明确的稳定高薪工作路径。Lumina Foundation 报告显示，高等教育经济回报因学校、学位级别和领域差异巨大。家庭的核心问题从\"上不上大学\"变成\"哪条路径有回报，何时有回报\"。CTE（Career and Technical Education，职业技术教育）不再是专业选项或安慰奖，而成为年轻人为工作、成年和经济流动做准备的核心。这反映了\"机会多元主义\"（opportunity pluralism）理念：成功有多条合法路径，教育系统应支持多元前进方式。数据：Education Week Research Center 显示 2022-23 至 2023-24 学年 K-12 CTE 参与率增长约 10%。National Student Clearinghouse 数据显示，更多学生选择本科证书和副学士学位而非学士学位，前者入学率分别增长 1.9% 和 2.2%，学士学位仅 0.9%。社区大学本科证书项目学生约 75.2 万，自 2021 年秋季增长 28.3%。公众态度也在转变：家长和公众对 CTE 和技术/贸易教育的接受度提高。现代 CTE 与历史上的职业教育截然不同。过去的职业轨道常作为分流机制，将低收入学生和有色人种学生引向流动性有限的工作。现代 CTE 强调职业路径（career pathways），整合学术学习、技术技能、工作本位经验和升学教育，目标不是让学生在大学和职业间二选一，而是融合两者以保留选择并增强晋升。EdResearch for Action 证据显示，最强的 CTE 路径将学术内容与职业技能开发对齐，而非视为竞争优先级。做得好时，整合会提高而非降低学术期望。约 85% 的公立和私立高中毕业生至少完成一门 CTE 课程。但随着参与度扩大，质量成为关键。Advance CTE 50 州调查结论：\"太多州缺乏强大的系统、政策和数据以确保真正的质量和价值。\"设计原则：劳动力市场对齐（从区域经济真实需求出发）、学术技术融合（学生不必在学代数和学高级制造/医疗/网络安全间二选一）、工作本位学习是核心基础设施（实习、学徒、带薪工作不是附加项）、阶梯而非死胡同（学分可迁移、证书可叠加，形成职业路径通往更好工作）。四个建议：1. 将 CTE 视为核心基础设施，对齐 K-12、高等教育和劳动力系统；2. 投资匹配需求，设施、设备、教师薪酬需反映 CTE 的中心角色；3. 质量和证据为中心，追踪结果、设定标准、改进或终止弱项目；4. 拥抱机会多元主义，重视多元职业路径，设计允许在教育和工作间无惩罚转换的系统。",
+      "tags": [
+        "教育科技",
+        "职业教育",
+        "CTE",
+        "机会多元"
+      ]
+    },
+    {
+      "num": 8,
+      "title": "Simon Willison：25 年后我开始喜欢类型标注了",
+      "url": "https://simonwillison.net/2026/Feb/18/typing/",
+      "source": "simonwillison.net",
+      "tldr": "资深程序员 Simon Willison 承认，当编码 agent 替你写所有类型标注时，强类型的吸引力突然增加了。REPL 迭代速度不再是反对类型的理由。",
+      "excerpt": "Simon Willison 是资深 Python 开发者、AI 观察者，在个人博客发表简短但深刻的观点：从业 25+ 年后，他可能终于开始倾向于 type hints 或强类型了。过去他抵制类型标注，因为它们降低了迭代速度，尤其在 REPL 环境中（这对他的生产力至关重要）。但如果编码 agent 替他完成所有 typing 工作，显式定义所有类型的好处突然变得更有吸引力。这个短文揭示了 AI 编码工具如何改变程序员长期持有的技术偏好：当\"写类型标注很烦\"这个摩擦点被 AI 消除，类型系统的收益（可维护性、IDE 支持、错误捕获）就凸显出来。这也呼应了 Martin Fowler 关于 TDD 和代码健康度的观点——当 AI 成为主力编码者，明确的契约和测试变得更有价值。",
+      "tags": [
+        "个人洞察",
+        "类型系统",
+        "编码 agent"
+      ]
+    },
+    {
+      "num": 9,
+      "title": "阿里推 Qwen3.5，中国 AI 竞赛白热化",
+      "url": "https://waya.media/alibaba-unveils-new-qwen-ai-model-as-chinas-ai-race-intensifies/",
+      "source": "WAYA",
+      "tldr": "Qwen3.5 支持 agent、长视频分析（最长 2 小时）、多模态输入。发布时机抢在 DeepSeek 更新前，春节假期用户争夺战激烈。阿里承诺投资超 $53B。",
+      "excerpt": "阿里巴巴发布旗舰 AI 模型 Qwen3.5 重大升级，加剧中国快速演进的 AI 市场竞争。Qwen3.5 设计用于处理 AI agent 任务和多种输入格式（文本、图像、视频），能分析最长 2 小时的视频，扩展企业和消费者用例。发布时机在 AI 开发商 DeepSeek 预期更新之前——DeepSeek 早期突破模型在 2025 年重塑了全球 AI 预期，竞争对手现在加速行动以避免失去阵地。阿里近几月稳步扩展 Qwen 家族，2025 年初升级核心模型，并推出新的推理聚焦版本以改善复杂问题解决和自主能力。升级是字节跳动、智谱、MiniMax 等竞争对手模型发布浪潮的一部分，许多发布时机在农历新年前——这个假期历史上推动中国消费互联网服务强劲采用。阿里是最激进的 AI 投资者之一，CEO Eddie Wu 此前承诺超过 $53B 投资 AI 基础设施和开发，公司表示总支出可能超过该水平。除技术外，竞争还在定价和用户获取上加剧。阿里、腾讯、百度提供财务激励吸引用户使用聊天机器人服务，假期期间总激励预计达约 45 亿元。同时，阿里将 Qwen 定位为更广泛数字生态系统的入口。面向消费者的应用正演变为多服务平台，用户已可通过 AI agent 完成订餐或预订旅行等任务。策略反映中国 AI 市场更广泛转变：公司不再仅在模型性能上竞争，下一阶段聚焦用户规模、生态系统集成、跨商务和服务的实际效用。对阿里而言，Qwen 正成为随着 AI 竞赛进入新阶段的长期平台战略核心。",
+      "tags": [
+        "模型发布",
+        "中国",
+        "多模态",
+        "生态系统"
+      ]
+    },
+    {
+      "num": 10,
+      "title": "World Labs 获 $1B 融资，Autodesk 投 $200M 押注空间智能",
+      "url": "https://techcrunch.com/2026/02/18/world-labs-lands-200m-from-autodesk-to-bring-world-models-into-3d-workflows/",
+      "source": "TechCrunch",
+      "tldr": "李飞飞的 World Labs 获 $1B 融资（AMD、Nvidia、Fidelity 等），Autodesk 独投 $200M。合作探索 world models 与 3D CAD 工具整合，初期聚焦娱乐用例。",
+      "excerpt": "李飞飞的 World Labs 获得软件设计巨头 Autodesk $200M 投资，作为 $1B 轮融资的一部分（其他投资者包括 AMD、Emerson Collective、Fidelity、Nvidia 等）。World Labs 于 2024 年以 $230M 融资和 $1B 估值走出隐秘模式，拒绝透露最新轮次是否提升估值，但一个月前报道称其目标是以 $5B 估值融资。合作：World Labs 与 Autodesk 将探索 World Labs 的模型（能生成和推理沉浸式 3D 环境的 AI 系统）如何与 Autodesk 工具协同工作，反之亦然，初期聚焦娱乐用例。对 World Labs 而言，Autodesk 投资是其产品具有商业吸引力的信号。World Labs 首款产品 Marble（2025 年 11 月发布）让用户创建可编辑、可下载的 3D 环境。Autodesk 是最大的 3D CAD（计算机辅助设计）软件开发商之一，其平台支撑建筑、工程、建造、制造和娱乐工作流。对建成世界的关注使其投资先进空间 AI 成为核心业务的自然延伸。李飞飞声明：\"Autodesk 长期帮助人们空间化思考并解决现实世界问题，我们共享明确目标：构建增强人类创造力的物理 AI，将更强大工具交到设计师、建造者和创作者手中。\"合作初期，具体形式尚未确定。Autodesk 首席科学家 Daron Green 设想客户可能在 World Labs 中用 world model 草图开始（如办公室布局），然后深入某些设计细节（如桌子设计），这时 Autodesk 技术介入。同样，可能在 Autodesk 平台设计物体后，通过 World Labs 的 prompt 将其置于上下文中。数据共享不是协议一部分。初期用例聚焦媒体和娱乐——大多数构建 world models 的公司（包括 Google DeepMind、Runway）都将游戏和互动娱乐视为初始 go-to-market 策略。Autodesk 已与大多数主要媒体制作公司合作，并一直在训练角色动画模型。Green 说：\"这些接近 world models，是对世界中动物的特征化，响应物理约束如时间、可能需要穿越的地形。模型中有物理理解，可以看到这如何与 [World Labs 技术] 结合。不仅是让狗动画化，而是给它一个可以交互的世界。\"合作支持 Autodesk 更广泛推动将更多 AI 功能整合到软件组合中。公司正在开发\"neural CAD\"，一种在几何数据上训练的新型生成 AI 模型，能推理组件和整个系统，生成有效的 3D 模型（而非仅图像），并理解这些设计在现实世界中如何运作。",
+      "tags": [
+        "融资",
+        "world models",
+        "3D",
+        "空间智能"
+      ]
+    }
+  ]
+}

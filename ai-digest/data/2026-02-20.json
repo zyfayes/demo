@@ -1,0 +1,96 @@
+{
+  "date": "2026-02-20",
+  "summary": "今日 AI 焦点：教育科技大爆发（5 条深度实战）+ AI agent 基础设施升级（5 条技术突破）。从 WhatsApp 教学助手到苹果 agentic coding，从自适应学习平台到 AI 世界模型，AI 正在重塑教育与开发的底层逻辑。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "真实案例：我把 AI 教学助手放进学生的 WhatsApp",
+      "url": "https://chatwithgpt.substack.com/p/i-put-an-ai-teaching-assistant-in",
+      "source": "ChatWithGPT (Substack)",
+      "tldr": "伊利诺伊大学教授用 OpenClaw 框架在 WhatsApp 部署 AI 教学助手，学生 11 点夜里提问 3 秒得到苏格拉底式引导（不直接给答案）。零下载、零登录、零摩擦，学习发生在学生已经每天使用的 app 里。",
+      "excerpt": "伊利诺伊大学数据库管理课程教授 Vishal Sachdev 用 MIT 开源框架 OpenClaw 在 WhatsApp 部署 AI 教学助手，学生深夜被 SQL 卡住时直接在 WhatsApp 提问，3 秒内得到苏格拉底式引导（不直接给答案，用提问引导思考）。系统每 10 分钟自动同步 Google 表单注册学生到白名单，设置三层防护栏：越狱检测、话题过滤（只回答课程相关）、作弊拦截（不写作业）。考前自动推送定时复习消息（4 天 12 条，间隔重复），最后一条教学生如何制作手写笔记 cheat sheet（制作过程本身就是最好的复习）。教授总结：LMS 是学生被迫打开的地方，WhatsApp 才是他们真正生活的地方。AI 助手不是替代教授，而是把答疑时间从周四 office hour 延伸到凌晨 3 点。",
+      "tags": ["教育科技", "AI 教学助手", "实战案例", "OpenClaw", "苏格拉底式教学"]
+    },
+    {
+      "num": 2,
+      "title": "Renaissance 发布首个教育智能系统，重新定义 K-12 个性化教学",
+      "url": "https://www.prnewswire.com/news-releases/renaissance-launches-first-of-its-kind-education-intelligence-system-that-redefines-personalized-teaching-and-learning-302692713.html",
+      "source": "PRNewswire",
+      "tldr": "教育科技公司 Renaissance 发布行业首个教育智能系统，用研究驱动的 AI 将评估、分组、教学、练习、掌握度全流程打通。不再是碎片化工具堆叠，而是一个连接的工作流，实时生成教师可用的指导建议和学生分组方案。",
+      "excerpt": "Renaissance 发布 Renaissance Intelligence 系统，定义全新品类教育智能系统（Education Intelligence System），将评估、智能分组、教学、练习、掌握度验证全流程连接为一体。过去学校投资多层技术支持个性化教学，结果是 app 割裂、数据孤岛、教学决策延迟。新系统用自适应、研究驱动的 AI 替代这些碎片，实时生成教师可用的指导、可操作的分组建议、与核心课程对齐的资源推荐。系统基于验证过的评估数据和几十年的心理测量学与学习研究，学习与掌握度模型从可信的表现数据中提取，对齐引擎将资源直接映射到标准、技能和核心课程。CEO Chris Bauleke 说：教育一直困在循环里，教师被迫从割裂工具中拼凑洞察来个性化教学，Renaissance Intelligence 改变了这一点，让教师的专业知识在教学旅程的每一步都被放大。",
+      "tags": ["教育科技", "K-12 教育", "自适应学习", "个性化教学", "AI 评估"]
+    },
+    {
+      "num": 3,
+      "title": "2026 AI + 教育科技如何改造全球劳动力？从学时证书到技能掌握",
+      "url": "https://techbullion.com/the-intelligent-learner-how-ai-and-edtech-are-transforming-the-global-workforce-in-2026/",
+      "source": "TechBullion",
+      "tldr": "2026 年标志坐满学时教育的终结和掌握技能学习的开始。个人学习环境（PLE）替代传统 LMS，AI 教学代理用苏格拉底式方法引导，区块链微证书即时验证，企业从按学历招聘转向技能库存。AI 解决了布鲁姆 2σ 问题：一对一辅导在规模化时依然高效。",
+      "excerpt": "2026 年全球教育与培训行业经历根本性转变，从静态、一刀切模型转向 AI 编排的动态生态系统。个人学习环境（PLE）替代学习管理系统（LMS）：Agentic 智能辅导系统（ITS）不只给答案，用苏格拉底方法提问、推动、根据学习者情绪和认知状态调整策略。沉浸式仿真学习（STEM 和职业培训）：高保真 VR/AR 让学生在零风险数字环境中做手术、维修量子计算机、管理化工厂，学习速度比讲座式教学快 4 倍。区块链微证书：2026 年的记录凭证是数字徽章，防篡改、即时验证，学习者可以堆叠特定技能（如 Python 数据科学、提示工程）成便携式终身数字简历。AI 解决了布鲁姆 Sigma 问题：一对一辅导比群体教学显著更有效，AI 让这种效果规模化。企业转向学习即福利模型：内部人才市场用 AI 映射现有员工技能，当新职位出现时，系统识别 80% 准备好的内部员工，提供个性化提升路径填补 20% 差距。",
+      "tags": ["教育科技", "AI 学习", "个性化教育", "区块链微证书", "企业培训"]
+    },
+    {
+      "num": 4,
+      "title": "自适应学习平台如何革新企业 L&D？从一刀切到 AI 驱动的个性化路径",
+      "url": "https://disprz.ai/blog/adaptive-learning-platform-overview",
+      "source": "Disprz",
+      "tldr": "自适应学习平台用数据挖掘和 AI 分析员工表现与偏好，创建定制学习路径优化培训结果。实时调整内容难度，持续评估表现直到掌握，提供数据驱动洞察监控进度。Josh Bersin 研究显示：采用自适应学习方法的组织增长率高 53%。",
+      "excerpt": "自适应学习（个性化学习系统）通过数据挖掘和 AI 分析员工表现与偏好，为每位员工创建定制学习路径。平台通过在线培训模块包含交互活动和评估，完成后 AI 驱动推荐系统基于表现提供定制学习材料。迭代过程持续直到掌握，确保员工有效填补技能差距。L&D 团队获得实时分析监控员工进度、参与度和表现指标，用数据优化学习路径。Josh Bersin 报告显示：采用自适应学习方法的组织增长率高 53%。自适应的三个特征：感知（测量、分析、提取可操作洞察）、决策（持续信息流与内置转折点实现快速转型决策）、进化（持续寻求创新、测试新技术、预测并过渡到新的学习交付方式）。企业从按学历招聘转向技能库存持续更新，成果导向教育（OBE）模式兴起：教育机构与企业合作提供收入分成协议（ISA）或就业后付款模式，教育者目标与学习者职业成功对齐。",
+      "tags": ["教育科技", "企业培训", "自适应学习", "AI 学习平台", "L&D"]
+    },
+    {
+      "num": 5,
+      "title": "AI 课堂管理工具 2026：从保持秩序到释放教师时间的智能助手",
+      "url": "https://teachingbd24.com/ai-classroom-management-tools/",
+      "source": "TeachingBD",
+      "tldr": "AI 课堂管理工具自动化考勤（面部识别/设备签到）、行为监控（参与度热图/早期预警）、智能通知（作业提醒/表现警报）。教师说就像有个永不睡觉的助教。但 AI 应该是通知而非结论，需要人类判断上下文。未来趋势：预测分析提前发现学习差距，情感感知检测挫折/困惑。",
+      "excerpt": "课堂管理不只是保持秩序，而是平衡注意力、文书工作、家长沟通、突发干扰，同时还要真正教学。AI 课堂管理工具自动化日常任务，减轻教师认知负荷。考勤跟踪：用面部识别、设备签到或学习平台登录自动化，真正价值是模式检测——系统可标记长期迟到或突然缺勤，帮助教师在问题滚雪球前干预。教师说最好的部分不是节省时间，而是注意到我会错过的模式。行为与参与监控：分析参与度信号（讨论中发言频率、活动完成度、数字参与、课堂噪音模式），突出可能在学业或社交上漂移的学生。AI 可能标记学生不投入，但也许他们只是度过艰难一周——上下文很重要。智能通知与警报：自动化日常沟通（作业提醒、缺失作业标记、参与度下降警报、表现更新、家长沟通）。教师开玩笑说就像克隆自己来发邮件。未来趋势：预测分析可能很快在学习差距出现前预测，情感感知工具（争议但新兴）可以检测挫折或困惑，自适应环境可能根据参与度调整照明或节奏。教室会完全自动化吗？可能不会。大多数教育者也不想要。未来可能是教师引导、AI 辅助的合作伙伴关系——直觉与数据的混合。",
+      "tags": ["教育科技", "课堂管理", "AI 辅助教学", "行为监控", "教师工具"]
+    },
+    {
+      "num": 6,
+      "title": "Google DeepMind Project Genie：可交互的 AI 世界模型，今日向美国 Ultra 用户开放",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/project-genie/",
+      "source": "Google DeepMind",
+      "tldr": "Google 向美国 AI Ultra 订阅用户（18+）推出 Project Genie，基于 Genie 3 世界模型的实验性原型，让用户创建、探索、混音交互式世界。用文本/图像提示构建环境，实时生成前进路径，支持第一人称/第三人称视角切换。",
+      "excerpt": "Google DeepMind 今日向美国 Google AI Ultra 订阅用户（18+）推出 Project Genie，实验性研究原型让用户创建、探索和混音自己的交互式世界。世界模型模拟环境动态，预测它们如何演变以及动作如何影响它们。与国际象棋或围棋等特定环境的代理不同，构建 AGI 需要导航真实世界多样性的系统。Genie 3 与静态 3D 快照不同，当你移动和与世界交互时实时生成前进路径。它模拟动态世界的物理和交互，突破性的一致性使其能够模拟任何真实世界场景——从机器人、建模动画和小说，到探索地点和历史场景。Project Genie 由 Genie 3、Nano Banana Pro 和 Gemini 驱动，核心能力：世界素描（用文本和生成/上传图像提示创建可扩展环境，定义角色、世界、探索方式，集成 Nano Banana Pro 预览世界外观并微调）、世界探索（可导航环境，移动时实时生成前进路径，可调整相机）、世界混音（在现有世界之上混音新诠释，探索画廊或随机图标获取灵感）。",
+      "tags": ["AI 世界模型", "生成式 AI", "Google DeepMind", "交互式环境", "AGI"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic Opus 4.6 Agent Teams 引发 SaaSocalypse：SaaS 从按席位收费到按结果收费",
+      "url": "https://markets.financialcontent.com/stocks/article/marketminute-2026-2-19-the-agentic-shift-anthropics-opus-46-release-ignites-saasocalypse-fears-among-software-giants",
+      "source": "FinancialContent",
+      "tldr": "Anthropic 2 月 5 日发布 Claude Opus 4.6，核心功能 Agent Teams 让 AI 生成并协调多个子 agent 自主完成端到端项目（如全栈应用、财务审计）。2 月 17 日 Sonnet 4.6 展示人类级计算机使用能力，可视化导航任何数字界面。华尔街分析师称之为 SaaSocalypse：AI agent 可以执行复杂工作流，传统 SaaS 按席位收费模式受威胁。Salesforce 股价今年下跌近 30%，被迫转向 Agentforce 平台和成果定价。",
+      "excerpt": "2026 年 2 月中旬，Anthropic 发布旗舰 AI 模型 Claude Opus 4.6 及更高效的 Sonnet 4.6，科技行业经历结构性重置，华尔街分析师称之为 SaaSocalypse。核心恐惧：Agentic AI（能自主执行复杂工作流的模型）将蚕食维持软件行业二十年的基于席位的收入模式。AI 不再只是副驾驶辅助人类，而是软件界面本身的替代品。2 月 5 日发布的 Opus 4.6 引入突破性功能 Agent Teams，允许 AI 生成并协调多个专业子 agent 完成端到端项目（如构建全栈应用或进行综合财务审计），无需人类干预。2 月 17 日发布的 Sonnet 4.6 展示人类级计算机使用能力，让 AI 可以看到并与任何数字界面交互，绕过传统软件菜单和仪表板。Salesforce 成为破坏的震中，股价今年下跌近 30%，投资者担心席位流失加速——如果像 Claude 4.6 这样的 AI agent 可以完成十个销售分析师的工作，按人类用户收费的传统模式就成了负债。Salesforce 激进转向 Agentforce 平台和成果定价（按成功的 agent 交互收费而非员工登录收费），但市场仍持怀疑态度。相反，CrowdStrike 成为相对避风港：随着企业部署数百万自主 AI agent，网络威胁的攻击面呈指数级扩大，CrowdStrike 的 Charlotte AI 用于驱动 Agentic 安全运营中心（SOC），AI agent 独立搜寻威胁。",
+      "tags": ["AI Agent", "Anthropic", "SaaS", "企业软件", "Agent Teams"]
+    },
+    {
+      "num": 8,
+      "title": "RynnBrain：开源具身 AI 基础模型，统一感知、推理、规划",
+      "url": "https://arxiv.org/abs/2602.14979",
+      "source": "arXiv (Alibaba DAMO Academy)",
+      "tldr": "阿里达摩院团队发布 RynnBrain，开源时空基础模型，专为具身智能设计。统一框架强化四个核心能力：全面的自我中心理解、多样化时空定位、物理基础推理、物理感知规划。提供三个规模（2B/8B/30B MoE）和四个下游任务微调版本（导航/规划/VLA/复杂空间推理）。在 20 个具身基准和 8 个通用视觉理解基准上大幅超越现有具身基础模型。",
+      "excerpt": "尽管多模态基础模型进展迅速，具身智能社区仍然缺乏统一的、物理基础的基础模型，能在真实世界时空动态中整合感知、推理和规划。阿里达摩院等团队推出 RynnBrain，开源时空基础模型。RynnBrain 在统一框架中强化四个核心能力：全面的自我中心理解（egocentric understanding）、多样化时空定位（spatiotemporal localization）、物理基础推理（physically grounded reasoning）、物理感知规划（physics-aware planning）。RynnBrain 家族包含三个基础模型规模（2B、8B、30B-A3B MoE）和四个针对下游具身任务的后训练变体：RynnBrain-Nav（导航）、RynnBrain-Plan（规划）、RynnBrain-VLA（视觉语言动作）、RynnBrain-CoP（复杂空间推理）。在 20 个具身基准和 8 个通用视觉理解基准的广泛评估中，RynnBrain 基础模型大幅超越现有具身基础模型。后训练模型套件进一步证实了 RynnBrain 基础模型的两个关键潜力：(i) 实现物理基础的推理和规划，(ii) 作为强大的预训练骨干，可以高效适配到多样化的具身任务。项目主页提供模型和代码开源。",
+      "tags": ["具身 AI", "开源模型", "时空基础模型", "机器人", "阿里巴巴"]
+    },
+    {
+      "num": 9,
+      "title": "苹果 Xcode 26.3 解锁 agentic coding：Claude Agent 和 Codex 直接集成",
+      "url": "https://www.apple.com/newsroom/2026/02/xcode-26-point-3-unlocks-the-power-of-agentic-coding/",
+      "source": "Apple",
+      "tldr": "苹果发布 Xcode 26.3，引入 agentic coding 支持，开发者可直接在 Xcode 中使用 Claude Agent 和 OpenAI Codex 等编码 agent。Agent 可搜索文档、探索文件结构、更新项目设置、捕获 Xcode 预览并视觉验证工作、迭代构建和修复。通过模型上下文协议（MCP）开放能力，开发者可使用任何兼容 agent。",
+      "excerpt": "苹果发布 Xcode 26.3，引入 agentic coding 支持，这是 Xcode 中使用编码 agent（如 Anthropic Claude Agent 和 OpenAI Codex）构建 app 的新方式。通过 agentic coding，Xcode 可以以更大的自主性朝向开发者目标工作——从分解任务到根据项目架构做决策并使用内置工具。扩展 Xcode 26 引入的智能功能（为 Swift 编写和编辑带来全新编码助手），此版本让编码 agent 访问更多 Xcode 能力。Claude Agent 和 Codex 等 agent 现在可以在整个开发生命周期中协作，让开发者能够简化工作流、更快迭代、前所未有地将想法变为现实。Agent 可以搜索文档、探索文件结构、更新项目设置，通过捕获 Xcode 预览并迭代构建和修复来视觉验证他们的工作。苹果全球开发者关系副总裁 Susan Prescott 说：在苹果，我们的目标是制造将行业领先技术直接放入开发者手中的工具，让他们能够构建最好的 app。Agentic coding 超级增强生产力和创造力，简化开发工作流，让开发者可以专注于创新。除了内置集成，Xcode 26.3 通过模型上下文协议（MCP，一个开放标准）提供能力，让开发者可以灵活使用任何兼容 agent 或工具与 Xcode。",
+      "tags": ["开发工具", "AI 编程", "Agentic Coding", "苹果", "Xcode"]
+    },
+    {
+      "num": 10,
+      "title": "Reload 推出 Epic：给 AI agent 团队配备共享记忆和系统架构师",
+      "url": "https://techcrunch.com/2026/02/19/reload-an-ai-employee-agent-management-platform-raises-2-275m-and-launches-an-ai-employee/",
+      "source": "TechCrunch",
+      "tldr": "AI 劳动力管理平台 Reload 宣布 227.5 万美元融资，推出首款 AI 产品 Epic。问题：团队同时使用多个 agent（编码、调试、重构），但这些 agent 只有短期记忆，不保留对产品是什么或为什么执行特定功能的长期记忆。Epic 作为架构师与其他编码 agent 并行，持续定义产品需求和约束，提醒 agent 正在构建什么以及为什么，保持系统随开发演进的一致性。",
+      "excerpt": "连续创业者 Newton Asare 和 Kiran Das 意识到 AI agent 不再只是工具，而是像队友一样运作。他们注意到自己使用 AI agent 执行通常自己会做的任务，相信未来在于人们管理 AI 员工。2025 年两人推出 Reload，AI 劳动力管理平台。2 月 19 日公司宣布首款 AI 产品 Epic，以及由 Anthemis 领投的 227.5 万美元融资。Reload 让组织跨团队和部门管理 AI agent，公司可以连接 agent（无论由第三方还是内部构建）、分配角色和权限、跟踪他们执行的工作。Reload 就像 AI 员工的记录系统，提供可见性、协调和监督，当 agent 跨职能运作时。Asare 观察到，团队同时使用多个 agent 进行编码、调试、重构等任务，问题是这些 agent 通常只专注于被提示做的事情，不一定保留对产品是什么或为什么被告知执行特定功能的长期记忆——它们只用短期记忆运作。随时间推移，agent 可能失去上下文，或系统偏离原始意图。这就是为什么 Reload 推出 Epic。基于 Reload 平台构建，它作为架构师与其他编码 agent 并行，持续定义产品需求和约束，提醒 agent 正在构建什么以及为什么，保持系统随开发演进的一致性。在软件开发中，编码 agent 可以生成大量代码，但不保留共享系统理解随时间变化。Epic 补充这些 agent，预先定义系统并维护共享上下文随演进。它不替代编码 agent，而是让它们更有效。Epic 设计为生活在开发者已经工作的编码环境中，可以作为扩展安装在 Cursor 和 Windsurf 等 AI 辅助代码编辑器中，与这些工具内的其他 agent 并行运行。",
+      "tags": ["AI Agent", "开发工具", "Agent 管理", "共享记忆", "编程辅助"]
+    }
+  ]
+}

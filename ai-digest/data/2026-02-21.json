@@ -1,0 +1,126 @@
+{
+  "date": "2026-02-21",
+  "summary": "今日 AI 圈重点聚焦教育科技与模型能力突破：印度推出 1.7 亿卢比 EdTech+AI 联合计划，覆盖 1300 万欠发达地区儿童；Google 发布 Gemini 3.1 Pro 推理增强模型；Anthropic 深度剖析 AI Agent 自主性在真实场景中的表现；硬件创业公司 Taalas 实现 Llama 3.1 8B 模型 17000 tokens/秒推理速度；本地 AI 社区迎来里程碑——ggml.ai 加入 Hugging Face。",
+  "items": [
+    {
+      "title": "Google 发布 Gemini 3.1 Pro：面向复杂任务的推理增强模型",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-1-pro/",
+      "tldr": "Google 发布 Gemini 3.1 Pro，强化核心推理能力，在复杂问题求解基准上显著提升。模型通过 Gemini API、Vertex AI、Gemini 应用和 NotebookLM 向开发者、企业和消费者全面开放。",
+      "summary": "Gemini 3.1 Pro 是 Google 最新推出的 AI 模型，专为需要深度推理的复杂任务设计。该模型在数据综合、复杂主题解释等高认知负荷场景中表现出色，在问题求解基准上取得显著提升。Google 以预览版形式发布该模型，旨在验证更新并推进 agentic 工作流。开发者可通过 Google AI Studio、Gemini CLI、Google Antigravity 和 Android Studio 访问；企业用户可通过 Vertex AI 和 Gemini Enterprise 使用；消费者则可通过 Gemini 应用和 NotebookLM 体验。该模型延续了上周发布的 Gemini 3 Deep Think 的技术路线，将突破性推理能力带入日常应用场景。",
+      "tags": [
+        "大模型",
+        "Google",
+        "推理能力",
+        "API"
+      ]
+    },
+    {
+      "title": "Taalas 实现 Llama 3.1 8B 17000 tokens/秒推理：硬件专用化之路",
+      "url": "https://taalas.com/the-path-to-ubiquitous-ai/",
+      "tldr": "加拿大硬件创业公司 Taalas 发布定制硬件实现，将 Llama 3.1 8B 模型推理速度提升至 17000 tokens/秒。通过将 AI 模型转化为专用芯片，两个月内完成从模型到硬件的全流程，性能提升一个数量级。",
+      "summary": "Taalas 成立 2.5 年，专注于将任意 AI 模型转化为定制硬件芯片（Hardcore Models）。其核心理念是完全专用化——通过深度专用化实现极致效率。该公司首款产品实现 Llama 3.1 8B 模型 17000 tokens/秒推理速度，相较软件实现快一个数量级，功耗和成本大幅降低。Taalas 的技术路径挑战了当前 AI 基础设施的范式——摆脱通用计算硬件和数据中心集群，转向专用芯片。文章指出，AI 普及受限于高延迟和天文数字般的成本，而历史经验表明技术革命往往从笨重原型走向轻量化普及（如 ENIAC 到智能手机）。Taalas 试图让 AI 推理变得易于构建、快速且廉价，从根本上改变 AI 部署模式。",
+      "tags": [
+        "硬件加速",
+        "推理优化",
+        "专用芯片",
+        "Llama"
+      ]
+    },
+    {
+      "title": "Intel India：用 AI 让学生更高效，推动个性化教育民主化",
+      "url": "https://www.businesstoday.in/technology/news/story/india-ai-impact-summit-2026-ai-can-make-our-students-more-effective-intel-indias-gokul-v-subramaniam-on-democratising-ai-517300-2026-02-20",
+      "tldr": "Intel India 总裁 Gokul V Subramaniam 在印度 AI 影响峰会上强调，AI 可通过个性化教育能力让学生更高效学习，技术需个性化、本地化、互动化才能真正惠及 2.45 亿印度学生。",
+      "summary": "Intel 正在印度推动 AI 从企业战略走向本地化实践落地。Gokul V Subramaniam 表示，印度有约 2.45 亿学生，AI 教育技术要有效，必须满足个性化、本地化（支持方言）、互动化三大特征。Intel 通过异构计算和本地工程让高性能技术既可负担又可获取，愿景是让 AI 不再是奢侈品，而成为为数百万人提供个性化方言教育的标准工具，同时简化各规模企业的运营。Intel 在印度的核心举措包括 D2M（Direct-2-Mobile）技术革新教育领域，让 AI 能够根据学生水平和兴趣进行针对性教学，提升学习效率。Intel 的策略不仅关注技术本身，更关注如何让技术普惠、可及，真正服务于教育公平。",
+      "tags": [
+        "教育科技",
+        "Intel",
+        "个性化学习",
+        "印度市场"
+      ]
+    },
+    {
+      "title": "ShikshaNext：1.7 亿卢比 EdTech+AI 联合计划，2029 年覆盖 1300 万儿童",
+      "url": "https://www.newkerala.com/news/a/shikshanext-rs-170-cr-multi-partner-initiative-launched-strengthen-945.htm",
+      "tldr": "印度启动 ShikshaNext 三年期计划，投入 1.7 亿卢比，由 Reliance Foundation、Gates Foundation 等联合发起，目标 2029 年为超 1300 万欠发达地区儿童提供 AI 驱动的学习机会。",
+      "summary": "ShikshaNext 是一项大胆的多捐赠方、多年期计划，旨在通过 EdTech 和 AI 改善弱势群体儿童的学习成果。该计划由印度教育部长 Dharmendra Pradhan 出席启动，规模达 1.7 亿卢比（约 3 年），目标到 2029 年让超 1300 万印度儿童获得有意义的技术和 AI 驱动学习机会。该计划由 Reliance Foundation 和 Gates Foundation 作为战略创始合作伙伴锚定，CentralSquare Foundation 担任管理合作伙伴，Michael & Susan Dell Foundation 参与资助。ShikshaNext 包括三大互联项目：EdTech ScaleX（扩展已验证的 EdTech+AI 方案）、EdTech Accelerator（支持高质量 EdTech 解决方案开发和成长），以及 EdTech & AI Innovation Hub（协作空间，发现、测试和验证新兴创新，聚焦印度本土场景）。所有项目均强调严格的证据生成，确保技术整合基于什么有效、对谁有效、在什么条件下有效的洞察。",
+      "tags": [
+        "教育科技",
+        "印度市场",
+        "公益计划",
+        "AI 教育"
+      ]
+    },
+    {
+      "title": "印度发布 EdTech 和 AI 路线图：BaSE 调查揭示欠发达社区技术使用现状",
+      "url": "https://aninews.in/news/business/building-indias-edtech-and-ai-roadmap-for-equitable-learning-for-every-child20260220105554/",
+      "tldr": "Central Square Foundation 在印度 AI 影响峰会期间发布第二版 BaSE（Bharat Survey for EdTech）调查，覆盖 10 个邦 12500 户家庭，揭示欠发达社区中家长、教师、儿童对技术和 AI 的使用与认知。",
+      "summary": "Central Square Foundation 主办的 EdTech 和 AI 对话会聚集了政府高层、慈善机构、全球及印度 EdTech 创新者和教育专家，共同探讨如何用技术和 AI 支持大规模学习。会上发布了第二版 BaSE（Bharat Survey for EdTech），这是一项大型全国性调查，涵盖 10 个邦，提供来自低收入背景的家长、教师和儿童关于教育技术访问、使用以及 AI 认知的洞察，样本量达 12500 户家庭和社区。印度教育部长 Dharmendra Pradhan 在主旨演讲中强调，技术和 AI 是实现 2047 年 Viksit Bharat（发达印度）的关键途径，能够提升教育质量、赋能教师、为年轻人未来工作做准备。他指出，印度数字化普及已深入各阶层，智能手机、互联网接入大幅增长，AI 准备度稳步提升。全球和印度领导者都呼吁用严格的数据和研究指导 AI 工具在教育中的有效使用。该会议强调，证据驱动的创新、强大的系统设计和跨部门协作是大规模提升学习成果的关键。",
+      "tags": [
+        "教育科技",
+        "调查研究",
+        "印度市场",
+        "AI 认知"
+      ]
+    },
+    {
+      "title": "36kr：2026 开年教育 AI 榜单观察——Quizlet、Speak、Astra AI、ThetaWave AI 增长爆发",
+      "url": "https://www.36kr.com/p/3681345039282048",
+      "tldr": "36kr 发布 2026 年 1 月 AI WEB100 教育榜单，Quizlet 规模领先但增速放缓；ThetaWave AI、Speak、Astra AI 访问量环比增速超 100%，活跃用户增速超 330%，教育 AI 从工具强化走向学习系统重构。",
+      "summary": "36kr 基于 Monthly Visits、MAU 及环比增速榜单交叉分析，2026 年 1 月教育类 AI 应用共 4 款入榜：Quizlet、Speak、Astra AI 与 ThetaWave AI。Quizlet 凭借 6759 万月访问量和 2055 万月活跃用户稳居规模榜单，代表传统学习工具通过 AI 强化能力的路径——自动生成练习、智能推荐复习路径等，但增速趋于平缓，处于工具强化期。而 ThetaWave AI、Speak 与 Astra AI 在增速榜单全部上榜，访问量环比增速分别为 220.91%、112.81% 与 106.37%，MAU 环比增速中 ThetaWave AI 高达 334.83%。访问量与活跃度同步提升，印证用户行为从体验尝试转向深度留存，产品完成市场验证。文章指出，教育 AI 正从功能展示向学习依赖过渡，用户开始将其纳入日常学习流程。Speak 通过语音识别和对话生成构建沉浸式口语练习环境，重构语言学习场景；Astra AI 和 ThetaWave AI 则切入不同学习环节。当前教育 AI 从工具强化阶段向学习系统重构深度演进。",
+      "tags": [
+        "教育科技",
+        "榜单分析",
+        "用户增长",
+        "学习应用"
+      ]
+    },
+    {
+      "title": "ggml.ai 加入 Hugging Face：确保本地 AI 的长期进展",
+      "url": "https://github.com/ggml-org/llama.cpp/discussions/19759",
+      "tldr": "llama.cpp 创始团队 ggml.ai 宣布加入 Hugging Face，以保持未来 AI 真正开放。Georgi Gerganov 及团队将全职维护 ggml/llama.cpp 等开源项目，新合作确保项目长期可持续性。",
+      "summary": "ggml.ai（llama.cpp 的创始团队）宣布加入 Hugging Face，目标是扩展和支持 ggml/llama.cpp 社区，并在未来几年本地 AI 持续指数级发展中保持领导地位。关键要点：1) ggml-org 项目保持开放和社区驱动；2) ggml 团队继续全职领导、维护和支持 ggml、llama.cpp 库及相关开源项目；3) 新合作确保项目长期可持续性，并为用户和贡献者带来新机会；4) 将额外专注于改善用户体验和与 Hugging Face transformers 库的集成，提升模型支持。自 2023 年成立以来，ggml.ai 的核心使命一直是支持 ggml 机器学习库的开发和采用。过去 3 年，小团队致力于发展开源开发者社区，将 ggml 确立为高效本地 AI 推理的事实标准。如今，llama.cpp 已成为无数项目和产品的基础构建块，在消费级硬件上实现私密且易于访问的 AI。Hugging Face 在这一过程中始终是最强大、最支持的合作伙伴，其工程师贡献了多项核心功能、构建了推理服务器、引入多模态支持、改进了 GGUF 格式兼容性。",
+      "tags": [
+        "开源社区",
+        "本地 AI",
+        "llama.cpp",
+        "收购合作"
+      ]
+    },
+    {
+      "title": "Anthropic 研究：真实场景中 AI Agent 自主性的测量与观察",
+      "url": "https://www.anthropic.com/research/measuring-agent-autonomy",
+      "tldr": "Anthropic 分析数百万次人机交互，发现 Claude Code 最长会话中自主工作时长 3 个月内从 25 分钟翻倍至超 45 分钟；经验丰富用户更倾向自动批准但也更频繁打断；Agent 主动暂停请求澄清的频率是人类打断的两倍。",
+      "summary": "Anthropic 使用隐私保护工具分析 Claude Code 和公开 API 中的数百万次人机交互，探究：人们授予 Agent 多少自主权？随经验增长如何变化？Agent 在哪些领域运作？所采取行动是否有风险？主要发现：1) Claude Code 自主工作时长显著增加——最长会话中，Claude Code 在停止前工作时长在 3 个月内从 25 分钟增至超 45 分钟，增长平滑跨越模型发布，表明现有模型能力超过实际发挥的自主性；2) 经验丰富的 Claude Code 用户更频繁自动批准但也更多打断——新用户约 20% 的会话使用完全自动批准，经验丰富用户超 40%，他们倾向于让 Claude 自主运行，仅在需要时干预；3) Claude Code 主动暂停请求澄清的频率超过人类打断——在最复杂任务中，Claude Code 主动停止请求澄清的频率是人类打断的两倍多，Agent 主动停止也是部署系统中的重要监督形式；4) Agent 被用于高风险领域，但尚未大规模——虽然 Agent 已进入网络间谍等高风险场景，但当前部署规模有限。",
+      "tags": [
+        "AI Agent",
+        "Anthropic",
+        "自主性研究",
+        "人机交互"
+      ]
+    },
+    {
+      "title": "Anthropic 发布 Claude Code Security：AI 驱动的漏洞检测与修复",
+      "url": "https://www.anthropic.com/news/claude-code-security",
+      "tldr": "Anthropic 发布 Claude Code Security 限定研究预览，内置于 Claude Code 网页版，可扫描代码库安全漏洞并建议针对性软件补丁供人工审核，帮助团队发现传统方法常遗漏的安全问题。",
+      "summary": "Claude Code Security 是 Anthropic 推出的新能力，现作为限定研究预览向企业和团队客户开放，开源仓库维护者可加速获取。它解决了安全团队的核心挑战：软件漏洞太多，处理人员不足。现有分析工具通常寻找已知模式，但难以发现攻击者常利用的微妙的、依赖上下文的漏洞，而这需要熟练的人类研究人员。Claude Code Security 不依赖规则匹配，而是像人类安全研究人员一样阅读和推理代码：理解组件交互、追踪数据流动、捕捉规则工具遗漏的复杂漏洞（如业务逻辑缺陷或访问控制破损）。每个发现都经历多阶段验证，Claude 会重新检查自己的结果，尝试证明或反驳，过滤误报，并分配严重性等级，让分析师优先处理关键问题。Anthropic 强调，同样能帮助防御者的能力也可能被攻击者利用，因此以限定预览形式发布，确保负责任部署。该工具将前沿网络安全能力牢牢掌握在防御者手中，保护代码免受 AI 驱动的新型攻击。",
+      "tags": [
+        "网络安全",
+        "Anthropic",
+        "漏洞检测",
+        "Claude Code"
+      ]
+    },
+    {
+      "title": "Sarvam 推出 Indus AI 聊天应用，印度本土大模型竞争升温",
+      "url": "https://techcrunch.com/2026/02/20/indias-sarvam-launches-indus-ai-chat-app-as-competition-heats-up/",
+      "tldr": "印度 AI 创业公司 Sarvam 推出 Indus 聊天应用（iOS/Android/Web），基于其 105B 参数大模型，正面对抗 OpenAI、Anthropic、Google。印度已成生成式 AI 关键战场，ChatGPT 周活用户超 1 亿，Claude 印度使用量占全球 5.8%。",
+      "summary": "Sarvam 是专注于为本地语言和用户构建模型的印度 AI 创业公司，周五推出 Indus 聊天应用，支持 iOS、Android 和 Web，进入由 OpenAI、Anthropic、Google 主导的快速增长市场。该应用基于 Sarvam 新发布的 105B 参数大语言模型（Sarvam 105B），是在印度 AI 影响峰会上公布的 105B 和 30B 模型之一。Sarvam 还在峰会上公布了企业计划、硬件规划，并宣布与 HMD 合作将 AI 带到诺基亚功能机、与 Bosch 合作 AI 汽车应用。Indus 应用目前处于 beta 阶段，用户可输入或语音查询，接收文本和音频回复，支持手机号、Google 或 Apple ID 登录，服务目前似乎仅限印度。应用目前有一些限制：无法删除聊天记录（除非删除账户）、无法关闭推理功能（可能拖慢响应速度）。印度已成生成式 AI 采用的关键战场，OpenAI CEO Sam Altman 称 ChatGPT 在印度有超 1 亿周活用户，Anthropic 表示印度占 Claude 总使用量 5.8%，仅次于美国。",
+      "tags": [
+        "印度市场",
+        "Sarvam",
+        "大模型",
+        "本地化"
+      ]
+    }
+  ]
+}

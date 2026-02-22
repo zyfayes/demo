@@ -1,0 +1,75 @@
+{
+  "date": "2026-02-22",
+  "items": [
+    {
+      "title": "Microsoft 在印度推出 AI 教师培训计划，目标 2030 年培训 200 万教师",
+      "url": "https://m.economictimes.com/tech/technology/microsoft-launches-ai-skilling-programme-for-2-million-indian-teachers-200000-institutions-by-2030/amp_articleshow/128632965.cms",
+      "tldr": "Microsoft Elevate for Educators 在印度启动，计划到 2030 年培训 200 万教师、覆盖 20 万教育机构。印度是亚洲首个推出该计划的国家。",
+      "summary": "Microsoft 宣布在印度推出 Microsoft Elevate for Educators 计划，目标到 2030 年培训 200 万教师、覆盖 20 万教育机构，作为其为印度 2000 万人提供 AI 技能培训承诺的一部分。该计划旨在将 AI 素养、计算思维和负责任的技术使用嵌入日常教学中，支持印度成为 AI 优先国家的愿景。首批覆盖德里 75 所 CM SHRI 学校，教师使用 Copilot 工具准备课程、制作可视化材料、评估学生并识别学习差距。印度教育部此前宣布，2026-27 学年将从三年级开始在学校课程中引入人工智能。",
+      "tags": ["教育科技", "AI 培训", "Microsoft", "印度", "Copilot"]
+    },
+    {
+      "title": "2026 年教育科技趋势：AI 导师、VR 沉浸式学习与技能验证区块链",
+      "url": "https://techbullion.com/the-intelligent-education-ai-tutors-vr-immersion-and-the-skill-verification-blockchain-of-2026/",
+      "tldr": "2026 年全球自适应学习市场达 45.9 亿美元，教育从通用聊天机器人转向教育专用平台。VR/AR 知识剧场使复杂技术学科的掌握时间缩短 42%。",
+      "summary": "2026 年 2 月，全球自适应学习市场达到 45.9 亿美元，从通用聊天机器人转向理解教学流程的教育专用平台。技术架构呈现三大特点：VR/AR 知识剧场用于医学、工程和历史教学，使复杂技术学科的掌握时间缩短 42%；技能验证区块链为学位颁发数字产品护照，消除学历造假风险；移动优先与离线 AI 确保偏远地区学生获得与城市学生同等的私人导师体验。多模态 AI 导师（如 Khanmigo 3.0）使用语音和情绪识别检测挫败感，提供苏格拉底式引导而非直接答案。教育已成为连续循环，企业技能提升与正规学位融合为统一的技能图谱。",
+      "tags": ["教育科技", "AI 导师", "VR/AR", "自适应学习", "区块链"]
+    },
+    {
+      "title": "AI 儿童学习工具市场预计 2033 年超 70 亿美元，教育面临机遇与风险",
+      "url": "https://theedgemalaysia.com/node/793121",
+      "tldr": "专为儿童设计的 AI 学习工具市场预计到 2033 年将超过 70 亿美元。AI 提供个性化学习路径和实时反馈，但可能加深教育不平等。",
+      "summary": "全球对教育领域人工智能的需求正以惊人速度增长，专为儿童设计的 AI 学习工具市场预计到 2033 年将超过 70 亿美元，标志着知识传播方式的重大转变。AI 正通过自适应软件、AI 导师和智能评估系统重塑教育基础，提供个性化学习路径和持续反馈。AI 平台如 Knewton 和 Smart Sparrow 可根据学生的进度、兴趣和理解水平调整内容。然而，马来西亚等发展中国家面临两难：AI 有潜力使个性化学习普及化，但如果实施不当，也可能加深现有不平等。没有包容性策略和伦理监督，AI 可能无意中强化教育和社会鸿沟。关键问题是 AI 如何部署、由谁部署以及在什么条件下部署。",
+      "tags": ["教育科技", "AI 学习工具", "个性化学习", "教育不平等", "市场预测"]
+    },
+    {
+      "title": "印度 2026-27 学年将从三年级开始在学校课程中引入人工智能",
+      "url": "https://www.storyboard18.com/amp/digital/microsofts-big-ai-push-20-lakh-teachers-to-be-trained-by-2030-in-nationwide-drive-90327.htm",
+      "tldr": "印度教育部宣布，2026-27 学年将从三年级开始在学校课程中引入人工智能。教师使用 Copilot 准备课程、制作可视化材料并评估学生。",
+      "summary": "印度教育部去年宣布，2026-27 学年将从三年级开始在学校课程中引入人工智能。Microsoft Elevate for Educators 计划首批覆盖德里 75 所 CM SHRI 学校，已在 Rohini 和 Dwarka 的 10 所学校推出，培训教师使用 Copilot 工具。Rohini 一所学校的教师 Sadaf Fatima 使用 Copilot 准备 11 年级人体骨骼系统讲座，工具帮助她制作海报、信息图表和演示文稿，使材料视觉化，将重点从死记硬背转向批判性思维和信息分析，将复杂概念分解为更简单的任务。她还使用该工具进行学生评估、识别学习差距并准备修订评估。英语教师 Preeti Sharma 自去年 12 月起使用该工具准备工作表和课程计划。",
+      "tags": ["教育科技", "AI 课程", "印度教育", "Copilot", "K-12"]
+    },
+    {
+      "title": "ggml.ai 加入 Hugging Face，确保本地 AI 的长期发展",
+      "url": "https://github.com/ggml-org/llama.cpp/discussions/19759",
+      "tldr": "llama.cpp 创始团队 ggml.ai 加入 Hugging Face，以保持未来 AI 真正开放。ggml-org 项目保持开源和社区驱动，长期可持续性得到保障。",
+      "summary": "ggml.ai（llama.cpp 的创始团队）宣布加入 Hugging Face，以确保未来 AI 保持真正开放。Georgi 及其团队加入 HF，目标是在未来几年本地 AI 持续指数级进步的同时，扩展和支持 ggml/llama.cpp 社区。关键要点：ggml-org 项目保持开源和社区驱动；ggml 团队继续全职领导、维护和支持 ggml 和 llama.cpp 库及相关开源项目；新合作伙伴关系确保项目的长期可持续性，并将为用户和贡献者培育新机会；将专注于改善用户体验和与 Hugging Face transformers 库的集成以获得更好的模型支持。自 2023 年成立以来，ggml.ai 的核心使命一直是支持 ggml 机器学习库的开发和采用。llama.cpp 已成为无数项目和产品的基础构建块，在消费级硬件上实现私密且易于访问的 AI。",
+      "tags": ["开源", "本地 AI", "llama.cpp", "Hugging Face", "GGML"]
+    },
+    {
+      "title": "Anthropic 推出 Claude Code Security，AI 驱动的安全漏洞扫描工具",
+      "url": "https://www.anthropic.com/news/claude-code-security",
+      "tldr": "Claude Code Security 现已提供有限研究预览，可扫描代码库中的安全漏洞并建议针对性补丁。使用 Claude Opus 4.6 识别出生产开源代码库中超过 500 个漏洞。",
+      "summary": "Claude Code Security 是内置于 Claude Code 网页版中的新功能，现已提供有限研究预览。它扫描代码库中的安全漏洞并建议针对性软件补丁供人工审查，使团队能够发现和修复传统方法经常遗漏的安全问题。安全团队面临共同挑战：软件漏洞太多，而解决它们的人手不足。现有分析工具有帮助，但只能到一定程度，因为它们通常寻找已知模式。发现攻击者经常利用的微妙、依赖上下文的漏洞需要熟练的人类研究人员。Claude Code Security 的工作方式类似于人类安全研究人员：理解组件如何交互、追踪数据如何在应用中移动，并捕获基于规则的工具遗漏的复杂漏洞。使用 Claude Opus 4.6 在生产开源代码库中识别出超过 500 个漏洞，其中一些问题多年未被发现。该功能以有限研究预览形式向企业和团队客户提供，开源仓库维护者可申请免费快速访问。",
+      "tags": ["网络安全", "AI 安全", "Claude", "Anthropic", "漏洞扫描"]
+    },
+    {
+      "title": "MiniMax M2.1 发布：多语言编程能力显著增强，为实际复杂任务而生",
+      "url": "https://www.minimax.io/news/minimax-m21",
+      "tldr": "MiniMax M2.1 系统性增强 Rust、Java、Golang、C++ 等多语言能力，在多语言任务上达到业界领先水平。全面支持多种 AI 编程工具。",
+      "summary": "MiniMax 发布 M2.1 更新，专注于提升实际复杂任务中的性能，特别是在更多编程语言和办公场景中的可用性。关键亮点：卓越的多编程语言能力 - 系统性增强 Rust、Java、Golang、C++、Kotlin、Objective-C、TypeScript、JavaScript 等语言能力，多语言任务整体性能达到业界领先水平，覆盖从底层系统开发到应用层开发的完整链条；WebDev 和 AppDev 能力与美学全面飞跃 - 针对业界公认的移动开发弱项，M2.1 显著加强原生 Android 和 iOS 开发能力，系统性增强模型在 Web 和 App 场景中的设计理解和美学表达；增强复合指令约束，赋能办公场景 - 作为首批系统性引入交错思维的开源模型系列之一，M2.1 系统性问题解决能力进一步升级；全面支持 Factory AI、Cline、Kilo Code、Roo Code 和 BlackBox 等 AI 编程工具。",
+      "tags": ["大模型", "MiniMax", "多语言编程", "AI 编程工具", "开源"]
+    },
+    {
+      "title": "Cord：协调 AI Agent 树的新框架，让 Agent 自主决定任务分解",
+      "url": "https://www.june.kim/cord",
+      "tldr": "Cord 是一个新的多 Agent 协调框架，让 Agent 在运行时动态决定如何分解和协调任务，而非由开发者预定义工作流图。支持并行执行和依赖追踪。",
+      "summary": "AI Agent 擅长一次做一件事，但真实工作是一棵具有依赖性、并行性和需要在任务间流动的上下文的任务树。现有的多 Agent 框架都在解决错误的问题。LangGraph 将协调建模为状态机，开发者预先定义节点和边，但图是静态的；CrewAI 基于角色，但角色由开发者决定，而非 Agent 发现；AutoGen 让 Agent 在群聊中协调，灵活但无结构；OpenAI Swarm 是最简化的代理间切换，但线性无并行；Claude 的工具使用循环让单个 Agent 处理顺序复杂性，但在大任务上遇到上下文窗口限制且无法并行。共同点：每个框架都要求开发者预定义协调结构。当前模型擅长规划，能自然地将问题分解为子问题、理解依赖关系、知道任务何时太大。Cord 框架让 Agent 在运行时动态决定如何分解和协调任务，而非开发者预定义工作流。",
+      "tags": ["AI Agent", "多 Agent 协调", "任务规划", "并行计算", "框架"]
+    },
+    {
+      "title": "通往无处不在 AI 的路径：Taalas 用定制硬件实现 17k tokens/秒推理",
+      "url": "https://taalas.com/the-path-to-ubiquitous-ai/",
+      "tldr": "AI 普及受阻于高延迟和天文成本。Taalas 开发平台可在 2 个月内将任何 AI 模型转化为定制芯片，速度提升一个数量级、成本更低、功耗更小。",
+      "summary": "AI 在狭窄领域已超越人类表现，但广泛采用受两大障碍阻碍：高延迟和天文成本。与语言模型的交互远落后于人类认知速度，编程助手可能需要思考几分钟，自动化 Agent AI 应用需要毫秒级延迟。部署现代模型需要房间大小的超级计算机，消耗数百千瓦，配备液冷、先进封装、堆叠内存、复杂 I/O 和数英里电缆，扩展到城市规模的数据中心园区。Taalas 在 2.5 年前成立，开发了将任何 AI 模型转化为定制芯片的平台。从收到未见过的模型那一刻起，只需 2 个月就能在硬件中实现。生成的 Hardcore Models 比基于软件的实现快一个数量级、更便宜、功耗更低。核心原则：完全专业化 - 深度专业化一直是在关键工作负载中实现极端效率的最可靠路径；AI 推理是当今最关键的计算工作负载。通用 GPU 很快将成为过去。",
+      "tags": ["AI 硬件", "推理加速", "定制芯片", "边缘计算", "Taalas"]
+    },
+    {
+      "title": "智谱就 GLM Coding Plan 问题致歉并公布补偿方案",
+      "url": "https://36kr.com/newsflashes/3693769029234568",
+      "tldr": "智谱就 GLM Coding Plan 改版问题致歉，承认规则透明度不够、GLM-5 灰度节奏太慢、老用户升级机制设计粗糙。支持受影响用户自主申请退款。",
+      "summary": "2月21日晚，智谱发布 GLM Coding Plan 致歉信，并公布处理和补偿方案。智谱承认这次改版主要犯了三个错：规则透明度不够、GLM-5 灰度节奏太慢、老用户升级机制设计粗糙。GLM-5 发布后流量超出预期，公司扩容节奏没有跟上，不得已将 GLM-5 按照 Max、Pro、Lite 的顺序逐步开放。目前 Max 用户已经全面开放，Pro 用户虽已开放但高峰期可能因集群负载较高遇到限流，Lite 用户将在节后非高峰期逐步灰度开放。针对受到影响的 Lite 和 Pro 用户，公司支持自主申请退款。这一事件凸显了 AI 服务提供商在产品升级和用户沟通方面面临的挑战。",
+      "tags": ["智谱", "GLM-5", "用户体验", "产品运营", "AI 服务"]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "date": "2026-02-22",
+  "summary": "Karpathy 给 AI agent 编排层正式命名'Claw'，ggml.ai 并入 Hugging Face 巩固本地 AI 生态，Taalas 用定制芯片把 Llama 8B 推到 17k tokens/s——本周的主题是：AI 的基础设施层正在快速固化，从芯片到编排到开源治理，每一层都在选边站。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Karpathy: Claws are now a new layer on top of LLM agents",
+      "url": "https://twitter.com/karpathy/status/2024987174077432126",
+      "source": "HN/Twitter",
+      "tldr": "Karpathy 买了台 Mac Mini 研究 OpenClaw 类系统后，正式给这类 AI agent 编排层起名'Claw'——负责调度、工具调用、持久化，是 LLM 之上的全新一层。他造词的嗅觉一向准（vibe coding 也是他的），这个词可能真会流行。",
+      "tags": ["agent", "infrastructure", "naming"]
+    },
+    {
+      "num": 2,
+      "title": "ggml.ai joins Hugging Face to ensure the long-term progress of Local AI",
+      "url": "https://github.com/ggml-org/llama.cpp/discussions/19759",
+      "source": "HN",
+      "tldr": "llama.cpp 之父 Georgi Gerganov 将 ggml.ai 整体并入 Hugging Face，GGUF 格式和 transformers 生态的隔阂有望消除。对数百万依赖 llama.cpp 跑本地模型的开发者来说，这是本地 AI 基础设施的里程碑式合并。",
+      "tags": ["open-source", "local-ai", "infrastructure"]
+    },
+    {
+      "num": 3,
+      "title": "The path to ubiquitous AI (17k tokens/sec)",
+      "url": "https://taalas.com/the-path-to-ubiquitous-ai/",
+      "source": "HN",
+      "tldr": "加拿大初创 Taalas 用定制 ASIC + 激进量化把 Llama 3.1 8B 推到 17,000 tokens/s，快到 demo 看起来像截图。这不是 PPT，chatjimmy.ai 可以免费体验。速度，而非参数规模，才是 AI 普及的真正瓶颈。",
+      "tags": ["hardware", "inference", "startup"]
+    },
+    {
+      "num": 4,
+      "title": "Every company building your AI assistant is now an ad company",
+      "url": "https://juno-labs.com/blogs/every-company-building-your-ai-assistant-is-an-ad-company",
+      "source": "HN",
+      "tldr": "当 AI 助手开始推荐餐厅、产品、服务时，它本质上就变成了广告渠道。文章追问：如果你的'个人助手'背后的商业模式是卖你的注意力，它还算是'你的'助手吗？搜索引擎广告化的历史正在 AI 上重演。",
+      "tags": ["business-model", "ads", "trust"]
+    },
+    {
+      "num": 5,
+      "title": "Why is Claude an Electron app?",
+      "url": "https://www.dbreunig.com/2026/02/21/why-is-claude-an-electron-app.html",
+      "source": "HN",
+      "tldr": "深度分析 Anthropic 为什么选择 Electron 做 Claude 桌面端——不是偷懒，而是因为 Claude Code 需要系统级权限（文件读写、终端、进程管理），Electron 的 Node.js 后端天然适合。342 分热帖，技术选型的务实考量。",
+      "tags": ["anthropic", "engineering", "desktop"]
+    },
+    {
+      "num": 6,
+      "title": "How I use Claude Code: Separation of planning and execution",
+      "url": "https://boristane.com/blog/how-i-use-claude-code/",
+      "source": "HN",
+      "tldr": "实操经验：把 Claude Code 的使用拆成'规划'和'执行'两个阶段，先让它输出计划（不执行），review 后再放手。这种'人审 AI 执行'的模式正在成为 agent 使用的最佳实践。",
+      "tags": ["claude-code", "workflow", "best-practice"]
+    },
+    {
+      "num": 7,
+      "title": "Uncovering insiders and alpha on Polymarket with AI",
+      "url": "https://twitter.com/peterjliu/status/2024901585806225723",
+      "source": "HN",
+      "tldr": "用 AI 分析 Polymarket 链上数据，识别内幕交易者和信息差。方法论：追踪大额下注者的历史准确率，找到持续盈利的'聪明钱'地址，然后跟单。133 分，预测市场的 alpha 源头分析。",
+      "tags": ["polymarket", "trading", "on-chain"]
+    },
+    {
+      "num": 8,
+      "title": "Cord: Coordinating Trees of AI Agents",
+      "url": "https://www.june.kim/cord",
+      "source": "HN",
+      "tldr": "一个新的 agent 编排框架，核心思路是把多 agent 协作建模为树状结构而非线性流程。每个节点是一个 agent，父节点负责分配和汇总，子节点负责执行。比 CrewAI 更灵活，147 分。",
+      "tags": ["agent", "framework", "orchestration"]
+    },
+    {
+      "num": 9,
+      "title": "Gemini 3.1 Pro 发布：推理能力翻倍，价格不变",
+      "url": "https://www.sohu.com/a/988798288_121956424",
+      "source": "MiniMax Search",
+      "tldr": "Google 发布 Gemini 3.1 Pro，ARC-AGI 2 得分是 3.0 的两倍，价格与 3.0 Pro 持平（$2/M input），直逼 Claude Opus 4.6 而价格不到一半。旗舰模型的价格战已经从'降价'进入'加量不加价'阶段。",
+      "tags": ["google", "gemini", "pricing"]
+    },
+    {
+      "num": 10,
+      "title": "国产大模型春节密集上新：GLM-5 登顶开源榜，智谱首次提价",
+      "url": "http://finance.eastmoney.com/news/1354,202602203651672288.html",
+      "source": "MiniMax Search",
+      "tldr": "智谱 GLM-5 在 Artificial Analysis 全球榜单排第四、开源第一，编程能力对齐 Claude Opus 4.5。更值得关注的是智谱宣布涨价 30%+，这是国产大模型首次大幅提价，'一码难求'说明市场需求已经能支撑溢价。",
+      "tags": ["china-ai", "glm", "pricing"]
+    }
+  ]
+}

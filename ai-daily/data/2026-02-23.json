@@ -1,0 +1,86 @@
+{
+  "date": "2026-02-23",
+  "summary": "本周 AI 圈的主旋律是「工程实践」而非「发布会」：Claude Code 工作流、ESP32 上跑 AI 助手、NVMe-to-GPU 绕过 CPU 跑 70B 模型——社区在用代码说话。硬件侧 Taalas 定制 ASIC 炸场，16960 tok/s 的数字让 GPU 党坐立难安。与此同时，经济学人泼了盆冷水：AI 生产力红利还没来。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "How I use Claude Code: Separation of planning and execution",
+      "url": "https://boristane.com/blog/how-i-use-claude-code/",
+      "source": "Hacker News (875pts, 551 comments)",
+      "tldr": "Boris Tane 分享 Claude Code 实战心法：规划和执行必须分开，先用「计划模式」让 Claude 写出详细步骤，再切到执行模式逐步落实，避免 Claude 边想边做越走越偏。这篇文章触发了 551 条评论，说明大家对 AI coding agent 工作流痛点共鸣强烈。",
+      "tags": ["Claude Code", "AI Coding", "工作流"]
+    },
+    {
+      "num": 2,
+      "title": "How Taalas 'prints' LLM onto a chip?",
+      "url": "https://www.anuragk.com/blog/posts/Taalas.html",
+      "source": "Hacker News (391pts, 243 comments)",
+      "tldr": "Taalas HC1 是 2026 年最值得关注的 AI 芯片黑马：通过「Hardcore AI」架构把 LLM 权重直接印进定制 ASIC，跑 Llama 3.1 8B 达到 16960 tok/s/user，远超 GPU。这篇文章从原理层面解释了为何这不是 PPT 产品——权重固化换来的是极致推理效率和成本优势。",
+      "tags": ["ASIC", "推理硬件", "Taalas", "芯片"]
+    },
+    {
+      "num": 3,
+      "title": "Show HN: Llama 3.1 70B on a single RTX 3090 via NVMe-to-GPU bypassing the CPU",
+      "url": "https://github.com/xaskasdf/ntransformer",
+      "source": "Hacker News (369pts, 93 comments)",
+      "tldr": "ntransformer 项目实现了在单张 RTX 3090（24GB VRAM）上跑 70B 参数模型：诀窍是用 NVMe SSD 直接作为二级显存，走 PCIe 通道绕过 CPU/内存瓶颈。推理速度不快但可用，打开了「消费级硬件跑大模型」的新思路，比 CPU offload 方案快得多。",
+      "tags": ["开源", "本地部署", "Llama", "硬件优化"]
+    },
+    {
+      "num": 4,
+      "title": "zclaw: personal AI assistant in under 888 KB, running on an ESP32",
+      "url": "https://github.com/tnm/zclaw",
+      "source": "Hacker News (259pts, 141 comments)",
+      "tldr": "zclaw 把 AI 助手塞进 888KB 固件跑在 ESP32 微控制器上，整机成本不到 10 美元。它连接远程 LLM API 完成推理，本地只处理语音唤醒和网络通信。证明了「边缘 AI 设备」不需要昂贵的片上 NPU，工程师用 C 语言就能搞定。",
+      "tags": ["开源", "嵌入式AI", "ESP32", "边缘计算"]
+    },
+    {
+      "num": 5,
+      "title": "We hid backdoors in ~40MB binaries and asked AI + Ghidra to find them",
+      "url": "https://quesma.com/blog/introducing-binaryaudit/",
+      "source": "Hacker News (205pts, 92 comments)",
+      "tldr": "BinaryAudit 团队做了一个红队实验：在 40MB 二进制文件里藏多种后门，然后让 LLM 结合 Ghidra 反编译结果做漏洞检测。结论喜忧参半——AI 能发现一些明显的模式，但对精心混淆的后门仍然束手无策，说明 AI 辅助二进制审计还在早期阶段。",
+      "tags": ["AI安全", "逆向工程", "漏洞检测", "红队"]
+    },
+    {
+      "num": 6,
+      "title": "The Claude C Compiler: What It Reveals About the Future of Software",
+      "url": "https://www.modular.com/blog/the-claude-c-compiler-what-it-reveals-about-the-future-of-software",
+      "source": "Simon Willison's blog / Modular",
+      "tldr": "Chris Lattner（LLVM 创始人、Modular CEO）深度解读了 Anthropic 用「并行 Claude」构建 C 编译器的实验。他的核心判断是：AI 正在让软件开发从「写代码」转向「描述意图」，编译器这类基础设施工具将率先被 AI 重构，而不是被替代。",
+      "tags": ["Claude", "编译器", "软件工程未来", "Anthropic"]
+    },
+    {
+      "num": 7,
+      "title": "[AINews] The Custom ASIC Thesis",
+      "url": "https://www.latent.space/p/ainews-the-custom-asic-thesis",
+      "source": "swyx / Latent Space",
+      "tldr": "swyx 系统梳理了定制 ASIC 作为 LLM 推理硬件的投资逻辑：Taalas HC1 的出现标志着「把模型烧进芯片」这条路从理论走向产品。文章认为未来高吞吐、低延迟推理场景将被定制 ASIC 统治，GPU 优势仅剩训练和灵活性两项。",
+      "tags": ["ASIC", "推理硬件", "Taalas", "行业分析"]
+    },
+    {
+      "num": 8,
+      "title": "AI uBlock Blacklist",
+      "url": "https://github.com/alvi-se/ai-ublock-blacklist",
+      "source": "Hacker News (279pts, 121 comments)",
+      "tldr": "一个社区驱动的 uBlock Origin 过滤列表，专门屏蔽 AI 生成的 SEO 垃圾内容网站。评论区炸出了大量用户「被 AI 内容污染搜索结果」的愤怒，这个项目的高热度本身就是一个信号：AI 生成内容已经严重影响信息生态，反制工具开始出现。",
+      "tags": ["开源", "AI内容污染", "工具", "社区"]
+    },
+    {
+      "num": 9,
+      "title": "How I think about Codex",
+      "url": "https://www.linkedin.com/pulse/how-i-think-codex-gabriel-chua-ukhic",
+      "source": "Simon Willison (转引 OpenAI DevEx)",
+      "tldr": "OpenAI APAC 开发者体验工程师 Gabriel Chua 澄清了「Codex」这个混乱术语：它既是旧版代码模型名称，也是新的软件工程 Agent 品牌。文章梳理了 Codex Agent 的实际能力边界——可以处理异步多任务代码工作，但不是通用 AI 程序员，定位更接近「Senior SWE 的异步助手」。",
+      "tags": ["OpenAI", "Codex", "AI Agent", "软件工程"]
+    },
+    {
+      "num": 10,
+      "title": "The AI productivity boom is not here (yet)",
+      "url": "https://www.economist.com/finance-and-economics/2026/02/22/the-ai-productivity-boom-is-not-here-yet",
+      "source": "The Economist",
+      "tldr": "经济学人最新分析：尽管 AI 模型能力突飞猛进（本月 OpenAI 模型甚至帮助推导了物理学新结果），但宏观经济生产力数据仍未出现统计意义上的 AI 提升。文章引用了「电气化滞后效应」类比——技术突破到经济层面的扩散通常需要 10-20 年，AI 可能也不例外。",
+      "tags": ["经济分析", "AI生产力", "宏观视角"]
+    }
+  ]
+}

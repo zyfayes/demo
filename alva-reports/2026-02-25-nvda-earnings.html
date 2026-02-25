@@ -320,12 +320,27 @@
   <div class="report-header">
     <h1>英伟达财报前瞻与市场分析</h1>
     <div class="report-meta">
-      <span>📅 2026-02-25 22:43</span>
+      <span>📅 2026-02-25 23:05</span>
       <span>⏱️ 0s</span>
       <span>🤖 Alva Ask</span>
       <span>🆔 2026667475130716160</span>
     </div>
   </div>
+
+  
+
+  
+    <details class="section">
+      <summary class="section-header">
+        <span class="icon">📋</span> Execution Plan
+        <span class="count">4 steps</span>
+        <span class="chevron">▸</span>
+      </summary>
+      <div class="section-body"><div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA analyst consensus (next-quarter and FY revenue/EPS), ratings and price targets into a single snapshot for the upcoming earnings.</span></div>
+<div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA price/volume history and compute key technical levels (MAs, support/resistance, gaps) into an earnings setup view.</span></div>
+<div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA options-implied volatility proxies or, if unavailable, estimate event move using realized vol + recent earnings gaps (proxy-based, clearly labeled).</span></div>
+<div class="plan-step"><span class="status completed">✓</span><span>Synthesize a scenario tree for post-earnings price action (beat/inline/miss + guidance) tied to positioning/vol/technicals and provide actionable levels and risk framing.</span></div></div>
+    </details>
 
   <div class="answer-section">
     <h2>NVDA into earnings (as of 2026-02-25)</h2>
@@ -402,18 +417,26 @@
   </div>
 
   
-
-  
-    <details class="section">
+    <details class="section" open>
       <summary class="section-header">
-        <span class="icon">📋</span> Execution Plan
-        <span class="count">4 steps</span>
+        <span class="icon">📊</span> Computed Data
+        <span class="count">2 results</span>
         <span class="chevron">▸</span>
       </summary>
-      <div class="section-body"><div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA analyst consensus (next-quarter and FY revenue/EPS), ratings and price targets into a single snapshot for the upcoming earnings.</span></div>
-<div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA price/volume history and compute key technical levels (MAs, support/resistance, gaps) into an earnings setup view.</span></div>
-<div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA options-implied volatility proxies or, if unavailable, estimate event move using realized vol + recent earnings gaps (proxy-based, clearly labeled).</span></div>
-<div class="plan-step"><span class="status completed">✓</span><span>Synthesize a scenario tree for post-earnings price action (beat/inline/miss + guidance) tied to positioning/vol/technicals and provide actionable levels and risk framing.</span></div></div>
+      <div class="section-body"><table><thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Ref</th></tr></thead><tbody><tr><td>Symbol</td><td>NVDA</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target High</td><td>400.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Low</td><td>140.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Consensus</td><td>272.18</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Median</td><td>275.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Current Price</td><td>192.85</td><td>@alva/data/stock/spot/ohlcv</td><td>alva://ohlcv</td></tr><tr><td>SMA20</td><td>186.73</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA50</td><td>185.11</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA100</td><td>186.18</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA200</td><td>173.95</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA20</td><td>187.72</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA50</td><td>185.45</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA100</td><td>186.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA200</td><td>172.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>RSI14</td><td>63.27</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Line</td><td>1.61</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Signal</td><td>0.18</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Histogram</td><td>1.43</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Upper</td><td>197.84</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Middle</td><td>186.73</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Lower</td><td>175.61</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Width</td><td>0.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Realized Volatility 20D</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Realized Volatility 60D</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>ATR14</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>60D High</td><td>194.49</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>60D Low</td><td>170.31</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Nearest Resistance</td><td>194.49 (60D High)</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Nearest Support</td><td>186.73 (SMA20)</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Event Move Method</td><td>earnings</td><td>Computed from OHLCV</td><td>alva://event_move</td></tr><tr><td>Earnings Moves Count</td><td>8</td><td>Computed from OHLCV</td><td>alva://event_move</td></tr><tr><td>Financial Estimates</td><td>Error: SDK JSON parse failed</td><td>@alva/data/stock/financial-estimates</td><td>alva://financial_estimates</td></tr></tbody></table>
+<br>
+<p><strong>Notes:</strong></p>
+<ul><li>Financial estimates failed due to SDK response parsing error (JSON format issue)</li>
+<li>Event move analysis used earnings method (8 earnings dates identified with gap threshold >5%)</li>
+<li>Technical indicators computed from 2 years of daily OHLCV data (500 data points)</li>
+<li>Support/resistance levels derived from 60-day range and major moving averages</li></ul>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Ref</th></tr></thead><tbody><tr><td>Symbol</td><td>NVDA</td><td>@arrays/data/market-metrics/volatility</td><td>alva://volatility_90</td></tr><tr><td>Current Price</td><td>$192.85</td><td>@arrays/data/stock/spot/ohlcv</td><td>alva://ohlcv_2y</td></tr><tr><td>VOLATILITY_90 (Annualized)</td><td>34.69%</td><td>@arrays/data/market-metrics/volatility</td><td>alva://volatility_90</td></tr><tr><td>1-Day Expected Move %</td><td>2.19%</td><td>Computed: vol/√252</td><td>alva://earnings_preview</td></tr><tr><td>1-Day Expected Move (Upper)</td><td>$192.89</td><td>Computed: close×(1+0.0219)</td><td>alva://earnings_preview</td></tr><tr><td>1-Day Expected Move (Lower)</td><td>$192.81</td><td>Computed: close×(1-0.0219)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move %</td><td>4.89%</td><td>Computed: vol/√(252/5)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move (Upper)</td><td>$192.94</td><td>Computed: close×(1+0.0489)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move (Lower)</td><td>$192.76</td><td>Computed: close×(1-0.0489)</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Mean Absolute Move</td><td>5.85%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Median Absolute Move</td><td>3.27%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Max Absolute Move</td><td>18.72%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Events Count</td><td>8</td><td>Identified from OHLCV</td><td>alva://earnings_preview</td></tr><tr><td>AVERAGE_DAILY_DOLLAR_VOLUME_20</td><td>$32.30B</td><td>@arrays/data/market-metrics/average-daily-dollar-volume</td><td>alva://addv_20</td></tr></tbody></table>
+<br>
+<p><strong>Notes:</strong></p>
+<ul><li>Volatility-based expected moves use realized 90-day volatility (34.69% annualized)</li>
+<li>1-day move = 34.69%/√252 ≈ 2.19%, 1-week move = 34.69%/√50.4 ≈ 4.89%</li>
+<li>Earnings moves computed from next-day returns around 8 identified earnings dates</li>
+<li>Dollar volume reflects 20-day average of daily close×volume</li></ul></div>
     </details>
 
   
@@ -2249,29 +2272,6 @@ graph.addNode('earnings_preview', {
         num('expected_move_1d_upper', '1-day expected move upper 
 
   
-    <details class="section" open>
-      <summary class="section-header">
-        <span class="icon">📊</span> Computed Data
-        <span class="count">2 results</span>
-        <span class="chevron">▸</span>
-      </summary>
-      <div class="section-body"><table><thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Ref</th></tr></thead><tbody><tr><td>Symbol</td><td>NVDA</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target High</td><td>400.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Low</td><td>140.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Consensus</td><td>272.18</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Median</td><td>275.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Current Price</td><td>192.85</td><td>@alva/data/stock/spot/ohlcv</td><td>alva://ohlcv</td></tr><tr><td>SMA20</td><td>186.73</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA50</td><td>185.11</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA100</td><td>186.18</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA200</td><td>173.95</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA20</td><td>187.72</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA50</td><td>185.45</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA100</td><td>186.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA200</td><td>172.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>RSI14</td><td>63.27</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Line</td><td>1.61</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Signal</td><td>0.18</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Histogram</td><td>1.43</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Upper</td><td>197.84</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Middle</td><td>186.73</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Lower</td><td>175.61</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Width</td><td>0.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Realized Volatility 20D</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Realized Volatility 60D</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>ATR14</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>60D High</td><td>194.49</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>60D Low</td><td>170.31</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Nearest Resistance</td><td>194.49 (60D High)</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Nearest Support</td><td>186.73 (SMA20)</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Event Move Method</td><td>earnings</td><td>Computed from OHLCV</td><td>alva://event_move</td></tr><tr><td>Earnings Moves Count</td><td>8</td><td>Computed from OHLCV</td><td>alva://event_move</td></tr><tr><td>Financial Estimates</td><td>Error: SDK JSON parse failed</td><td>@alva/data/stock/financial-estimates</td><td>alva://financial_estimates</td></tr></tbody></table>
-<br>
-<p><strong>Notes:</strong></p>
-<ul><li>Financial estimates failed due to SDK response parsing error (JSON format issue)</li>
-<li>Event move analysis used earnings method (8 earnings dates identified with gap threshold >5%)</li>
-<li>Technical indicators computed from 2 years of daily OHLCV data (500 data points)</li>
-<li>Support/resistance levels derived from 60-day range and major moving averages</li></ul>
-<table><thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Ref</th></tr></thead><tbody><tr><td>Symbol</td><td>NVDA</td><td>@arrays/data/market-metrics/volatility</td><td>alva://volatility_90</td></tr><tr><td>Current Price</td><td>$192.85</td><td>@arrays/data/stock/spot/ohlcv</td><td>alva://ohlcv_2y</td></tr><tr><td>VOLATILITY_90 (Annualized)</td><td>34.69%</td><td>@arrays/data/market-metrics/volatility</td><td>alva://volatility_90</td></tr><tr><td>1-Day Expected Move %</td><td>2.19%</td><td>Computed: vol/√252</td><td>alva://earnings_preview</td></tr><tr><td>1-Day Expected Move (Upper)</td><td>$192.89</td><td>Computed: close×(1+0.0219)</td><td>alva://earnings_preview</td></tr><tr><td>1-Day Expected Move (Lower)</td><td>$192.81</td><td>Computed: close×(1-0.0219)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move %</td><td>4.89%</td><td>Computed: vol/√(252/5)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move (Upper)</td><td>$192.94</td><td>Computed: close×(1+0.0489)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move (Lower)</td><td>$192.76</td><td>Computed: close×(1-0.0489)</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Mean Absolute Move</td><td>5.85%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Median Absolute Move</td><td>3.27%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Max Absolute Move</td><td>18.72%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Events Count</td><td>8</td><td>Identified from OHLCV</td><td>alva://earnings_preview</td></tr><tr><td>AVERAGE_DAILY_DOLLAR_VOLUME_20</td><td>$32.30B</td><td>@arrays/data/market-metrics/average-daily-dollar-volume</td><td>alva://addv_20</td></tr></tbody></table>
-<br>
-<p><strong>Notes:</strong></p>
-<ul><li>Volatility-based expected moves use realized 90-day volatility (34.69% annualized)</li>
-<li>1-day move = 34.69%/√252 ≈ 2.19%, 1-week move = 34.69%/√50.4 ≈ 4.89%</li>
-<li>Earnings moves computed from next-day returns around 8 identified earnings dates</li>
-<li>Dollar volume reflects 20-day average of daily close×volume</li></ul></div>
-    </details>
-
-  
     <details class="section">
       <summary class="section-header">
         <span class="icon">🧠</span> Detailed Reasoning
@@ -2416,7 +2416,7 @@ graph.addNode('earnings_preview', {
 
   <div class="report-footer">
     <span>Generated by Moss · alva-ask skill</span>
-    <span>2026-02-25T14:43:13.971Z</span>
+    <span>2026-02-25T15:05:11.238Z</span>
   </div>
 
 </div>
@@ -2432,8 +2432,6 @@ document.querySelectorAll('.section-header').forEach(h => {
 </html>
 ),
         num('expected_move_1d_lower', '1-day expected move lower 
-
-  {{COMPUTED_SECTION}}
 
   {{REASONING_SECTION}}
 
@@ -2459,8 +2457,6 @@ document.querySelectorAll('.section-header').forEach(h => {
         num('expected_move_1w_pct', '1-week expected move %'),
         num('expected_move_1w_upper', '1-week expected move upper 
 
-  {{COMPUTED_SECTION}}
-
   {{REASONING_SECTION}}
 
   {{REFERENCES_SECTION}}
@@ -2483,8 +2479,6 @@ document.querySelectorAll('.section-header').forEach(h => {
 </html>
 ),
         num('expected_move_1w_lower', '1-week expected move lower 
-
-  {{COMPUTED_SECTION}}
 
   {{REASONING_SECTION}}
 
@@ -2653,8 +2647,6 @@ function main() {
 main();</code></pre>
       </div></div>
     </details>
-
-  {{COMPUTED_SECTION}}
 
   {{REASONING_SECTION}}
 

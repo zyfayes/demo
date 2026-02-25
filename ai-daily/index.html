@@ -445,7 +445,7 @@
             <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
           </button>
           <div class="podcast-info">
-            <div class="podcast-title">${escapeHtml(data.podcastTitle || 'AI 日报音频')}</div>
+            <div class="podcast-title">${data.podcastLink ? `<a href="${escapeHtml(data.podcastLink)}" target="_blank" rel="noopener" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3)">${escapeHtml(data.podcastTitle || 'AI 日报音频')}</a>` : escapeHtml(data.podcastTitle || 'AI 日报音频')}</div>
             <div class="podcast-sub">🎙️ ${escapeHtml(data.podcastVoice || 'uma')} · via ListenHub</div>
           </div>
         </div>

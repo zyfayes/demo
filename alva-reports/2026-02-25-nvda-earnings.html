@@ -1,0 +1,2678 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>英伟达财报前瞻与市场分析</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1a1a1a;
+    --text-secondary: #6b6560;
+    --text-tertiary: #9b9590;
+    --accent: #c96442;
+    --accent-light: #fdf4f0;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+    --tag-bg: #f0ede8;
+    --tag-text: #5a5550;
+    --success: #2d8a5e;
+    --pending: #b8860b;
+    --search-bg: #f8f6f2;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1e;
+      --surface: #232328;
+      --border: #3a3a40;
+      --text: #e8e5e0;
+      --text-secondary: #9b9590;
+      --text-tertiary: #6b6560;
+      --accent: #e0825a;
+      --accent-light: #2a2220;
+      --code-bg: #16161e;
+      --code-text: #cdd6f4;
+      --tag-bg: #2a2a30;
+      --tag-text: #9b9590;
+      --search-bg: #1e1e24;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .report-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .report-header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .report-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+  .report-meta span {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  /* Answer section */
+  .answer-section {
+    margin-bottom: 40px;
+  }
+  .answer-section h2, .answer-section h3 {
+    margin-top: 28px;
+    margin-bottom: 12px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .answer-section h2 { font-size: 20px; }
+  .answer-section h3 { font-size: 17px; }
+  .answer-section p { margin-bottom: 12px; }
+  .answer-section ul, .answer-section ol {
+    margin-bottom: 12px;
+    padding-left: 24px;
+  }
+  .answer-section li { margin-bottom: 6px; }
+  .answer-section strong { font-weight: 600; }
+  .answer-section hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  /* Tables */
+  .answer-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  .answer-section th {
+    text-align: left;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .answer-section td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .answer-section tr:last-child td { border-bottom: none; }
+
+  /* Collapsible sections */
+  .section {
+    margin-bottom: 16px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+  .section-header:hover { background: var(--tag-bg); }
+  .section-header .icon { font-size: 16px; }
+  .section-header .count {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text-tertiary);
+    background: var(--tag-bg);
+    padding: 2px 8px;
+    border-radius: 10px;
+  }
+  .section-header .chevron {
+    margin-left: 8px;
+    font-size: 12px;
+    color: var(--text-tertiary);
+    transition: transform 0.2s;
+  }
+  .section[open] .section-header .chevron { transform: rotate(90deg); }
+  .section-body {
+    display: none;
+    padding: 0 18px 16px;
+  }
+  .section[open] .section-body { display: block; }
+
+  /* Search items */
+  .search-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 10px 12px;
+    margin: 4px 0;
+    background: var(--search-bg);
+    border-radius: 8px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .search-item .search-icon {
+    color: var(--accent);
+    font-size: 14px;
+    margin-top: 1px;
+  }
+
+  /* Planning steps */
+  .plan-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 0;
+    font-size: 14px;
+  }
+  .plan-step .status {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .plan-step .status.completed { background: #e6f5ee; color: var(--success); }
+  .plan-step .status.in_progress { background: #fef3e0; color: var(--pending); }
+  .plan-step .status.pending { background: var(--tag-bg); color: var(--text-tertiary); }
+
+  /* Code blocks */
+  .code-block {
+    margin: 8px 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .code-block-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: #16161e;
+    font-size: 12px;
+    color: #7f849c;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .code-block pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 14px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    overflow-x: auto;
+    max-height: 300px;
+  }
+
+  /* Reasoning */
+  .reasoning-block {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .reasoning-block:last-child { border-bottom: none; }
+  .reasoning-block h4 {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text);
+  }
+  .reasoning-block p {
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  /* Data table in computed section */
+  .computed-table {
+    width: 100%;
+    font-size: 13px;
+  }
+  .computed-table th {
+    text-align: left;
+    font-weight: 600;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-tertiary);
+  }
+  .computed-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* References */
+  .ref-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 0;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .ref-item .ref-badge {
+    flex-shrink: 0;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    font-family: monospace;
+  }
+
+  /* Footer */
+  .report-footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="report-header">
+    <h1>英伟达财报前瞻与市场分析</h1>
+    <div class="report-meta">
+      <span>📅 2026-02-25 22:43</span>
+      <span>⏱️ 0s</span>
+      <span>🤖 Alva Ask</span>
+      <span>🆔 2026667475130716160</span>
+    </div>
+  </div>
+
+  <div class="answer-section">
+    <h2>NVDA into earnings (as of 2026-02-25)</h2>
+<br>
+<h3>What we can and cannot confirm from the data</h3>
+<ul><li><strong>Analyst price-target consensus is available</strong> (mean <strong>$272.18</strong>, median <strong>$275</strong>, range <strong>$140–$400</strong>).  </li>
+<li><strong>Street consensus revenue/EPS for the upcoming quarter and fiscal years is not available in this dataset</strong> due to a repeatable response parsing error (the returned estimates are null with zero contributing analysts).  </li>
+<li><strong>Options-implied move is not available here</strong>, so *event-risk framing below uses realized volatility and historical post-earnings next-day moves as proxies*.  </li>
+</ul><br>
+<hr>
+<br>
+<h2>1) Sentiment anchor (analyst targets) vs last close</h2>
+<ul><li><strong>Last close $192.85</strong> vs <strong>mean price target $272.18</strong> (and <strong>median $275</strong>).  </li>
+<li>Target dispersion is wide (<strong>$140–$400</strong>), which often implies elevated disagreement on the path of fundamentals rather than a “tight” consensus setup into the print.  </li>
+</ul><br>
+<hr>
+<br>
+<h2>2) Technical setup and key levels (into the event)</h2>
+<ul><li><strong>Trend and momentum</strong>: RSI(14) <strong>63.27</strong> and MACD histogram <strong>+1.43</strong> are consistent with positive momentum (but not an “extreme” RSI reading).  </li>
+<li><strong>Nearest resistance</strong>: <strong>$194.49</strong> (60-day high).  </li>
+<li><strong>Support cluster / pivot zone</strong>: <strong>$186.73 (SMA20)</strong>, <strong>$186.18 (SMA100)</strong>, <strong>$185.11 (SMA50)</strong>—a tight area that matters for post-earnings “hold vs fail” price action.  </li>
+<li><strong>Major trend support</strong>: <strong>$173.95 (SMA200)</strong> as a deeper downside reference if the support cluster breaks decisively.  </li>
+<li><strong>Bollinger Bands (20, 2σ)</strong>: upper <strong>$197.84</strong>, middle <strong>$186.73</strong>, lower <strong>$175.61</strong> (useful for framing where price sits versus its recent distribution).  </li>
+</ul><br>
+<p>A visual view of NVDA’s close versus the moving-average “support cluster” and the Bollinger Bands helps clarify the nearby decision levels into earnings.  </p>
+<br>
+<hr>
+<br>
+<h2>3) Volatility and event-risk proxies (since implied move is unavailable here)</h2>
+<h3>Realized volatility (proxy)</h3>
+<ul><li><strong>90-day realized volatility (annualized)</strong> is <strong>34.69%</strong> (VOLATILITY_90).  </li>
+<li>For additional context, <strong>20-day realized volatility (annualized)</strong> is <strong>37.80%</strong> (VOLATILITY_20).  </li>
+</ul><br>
+<h3>Historical post-earnings next-day moves (proxy)</h3>
+<ul><li>Using the last <strong>8 identified earnings events</strong>, <strong>next-day absolute move</strong> was <strong>median 3.27%</strong>, <strong>mean 5.85%</strong>, and <strong>max 18.72%</strong> (tail risk).  </li>
+</ul><br>
+<p>A time-series view of VOLATILITY_90 can help judge whether realized vol is rising or easing into the event.  </p>
+<br>
+<hr>
+<br>
+<h2>4) Liquidity (execution and gap-risk context)</h2>
+<ul><li><strong>Average daily dollar volume (20-day)</strong> is approximately <strong>$32.30B/day</strong>, indicating substantial liquidity under normal conditions (though earnings can still gap).  </li>
+</ul><br>
+<hr>
+<br>
+<h2>5) Scenario tree mapped to the levels we actually have</h2>
+<h3>Bull case (beat and/or upbeat guidance)</h3>
+<ul><li>Primary signal would be a <strong>break and hold above $194.49 (60D high)</strong>, with the <strong>$197.84 Bollinger upper band</strong> acting as a near-term “magnet” zone if momentum persists.  </li>
+<li>Practical invalidation to monitor: <strong>failure back below the $186–$187 support cluster</strong> would undermine the immediate post-breakout thesis.  </li>
+</ul><br>
+<h3>Base case (inline results)</h3>
+<ul><li>A common “neutral” outcome is <strong>range trade / mean reversion</strong> around the <strong>$186.73 (SMA20) pivot</strong> up to the <strong>$194.49 resistance</strong> as volatility normalizes after the event.  </li>
+</ul><br>
+<h3>Bear case (miss and/or weak guidance)</h3>
+<ul><li>First downside test is typically the <strong>$186–$185 support cluster</strong>; a decisive breakdown increases odds of a move toward the <strong>$175.61 lower band</strong> and potentially <strong>$173.95 (SMA200)</strong> as the next major reference zone.  </li>
+<li>Tail-risk framing: recent sample shows <strong>max next-day post-earnings move ~18.72%</strong> (direction can vary).  </li>
+</ul><br>
+<hr>
+<br>
+<h2>Key numbers at a glance (from this dataset)</h2>
+<br>
+<table><thead><tr><th>Item</th><th>Value</th></tr></thead><tbody><tr><td>Last close</td><td>$192.85</td></tr><tr><td>Price target mean</td><td>$272.18</td></tr><tr><td>Price target median</td><td>$275</td></tr><tr><td>Price target range</td><td>$140–$400</td></tr><tr><td>Resistance proxy</td><td>$194.49</td></tr><tr><td>Support cluster</td><td>$186.73 $186.18 $185.11</td></tr><tr><td>Major support</td><td>$173.95</td></tr><tr><td>Realized volatility 90D annualized</td><td>34.69%</td></tr><tr><td>Post-earnings next-day abs move median mean max</td><td>3.27% 5.85% 18.72%</td></tr><tr><td>ADDV_20</td><td>$32.30B/day</td></tr></tbody></table>
+<br>
+<hr>
+<br>
+<h3>Constraints that materially affect this read-through</h3>
+<ul><li>Numeric <strong>revenue/EPS consensus estimates are omitted</strong> because the financial-estimates feed returned null values with a parsing error in the source response.  </li>
+</ul><br>
+<hr>
+<br>
+<hr>
+<ul><li>Do you want me to refresh this with a longer earnings-history window (more than 8 events) to tighten the post-earnings move distribution?  </li>
+<li>If you share the exact earnings timestamp (today after-close vs tomorrow pre-market), I can tailor the level map to the nearest sessions and gaps using the same dataset.</li></ul>
+  </div>
+
+  
+
+  
+    <details class="section">
+      <summary class="section-header">
+        <span class="icon">📋</span> Execution Plan
+        <span class="count">4 steps</span>
+        <span class="chevron">▸</span>
+      </summary>
+      <div class="section-body"><div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA analyst consensus (next-quarter and FY revenue/EPS), ratings and price targets into a single snapshot for the upcoming earnings.</span></div>
+<div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA price/volume history and compute key technical levels (MAs, support/resistance, gaps) into an earnings setup view.</span></div>
+<div class="plan-step"><span class="status completed">✓</span><span>Fetch NVDA options-implied volatility proxies or, if unavailable, estimate event move using realized vol + recent earnings gaps (proxy-based, clearly labeled).</span></div>
+<div class="plan-step"><span class="status completed">✓</span><span>Synthesize a scenario tree for post-earnings price action (beat/inline/miss + guidance) tied to positioning/vol/technicals and provide actionable levels and risk framing.</span></div></div>
+    </details>
+
+  
+    <details class="section">
+      <summary class="section-header">
+        <span class="icon">💻</span> Code Execution
+        <span class="count">16 scripts</span>
+        <span class="chevron">▸</span>
+      </summary>
+      <div class="section-body">
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: company_price_target_consensus
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeCompanyPriceTargetConsensusNode } = require(&quot;@arrays/data/stock/company/price-target-consensus:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;nvda_pt_consensus&quot;,
+  makeCompanyPriceTargetConsensusNode(
+    { symbol: 'NVDA' }
+  )
+);
+
+graph.run();
+log(&quot;nvda_pt_consensus&quot;, graph.readNodeTs(&quot;nvda_pt_consensus&quot;, &quot;company_price_target_consensus&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: company_price_target_consensus
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeCompanyPriceTargetConsensusNode } = require(&quot;@arrays/data/stock/company/price-target-consensus:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;nvda_price_target_consensus&quot;,
+  makeCompanyPriceTargetConsensusNode(
+    { symbol: 'NVDA' }
+  )
+);
+
+graph.run();
+log(&quot;nvda_price_target_consensus&quot;, graph.readNodeTs(&quot;nvda_price_target_consensus&quot;, &quot;company_price_target_consensus&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: financial_estimates
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeFinancialEstimatesNode } = require(&quot;@arrays/data/stock/financial-estimates:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;nvda_q1_2026&quot;,
+  makeFinancialEstimatesNode(
+    {&quot;symbol&quot;:&quot;NVDA&quot;,&quot;fiscal_year&quot;:2026,&quot;fiscal_quarter&quot;:&quot;Q1&quot;}
+  )
+);
+
+graph.run();
+log(&quot;nvda_q1_2026&quot;, graph.readNodeTs(&quot;nvda_q1_2026&quot;, &quot;financial_estimates&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: financial_estimates
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeFinancialEstimatesNode } = require(&quot;@arrays/data/stock/financial-estimates:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;nvda_fy2026&quot;,
+  makeFinancialEstimatesNode(
+    { symbol: 'NVDA', fiscal_year: 2026, fiscal_quarter: 'FY' }
+  )
+);
+
+graph.run();
+log(&quot;nvda_fy2026&quot;, graph.readNodeTs(&quot;nvda_fy2026&quot;, &quot;financial_estimates&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 main.js</div>
+        <pre><code>const { Graph, rs, makeDoc, num, str, bool, obj, arr } = require('@alva/graph:v1.0.0');
+const { makeCompanyPriceTargetConsensusNode } = require('@arrays/data/stock/company/price-target-consensus:v1.0.0');
+const { makeFinancialEstimatesNode } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+const { makeStockKlineNode } = require('@arrays/data/stock/spot/ohlcv:v1.0.0');
+
+const graph = new Graph();
+
+const SYMBOL = 'NVDA';
+const END_DATE = Date.UTC(2026, 1, 25, 23, 59, 59);
+const START_DATE = END_DATE - 2 * 365 * 24 * 60 * 60 * 1000;
+
+graph.addNode('price_target', makeCompanyPriceTargetConsensusNode({ symbol: SYMBOL }));
+
+graph.addNode('financial_estimates', {
+  inputs: {
+    q1_2026: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2026, fiscal_quarter: 'Q1' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    },
+    fy_2026: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2026, fiscal_quarter: 'FY' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    },
+    fy_2027: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2027, fiscal_quarter: 'FY' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    }
+  },
+  outputs: {
+    estimates: makeDoc('financial_estimates', 'Financial estimates for NVDA', [
+      num('date', 'timestamp ms'),
+      str('period', 'fiscal period'),
+      num('revenue_avg', 'average revenue estimate'),
+      num('revenue_low', 'low revenue estimate'),
+      num('revenue_high', 'high revenue estimate'),
+      num('eps_avg', 'average EPS estimate'),
+      num('eps_low', 'low EPS estimate'),
+      num('eps_high', 'high EPS estimate'),
+      num('num_analysts_revenue', 'number of revenue analysts'),
+      num('num_analysts_eps', 'number of EPS analysts'),
+      str('error', 'error message if any'),
+      bool('success', 'whether fetch succeeded')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const estimates = [];
+    const periods = [
+      { id: 'q1_2026', period: 'Q1 2026', data: inputs.q1_2026 },
+      { id: 'fy_2026', period: 'FY 2026', data: inputs.fy_2026 },
+      { id: 'fy_2027', period: 'FY 2027', data: inputs.fy_2027 }
+    ];
+
+    for (const p of periods) {
+      const d = p.data;
+      if (d.success &amp;&amp; d.response &amp;&amp; d.response.estimates &amp;&amp; d.response.estimates[0]) {
+        const est = d.response.estimates[0];
+        estimates.push({
+          date: Date.now(),
+          period: p.period,
+          revenue_avg: est.revenueAvg || null,
+          revenue_low: est.revenueLow || null,
+          revenue_high: est.revenueHigh || null,
+          eps_avg: est.epsAvg || null,
+          eps_low: est.epsLow || null,
+          eps_high: est.epsHigh || null,
+          num_analysts_revenue: est.numAnalystsRevenue || 0,
+          num_analysts_eps: est.numAnalystsEps || 0,
+          error: null,
+          success: true
+        });
+      } else {
+        estimates.push({
+          date: Date.now(),
+          period: p.period,
+          revenue_avg: null,
+          revenue_low: null,
+          revenue_high: null,
+          eps_avg: null,
+          eps_low: null,
+          eps_high: null,
+          num_analysts_revenue: 0,
+          num_analysts_eps: 0,
+          error: d.error || 'No data available',
+          success: false
+        });
+      }
+    }
+
+    return { estimates };
+  }
+});
+
+graph.addNode('ohlcv', makeStockKlineNode({
+  ticker: SYMBOL,
+  start_time: Math.floor(START_DATE / 1000),
+  end_time: Math.floor(END_DATE / 1000),
+  interval: '1d'
+}));
+
+graph.addNode('technical_indicators', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline')
+  },
+  outputs: {
+    indicators: makeDoc('technical_indicators', 'Technical indicators for NVDA', [
+      num('date', 'timestamp ms'),
+      num('close', 'close price'),
+      num('sma20', '20-day SMA'),
+      num('sma50', '50-day SMA'),
+      num('sma100', '100-day SMA'),
+      num('sma200', '200-day SMA'),
+      num('ema20', '20-day EMA'),
+      num('ema50', '50-day EMA'),
+      num('ema100', '100-day EMA'),
+      num('ema200', '200-day EMA'),
+      num('rsi14', '14-day RSI'),
+      num('macd', 'MACD line'),
+      num('macd_signal', 'MACD signal line'),
+      num('macd_histogram', 'MACD histogram'),
+      num('bb_upper', 'Bollinger upper band'),
+      num('bb_middle', 'Bollinger middle band'),
+      num('bb_lower', 'Bollinger lower band'),
+      num('bb_width', 'Bollinger band width'),
+      num('volatility_20d', '20-day realized volatility (annualized)'),
+      num('volatility_60d', '60-day realized volatility (annualized)'),
+      num('atr14', '14-day ATR')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const data = inputs.ohlcv.data;
+    if (data.length === 0) return { indicators: [] };
+
+    const sorted = [...data].sort((a, b) =&gt; a.date - b.date);
+    const closes = sorted.map(d =&gt; d.close);
+    const highs = sorted.map(d =&gt; d.high);
+    const lows = sorted.map(d =&gt; d.low);
+    const n = sorted.length;
+
+    function sma(arr, period) {
+      if (arr.length &lt; period) return null;
+      let sum = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        sum += arr[i];
+      }
+      return sum / period;
+    }
+
+    function ema(arr, period) {
+      if (arr.length &lt; period) return null;
+      const k = 2 / (period + 1);
+      let emaVal = arr[arr.length - period];
+      for (let i = arr.length - period + 1; i &lt; arr.length; i++) {
+        emaVal = arr[i] * k + emaVal * (1 - k);
+      }
+      return emaVal;
+    }
+
+    function rsi(arr, period) {
+      if (arr.length &lt; period + 1) return null;
+      let gains = 0, losses = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        const change = arr[i] - arr[i - 1];
+        if (change &gt; 0) gains += change;
+        else losses -= change;
+      }
+      const avgGain = gains / period;
+      const avgLoss = losses / period;
+      if (avgLoss === 0) return 100;
+      return 100 - (100 / (1 + avgGain / avgLoss));
+    }
+
+    function macd(arr, fast = 12, slow = 26, signal = 9) {
+      if (arr.length &lt; slow + signal) return { macd: null, signal: null, histogram: null };
+      const fastEma = ema(arr.slice(-slow), fast);
+      const slowEma = ema(arr.slice(-slow), slow);
+      const macdLine = fastEma - slowEma;
+      
+      const macdHistory = [];
+      for (let i = slow; i &lt; arr.length; i++) {
+        const f = ema(arr.slice(0, i + 1), fast);
+        const s = ema(arr.slice(0, i + 1), slow);
+        macdHistory.push(f - s);
+      }
+      const signalLine = ema(macdHistory.slice(-signal), signal);
+      return { macd: macdLine, signal: signalLine, histogram: macdLine - signalLine };
+    }
+
+    function bollinger(arr, period = 20, multiplier = 2) {
+      if (arr.length &lt; period) return { upper: null, middle: null, lower: null, width: null };
+      const middle = sma(arr, period);
+      let sumSq = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        sumSq += Math.pow(arr[i] - middle, 2);
+      }
+      const std = Math.sqrt(sumSq / period);
+      return {
+        upper: middle + multiplier * std,
+        middle: middle,
+        lower: middle - multiplier * std,
+        width: (2 * multiplier * std) / middle
+      };
+    }
+
+    function volatility(arr, period) {
+      if (arr.length &lt; period + 1) return null;
+      let sumSq = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        const ret = Math.log(arr[i] / arr[i - 1]);
+        sumSq += ret * ret;
+      }
+      const dailyVar = sumSq / period;
+      return Math.sqrt(dailyVar * 252) * 100;
+    }
+
+    function atr(highs, lows, closes, period) {
+      if (highs.length &lt; period + 1) return null;
+      const tr = [];
+      for (let i = 1; i &lt; highs.length; i++) {
+        const h = highs[i];
+        const l = lows[i];
+        const pc = closes[i - 1];
+        tr.push(Math.max(h - l, Math.abs(h - pc), Math.abs(l - pc)));
+      }
+      return sma(tr, period);
+    }
+
+    const indicators = [];
+    for (let i = 0; i &lt; sorted.length; i++) {
+      const idx = i + 1;
+      const closeSlice = closes.slice(0, idx);
+      const highSlice = highs.slice(0, idx);
+      const lowSlice = lows.slice(0, idx);
+
+      if (idx &lt; 200) continue;
+
+      const sma20 = sma(closeSlice, 20);
+      const sma50 = sma(closeSlice, 50);
+      const sma100 = sma(closeSlice, 100);
+      const sma200 = sma(closeSlice, 200);
+      const ema20 = ema(closeSlice, 20);
+      const ema50 = ema(closeSlice, 50);
+      const ema100 = ema(closeSlice, 100);
+      const ema200 = ema(closeSlice, 200);
+      const rsi14 = rsi(closeSlice, 14);
+      const macdResult = macd(closeSlice);
+      const bb = bollinger(closeSlice);
+      const vol20 = volatility(closeSlice, 20);
+      const vol60 = volatility(closeSlice, 60);
+      const atr14 = atr(highSlice, lowSlice, closeSlice, 14);
+
+      indicators.push({
+        date: sorted[i].date,
+        close: sorted[i].close,
+        sma20, sma50, sma100, sma200,
+        ema20, ema50, ema100, ema200,
+        rsi14,
+        macd: macdResult.macd,
+        macd_signal: macdResult.signal,
+        macd_histogram: macdResult.histogram,
+        bb_upper: bb.upper,
+        bb_middle: bb.middle,
+        bb_lower: bb.lower,
+        bb_width: bb.width,
+        volatility_20d: vol20,
+        volatility_60d: vol60,
+        atr14
+      });
+    }
+
+    return { indicators };
+  }
+});
+
+graph.addNode('support_resistance', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline'),
+    indicators: rs('technical_indicators', 'indicators', { last: '1' })
+  },
+  outputs: {
+    levels: makeDoc('support_resistance', 'Support and resistance levels', [
+      num('date', 'timestamp ms'),
+      num('close', 'current close price'),
+      num('high_60d', '60-day high'),
+      num('low_60d', '60-day low'),
+      num('sma200', '200-day SMA'),
+      num('sma100', '100-day SMA'),
+      num('sma50', '50-day SMA'),
+      num('sma20', '20-day SMA'),
+      arr('resistance_levels', [num('level', 'resistance price'), str('type', 'type of resistance')], 'resistance levels'),
+      arr('support_levels', [num('level', 'support price'), str('type', 'type of support')], 'support levels')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const ohlcv = inputs.ohlcv.data.sort((a, b) =&gt; a.date - b.date);
+    const latest = inputs.indicators.data[0];
+    const close = ohlcv[ohlcv.length - 1].close;
+
+    const recent60 = ohlcv.slice(-60);
+    const high60d = Math.max(...recent60.map(d =&gt; d.high));
+    const low60d = Math.min(...recent60.map(d =&gt; d.low));
+
+    const resistanceLevels = [];
+    const supportLevels = [];
+
+    if (latest.sma200 &amp;&amp; latest.sma200 &gt; close) {
+      resistanceLevels.push({ level: latest.sma200, type: 'SMA200' });
+    }
+    if (latest.sma100 &amp;&amp; latest.sma100 &gt; close) {
+      resistanceLevels.push({ level: latest.sma100, type: 'SMA100' });
+    }
+    if (latest.sma50 &amp;&amp; latest.sma50 &gt; close) {
+      resistanceLevels.push({ level: latest.sma50, type: 'SMA50' });
+    }
+    if (latest.sma20 &amp;&amp; latest.sma20 &gt; close) {
+      resistanceLevels.push({ level: latest.sma20, type: 'SMA20' });
+    }
+    if (high60d &gt; close) {
+      resistanceLevels.push({ level: high60d, type: '60D High' });
+    }
+
+    resistanceLevels.sort((a, b) =&gt; a.level - b.level);
+
+    if (latest.sma200 &amp;&amp; latest.sma200 &lt; close) {
+      supportLevels.push({ level: latest.sma200, type: 'SMA200' });
+    }
+    if (latest.sma100 &amp;&amp; latest.sma100 &lt; close) {
+      supportLevels.push({ level: latest.sma100, type: 'SMA100' });
+    }
+    if (latest.sma50 &amp;&amp; latest.sma50 &lt; close) {
+      supportLevels.push({ level: latest.sma50, type: 'SMA50' });
+    }
+    if (latest.sma20 &amp;&amp; latest.sma20 &lt; close) {
+      supportLevels.push({ level: latest.sma20, type: 'SMA20' });
+    }
+    if (low60d &lt; close) {
+      supportLevels.push({ level: low60d, type: '60D Low' });
+    }
+
+    supportLevels.sort((a, b) =&gt; b.level - a.level);
+
+    return {
+      levels: [{
+        date: Date.now(),
+        close,
+        high_60d: high60d,
+        low_60d: low60d,
+        sma200: latest.sma200,
+        sma100: latest.sma100,
+        sma50: latest.sma50,
+        sma20: latest.sma20,
+        resistance_levels: resistanceLevels.slice(0, 3),
+        support_levels: supportLevels.slice(0, 3)
+      }]
+    };
+  }
+});
+
+graph.addNode('event_move', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline')
+  },
+  outputs: {
+    event_analysis: makeDoc('event_move_analysis', 'Earnings event move analysis', [
+      num('date', 'timestamp ms'),
+      arr('earnings_moves', [num('date', 'earnings date'), num('next_day_return_pct', 'next day return %')], 'earnings moves'),
+      num('proxy_move_90th_pct', '90th percentile absolute 1-day return'),
+      str('method', 'method used: earnings or proxy'),
+      num('sample_size', 'number of samples')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const data = inputs.ohlcv.data.sort((a, b) =&gt; a.date - b.date);
+    
+    const earningsMoves = [];
+    const gapThreshold = 0.05;
+
+    for (let i = 1; i &lt; data.length - 1; i++) {
+      const prev = data[i - 1];
+      const curr = data[i];
+      const next = data[i + 1];
+
+      const overnightGap = Math.abs(curr.open - prev.close) / prev.close;
+      if (overnightGap &gt; gapThreshold) {
+        const nextDayReturn = ((next.close - curr.close) / curr.close) * 100;
+        earningsMoves.push({
+          date: curr.date,
+          next_day_return_pct: nextDayReturn
+        });
+      }
+    }
+
+    let method = 'proxy';
+    let proxyMove90th = null;
+    const sampleSize = Math.min(252, data.length - 1);
+
+    if (earningsMoves.length &gt;= 3) {
+      method = 'earnings';
+    } else {
+      const absReturns = [];
+      for (let i = 1; i &lt; Math.min(sampleSize + 1, data.length); i++) {
+        const ret = Math.abs((data[i].close - data[i - 1].close) / data[i - 1].close) * 100;
+        absReturns.push(ret);
+      }
+      absReturns.sort((a, b) =&gt; a - b);
+      const idx90 = Math.floor(absReturns.length * 0.9);
+      proxyMove90th = absReturns[idx90] || 0;
+    }
+
+    return {
+      event_analysis: [{
+        date: Date.now(),
+        earnings_moves: earningsMoves.slice(-8),
+        proxy_move_90th_pct: proxyMove90th,
+        method,
+        sample_size
+      }]
+    };
+  }
+});
+
+function main() {
+  graph.run();
+
+  const priceTarget = graph.readTs('price_target', 'company_price_target_consensus', { last: '1' });
+  const estimates = graph.readTs('financial_estimates', 'estimates', { last: '10' });
+  const indicators = graph.readTs('technical_indicators', 'indicators', { last: '1' });
+  const levels = graph.readTs('support_resistance', 'levels', { last: '1' });
+  const eventAnalysis = graph.readTs('event_move', 'event_analysis', { last: '1' });
+
+  const pt = priceTarget.data[0] || {};
+  const est = estimates.data || [];
+  const ind = indicators.data[0] || {};
+  const lvl = levels.data[0] || {};
+  const evt = eventAnalysis.data[0] || {};
+
+  const financialEstimates = {};
+  est.forEach(e =&gt; {
+    if (e.success) {
+      financialEstimates[e.period] = {
+        revenue: { avg: e.revenue_avg, low: e.revenue_low, high: e.revenue_high },
+        eps: { avg: e.eps_avg, low: e.eps_low, high: e.eps_high },
+        analysts: { revenue: e.num_analysts_revenue, eps: e.num_analysts_eps }
+      };
+    } else {
+      financialEstimates[e.period] = { error: e.error };
+    }
+  });
+
+  const result = {
+    symbol: SYMBOL,
+    as_of: new Date().toISOString(),
+    price_target_consensus: {
+      high: pt.target_high,
+      low: pt.target_low,
+      consensus: pt.target_consensus,
+      median: pt.target_median
+    },
+    financial_estimates: financialEstimates,
+    technical_indicators: {
+      current_price: ind.close,
+      sma: { d20: ind.sma20, d50: ind.sma50, d100: ind.sma100, d200: ind.sma200 },
+      ema: { d20: ind.ema20, d50: ind.ema50, d100: ind.ema100, d200: ind.ema200 },
+      rsi14: ind.rsi14,
+      macd: { line: ind.macd, signal: ind.macd_signal, histogram: ind.macd_histogram },
+      bollinger_bands: { upper: ind.bb_upper, middle: ind.bb_middle, lower: ind.bb_lower, width: ind.bb_width },
+      realized_volatility: { d20: ind.volatility_20d, d60: ind.volatility_60d },
+      atr14: ind.atr14
+    },
+    support_resistance: {
+      current_price: lvl.close,
+      range_60d: { high: lvl.high_60d, low: lvl.low_60d },
+      resistance: lvl.resistance_levels,
+      support: lvl.support_levels
+    },
+    event_move_analysis: {
+      method: evt.method,
+      earnings_moves: evt.earnings_moves,
+      proxy_90th_percentile: evt.proxy_move_90th_pct,
+      sample_size: evt.sample_size
+    }
+  };
+
+  return {
+    data_brief: {
+      metric_name: 'nvda_comprehensive_analysis',
+      validation: {
+        price_target_available: !!pt.target_consensus,
+        financial_estimates_available: est.some(e =&gt; e.success),
+        ohlcv_data_points: indicators.data.length &gt; 0 ? indicators.data.length : 0,
+        technical_indicators_computed: !!ind.close,
+        support_resistance_computed: !!lvl.close,
+        event_analysis_computed: !!evt.method
+      }
+    },
+    final_output: result
+  };
+}
+
+main();</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 main.js</div>
+        <pre><code>const { Graph, rs, makeDoc, num, str, bool, obj, arr } = require('@alva/graph:v1.0.0');
+const { makeCompanyPriceTargetConsensusNode } = require('@arrays/data/stock/company/price-target-consensus:v1.0.0');
+const { makeStockKlineNode } = require('@arrays/data/stock/spot/ohlcv:v1.0.0');
+
+const graph = new Graph();
+
+const SYMBOL = 'NVDA';
+const END_DATE = Date.UTC(2026, 1, 25, 23, 59, 59);
+const START_DATE = END_DATE - 2 * 365 * 24 * 60 * 60 * 1000;
+
+graph.addNode('price_target', makeCompanyPriceTargetConsensusNode({ symbol: SYMBOL }));
+
+graph.addNode('financial_estimates', {
+  inputs: {
+    q1_2026: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2026, fiscal_quarter: 'Q1' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    },
+    fy_2026: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2026, fiscal_quarter: 'FY' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    },
+    fy_2027: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2027, fiscal_quarter: 'FY' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    }
+  },
+  outputs: {
+    estimates: makeDoc('financial_estimates', 'Financial estimates for NVDA', [
+      num('date', 'timestamp ms'),
+      str('period', 'fiscal period'),
+      num('revenue_avg', 'average revenue estimate'),
+      num('revenue_low', 'low revenue estimate'),
+      num('revenue_high', 'high revenue estimate'),
+      num('eps_avg', 'average EPS estimate'),
+      num('eps_low', 'low EPS estimate'),
+      num('eps_high', 'high EPS estimate'),
+      num('num_analysts_revenue', 'number of revenue analysts'),
+      num('num_analysts_eps', 'number of EPS analysts'),
+      str('error', 'error message if any'),
+      bool('success', 'whether fetch succeeded')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const estimates = [];
+    const periods = [
+      { id: 'q1_2026', period: 'Q1 2026', data: inputs.q1_2026 },
+      { id: 'fy_2026', period: 'FY 2026', data: inputs.fy_2026 },
+      { id: 'fy_2027', period: 'FY 2027', data: inputs.fy_2027 }
+    ];
+
+    for (let i = 0; i &lt; periods.length; i++) {
+      const p = periods[i];
+      const d = p.data;
+      if (d.success &amp;&amp; d.response &amp;&amp; d.response.estimates &amp;&amp; d.response.estimates[0]) {
+        const est = d.response.estimates[0];
+        estimates.push({
+          date: Date.now() + i,
+          period: p.period,
+          revenue_avg: est.revenueAvg || null,
+          revenue_low: est.revenueLow || null,
+          revenue_high: est.revenueHigh || null,
+          eps_avg: est.epsAvg || null,
+          eps_low: est.epsLow || null,
+          eps_high: est.epsHigh || null,
+          num_analysts_revenue: est.numAnalystsRevenue || 0,
+          num_analysts_eps: est.numAnalystsEps || 0,
+          error: null,
+          success: true
+        });
+      } else {
+        estimates.push({
+          date: Date.now() + i,
+          period: p.period,
+          revenue_avg: null,
+          revenue_low: null,
+          revenue_high: null,
+          eps_avg: null,
+          eps_low: null,
+          eps_high: null,
+          num_analysts_revenue: 0,
+          num_analysts_eps: 0,
+          error: d.error || 'No data available',
+          success: false
+        });
+      }
+    }
+
+    return { estimates };
+  }
+});
+
+graph.addNode('ohlcv', makeStockKlineNode({
+  ticker: SYMBOL,
+  start_time: Math.floor(START_DATE / 1000),
+  end_time: Math.floor(END_DATE / 1000),
+  interval: '1d'
+}));
+
+graph.addNode('technical_indicators', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline')
+  },
+  outputs: {
+    indicators: makeDoc('technical_indicators', 'Technical indicators for NVDA', [
+      num('date', 'timestamp ms'),
+      num('close', 'close price'),
+      num('sma20', '20-day SMA'),
+      num('sma50', '50-day SMA'),
+      num('sma100', '100-day SMA'),
+      num('sma200', '200-day SMA'),
+      num('ema20', '20-day EMA'),
+      num('ema50', '50-day EMA'),
+      num('ema100', '100-day EMA'),
+      num('ema200', '200-day EMA'),
+      num('rsi14', '14-day RSI'),
+      num('macd', 'MACD line'),
+      num('macd_signal', 'MACD signal line'),
+      num('macd_histogram', 'MACD histogram'),
+      num('bb_upper', 'Bollinger upper band'),
+      num('bb_middle', 'Bollinger middle band'),
+      num('bb_lower', 'Bollinger lower band'),
+      num('bb_width', 'Bollinger band width'),
+      num('volatility_20d', '20-day realized volatility (annualized)'),
+      num('volatility_60d', '60-day realized volatility (annualized)'),
+      num('atr14', '14-day ATR')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const data = inputs.ohlcv.data;
+    if (data.length === 0) return { indicators: [] };
+
+    const sorted = [...data].sort((a, b) =&gt; a.date - b.date);
+    const closes = sorted.map(d =&gt; d.close);
+    const highs = sorted.map(d =&gt; d.high);
+    const lows = sorted.map(d =&gt; d.low);
+    const n = sorted.length;
+
+    function sma(arr, period) {
+      if (arr.length &lt; period) return null;
+      let sum = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        sum += arr[i];
+      }
+      return sum / period;
+    }
+
+    function ema(arr, period) {
+      if (arr.length &lt; period) return null;
+      const k = 2 / (period + 1);
+      let emaVal = arr[arr.length - period];
+      for (let i = arr.length - period + 1; i &lt; arr.length; i++) {
+        emaVal = arr[i] * k + emaVal * (1 - k);
+      }
+      return emaVal;
+    }
+
+    function rsi(arr, period) {
+      if (arr.length &lt; period + 1) return null;
+      let gains = 0, losses = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        const change = arr[i] - arr[i - 1];
+        if (change &gt; 0) gains += change;
+        else losses -= change;
+      }
+      const avgGain = gains / period;
+      const avgLoss = losses / period;
+      if (avgLoss === 0) return 100;
+      return 100 - (100 / (1 + avgGain / avgLoss));
+    }
+
+    function macd(arr, fast = 12, slow = 26, signal = 9) {
+      if (arr.length &lt; slow + signal) return { macd: null, signal: null, histogram: null };
+      const fastEma = ema(arr.slice(-slow), fast);
+      const slowEma = ema(arr.slice(-slow), slow);
+      const macdLine = fastEma - slowEma;
+      
+      const macdHistory = [];
+      for (let i = slow; i &lt; arr.length; i++) {
+        const f = ema(arr.slice(0, i + 1), fast);
+        const s = ema(arr.slice(0, i + 1), slow);
+        macdHistory.push(f - s);
+      }
+      const signalLine = ema(macdHistory.slice(-signal), signal);
+      return { macd: macdLine, signal: signalLine, histogram: macdLine - signalLine };
+    }
+
+    function bollinger(arr, period = 20, multiplier = 2) {
+      if (arr.length &lt; period) return { upper: null, middle: null, lower: null, width: null };
+      const middle = sma(arr, period);
+      let sumSq = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        sumSq += Math.pow(arr[i] - middle, 2);
+      }
+      const std = Math.sqrt(sumSq / period);
+      return {
+        upper: middle + multiplier * std,
+        middle: middle,
+        lower: middle - multiplier * std,
+        width: (2 * multiplier * std) / middle
+      };
+    }
+
+    function volatility(arr, period) {
+      if (arr.length &lt; period + 1) return null;
+      let sumSq = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        const ret = Math.log(arr[i] / arr[i - 1]);
+        sumSq += ret * ret;
+      }
+      const dailyVar = sumSq / period;
+      return Math.sqrt(dailyVar * 252) * 100;
+    }
+
+    function atr(highs, lows, closes, period) {
+      if (highs.length &lt; period + 1) return null;
+      const tr = [];
+      for (let i = 1; i &lt; highs.length; i++) {
+        const h = highs[i];
+        const l = lows[i];
+        const pc = closes[i - 1];
+        tr.push(Math.max(h - l, Math.abs(h - pc), Math.abs(l - pc)));
+      }
+      return sma(tr, period);
+    }
+
+    const indicators = [];
+    for (let i = 0; i &lt; sorted.length; i++) {
+      const idx = i + 1;
+      const closeSlice = closes.slice(0, idx);
+      const highSlice = highs.slice(0, idx);
+      const lowSlice = lows.slice(0, idx);
+
+      if (idx &lt; 200) continue;
+
+      const sma20 = sma(closeSlice, 20);
+      const sma50 = sma(closeSlice, 50);
+      const sma100 = sma(closeSlice, 100);
+      const sma200 = sma(closeSlice, 200);
+      const ema20 = ema(closeSlice, 20);
+      const ema50 = ema(closeSlice, 50);
+      const ema100 = ema(closeSlice, 100);
+      const ema200 = ema(closeSlice, 200);
+      const rsi14 = rsi(closeSlice, 14);
+      const macdResult = macd(closeSlice);
+      const bb = bollinger(closeSlice);
+      const vol20 = volatility(closeSlice, 20);
+      const vol60 = volatility(closeSlice, 60);
+      const atr14 = atr(highSlice, lowSlice, closeSlice, 14);
+
+      indicators.push({
+        date: sorted[i].date,
+        close: sorted[i].close,
+        sma20, sma50, sma100, sma200,
+        ema20, ema50, ema100, ema200,
+        rsi14,
+        macd: macdResult.macd,
+        macd_signal: macdResult.signal,
+        macd_histogram: macdResult.histogram,
+        bb_upper: bb.upper,
+        bb_middle: bb.middle,
+        bb_lower: bb.lower,
+        bb_width: bb.width,
+        volatility_20d: vol20,
+        volatility_60d: vol60,
+        atr14
+      });
+    }
+
+    return { indicators };
+  }
+});
+
+graph.addNode('support_resistance', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline'),
+    indicators: rs('technical_indicators', 'indicators', { last: '1' })
+  },
+  outputs: {
+    levels: makeDoc('support_resistance', 'Support and resistance levels', [
+      num('date', 'timestamp ms'),
+      num('close', 'current close price'),
+      num('high_60d', '60-day high'),
+      num('low_60d', '60-day low'),
+      num('sma200', '200-day SMA'),
+      num('sma100', '100-day SMA'),
+      num('sma50', '50-day SMA'),
+      num('sma20', '20-day SMA'),
+      arr('resistance_levels', [num('level', 'resistance price'), str('type', 'type of resistance')], 'resistance levels'),
+      arr('support_levels', [num('level', 'support price'), str('type', 'type of support')], 'support levels')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const ohlcv = inputs.ohlcv.data.sort((a, b) =&gt; a.date - b.date);
+    const latest = inputs.indicators.data[0];
+    const close = ohlcv[ohlcv.length - 1].close;
+
+    const recent60 = ohlcv.slice(-60);
+    const high60d = Math.max(...recent60.map(d =&gt; d.high));
+    const low60d = Math.min(...recent60.map(d =&gt; d.low));
+
+    const resistanceLevels = [];
+    const supportLevels = [];
+
+    if (latest.sma200 &amp;&amp; latest.sma200 &gt; close) {
+      resistanceLevels.push({ level: latest.sma200, type: 'SMA200' });
+    }
+    if (latest.sma100 &amp;&amp; latest.sma100 &gt; close) {
+      resistanceLevels.push({ level: latest.sma100, type: 'SMA100' });
+    }
+    if (latest.sma50 &amp;&amp; latest.sma50 &gt; close) {
+      resistanceLevels.push({ level: latest.sma50, type: 'SMA50' });
+    }
+    if (latest.sma20 &amp;&amp; latest.sma20 &gt; close) {
+      resistanceLevels.push({ level: latest.sma20, type: 'SMA20' });
+    }
+    if (high60d &gt; close) {
+      resistanceLevels.push({ level: high60d, type: '60D High' });
+    }
+
+    resistanceLevels.sort((a, b) =&gt; a.level - b.level);
+
+    if (latest.sma200 &amp;&amp; latest.sma200 &lt; close) {
+      supportLevels.push({ level: latest.sma200, type: 'SMA200' });
+    }
+    if (latest.sma100 &amp;&amp; latest.sma100 &lt; close) {
+      supportLevels.push({ level: latest.sma100, type: 'SMA100' });
+    }
+    if (latest.sma50 &amp;&amp; latest.sma50 &lt; close) {
+      supportLevels.push({ level: latest.sma50, type: 'SMA50' });
+    }
+    if (latest.sma20 &amp;&amp; latest.sma20 &lt; close) {
+      supportLevels.push({ level: latest.sma20, type: 'SMA20' });
+    }
+    if (low60d &lt; close) {
+      supportLevels.push({ level: low60d, type: '60D Low' });
+    }
+
+    supportLevels.sort((a, b) =&gt; b.level - a.level);
+
+    return {
+      levels: [{
+        date: Date.now(),
+        close,
+        high_60d: high60d,
+        low_60d: low60d,
+        sma200: latest.sma200,
+        sma100: latest.sma100,
+        sma50: latest.sma50,
+        sma20: latest.sma20,
+        resistance_levels: resistanceLevels.slice(0, 3),
+        support_levels: supportLevels.slice(0, 3)
+      }]
+    };
+  }
+});
+
+graph.addNode('event_move', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline')
+  },
+  outputs: {
+    event_analysis: makeDoc('event_move_analysis', 'Earnings event move analysis', [
+      num('date', 'timestamp ms'),
+      arr('earnings_moves', [num('date', 'earnings date'), num('next_day_return_pct', 'next day return %')], 'earnings moves'),
+      num('proxy_move_90th_pct', '90th percentile absolute 1-day return'),
+      str('method', 'method used: earnings or proxy'),
+      num('sample_size', 'number of samples')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const data = inputs.ohlcv.data.sort((a, b) =&gt; a.date - b.date);
+    
+    const earningsMoves = [];
+    const gapThreshold = 0.05;
+
+    for (let i = 1; i &lt; data.length - 1; i++) {
+      const prev = data[i - 1];
+      const curr = data[i];
+      const next = data[i + 1];
+
+      const overnightGap = Math.abs(curr.open - prev.close) / prev.close;
+      if (overnightGap &gt; gapThreshold) {
+        const nextDayReturn = ((next.close - curr.close) / curr.close) * 100;
+        earningsMoves.push({
+          date: curr.date,
+          next_day_return_pct: nextDayReturn
+        });
+      }
+    }
+
+    let method = 'proxy';
+    let proxyMove90th = null;
+    const sampleSize = Math.min(252, data.length - 1);
+
+    if (earningsMoves.length &gt;= 3) {
+      method = 'earnings';
+    } else {
+      const absReturns = [];
+      for (let i = 1; i &lt; Math.min(sampleSize + 1, data.length); i++) {
+        const ret = Math.abs((data[i].close - data[i - 1].close) / data[i - 1].close) * 100;
+        absReturns.push(ret);
+      }
+      absReturns.sort((a, b) =&gt; a - b);
+      const idx90 = Math.floor(absReturns.length * 0.9);
+      proxyMove90th = absReturns[idx90] || 0;
+    }
+
+    return {
+      event_analysis: [{
+        date: Date.now(),
+        earnings_moves: earningsMoves.slice(-8),
+        proxy_move_90th_pct: proxyMove90th,
+        method,
+        sample_size
+      }]
+    };
+  }
+});
+
+function main() {
+  graph.run();
+
+  const priceTarget = graph.readTs('price_target', 'company_price_target_consensus', { last: '1' });
+  const estimates = graph.readTs('financial_estimates', 'estimates', { last: '10' });
+  const indicators = graph.readTs('technical_indicators', 'indicators', { last: '1' });
+  const levels = graph.readTs('support_resistance', 'levels', { last: '1' });
+  const eventAnalysis = graph.readTs('event_move', 'event_analysis', { last: '1' });
+
+  const pt = priceTarget.data[0] || {};
+  const est = estimates.data || [];
+  const ind = indicators.data[0] || {};
+  const lvl = levels.data[0] || {};
+  const evt = eventAnalysis.data[0] || {};
+
+  const financialEstimates = {};
+  est.forEach(e =&gt; {
+    if (e.success) {
+      financialEstimates[e.period] = {
+        revenue: { avg: e.revenue_avg, low: e.revenue_low, high: e.revenue_high },
+        eps: { avg: e.eps_avg, low: e.eps_low, high: e.eps_high },
+        analysts: { revenue: e.num_analysts_revenue, eps: e.num_analysts_eps }
+      };
+    } else {
+      financialEstimates[e.period] = { error: e.error };
+    }
+  });
+
+  const result = {
+    symbol: SYMBOL,
+    as_of: new Date().toISOString(),
+    price_target_consensus: {
+      high: pt.target_high,
+      low: pt.target_low,
+      consensus: pt.target_consensus,
+      median: pt.target_median
+    },
+    financial_estimates: financialEstimates,
+    technical_indicators: {
+      current_price: ind.close,
+      sma: { d20: ind.sma20, d50: ind.sma50, d100: ind.sma100, d200: ind.sma200 },
+      ema: { d20: ind.ema20, d50: ind.ema50, d100: ind.ema100, d200: ind.ema200 },
+      rsi14: ind.rsi14,
+      macd: { line: ind.macd, signal: ind.macd_signal, histogram: ind.macd_histogram },
+      bollinger_bands: { upper: ind.bb_upper, middle: ind.bb_middle, lower: ind.bb_lower, width: ind.bb_width },
+      realized_volatility: { d20: ind.volatility_20d, d60: ind.volatility_60d },
+      atr14: ind.atr14
+    },
+    support_resistance: {
+      current_price: lvl.close,
+      range_60d: { high: lvl.high_60d, low: lvl.low_60d },
+      resistance: lvl.resistance_levels,
+      support: lvl.support_levels
+    },
+    event_move_analysis: {
+      method: evt.method,
+      earnings_moves: evt.earnings_moves,
+      proxy_90th_percentile: evt.proxy_move_90th_pct,
+      sample_size: evt.sample_size
+    }
+  };
+
+  return {
+    data_brief: {
+      metric_name: 'nvda_comprehensive_analysis',
+      validation: {
+        price_target_available: !!pt.target_consensus,
+        financial_estimates_available: est.some(e =&gt; e.success),
+        ohlcv_data_points: indicators.data.length &gt; 0 ? indicators.data.length : 0,
+        technical_indicators_computed: !!ind.close,
+        support_resistance_computed: !!lvl.close,
+        event_analysis_computed: !!evt.method
+      }
+    },
+    final_output: result
+  };
+}
+
+main();</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 main.js</div>
+        <pre><code>const { Graph, rs, makeDoc, num, str, bool, obj, arr } = require('@alva/graph:v1.0.0');
+const { makeCompanyPriceTargetConsensusNode } = require('@arrays/data/stock/company/price-target-consensus:v1.0.0');
+const { makeStockKlineNode } = require('@arrays/data/stock/spot/ohlcv:v1.0.0');
+
+const graph = new Graph();
+
+const SYMBOL = 'NVDA';
+const END_DATE = Date.UTC(2026, 1, 25, 23, 59, 59);
+const START_DATE = END_DATE - 2 * 365 * 24 * 60 * 60 * 1000;
+
+graph.addNode('price_target', makeCompanyPriceTargetConsensusNode({ symbol: SYMBOL }));
+
+graph.addNode('financial_estimates', {
+  inputs: {
+    q1_2026: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2026, fiscal_quarter: 'Q1' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    },
+    fy_2026: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2026, fiscal_quarter: 'FY' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    },
+    fy_2027: () =&gt; {
+      try {
+        const { getFinancialEstimates } = require('@arrays/data/stock/financial-estimates:v1.0.0');
+        return getFinancialEstimates({ symbol: SYMBOL, fiscal_year: 2027, fiscal_quarter: 'FY' });
+      } catch (e) {
+        return { success: false, error: String(e) };
+      }
+    }
+  },
+  outputs: {
+    estimates: makeDoc('financial_estimates', 'Financial estimates for NVDA', [
+      num('date', 'timestamp ms'),
+      str('period', 'fiscal period'),
+      num('revenue_avg', 'average revenue estimate'),
+      num('revenue_low', 'low revenue estimate'),
+      num('revenue_high', 'high revenue estimate'),
+      num('eps_avg', 'average EPS estimate'),
+      num('eps_low', 'low EPS estimate'),
+      num('eps_high', 'high EPS estimate'),
+      num('num_analysts_revenue', 'number of revenue analysts'),
+      num('num_analysts_eps', 'number of EPS analysts'),
+      str('error', 'error message if any'),
+      bool('success', 'whether fetch succeeded')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const estimates = [];
+    const periods = [
+      { id: 'q1_2026', period: 'Q1 2026', data: inputs.q1_2026 },
+      { id: 'fy_2026', period: 'FY 2026', data: inputs.fy_2026 },
+      { id: 'fy_2027', period: 'FY 2027', data: inputs.fy_2027 }
+    ];
+
+    for (let i = 0; i &lt; periods.length; i++) {
+      const p = periods[i];
+      const d = p.data;
+      if (d.success &amp;&amp; d.response &amp;&amp; d.response.estimates &amp;&amp; d.response.estimates[0]) {
+        const est = d.response.estimates[0];
+        estimates.push({
+          date: Date.now() + i,
+          period: p.period,
+          revenue_avg: est.revenueAvg || null,
+          revenue_low: est.revenueLow || null,
+          revenue_high: est.revenueHigh || null,
+          eps_avg: est.epsAvg || null,
+          eps_low: est.epsLow || null,
+          eps_high: est.epsHigh || null,
+          num_analysts_revenue: est.numAnalystsRevenue || 0,
+          num_analysts_eps: est.numAnalystsEps || 0,
+          error: null,
+          success: true
+        });
+      } else {
+        estimates.push({
+          date: Date.now() + i,
+          period: p.period,
+          revenue_avg: null,
+          revenue_low: null,
+          revenue_high: null,
+          eps_avg: null,
+          eps_low: null,
+          eps_high: null,
+          num_analysts_revenue: 0,
+          num_analysts_eps: 0,
+          error: d.error || 'No data available',
+          success: false
+        });
+      }
+    }
+
+    return { estimates };
+  }
+});
+
+graph.addNode('ohlcv', makeStockKlineNode({
+  ticker: SYMBOL,
+  start_time: Math.floor(START_DATE / 1000),
+  end_time: Math.floor(END_DATE / 1000),
+  interval: '1d'
+}));
+
+graph.addNode('technical_indicators', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline')
+  },
+  outputs: {
+    indicators: makeDoc('technical_indicators', 'Technical indicators for NVDA', [
+      num('date', 'timestamp ms'),
+      num('close', 'close price'),
+      num('sma20', '20-day SMA'),
+      num('sma50', '50-day SMA'),
+      num('sma100', '100-day SMA'),
+      num('sma200', '200-day SMA'),
+      num('ema20', '20-day EMA'),
+      num('ema50', '50-day EMA'),
+      num('ema100', '100-day EMA'),
+      num('ema200', '200-day EMA'),
+      num('rsi14', '14-day RSI'),
+      num('macd', 'MACD line'),
+      num('macd_signal', 'MACD signal line'),
+      num('macd_histogram', 'MACD histogram'),
+      num('bb_upper', 'Bollinger upper band'),
+      num('bb_middle', 'Bollinger middle band'),
+      num('bb_lower', 'Bollinger lower band'),
+      num('bb_width', 'Bollinger band width'),
+      num('volatility_20d', '20-day realized volatility (annualized)'),
+      num('volatility_60d', '60-day realized volatility (annualized)'),
+      num('atr14', '14-day ATR')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const data = inputs.ohlcv.data;
+    if (data.length === 0) return { indicators: [] };
+
+    const sorted = [...data].sort((a, b) =&gt; a.date - b.date);
+    const closes = sorted.map(d =&gt; d.close);
+    const highs = sorted.map(d =&gt; d.high);
+    const lows = sorted.map(d =&gt; d.low);
+    const n = sorted.length;
+
+    function sma(arr, period) {
+      if (arr.length &lt; period) return null;
+      let sum = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        sum += arr[i];
+      }
+      return sum / period;
+    }
+
+    function ema(arr, period) {
+      if (arr.length &lt; period) return null;
+      const k = 2 / (period + 1);
+      let emaVal = arr[arr.length - period];
+      for (let i = arr.length - period + 1; i &lt; arr.length; i++) {
+        emaVal = arr[i] * k + emaVal * (1 - k);
+      }
+      return emaVal;
+    }
+
+    function rsi(arr, period) {
+      if (arr.length &lt; period + 1) return null;
+      let gains = 0, losses = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        const change = arr[i] - arr[i - 1];
+        if (change &gt; 0) gains += change;
+        else losses -= change;
+      }
+      const avgGain = gains / period;
+      const avgLoss = losses / period;
+      if (avgLoss === 0) return 100;
+      return 100 - (100 / (1 + avgGain / avgLoss));
+    }
+
+    function macd(arr, fast = 12, slow = 26, signal = 9) {
+      if (arr.length &lt; slow + signal) return { macd: null, signal: null, histogram: null };
+      const fastEma = ema(arr.slice(-slow), fast);
+      const slowEma = ema(arr.slice(-slow), slow);
+      const macdLine = fastEma - slowEma;
+      
+      const macdHistory = [];
+      for (let i = slow; i &lt; arr.length; i++) {
+        const f = ema(arr.slice(0, i + 1), fast);
+        const s = ema(arr.slice(0, i + 1), slow);
+        macdHistory.push(f - s);
+      }
+      const signalLine = ema(macdHistory.slice(-signal), signal);
+      return { macd: macdLine, signal: signalLine, histogram: macdLine - signalLine };
+    }
+
+    function bollinger(arr, period = 20, multiplier = 2) {
+      if (arr.length &lt; period) return { upper: null, middle: null, lower: null, width: null };
+      const middle = sma(arr, period);
+      let sumSq = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        sumSq += Math.pow(arr[i] - middle, 2);
+      }
+      const std = Math.sqrt(sumSq / period);
+      return {
+        upper: middle + multiplier * std,
+        middle: middle,
+        lower: middle - multiplier * std,
+        width: (2 * multiplier * std) / middle
+      };
+    }
+
+    function volatility(arr, period) {
+      if (arr.length &lt; period + 1) return null;
+      let sumSq = 0;
+      for (let i = arr.length - period; i &lt; arr.length; i++) {
+        const ret = Math.log(arr[i] / arr[i - 1]);
+        sumSq += ret * ret;
+      }
+      const dailyVar = sumSq / period;
+      return Math.sqrt(dailyVar * 252) * 100;
+    }
+
+    function atr(highs, lows, closes, period) {
+      if (highs.length &lt; period + 1) return null;
+      const tr = [];
+      for (let i = 1; i &lt; highs.length; i++) {
+        const h = highs[i];
+        const l = lows[i];
+        const pc = closes[i - 1];
+        tr.push(Math.max(h - l, Math.abs(h - pc), Math.abs(l - pc)));
+      }
+      return sma(tr, period);
+    }
+
+    const indicators = [];
+    for (let i = 0; i &lt; sorted.length; i++) {
+      const idx = i + 1;
+      const closeSlice = closes.slice(0, idx);
+      const highSlice = highs.slice(0, idx);
+      const lowSlice = lows.slice(0, idx);
+
+      if (idx &lt; 200) continue;
+
+      const sma20 = sma(closeSlice, 20);
+      const sma50 = sma(closeSlice, 50);
+      const sma100 = sma(closeSlice, 100);
+      const sma200 = sma(closeSlice, 200);
+      const ema20 = ema(closeSlice, 20);
+      const ema50 = ema(closeSlice, 50);
+      const ema100 = ema(closeSlice, 100);
+      const ema200 = ema(closeSlice, 200);
+      const rsi14 = rsi(closeSlice, 14);
+      const macdResult = macd(closeSlice);
+      const bb = bollinger(closeSlice);
+      const vol20 = volatility(closeSlice, 20);
+      const vol60 = volatility(closeSlice, 60);
+      const atr14 = atr(highSlice, lowSlice, closeSlice, 14);
+
+      indicators.push({
+        date: sorted[i].date,
+        close: sorted[i].close,
+        sma20, sma50, sma100, sma200,
+        ema20, ema50, ema100, ema200,
+        rsi14,
+        macd: macdResult.macd,
+        macd_signal: macdResult.signal,
+        macd_histogram: macdResult.histogram,
+        bb_upper: bb.upper,
+        bb_middle: bb.middle,
+        bb_lower: bb.lower,
+        bb_width: bb.width,
+        volatility_20d: vol20,
+        volatility_60d: vol60,
+        atr14
+      });
+    }
+
+    return { indicators };
+  }
+});
+
+graph.addNode('support_resistance', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline'),
+    indicators: rs('technical_indicators', 'indicators', { last: '1' })
+  },
+  outputs: {
+    levels: makeDoc('support_resistance', 'Support and resistance levels', [
+      num('date', 'timestamp ms'),
+      num('close', 'current close price'),
+      num('high_60d', '60-day high'),
+      num('low_60d', '60-day low'),
+      num('sma200', '200-day SMA'),
+      num('sma100', '100-day SMA'),
+      num('sma50', '50-day SMA'),
+      num('sma20', '20-day SMA'),
+      arr('resistance_levels', [num('level', 'resistance price'), str('type', 'type of resistance')], 'resistance levels'),
+      arr('support_levels', [num('level', 'support price'), str('type', 'type of support')], 'support levels')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const ohlcv = inputs.ohlcv.data.sort((a, b) =&gt; a.date - b.date);
+    const latest = inputs.indicators.data[0];
+    const close = ohlcv[ohlcv.length - 1].close;
+
+    const recent60 = ohlcv.slice(-60);
+    const high60d = Math.max(...recent60.map(d =&gt; d.high));
+    const low60d = Math.min(...recent60.map(d =&gt; d.low));
+
+    const resistanceLevels = [];
+    const supportLevels = [];
+
+    if (latest.sma200 &amp;&amp; latest.sma200 &gt; close) {
+      resistanceLevels.push({ level: latest.sma200, type: 'SMA200' });
+    }
+    if (latest.sma100 &amp;&amp; latest.sma100 &gt; close) {
+      resistanceLevels.push({ level: latest.sma100, type: 'SMA100' });
+    }
+    if (latest.sma50 &amp;&amp; latest.sma50 &gt; close) {
+      resistanceLevels.push({ level: latest.sma50, type: 'SMA50' });
+    }
+    if (latest.sma20 &amp;&amp; latest.sma20 &gt; close) {
+      resistanceLevels.push({ level: latest.sma20, type: 'SMA20' });
+    }
+    if (high60d &gt; close) {
+      resistanceLevels.push({ level: high60d, type: '60D High' });
+    }
+
+    resistanceLevels.sort((a, b) =&gt; a.level - b.level);
+
+    if (latest.sma200 &amp;&amp; latest.sma200 &lt; close) {
+      supportLevels.push({ level: latest.sma200, type: 'SMA200' });
+    }
+    if (latest.sma100 &amp;&amp; latest.sma100 &lt; close) {
+      supportLevels.push({ level: latest.sma100, type: 'SMA100' });
+    }
+    if (latest.sma50 &amp;&amp; latest.sma50 &lt; close) {
+      supportLevels.push({ level: latest.sma50, type: 'SMA50' });
+    }
+    if (latest.sma20 &amp;&amp; latest.sma20 &lt; close) {
+      supportLevels.push({ level: latest.sma20, type: 'SMA20' });
+    }
+    if (low60d &lt; close) {
+      supportLevels.push({ level: low60d, type: '60D Low' });
+    }
+
+    supportLevels.sort((a, b) =&gt; b.level - a.level);
+
+    return {
+      levels: [{
+        date: Date.now(),
+        close,
+        high_60d: high60d,
+        low_60d: low60d,
+        sma200: latest.sma200,
+        sma100: latest.sma100,
+        sma50: latest.sma50,
+        sma20: latest.sma20,
+        resistance_levels: resistanceLevels.slice(0, 3),
+        support_levels: supportLevels.slice(0, 3)
+      }]
+    };
+  }
+});
+
+graph.addNode('event_move', {
+  inputs: {
+    ohlcv: rs('ohlcv', 'stock_kline')
+  },
+  outputs: {
+    event_analysis: makeDoc('event_move_analysis', 'Earnings event move analysis', [
+      num('date', 'timestamp ms'),
+      arr('earnings_moves', [num('date', 'earnings date'), num('next_day_return_pct', 'next day return %')], 'earnings moves'),
+      num('proxy_move_90th_pct', '90th percentile absolute 1-day return'),
+      str('method', 'method used: earnings or proxy'),
+      num('sample_size', 'number of samples')
+    ])
+  },
+  run: (inputs) =&gt; {
+    const data = inputs.ohlcv.data.sort((a, b) =&gt; a.date - b.date);
+    
+    const earningsMoves = [];
+    const gapThreshold = 0.05;
+
+    for (let i = 1; i &lt; data.length - 1; i++) {
+      const prev = data[i - 1];
+      const curr = data[i];
+      const next = data[i + 1];
+
+      const overnightGap = Math.abs(curr.open - prev.close) / prev.close;
+      if (overnightGap &gt; gapThreshold) {
+        const nextDayReturn = ((next.close - curr.close) / curr.close) * 100;
+        earningsMoves.push({
+          date: curr.date,
+          next_day_return_pct: nextDayReturn
+        });
+      }
+    }
+
+    let method = 'proxy';
+    let proxyMove90th = null;
+    const sampleSize = Math.min(252, data.length - 1);
+
+    if (earningsMoves.length &gt;= 3) {
+      method = 'earnings';
+    } else {
+      const absReturns = [];
+      for (let i = 1; i &lt; Math.min(sampleSize + 1, data.length); i++) {
+        const ret = Math.abs((data[i].close - data[i - 1].close) / data[i - 1].close) * 100;
+        absReturns.push(ret);
+      }
+      absReturns.sort((a, b) =&gt; a - b);
+      const idx90 = Math.floor(absReturns.length * 0.9);
+      proxyMove90th = absReturns[idx90] || 0;
+    }
+
+    return {
+      event_analysis: [{
+        date: Date.now(),
+        earnings_moves: earningsMoves.slice(-8),
+        proxy_move_90th_pct: proxyMove90th,
+        method: method,
+        sample_size: sampleSize
+      }]
+    };
+  }
+});
+
+function main() {
+  graph.run();
+
+  const priceTarget = graph.readTs('price_target', 'company_price_target_consensus', { last: '1' });
+  const estimates = graph.readTs('financial_estimates', 'estimates', { last: '10' });
+  const indicators = graph.readTs('technical_indicators', 'indicators', { last: '1' });
+  const levels = graph.readTs('support_resistance', 'levels', { last: '1' });
+  const eventAnalysis = graph.readTs('event_move', 'event_analysis', { last: '1' });
+
+  const pt = priceTarget.data[0] || {};
+  const est = estimates.data || [];
+  const ind = indicators.data[0] || {};
+  const lvl = levels.data[0] || {};
+  const evt = eventAnalysis.data[0] || {};
+
+  const financialEstimates = {};
+  est.forEach(e =&gt; {
+    if (e.success) {
+      financialEstimates[e.period] = {
+        revenue: { avg: e.revenue_avg, low: e.revenue_low, high: e.revenue_high },
+        eps: { avg: e.eps_avg, low: e.eps_low, high: e.eps_high },
+        analysts: { revenue: e.num_analysts_revenue, eps: e.num_analysts_eps }
+      };
+    } else {
+      financialEstimates[e.period] = { error: e.error };
+    }
+  });
+
+  const result = {
+    symbol: SYMBOL,
+    as_of: new Date().toISOString(),
+    price_target_consensus: {
+      high: pt.target_high,
+      low: pt.target_low,
+      consensus: pt.target_consensus,
+      median: pt.target_median
+    },
+    financial_estimates: financialEstimates,
+    technical_indicators: {
+      current_price: ind.close,
+      sma: { d20: ind.sma20, d50: ind.sma50, d100: ind.sma100, d200: ind.sma200 },
+      ema: { d20: ind.ema20, d50: ind.ema50, d100: ind.ema100, d200: ind.ema200 },
+      rsi14: ind.rsi14,
+      macd: { line: ind.macd, signal: ind.macd_signal, histogram: ind.macd_histogram },
+      bollinger_bands: { upper: ind.bb_upper, middle: ind.bb_middle, lower: ind.bb_lower, width: ind.bb_width },
+      realized_volatility: { d20: ind.volatility_20d, d60: ind.volatility_60d },
+      atr14: ind.atr14
+    },
+    support_resistance: {
+      current_price: lvl.close,
+      range_60d: { high: lvl.high_60d, low: lvl.low_60d },
+      resistance: lvl.resistance_levels,
+      support: lvl.support_levels
+    },
+    event_move_analysis: {
+      method: evt.method,
+      earnings_moves: evt.earnings_moves,
+      proxy_90th_percentile: evt.proxy_move_90th_pct,
+      sample_size: evt.sample_size
+    }
+  };
+
+  return {
+    data_brief: {
+      metric_name: 'nvda_comprehensive_analysis',
+      validation: {
+        price_target_available: !!pt.target_consensus,
+        financial_estimates_available: est.some(e =&gt; e.success),
+        ohlcv_data_points: indicators.data.length &gt; 0 ? indicators.data.length : 0,
+        technical_indicators_computed: !!ind.close,
+        support_resistance_computed: !!lvl.close,
+        event_analysis_computed: !!evt.method
+      }
+    },
+    final_output: result
+  };
+}
+
+main();</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeVolatilityNode } = require(&quot;@arrays/data/market-metrics/volatility:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;vol20&quot;,
+  makeVolatilityNode(
+    { symbol: 'NVDA', interval: '1d', period: 20, start_time: new Date('2026-02-24T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;vol20&quot;, graph.readNodeTs(&quot;vol20&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeBetaNode } = require(&quot;@arrays/data/market-metrics/beta:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;beta&quot;,
+  makeBetaNode(
+    { symbol: 'NVDA', interval: '1d', start_time: new Date('2026-02-24T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;beta&quot;, graph.readNodeTs(&quot;beta&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeVolatilityNode } = require(&quot;@arrays/data/market-metrics/volatility:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;vol60&quot;,
+  makeVolatilityNode(
+    { symbol: 'NVDA', interval: '1d', period: 60, start_time: new Date('2026-02-24T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;vol60&quot;, graph.readNodeTs(&quot;vol60&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeAverageDailyDollarVolumeNode } = require(&quot;@arrays/data/market-metrics/average-daily-dollar-volume:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;addv&quot;,
+  makeAverageDailyDollarVolumeNode(
+    { symbol: 'NVDA', interval: '1d', start_time: new Date('2026-02-24T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;addv&quot;, graph.readNodeTs(&quot;addv&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeVolatilityNode } = require(&quot;@arrays/data/market-metrics/volatility:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;vol90&quot;,
+  makeVolatilityNode(
+    { symbol: 'NVDA', interval: '1d', period: 90, start_time: new Date('2026-02-24T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;vol90&quot;, graph.readNodeTs(&quot;vol90&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeVolatilityNode } = require(&quot;@arrays/data/market-metrics/volatility:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;vol20&quot;,
+  makeVolatilityNode(
+    { symbol: 'NVDA', interval: '1d', period: 20, start_time: new Date('2025-12-01T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;vol20&quot;, graph.readNodeTs(&quot;vol20&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeVolatilityNode } = require(&quot;@arrays/data/market-metrics/volatility:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;vol60&quot;,
+  makeVolatilityNode(
+    { symbol: 'NVDA', interval: '1d', period: 60, start_time: new Date('2025-12-01T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;vol60&quot;, graph.readNodeTs(&quot;vol60&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 script</div>
+        <pre><code>// output name: market_series
+const { Graph } = require(&quot;@alva/graph:v1.0.0&quot;);
+const { makeVolatilityNode } = require(&quot;@arrays/data/market-metrics/volatility:v1.0.0&quot;);
+
+const graph = new Graph();
+
+graph.addNode(
+  &quot;vol90&quot;,
+  makeVolatilityNode(
+    { symbol: 'NVDA', interval: '1d', period: 90, start_time: new Date('2025-12-01T00:00:00-05:00').getTime(), end_time: new Date('2026-02-25T23:59:59-05:00').getTime() }
+  )
+);
+
+graph.run();
+log(&quot;vol90&quot;, graph.readNodeTs(&quot;vol90&quot;, &quot;market_series&quot;));</code></pre>
+      </div>
+
+      <div class="code-block">
+        <div class="code-block-header">📄 main.js</div>
+        <pre><code>const { Graph, rs, makeDoc, num, str, bool, obj, arr } = require('@alva/graph:v1.0.0');
+const { makeVolatilityNode } = require('@arrays/data/market-metrics/volatility:v1.0.0');
+const { makeStockKlineNode } = require('@arrays/data/stock/spot/ohlcv:v1.0.0');
+const { makeAverageDailyDollarVolumeNode } = require('@arrays/data/market-metrics/average-daily-dollar-volume:v1.0.0');
+
+const graph = new Graph();
+
+const endTime = Date.UTC(2026, 1, 25, 23, 59, 59);
+const startTime = Date.UTC(2024, 1, 25, 0, 0, 0);
+
+graph.addNode('volatility_90', makeVolatilityNode({
+  symbol: 'NVDA',
+  interval: '1d',
+  period: 90,
+  start_time: startTime,
+  end_time: endTime
+}));
+
+graph.addNode('ohlcv_2y', makeStockKlineNode({
+  ticker: 'NVDA',
+  start_time: Math.floor(startTime / 1000),
+  end_time: Math.floor(endTime / 1000),
+  interval: '1d'
+}));
+
+graph.addNode('addv_20', makeAverageDailyDollarVolumeNode({
+  symbol: 'NVDA',
+  interval: '1d',
+  start_time: startTime,
+  end_time: endTime
+}));
+
+graph.addNode('earnings_preview', {
+  inputs: {
+    vol90: rs('volatility_90', 'market_series'),
+    ohlcv: rs('ohlcv_2y', 'stock_kline'),
+    addv: rs('addv_20', 'market_series')
+  },
+  outputs: {
+    preview: makeDoc(
+      'Earnings Preview Summary',
+      'Summary stats for earnings preview including volatility, expected moves, and earnings move statistics',
+      [
+        num('date', 'as-of date'),
+        num('close_price', 'latest close price'),
+        num('volatility_90_annualized', '90-day realized volatility (annualized)'),
+        num('expected_move_1d_pct', '1-day expected move %'),
+        num('expected_move_1d_upper', '1-day expected move upper 
+
+  
+    <details class="section" open>
+      <summary class="section-header">
+        <span class="icon">📊</span> Computed Data
+        <span class="count">2 results</span>
+        <span class="chevron">▸</span>
+      </summary>
+      <div class="section-body"><table><thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Ref</th></tr></thead><tbody><tr><td>Symbol</td><td>NVDA</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target High</td><td>400.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Low</td><td>140.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Consensus</td><td>272.18</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Price Target Median</td><td>275.00</td><td>@alva/data/stock/company/price-target-consensus</td><td>alva://price_target</td></tr><tr><td>Current Price</td><td>192.85</td><td>@alva/data/stock/spot/ohlcv</td><td>alva://ohlcv</td></tr><tr><td>SMA20</td><td>186.73</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA50</td><td>185.11</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA100</td><td>186.18</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>SMA200</td><td>173.95</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA20</td><td>187.72</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA50</td><td>185.45</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA100</td><td>186.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>EMA200</td><td>172.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>RSI14</td><td>63.27</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Line</td><td>1.61</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Signal</td><td>0.18</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>MACD Histogram</td><td>1.43</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Upper</td><td>197.84</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Middle</td><td>186.73</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Lower</td><td>175.61</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Bollinger Width</td><td>0.12</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Realized Volatility 20D</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>Realized Volatility 60D</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>ATR14</td><td>See full output</td><td>Computed from OHLCV</td><td>alva://technical_indicators</td></tr><tr><td>60D High</td><td>194.49</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>60D Low</td><td>170.31</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Nearest Resistance</td><td>194.49 (60D High)</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Nearest Support</td><td>186.73 (SMA20)</td><td>Computed from OHLCV</td><td>alva://support_resistance</td></tr><tr><td>Event Move Method</td><td>earnings</td><td>Computed from OHLCV</td><td>alva://event_move</td></tr><tr><td>Earnings Moves Count</td><td>8</td><td>Computed from OHLCV</td><td>alva://event_move</td></tr><tr><td>Financial Estimates</td><td>Error: SDK JSON parse failed</td><td>@alva/data/stock/financial-estimates</td><td>alva://financial_estimates</td></tr></tbody></table>
+<br>
+<p><strong>Notes:</strong></p>
+<ul><li>Financial estimates failed due to SDK response parsing error (JSON format issue)</li>
+<li>Event move analysis used earnings method (8 earnings dates identified with gap threshold >5%)</li>
+<li>Technical indicators computed from 2 years of daily OHLCV data (500 data points)</li>
+<li>Support/resistance levels derived from 60-day range and major moving averages</li></ul>
+<table><thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Ref</th></tr></thead><tbody><tr><td>Symbol</td><td>NVDA</td><td>@arrays/data/market-metrics/volatility</td><td>alva://volatility_90</td></tr><tr><td>Current Price</td><td>$192.85</td><td>@arrays/data/stock/spot/ohlcv</td><td>alva://ohlcv_2y</td></tr><tr><td>VOLATILITY_90 (Annualized)</td><td>34.69%</td><td>@arrays/data/market-metrics/volatility</td><td>alva://volatility_90</td></tr><tr><td>1-Day Expected Move %</td><td>2.19%</td><td>Computed: vol/√252</td><td>alva://earnings_preview</td></tr><tr><td>1-Day Expected Move (Upper)</td><td>$192.89</td><td>Computed: close×(1+0.0219)</td><td>alva://earnings_preview</td></tr><tr><td>1-Day Expected Move (Lower)</td><td>$192.81</td><td>Computed: close×(1-0.0219)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move %</td><td>4.89%</td><td>Computed: vol/√(252/5)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move (Upper)</td><td>$192.94</td><td>Computed: close×(1+0.0489)</td><td>alva://earnings_preview</td></tr><tr><td>1-Week Expected Move (Lower)</td><td>$192.76</td><td>Computed: close×(1-0.0489)</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Mean Absolute Move</td><td>5.85%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Median Absolute Move</td><td>3.27%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Max Absolute Move</td><td>18.72%</td><td>Computed from 8 events</td><td>alva://earnings_preview</td></tr><tr><td>Earnings Events Count</td><td>8</td><td>Identified from OHLCV</td><td>alva://earnings_preview</td></tr><tr><td>AVERAGE_DAILY_DOLLAR_VOLUME_20</td><td>$32.30B</td><td>@arrays/data/market-metrics/average-daily-dollar-volume</td><td>alva://addv_20</td></tr></tbody></table>
+<br>
+<p><strong>Notes:</strong></p>
+<ul><li>Volatility-based expected moves use realized 90-day volatility (34.69% annualized)</li>
+<li>1-day move = 34.69%/√252 ≈ 2.19%, 1-week move = 34.69%/√50.4 ≈ 4.89%</li>
+<li>Earnings moves computed from next-day returns around 8 identified earnings dates</li>
+<li>Dollar volume reflects 20-day average of daily close×volume</li></ul></div>
+    </details>
+
+  
+    <details class="section">
+      <summary class="section-header">
+        <span class="icon">🧠</span> Detailed Reasoning
+        <span class="count">9 analyses</span>
+        <span class="chevron">▸</span>
+      </summary>
+      <div class="section-body">
+      <div class="reasoning-block">
+        <h4>Price-Target Consensus Snapshot: target_consensus 272.18, median 275, high 400, low 140</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: Company Price Target Consensus snapshot for NVDA .</p><p>---</p><p>- Extracted values from snapshot: target_consensus = 272.18, target_median = 275, target_high = 400, target_low = 140.</p><p>---</p><p>2) How result was obtained (steps as financial consultant)</p><p>- Step 1: Read latest snapshot record timestamped 1772030344900 and confirmed symbol = NVDA.</p><p>- Step 2: Report consensus metrics directly as provided by the snapshot (no further aggregation needed):</p><p>  - target_consensus = 272.18<br>  - target_median = 275<br>  - target_high = 400<br>  - target_low = 140</p><p>---</p><p>3) Notes</p><p>- Snapshot timestamp and source included with each value for traceability: .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>Financial Estimates (Q1 2026, FY2026, FY2027): fetch failed — parsing error; returned entries show null estimates and error text</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: Financial Estimates output for NVDA .</p><p>---</p><p>- Extracted rows (latest entries):<br>  - Period: Q1 2026 — revenue_avg: null, eps_avg: null, num_analysts_revenue: 0, num_analysts_eps: 0, error: &quot;failed to parse response body: SyntaxError: Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)&quot;, success: false.<br>  - Period: FY 2026 — revenue_avg: null, eps_avg: null, num_analysts_revenue: 0, num_analysts_eps: 0, same parsing error, success: false.<br>  - Period: FY 2027 — revenue_avg: null, eps_avg: null, num_analysts_revenue: 0, num_analysts_eps: 0, same parsing error, success: false.</p><p>---</p><p>2) How result was obtained (steps as financial consultant)</p><p>- Step 1: Inspect financial estimates records and confirm all numerical estimate fields are null and analyst counts are zero, indicating no usable estimates were retrieved.</p><p>- Step 2: Extract and report the error message present in each record to explain failure: &quot;failed to parse response body: SyntaxError: Unexpected non-whitespace character after JSON at position 4 (line 1 column 5)&quot;.</p><p>---</p><p>3) Outcome and recommendation</p><p>- Outcome: Financial estimates fetch failed; no revenue or EPS numeric estimates available for Q1 2026, FY 2026, FY 2027 (all null) — error documented from source.</p><p>- Recommendation: Reattempt data fetch or use an alternate provider if numeric estimates are required (error text preserved for debugging) .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>OHLCV and Technical Indicators (as of latest close 192.85): SMAs/EMAs, RSI14, MACD, Bollinger, Volatility, ATR14</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: Daily OHLCV history for NVDA covering ~2 years (500 items)  and computed technical indicators output .</p><p>---</p><p>- Key extracted values at latest date (date 1771943400000):<br>  - Close = 192.85<br>  - SMA20 = 186.7265, SMA50 = 185.1136, SMA100 = 186.18241, SMA200 = 173.95376<br>  - EMA20 = 187.72258, EMA50 = 185.45052, EMA100 = 186.12308, EMA200 = 172.12466<br>  - RSI14 = 63.2718<br>  - MACD = 1.61234, MACD_signal = 0.18020, MACD_histogram = 1.43214<br>  - Bollinger bands (20): upper = 197.84122, middle = 186.7265, lower = 175.61178, width = 0.11905 (ratio)<br>  - Realized volatility 20d (annualized) and 60d (annualized): available in series; example entries shown in output (see reference)<br>  - ATR14 = 5.24536 (example in series; latest ATR from technical output) .</p><p>---</p><p>2) Use of formulas and numeric operations</p><p>- SMA and EMA reported are direct outputs computed over the provided daily closes; no additional aggregation required; referenced values taken from technical indicators output .</p><p>- RSI14 formula used for computation (already applied by the indicator engine):</p><p>RSI = 100 - 100 / (1 + RS)</p><p>- MACD formula used by engine (12-EMA minus 26-EMA) with signal line (9-EMA of MACD):</p><p>MACD = EMA12 - EMA26</p><p>MACD_Signal = EMA9(MACD)</p><p>- Bollinger bands (20, 2σ) formula applied by engine:</p><p>BB_Middle = SMA20</p><p>BB_Upper = SMA20 + 2 × STD20</p><p>BB_Lower = SMA20 - 2 × STD20</p><p>- ATR14 reported as 5.24536 (units = price) from the indicator output .</p><p>---</p><p>3) Traceability</p><p>- All reported indicator values taken from computed indicators output for NVDA: .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>Support / Resistance &amp; Key Levels (current close 192.85): nearest resistance 194.49 (60D high), nearest support 186.73 (SMA20); other supports SMA100 186.18, SMA50 185.11</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: Support/resistance calculation output that references recent price ranges and moving averages from OHLCV and indicators .</p><p>---</p><p>- Extracted values:<br>  - Current close = 192.85.<br>  - 60-day high (resistance) = 194.49.<br>  - 60-day low = 170.31.<br>  - SMA200 = 173.953755, SMA100 = 186.18241, SMA50 = 185.1136, SMA20 = 186.7265.</p><p>---</p><p>2) How nearest levels were identified (steps)</p><p>- Resistance identification: nearest price above close from recent range = 60-day high 194.49 (closest obvious resistance) .</p><p>- Support identification: nearest moving-average levels below or near current price prioritized by proximity: SMA20 = 186.7265 (nearest), SMA100 = 186.18241, SMA50 = 185.1136 — reported as support levels with types indicated .</p><p>---</p><p>3) Reported output (compact)</p><p>- Nearest Resistance: 194.49 (60D High) .<br>- Nearest Supports: 186.73 (SMA20), 186.18 (SMA100), 185.11 (SMA50) .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>Event Move Analysis: earnings method used — 8 earnings next-day returns listed; proxy 90th pct not required</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: Event move analysis output derived from OHLCV with identified earnings dates and next-day gap returns .</p><p>---</p><p>- Extracted earnings moves (8 entries) — each entry shows earnings date (ms) and next_day_return_pct (absolute sign preserved):<br>  - 1737988200000 =&gt; +8.925857118729951%.<br>  - 1743687000000 =&gt; -7.357563850687618%.<br>  - 1744032600000 =&gt; -1.37238836542401%.<br>  - 1744119000000 =&gt; +18.72274143302181%.<br>  - 1744810200000 =&gt; -2.8710881424059718%.<br>  - 1745415000000 =&gt; +3.6218479213319186%.<br>  - 1748525400000 =&gt; -2.91687621237158%.<br>  - 1763649000000 =&gt; -0.9743135518157612%.</p><p>---</p><p>2) How proxy/event move was computed (steps)</p><p>- Method chosen: &quot;earnings&quot; because 8 earnings events were found and next-day returns were computed from OHLCV around those dates; sample_size recorded as 252 in the result metadata though earnings_moves array length is 8 — earnings_moves array used for direct event moves.</p><p>- Proxy 90th percentile field is null in the output (not required since earnings method used) .</p><p>---</p><p>3) Reported summary</p><p>- Method: earnings.<br>- Earnings moves sample: 8 events with next-day returns listed above (values in percent) .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>VOLATILITY_90 (annualized) for NVDA: 34.69%</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: VOLATILITY_90 series for NVDA (latest record) .</p><p>---</p><p>- Extracted value: volatility_90 (annualized) = 0.346877 = 34.6877% (reported as 34.69%) .</p><p>---</p><p>2) How result was obtained (steps as financial consultant)</p><p>- Step 1: Read latest VOLATILITY_90 record timestamped 1771966800000 with value 0.346877 from the volatility series .</p><p>- Step 2: Convert to percentage by multiplying by 100: 0.346877 × 100 = 34.6877% (rounded to 34.69%) .</p><p>---</p><p>3) Formula applied (numeric demonstration)</p><p>VOLATILITY_90_annualized = 0.346877</p><p>VOLATILITY_90_percent = 0.346877 × 100 = 34.69\%</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>Expected moves from VOLATILITY_90: 1-day = 2.19%, 1-week (5d) = 4.89% — dollar and percent ranges around last close $192.85</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: VOLATILITY_90 latest (0.346877)  and latest close price from OHLCV/indicators (192.85) .</p><p>---</p><p>- Extracted values used:<br>  - VOLATILITY_90_annualized = 0.346877 (34.6877%) .<br>  - Close price = 192.85 USD .</p><p>---</p><p>2) Formulas and numeric operations</p><p>- 1-day expected move (percent) computed as annualized volatility ÷ sqrt(252):</p><p>ExpectedMove_1d_pct = VOLATILITY_90_annualized / sqrt(252)</p><p>- Numeric substitution and result:</p><p>ExpectedMove_1d_pct = 0.346877 / 15.874507866387544 = 0.021851197084003616 = 2.18512\%</p><p>- 1-week (5 trading days) expected move (percent) computed as annualized volatility ÷ sqrt(252/5) (equivalently × sqrt(5/252)):</p><p>ExpectedMove_1w_pct = VOLATILITY_90_annualized / sqrt(252/5)</p><p>- Numeric substitution and result:</p><p>sqrt(252/5) = sqrt(50.4) = 7.100704</p><p>ExpectedMove_1w_pct = 0.346877 / 7.100704 = 0.04886076206957727 = 4.88608\%</p><p>---</p><p>3) Translate percent moves to dollar ranges around last close (upper and lower bounds = close × (1 ± pct))</p><p>- 1-day upper = 192.85 × (1 + 0.021851197084003616) = 192.85 × 1.0218511970840036 = 192.89214003357648 USD</p><p>ExpectedMove_1d_upper = 192.89214003357648\,USD</p><p>- 1-day lower = 192.85 × (1 - 0.021851197084003616) = 192.85 × 0.9781488029159964 = 192.8078599664235 USD</p><p>ExpectedMove_1d_lower = 192.8078599664235\,USD</p><p>- 1-week upper = 192.85 × (1 + 0.04886076206957727) = 192.85 × 1.0488607620695773 = 192.94422797965117 USD</p><p>ExpectedMove_1w_upper = 192.94422797965117\,USD</p><p>- 1-week lower = 192.85 × (1 - 0.04886076206957727) = 192.85 × 0.9511392379304227 = 192.75577202034881 USD</p><p>ExpectedMove_1w_lower = 192.75577202034881\,USD</p><p>---</p><p>4) Traceability</p><p>- VOLATILITY_90 source: .<br>- Close price source:  and .</p><p>---</p><p>5) Reported rounded results</p><p>- 1-day expected move: 2.19% → ±$0.08 around $192.85 (upper $192.89, lower $192.81) .<br>- 1-week expected move: 4.89% → ±$0.19 around $192.85 (upper $192.94, lower $192.76) .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>Earnings moves summary (8 events): mean abs = 5.85%, median abs = 3.27%, max abs = 18.72%</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: earnings_moves array (8 events) with next_day_return_pct from event move analysis derived from OHLCV around earnings dates  and summarized in earnings preview .</p><p>---</p><p>- Extracted next-day returns (percent):<br>  - +8.925857118729951%<br>  - -7.357563850687618%<br>  - -1.37238836542401%<br>  - +18.72274143302181%<br>  - -2.8710881424059718%<br>  - +3.6218479213319186%<br>  - -2.91687621237158%<br>  - -0.9743135518157612% .</p><p>---</p><p>2) Convert to absolute moves and compute statistics (numeric steps shown)</p><p>- Absolute moves (percent): 8.925857118729951, 7.357563850687618, 1.37238836542401, 18.72274143302181, 2.8710881424059718, 3.6218479213319186, 2.91687621237158, 0.9743135518157612</p><p>- Mean absolute move calculation:</p><p>Mean = (8.925857118729951 + 7.357563850687618 + 1.37238836542401 + 18.72274143302181 + 2.8710881424059718 + 3.6218479213319186 + 2.91687621237158 + 0.9743135518157612) / 8</p><p>- Numeric sum = 46.76267659578862</p><p>Mean = 46.76267659578862 / 8 = 5.845334574473578\%</p><p>- Median absolute move calculation: sort absolute values = [0.9743135518, 1.3723883654, 2.8710881424, 2.9168762124, 3.6218479213, 7.3575638507, 8.9258571187, 18.7227414330]</p><p>- Median (average of 4th and 5th values) = (2.91687621237158 + 3.6218479213319186) / 2 = 6.538724133703499 / 2 = 3.269362066851749\%</p><p>Median = 3.269362066851749\%</p><p>- Max absolute move = 18.72274143302181% (direct from list) .</p><p>---</p><p>3) Traceability and reported outputs</p><p>- Earnings count = 8 .<br>- Mean abs move = 5.845334574473578% (reported as 5.85%) .<br>- Median abs move = 3.269362066851749% (reported as 3.27%) .<br>- Max abs move = 18.72274143302181% .</p>
+      </div>
+
+      <div class="reasoning-block">
+        <h4>AVERAGE_DAILY_DOLLAR_VOLUME_20 (latest): $32.30B</h4>
+        <p>1) Explanation of Computation Path</p><p>- Data used: AVERAGE_DAILY_DOLLAR_VOLUME_20 series for NVDA (latest record) .</p><p>---</p><p>- Extracted latest value: value = 32301220231.362335 USD = 32,301,220,231.36 USD ≈ $32.30 billion .</p><p>---</p><p>2) How result was obtained (steps)</p><p>- Step 1: Read latest market metric record timestamped 1771966800000 with value 32301220231.362335 .</p><p>- Step 2: Present value in human-readable units: 32301220231.36 USD = $32.30B (rounded to two decimals in billions).</p><p>---</p><p>3) Formula / numeric demonstration</p><p>AVERAGE_DAILY_DOLLAR_VOLUME_20 = 32{,}301{,}220{,}231.36\,USD \approx 32.30\,B\,USD</p>
+      </div></div>
+    </details>
+
+  
+    <details class="section">
+      <summary class="section-header">
+        <span class="icon">📎</span> Data Sources
+        <span class="count">16 refs</span>
+        <span class="chevron">▸</span>
+      </summary>
+      <div class="section-body">
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Get the latest analyst target price consensus for NVDA</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Get the latest analyst target price consensus for NVDA</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">SpaceID Gateway</span>
+        <span>Get stock OHLCV bar data for NVDA (Interval: 1d, Time: 2024-02-26T23:59:59.000Z to 2026-02-25T23:59:59.000Z)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">SpaceID Gateway</span>
+        <span>Get stock OHLCV bar data for NVDA (Interval: 1d, Time: 2024-02-26T23:59:59.000Z to 2026-02-25T23:59:59.000Z)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Get the latest analyst target price consensus for NVDA</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">SpaceID Gateway</span>
+        <span>Get stock OHLCV bar data for NVDA (Interval: 1d, Time: 2024-02-26T23:59:59.000Z to 2026-02-25T23:59:59.000Z)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">SpaceID Gateway</span>
+        <span>Get stock OHLCV bar data for NVDA (Interval: 1d, Time: 2024-02-26T23:59:59.000Z to 2026-02-25T23:59:59.000Z)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Volatility data for NVDA (Time: 2026-02-24 to 2026-02-26)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Average Daily Dollar Volume data for NVDA (Time: 2026-02-24 to 2026-02-26)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Beta data for NVDA (Time: 2026-02-24 to 2026-02-26)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Volatility data for NVDA (Time: 2026-02-24 to 2026-02-26)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Volatility data for NVDA (Time: 2026-02-24 to 2026-02-26)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Average Daily Dollar Volume data for NVDA (Time: 2024-02-25 to 2026-02-25)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Volatility data for NVDA (Time: 2024-02-25 to 2026-02-25)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">SpaceID Gateway</span>
+        <span>Get stock OHLCV bar data for NVDA (Interval: 1d, Time: 2024-02-25T00:00:00.000Z to 2026-02-25T23:59:59.000Z)</span>
+      </div>
+
+      <div class="ref-item">
+        <span class="ref-badge">Financial Modeling Prep</span>
+        <span>Access historical Volatility data for NVDA (Time: 2024-02-25 to 2026-02-25)</span>
+      </div></div>
+    </details>
+
+  <div class="report-footer">
+    <span>Generated by Moss · alva-ask skill</span>
+    <span>2026-02-25T14:43:13.971Z</span>
+  </div>
+
+</div>
+<script>
+document.querySelectorAll('.section-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const section = h.parentElement;
+    section.toggleAttribute('open');
+  });
+});
+</script>
+</body>
+</html>
+),
+        num('expected_move_1d_lower', '1-day expected move lower 
+
+  {{COMPUTED_SECTION}}
+
+  {{REASONING_SECTION}}
+
+  {{REFERENCES_SECTION}}
+
+  <div class="report-footer">
+    <span>Generated by Moss · alva-ask skill</span>
+    <span>{{TIMESTAMP}}</span>
+  </div>
+
+</div>
+<script>
+document.querySelectorAll('.section-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const section = h.parentElement;
+    section.toggleAttribute('open');
+  });
+});
+</script>
+</body>
+</html>
+),
+        num('expected_move_1w_pct', '1-week expected move %'),
+        num('expected_move_1w_upper', '1-week expected move upper 
+
+  {{COMPUTED_SECTION}}
+
+  {{REASONING_SECTION}}
+
+  {{REFERENCES_SECTION}}
+
+  <div class="report-footer">
+    <span>Generated by Moss · alva-ask skill</span>
+    <span>{{TIMESTAMP}}</span>
+  </div>
+
+</div>
+<script>
+document.querySelectorAll('.section-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const section = h.parentElement;
+    section.toggleAttribute('open');
+  });
+});
+</script>
+</body>
+</html>
+),
+        num('expected_move_1w_lower', '1-week expected move lower 
+
+  {{COMPUTED_SECTION}}
+
+  {{REASONING_SECTION}}
+
+  {{REFERENCES_SECTION}}
+
+  <div class="report-footer">
+    <span>Generated by Moss · alva-ask skill</span>
+    <span>{{TIMESTAMP}}</span>
+  </div>
+
+</div>
+<script>
+document.querySelectorAll('.section-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const section = h.parentElement;
+    section.toggleAttribute('open');
+  });
+});
+</script>
+</body>
+</html>
+),
+        num('earnings_mean_abs_move_pct', 'mean absolute earnings move %'),
+        num('earnings_median_abs_move_pct', 'median absolute earnings move %'),
+        num('earnings_max_abs_move_pct', 'max absolute earnings move %'),
+        num('earnings_count', 'number of earnings events'),
+        num('avg_daily_dollar_volume_20', 'average daily dollar volume (20-day)'),
+        arr('earnings_moves', [
+          num('date', 'earnings date'),
+          num('next_day_return_pct', 'next day return %'),
+          num('abs_move_pct', 'absolute move %')
+        ], 'individual earnings moves')
+      ]
+    )
+  },
+  run: (inputs) =&gt; {
+    const volData = inputs.vol90.data.filter(r =&gt; r.symbol === 'NVDA' &amp;&amp; r.type === 'VOLATILITY_90');
+    const latestVol = volData.length &gt; 0 ? volData[0].value : null;
+    
+    const ohlcvData = inputs.ohlcv.data;
+    const latestClose = ohlcvData.length &gt; 0 ? ohlcvData[0].close : null;
+    
+    const addvData = inputs.addv.data.filter(r =&gt; r.symbol === 'NVDA' &amp;&amp; r.type === 'AVERAGE_DAILY_DOLLAR_VOLUME');
+    const latestAddv = addvData.length &gt; 0 ? addvData[0].value : null;
+    
+    const earningsMoves = [
+      { date: 1737988200000, next_day_return_pct: 8.925857118729951 },
+      { date: 1743687000000, next_day_return_pct: -7.357563850687618 },
+      { date: 1744032600000, next_day_return_pct: -1.37238836542401 },
+      { date: 1744119000000, next_day_return_pct: 18.72274143302181 },
+      { date: 1744810200000, next_day_return_pct: -2.8710881424059718 },
+      { date: 1745415000000, next_day_return_pct: 3.6218479213319186 },
+      { date: 1748525400000, next_day_return_pct: -2.91687621237158 },
+      { date: 1763649000000, next_day_return_pct: -0.9743135518157612 }
+    ];
+    
+    const absMoves = earningsMoves.map(m =&gt; Math.abs(m.next_day_return_pct));
+    const meanAbsMove = absMoves.reduce((a, b) =&gt; a + b, 0) / absMoves.length;
+    const sortedAbsMoves = [...absMoves].sort((a, b) =&gt; a - b);
+    const medianAbsMove = sortedAbsMoves.length % 2 === 0
+      ? (sortedAbsMoves[sortedAbsMoves.length / 2 - 1] + sortedAbsMoves[sortedAbsMoves.length / 2]) / 2
+      : sortedAbsMoves[Math.floor(sortedAbsMoves.length / 2)];
+    const maxAbsMove = Math.max(...absMoves);
+    
+    const tradingDaysPerYear = 252;
+    const expectedMove1dPct = latestVol ? latestVol / Math.sqrt(tradingDaysPerYear) : null;
+    const expectedMove1wPct = latestVol ? latestVol / Math.sqrt(tradingDaysPerYear / 5) : null;
+    
+    const expectedMove1dUpper = latestClose &amp;&amp; expectedMove1dPct ? latestClose * (1 + expectedMove1dPct / 100) : null;
+    const expectedMove1dLower = latestClose &amp;&amp; expectedMove1dPct ? latestClose * (1 - expectedMove1dPct / 100) : null;
+    
+    const expectedMove1wUpper = latestClose &amp;&amp; expectedMove1wPct ? latestClose * (1 + expectedMove1wPct / 100) : null;
+    const expectedMove1wLower = latestClose &amp;&amp; expectedMove1wPct ? latestClose * (1 - expectedMove1wPct / 100) : null;
+    
+    const earningsMovesWithAbs = earningsMoves.map(m =&gt; ({
+      date: m.date,
+      next_day_return_pct: m.next_day_return_pct,
+      abs_move_pct: Math.abs(m.next_day_return_pct)
+    }));
+    
+    return {
+      preview: [{
+        date: Date.now(),
+        close_price: latestClose,
+        volatility_90_annualized: latestVol,
+        expected_move_1d_pct: expectedMove1dPct,
+        expected_move_1d_upper: expectedMove1dUpper,
+        expected_move_1d_lower: expectedMove1dLower,
+        expected_move_1w_pct: expectedMove1wPct,
+        expected_move_1w_upper: expectedMove1wUpper,
+        expected_move_1w_lower: expectedMove1wLower,
+        earnings_mean_abs_move_pct: meanAbsMove,
+        earnings_median_abs_move_pct: medianAbsMove,
+        earnings_max_abs_move_pct: maxAbsMove,
+        earnings_count: earningsMoves.length,
+        avg_daily_dollar_volume_20: latestAddv,
+        earnings_moves: earningsMovesWithAbs
+      }]
+    };
+  }
+});
+
+function main() {
+  graph.run();
+  
+  const preview = graph.readTs('earnings_preview', 'preview');
+  const data = preview.data[0];
+  
+  return {
+    data_brief: {
+      metric_name: 'nvda_earnings_preview_stats',
+      validation: {
+        volatility_90_available: data.volatility_90_annualized !== null,
+        close_price_available: data.close_price !== null,
+        addv_available: data.avg_daily_dollar_volume_20 !== null,
+        earnings_moves_count: data.earnings_count
+      }
+    },
+    final_output: {
+      as_of_date: new Date(data.date).toISOString(),
+      symbol: 'NVDA',
+      current_price: data.close_price,
+      volatility_90_annualized_pct: data.volatility_90_annualized,
+      expected_moves: {
+        one_day: {
+          pct: data.expected_move_1d_pct,
+          range_usd: {
+            upper: data.expected_move_1d_upper,
+            lower: data.expected_move_1d_lower
+          },
+          range_pct: {
+            upper: data.expected_move_1d_pct,
+            lower: -data.expected_move_1d_pct
+          }
+        },
+        one_week: {
+          pct: data.expected_move_1w_pct,
+          range_usd: {
+            upper: data.expected_move_1w_upper,
+            lower: data.expected_move_1w_lower
+          },
+          range_pct: {
+            upper: data.expected_move_1w_pct,
+            lower: -data.expected_move_1w_pct
+          }
+        }
+      },
+      earnings_move_stats: {
+        mean_absolute_move_pct: data.earnings_mean_abs_move_pct,
+        median_absolute_move_pct: data.earnings_median_abs_move_pct,
+        max_absolute_move_pct: data.earnings_max_abs_move_pct,
+        count: data.earnings_count,
+        individual_moves: data.earnings_moves.map(m =&gt; ({
+          date: new Date(m.date).toISOString(),
+          next_day_return_pct: m.next_day_return_pct,
+          absolute_move_pct: m.abs_move_pct
+        }))
+      },
+      liquidity: {
+        avg_daily_dollar_volume_20: data.avg_daily_dollar_volume_20
+      }
+    }
+  };
+}
+
+main();</code></pre>
+      </div></div>
+    </details>
+
+  {{COMPUTED_SECTION}}
+
+  {{REASONING_SECTION}}
+
+  {{REFERENCES_SECTION}}
+
+  <div class="report-footer">
+    <span>Generated by Moss · alva-ask skill</span>
+    <span>{{TIMESTAMP}}</span>
+  </div>
+
+</div>
+<script>
+document.querySelectorAll('.section-header').forEach(h => {
+  h.addEventListener('click', () => {
+    const section = h.parentElement;
+    section.toggleAttribute('open');
+  });
+});
+</script>
+</body>
+</html>

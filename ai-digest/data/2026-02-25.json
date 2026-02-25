@@ -1,0 +1,117 @@
+{
+  "summary": "今天的 AI 资讯主线很清晰：一是工程实践继续加速，AI 正从“写代码”走向“可验证迁移”和“规范驱动开发”；二是模型能力评测开始从跑分转向可靠性与一致性；三是教育场景进入深水区，行业关注点从“能不能用”转向“是否真正促进学习”。本期精选 8 条，其中教育科技相关 4 条，兼顾技术深度与落地影响。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Ladybird adopts Rust, with help from AI",
+      "url": "https://ladybird.org/posts/adopting-rust/",
+      "source": "Ladybird 官方博客",
+      "tldr": "Ladybird 宣布在核心组件中引入 Rust，并用 Claude Code/Codex 进行“人类主导”的迁移协作。首个 Rust 化目标是 LibJS 的词法/语法/字节码链路，约 2.5 万行代码两周完成。关键不是“自动生成”，而是通过严格对齐和回归验证实现零回归迁移。",
+      "tags": [
+        "AI编程",
+        "Rust",
+        "浏览器内核",
+        "工程实践"
+      ],
+      "excerpt": "团队将 Rust 定位为长期内存安全演进路径，而不是一次性重写。迁移采用了字节级一致性标准，要求 Rust 与 C++ 管线输出完全一致。结果显示 test262 与内部回归测试均为 0 回归，并在基准性能上无明显退化。作者强调这是“人类决策+模型辅助”的迭代过程，不是无人监督生成。现阶段代码仍带有明显 C++ 翻译痕迹，后续会在稳定后逐步 Rust 化重构。项目策略是 C++ 与 Rust 长期共存，通过清晰边界控制风险。这条路线给“老牌大型代码库如何安全引入 AI 与新语言”提供了可复用样板。"
+    },
+    {
+      "num": 2,
+      "title": "FreeBSD doesn't have Wi‑Fi driver for my old MacBook. AI built one for me",
+      "url": "https://vladimir.varank.in/notes/2026/02/freebsd-brcmfmac/",
+      "source": "技术博主 Vladimir Varankin",
+      "tldr": "作者用 AI 代理为 FreeBSD 的 BCM4350 写出可工作的 Wi‑Fi 驱动，并公开了从失败到成功的方法论。直接“让模型移植 Linux 驱动”几乎不可控，转向“先写规格、再分阶段实现”后效果显著提升。最终实现了扫描、2.4/5GHz 与 WPA/WPA2 的可用版本。",
+      "tags": [
+        "AI代理",
+        "系统编程",
+        "驱动开发",
+        "规范驱动"
+      ],
+      "excerpt": "文章最有价值的是流程：先让代理提炼 11 章技术规格，再用多模型交叉审校，最后按里程碑执行实现。作者记录了每次关键决策与回滚点，把代理开发从“提示词碰碰运气”变成“文档化工程管理”。中途曾尝试 LinuxKPI 路线但复杂度失控，后续果断切换到更可控的原生实现。代理被赋予了构建与测试环境访问权限，并在崩溃后通过分支会话复盘问题。结果虽非“生产级完成态”，但已形成可运行代码与可迭代文档资产。这显示 AI 在底层工程中的价值，更多来自流程编排与验证闭环，而非一次性代码生成。对企业级 Agent 工程化落地很有启发。"
+    },
+    {
+      "num": 3,
+      "title": "Making Wolfram Tech Available as a Foundation Tool for LLM Systems",
+      "url": "https://writings.stephenwolfram.com/2026/02/making-wolfram-tech-available-as-a-foundation-tool-for-llm-systems/",
+      "source": "Stephen Wolfram Writings",
+      "tldr": "Wolfram 发布“Foundation Tool”战略，强调 LLM 需要可计算、可验证的外部能力补全。核心技术是 CAG（Computation-Augmented Generation），将实时计算结果注入生成流程。同步推出 MCP Service、Agent One API 与组件级 API，面向不同集成深度。",
+      "tags": [
+        "MCP",
+        "工具调用",
+        "CAG",
+        "企业集成"
+      ],
+      "excerpt": "作者认为 LLM 的强项是广泛语言能力，而非深计算与精确知识，因此工具层将成为下一阶段竞争焦点。与传统 RAG 不同，CAG 不是检索静态文档，而是按需生成可计算内容，理论上可扩展到“无限可计算上下文”。这意味着模型能力边界可通过工具协议持续外延，而不是仅靠参数规模增长。发布的三层产品覆盖从消费级接入到企业定制：即插即用 MCP、统一代理 API、以及细粒度组件接口。其本质是将 Wolfram 从“应用插件”升级为“模型基础设施部件”。对 AI 应用公司而言，这也是“先选模型还是先建工具栈”的战略提醒。"
+    },
+    {
+      "num": 4,
+      "title": "“Car Wash” test with 53 models",
+      "url": "https://opper.ai/blog/car-wash-test",
+      "source": "Opper 技术博客",
+      "tldr": "Opper 用一个极简推理题测试 53 个模型并做 10 次一致性复测，结果显示“答对一次”不代表“稳定可用”。单次测试仅 11/53 正确，10 次全对仅剩 5 个模型。文章把问题从“模型会不会”推进到“模型是否可靠”。",
+      "tags": [
+        "模型评测",
+        "可靠性",
+        "一致性",
+        "推理"
+      ],
+      "excerpt": "该测试问题非常短，但能暴露模型常见的启发式偏差：抓住“50 米很近”而忽略“要洗的是车本体”。研究显示不少模型存在“偶发正确”，复测后显著回落，提示线上部署不能仅看单次基准成绩。作者还引入 1 万人类对照，提供了更接近产品决策的参考维度。文章把模型分成三类：稳定正确、随机正确、几乎永错，其中“随机正确”对生产最危险。结论是评估框架应把稳定性、波动率纳入核心指标，而非只看平均分。这与近期企业对 Agent 质量门槛提高的趋势一致。对需要可预测输出的业务场景，这类测试方法值得引入。"
+    },
+    {
+      "num": 5,
+      "title": "The Missing Semester of Your CS Education – 2026",
+      "url": "https://missing.csail.mit.edu/",
+      "source": "MIT Missing Semester",
+      "tldr": "MIT Missing Semester 2026 版更新完成，继续聚焦“课堂不教但职业最常用”的工程工具能力。新版把 AI 工具实践嵌入各讲，不单独开一节 AI 课。课程新增 Agentic Coding 等主题，体现教学从工具熟练度向人机协作迁移。",
+      "tags": [
+        "教育科技",
+        "CS教育",
+        "Agentic Coding",
+        "课程设计"
+      ],
+      "excerpt": "课程仍围绕 shell、开发环境、调试、版本控制、打包发布与代码质量等“高频基础能力”。与往年不同的是，2026 版明确承认 AI 已成为软件工程流程变量，并要求学习者理解其收益与边界。教学策略不是把 AI 当外挂，而是把其融入每个真实工作流环节。这样设计能避免“会用模型但不会工程”的能力断层。公开课与多语言社区传播也让其影响超出 MIT 校内。对高校与企业培训来说，这是较成熟的 AI 时代工程素养模板。它强调的不是追新模型，而是建立长期可迁移的生产力底座。"
+    },
+    {
+      "num": 6,
+      "title": "What Students Gain When Teachers — Not AI — Grade Students’ Work",
+      "url": "https://www.edsurge.com/news/2026-02-24-what-students-gain-when-teachers-not-ai-grade-students-work",
+      "source": "EdSurge",
+      "tldr": "EdSurge 通过一线教师案例提出：AI 可减轻事务性负担，但关键评估与反馈仍需教师主导。文章强调诊断性评估与持续个性化反馈对学习跃迁的决定作用。其核心观点是“AI 可辅教，不应替代教学关系本身”。",
+      "tags": [
+        "教育科技",
+        "学习评估",
+        "教师反馈",
+        "AI伦理"
+      ],
+      "excerpt": "案例展示了教师如何通过早期诊断、分层教学和多样化再评估，帮助不同基础学生在学年中实现能力追平。文章并未否认 AI 在备课和流程提效中的价值，但警惕将评分与反馈完全自动化带来的学习质量风险。它还关联了学生数据隐私与风险标签误判等治理问题，提醒学校在部署 edtech 时保持审慎。对 K-12 场景而言，最稀缺的不是“自动批改速度”，而是“可信、可解释、面向成长的反馈闭环”。这与当前教育 AI 商业化中过度强调效率的倾向形成对照。文章的实践导向较强，适合学校管理者与教研团队参考。也说明教育场景里的 AI 评估标准应超越 ROI，纳入长期学习成效。"
+    },
+    {
+      "num": 7,
+      "title": "Subject Secures $28M To Expand AI-Powered Education Platform",
+      "url": "https://ventureburn.com/subject-secures-28m/",
+      "source": "Ventureburn",
+      "tldr": "AI 教育平台 Subject 完成 2800 万美元融资，资金将用于扩展中学课程与自动化教学支持能力。公司强调“认证课程+AI 教师支持+多语能力”的组合路径，已覆盖近千所学校。此轮融资反映 edtech 在 AI 叙事后进入“规模化交付与合规验证”阶段。",
+      "tags": [
+        "教育科技",
+        "融资",
+        "K12",
+        "AI平台"
+      ],
+      "excerpt": "报道显示 Subject 重点解决的是学区普遍存在的供给缺口：课程需求上升但师资与预算受限。其产品并非单一聊天助手，而是围绕学分课程、学习进度追踪与管理端分析形成系统方案。对学区而言，是否具备认证资质与可接入现有流程，比模型参数更关键。融资方结构也体现了对“可持续交付能力”的偏好，而非短期流量故事。若后续能在学习结果和留存上持续披露数据，这类平台有机会成为中学数字基础设施的一部分。与此同时，市场也会更严格审视其教学质量与公平性承诺。整体看，这条赛道正在从“AI 功能展示”转向“教育系统能力建设”。"
+    },
+    {
+      "num": 8,
+      "title": "The greatest risk of AI in higher education isn’t cheating – it’s the erosion of learning itself",
+      "url": "https://theconversation.com/the-greatest-risk-of-ai-in-higher-education-isnt-cheating-its-the-erosion-of-learning-itself-270243",
+      "source": "The Conversation",
+      "tldr": "文章指出高校 AI 讨论过度聚焦“作弊”，而真正风险是学习生态被渐进式掏空。作者把系统分为非自治、混合、自治三层，并分别讨论隐私、问责、认知外包与能力管道断裂。核心警示是：当机器接管“看似低效”的学习劳动，大学可能保住产出却失去育人机制。",
+      "tags": [
+        "教育科技",
+        "高等教育",
+        "AI治理",
+        "认知外包"
+      ],
+      "excerpt": "文章认为高校正在多环节部署 AI：招生、排课、风险识别、教学反馈与科研辅助，影响早已超出作业场景。混合系统阶段的关键矛盾是透明性和责任归属：学生是否知道反馈来自谁，错误由谁负责。更深层问题是认知外包，学生与研究者若持续跳过构思、试错和修订过程，能力形成会被削弱。作者特别强调大学是“实践共同体”，而不只是论文和学位的产出工厂。若自治代理持续替代入门劳动，人才培养的上升通道可能被削薄。其结论不是拒绝 AI，而是重新定义哪些环节必须保留人类参与。对高校治理者而言，这是一份面向制度层的风险清单。"
+    }
+  ]
+}

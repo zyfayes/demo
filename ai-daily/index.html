@@ -114,27 +114,117 @@
     border-bottom: 1px solid var(--border);
   }
   .podcast-player {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
     margin-bottom: 2.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .podcast-player::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .podcast-player .podcast-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 1;
+  }
+  .podcast-player .play-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #1db954;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s ease, background 0.2s;
+    box-shadow: 0 4px 12px rgba(29,185,84,0.4);
+  }
+  .podcast-player .play-btn:hover {
+    transform: scale(1.08);
+    background: #1ed760;
+  }
+  .podcast-player .play-btn:active {
+    transform: scale(0.95);
+  }
+  .podcast-player .play-btn svg {
+    width: 22px;
+    height: 22px;
+    fill: #fff;
+  }
+  .podcast-player .podcast-info {
+    flex: 1;
+    min-width: 0;
   }
   .podcast-player .podcast-title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.3rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
   }
   .podcast-player .podcast-sub {
     font-size: 0.75rem;
-    color: var(--text-light);
-    margin-bottom: 0.6rem;
+    color: rgba(255,255,255,0.5);
   }
-  .podcast-player audio {
+  .podcast-player .progress-wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .podcast-player .progress-bar {
     width: 100%;
-    height: 36px;
+    height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px;
+    cursor: pointer;
+    position: relative;
+    margin-bottom: 0.4rem;
   }
+  .podcast-player .progress-bar .fill {
+    height: 100%;
+    background: #1db954;
+    border-radius: 2px;
+    width: 0%;
+    position: relative;
+    transition: width 0.1s linear;
+  }
+  .podcast-player .progress-bar .fill::after {
+    content: '';
+    position: absolute;
+    right: -5px;
+    top: -3px;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .podcast-player .progress-bar:hover .fill::after {
+    opacity: 1;
+  }
+  .podcast-player .time-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.45);
+    font-variant-numeric: tabular-nums;
+  }
+  .podcast-player audio { display: none; }
   .article {
     margin-bottom: 2.5rem;
   }
@@ -349,11 +439,52 @@
     let podcastHtml = '';
     if (data.podcastUrl) {
       podcastHtml = `
-      <div class="podcast-player">
-        <div class="podcast-title">🎙️ 播客版 · ${escapeHtml(data.podcastTitle || 'AI 日报音频')}</div>
-        <div class="podcast-sub">voice: ${escapeHtml(data.podcastVoice || 'uma')} · via ListenHub</div>
-        <audio controls preload="none" src="${escapeHtml(data.podcastUrl)}"></audio>
+      <div class="podcast-player" id="podcast-widget">
+        <div class="podcast-header">
+          <button class="play-btn" id="pod-play" aria-label="播放">
+            <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+          </button>
+          <div class="podcast-info">
+            <div class="podcast-title">${escapeHtml(data.podcastTitle || 'AI 日报音频')}</div>
+            <div class="podcast-sub">🎙️ ${escapeHtml(data.podcastVoice || 'uma')} · via ListenHub</div>
+          </div>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+          <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+        </div>
+        <audio id="pod-audio" preload="none" src="${escapeHtml(data.podcastUrl)}"></audio>
       </div>`;
+    }
+
+    // Wire up podcast player after render
+    if (data.podcastUrl) {
+      setTimeout(() => {
+        const audio = document.getElementById('pod-audio');
+        const btn = document.getElementById('pod-play');
+        const icon = document.getElementById('pod-icon');
+        const fill = document.getElementById('pod-fill');
+        const bar = document.getElementById('pod-progress');
+        const curEl = document.getElementById('pod-cur');
+        const durEl = document.getElementById('pod-dur');
+        if (!audio || !btn) return;
+        const fmt = s => { const m=Math.floor(s/60); return m+':'+String(Math.floor(s%60)).padStart(2,'0'); };
+        btn.onclick = () => {
+          if (audio.paused) { audio.play(); icon.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>'; }
+          else { audio.pause(); icon.innerHTML='<polygon points="6,3 20,12 6,21"/>'; }
+        };
+        audio.ontimeupdate = () => {
+          if (!audio.duration) return;
+          fill.style.width = (audio.currentTime/audio.duration*100)+'%';
+          curEl.textContent = fmt(audio.currentTime);
+        };
+        audio.onloadedmetadata = () => { durEl.textContent = fmt(audio.duration); };
+        audio.onended = () => { icon.innerHTML='<polygon points="6,3 20,12 6,21"/>'; fill.style.width='0%'; curEl.textContent='0:00'; };
+        bar.onclick = e => {
+          if (!audio.duration) return;
+          audio.currentTime = (e.offsetX/bar.offsetWidth)*audio.duration;
+        };
+      }, 50);
     }
 
     document.getElementById('content').innerHTML = `

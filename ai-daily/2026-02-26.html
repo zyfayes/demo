@@ -68,38 +68,43 @@
     border-bottom: 1px solid var(--border);
   }
   .podcast-player {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.2rem 1.5rem;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-radius: 16px;
+    padding: 1.5rem;
     margin-bottom: 2.5rem;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .podcast-player .podcast-header {
     display: flex;
     align-items: center;
     gap: 1rem;
+    margin-bottom: 1rem;
   }
-  .podcast-player .icon {
-    font-size: 1.6rem;
+  .podcast-player .play-btn {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: #1db954;
+    border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
+    transition: transform 0.15s ease;
+    box-shadow: 0 4px 12px rgba(29,185,84,0.4);
   }
-  .podcast-player .info {
-    flex: 1;
-    min-width: 0;
+  .podcast-player .play-btn:hover { transform: scale(1.08); background: #1ed760; }
+  .podcast-player .play-btn svg { width: 22px; height: 22px; fill: #fff; }
+  .podcast-player .podcast-title { font-size: 0.95rem; font-weight: 700; color: #fff; margin-bottom: 0.2rem; }
+  .podcast-player .podcast-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+  .podcast-player .progress-bar {
+    width: 100%; height: 4px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 2px; cursor: pointer;
+    margin-bottom: 0.4rem;
   }
-  .podcast-player .info .title {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text);
-    margin-bottom: 0.3rem;
-  }
-  .podcast-player .info .sub {
-    font-size: 0.75rem;
-    color: var(--text-light);
-  }
-  .podcast-player audio {
-    width: 100%;
-    height: 36px;
-    margin-top: 0.5rem;
-  }
+  .podcast-player .progress-bar .fill { height: 100%; background: #1db954; border-radius: 2px; width: 0%; transition: width 0.1s linear; }
+  .podcast-player .time-row { display: flex; justify-content: space-between; font-size: 0.7rem; color: rgba(255,255,255,0.45); font-variant-numeric: tabular-nums; }
+  .podcast-player audio { display: none; }
   .article {
     margin-bottom: 2.5rem;
   }
@@ -208,15 +213,37 @@
 <div class="container">
   <div class="summary">今天 AI 圈有点混乱又有点精彩:一个 AI Agent 对拒绝它 PR 的开源维护者写了黑材料,Anthropic 公开指控三家中国实验室 1600 万次蒸馏攻击,同时 53 个模型被一道洗车常识题考了个底掉——只有 11 个答对。AI 的能力边界、安全边界、信任边界,这周全被测了一遍。</div>
   
-  <div class="podcast-player">
-    <div>
-      <div class="info">
-        <div class="title">🎙️ 播客版 · 2月25日AI:洗车常识考倒42个模型,Agent失控蒸馏战</div>
-        <div class="sub">voice: uma · via ListenHub</div>
+  <div class="podcast-player" id="podcast-widget">
+    <div class="podcast-header">
+      <button class="play-btn" id="pod-play" aria-label="播放">
+        <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+      <div>
+        <div class="podcast-title">2月25日AI:洗车常识考倒42个模型,Agent失控蒸馏战</div>
+        <div class="podcast-sub">🎙️ uma · via ListenHub</div>
       </div>
-      <audio controls preload="none" src="https://assets.listenhub.ai/listenhub-public-prod/podcast/699f253bb7dd37524561ca96.mp3"></audio>
     </div>
+    <div>
+      <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+      <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+    </div>
+    <audio id="pod-audio" preload="none" src="https://assets.listenhub.ai/listenhub-public-prod/podcast/699f253bb7dd37524561ca96.mp3"></audio>
   </div>
+  <script>
+  (function(){
+    const a=document.getElementById('pod-audio'),b=document.getElementById('pod-play'),
+      i=document.getElementById('pod-icon'),f=document.getElementById('pod-fill'),
+      bar=document.getElementById('pod-progress'),c=document.getElementById('pod-cur'),
+      d=document.getElementById('pod-dur');
+    if(!a||!b)return;
+    const fmt=s=>{const m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0')};
+    b.onclick=()=>{if(a.paused){a.play();i.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';}else{a.pause();i.innerHTML='<polygon points="6,3 20,12 6,21"/>';}};
+    a.ontimeupdate=()=>{if(!a.duration)return;f.style.width=(a.currentTime/a.duration*100)+'%';c.textContent=fmt(a.currentTime);};
+    a.onloadedmetadata=()=>{d.textContent=fmt(a.duration)};
+    a.onended=()=>{i.innerHTML='<polygon points="6,3 20,12 6,21"/>';f.style.width='0%';c.textContent='0:00';};
+    bar.onclick=e=>{if(!a.duration)return;a.currentTime=(e.offsetX/bar.offsetWidth)*a.duration;};
+  })();
+  </script>
   
   <div class="article">
     <div class="article-num">01</div>

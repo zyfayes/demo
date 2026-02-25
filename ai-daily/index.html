@@ -113,6 +113,28 @@
     padding-bottom: 2rem;
     border-bottom: 1px solid var(--border);
   }
+  .podcast-player {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .podcast-player .podcast-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .podcast-player .podcast-sub {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    margin-bottom: 0.6rem;
+  }
+  .podcast-player audio {
+    width: 100%;
+    height: 36px;
+  }
   .article {
     margin-bottom: 2.5rem;
   }
@@ -324,8 +346,19 @@
         ${divider}`;
     }).join('');
 
+    let podcastHtml = '';
+    if (data.podcastUrl) {
+      podcastHtml = `
+      <div class="podcast-player">
+        <div class="podcast-title">🎙️ 播客版 · ${escapeHtml(data.podcastTitle || 'AI 日报音频')}</div>
+        <div class="podcast-sub">voice: ${escapeHtml(data.podcastVoice || 'uma')} · via ListenHub</div>
+        <audio controls preload="none" src="${escapeHtml(data.podcastUrl)}"></audio>
+      </div>`;
+    }
+
     document.getElementById('content').innerHTML = `
       <div class="summary">${escapeHtml(data.summary || '')}</div>
+      ${podcastHtml}
       ${articlesHtml}
     `;
   }

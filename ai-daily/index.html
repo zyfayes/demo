@@ -220,9 +220,26 @@
   .podcast-player .time-row {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     font-size: 0.7rem;
     color: rgba(255,255,255,0.45);
     font-variant-numeric: tabular-nums;
+  }
+  .podcast-player .speed-btn {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: rgba(255,255,255,0.7);
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-variant-numeric: tabular-nums;
+  }
+  .podcast-player .speed-btn:hover {
+    background: rgba(255,255,255,0.25);
+    color: #fff;
   }
   .podcast-player audio { display: none; }
   .article {
@@ -451,7 +468,7 @@
         </div>
         <div class="progress-wrap">
           <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
-          <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+          <div class="time-row"><span id="pod-cur">0:00</span><button class="speed-btn" id="pod-speed">1x</button><span id="pod-dur">--:--</span></div>
         </div>
         <audio id="pod-audio" preload="none" src="${escapeHtml(data.podcastUrl)}"></audio>
       </div>`;
@@ -483,6 +500,14 @@
         bar.onclick = e => {
           if (!audio.duration) return;
           audio.currentTime = (e.offsetX/bar.offsetWidth)*audio.duration;
+        };
+        const speeds = [1, 1.25, 1.5, 1.75, 2, 0.75];
+        let si = 0;
+        const speedBtn = document.getElementById('pod-speed');
+        speedBtn.onclick = () => {
+          si = (si + 1) % speeds.length;
+          audio.playbackRate = speeds[si];
+          speedBtn.textContent = speeds[si] + 'x';
         };
       }, 50);
     }

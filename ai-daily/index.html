@@ -463,12 +463,12 @@
           </button>
           <div class="podcast-info">
             <div class="podcast-title">${data.podcastLink ? `<a href="${escapeHtml(data.podcastLink)}" target="_blank" rel="noopener" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3)">${escapeHtml(data.podcastTitle || 'AI 日报音频')}</a>` : escapeHtml(data.podcastTitle || 'AI 日报音频')}</div>
-            <div class="podcast-sub">🎙️ ${escapeHtml(data.podcastVoice || 'uma')} · via ListenHub</div>
+            <div class="podcast-sub">🎙️ ${escapeHtml(data.podcastVoice || 'uma')} · via ListenHub <button class="speed-btn" id="pod-speed">1x</button></div>
           </div>
         </div>
         <div class="progress-wrap">
           <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
-          <div class="time-row"><span id="pod-cur">0:00</span><button class="speed-btn" id="pod-speed">1x</button><span id="pod-dur">--:--</span></div>
+          <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
         </div>
         <audio id="pod-audio" preload="none" src="${escapeHtml(data.podcastUrl)}"></audio>
       </div>`;

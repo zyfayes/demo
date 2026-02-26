@@ -8,7 +8,12 @@
       "url": "https://time.com/7380854/exclusive-anthropic-drops-flagship-safety-pledge/",
       "source": "TIME",
       "tldr": "Anthropic 修改了《负责任扩展政策》(RSP)，删除了之前承诺的「一旦评估为领跑且风险显著即暂停开发」的硬性限制，改为更模糊的'延迟'表述。这意味着即使安全措施跟不上模型能力，训练也不会被强制叫停。这次改动没有官方声明，是被 TIME 独家报道曝光的——安全优先的招牌在竞争压力下正在褪色。",
-      "tags": ["Anthropic", "AI安全", "RSP", "政策"]
+      "tags": [
+        "Anthropic",
+        "AI安全",
+        "RSP",
+        "政策"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://vmfunc.re/blog/persona/",
       "source": "vmfunc.re",
       "tldr": "安全研究员通过 Shodan、CT 日志、DNS 等公开被动侦察手段，发现了 openai-watchlistdb.withpersona.com 这个域名，有长达 27 个月的证书透明度历史。据此推断 OpenAI 与身份核验公司 Persona 及美国政府机构合作，建立了针对用户的监控上报系统。Persona CEO 已公开承诺书面回答 18 个核心问题，全部通信将公开——这是继 OpenAI 接入美军系统后又一个值得高度关注的隐私事件。",
-      "tags": ["OpenAI", "隐私", "监控", "安全研究"]
+      "tags": [
+        "OpenAI",
+        "隐私",
+        "监控",
+        "安全研究"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,12 @@
       "url": "https://www.inceptionlabs.ai/blog/introducing-mercury-2",
       "source": "Inception Labs",
       "tldr": "InceptionLabs 发布 Mercury 2，放弃「一次一个 token」的自回归路线，改用并行扩散精炼——像编辑一篇草稿而非逐字打字。生成速度超过传统 LLM 5 倍以上，且保持推理级别的质量。在 Agent 循环、管道任务场景下延迟优势会成倍放大，是正面向 GPT-4o 级别推理速度发起挑战的新架构路线。",
-      "tags": ["新模型", "扩散模型", "推理速度", "Mercury"]
+      "tags": [
+        "新模型",
+        "扩散模型",
+        "推理速度",
+        "Mercury"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +47,12 @@
       "url": "https://www.sohu.com/a/990012977_120588187",
       "source": "搜狐",
       "tldr": "MiniMax 于 2026 年 2 月发布 M2.5，定位为原生 Agent 架构模型，在 SWE-Bench Verified 编程测试中准确率达 80.2%，任务完成速度较上代提升 37%。最亮眼的是成本：100 TPS 版本连续运行一小时仅需 1 美元，直接拉低了 Agent 规模化部署的门槛。如果这个成本/性能比数据属实，对 Claude/GPT 系 API 调用方来说是重要备选。",
-      "tags": ["MiniMax", "Agent", "SWE-Bench", "国产模型"]
+      "tags": [
+        "MiniMax",
+        "Agent",
+        "SWE-Bench",
+        "国产模型"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +60,12 @@
       "url": "https://www.sohu.com/a/989734268_121124374",
       "source": "搜狐",
       "tldr": "谷歌发布 Gemini 3.1 Pro，在 12 项能力测试中超越 Claude 和 GPT 系列夺得第一，ARC-AGI-2 通用智能测试得分 77.1%，较上代实现翻倍提升。模型能一次性生成 Windows 11 WebOS、Minecraft 式 3D 沙盒等复杂项目，API 价格与上代持平。大模型竞争的焦点正从「通用能力跑分」转向「复杂任务一次性完成率」。",
-      "tags": ["Gemini", "谷歌", "新模型", "benchmark"]
+      "tags": [
+        "Gemini",
+        "谷歌",
+        "新模型",
+        "benchmark"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +73,12 @@
       "url": "https://simonwillison.net/2026/Feb/25/claude-code-remote-control/",
       "source": "Simon Willison",
       "tldr": "Claude Code 新增 `claude remote-control` 命令，可在本机开启一个远程控制 session，然后用 Claude Web、iOS App 或桌面客户端向其发送指令。Simon Willison 第一时间试用并记录了踩坑过程：不支持 --dangerously-skip-permissions，每个操作都需手动审批，且目前偶有 500 错误。虽然还有些粗糙，但这是 Claude Code 向「跨设备随时随地控制本机 Agent」迈出的实质性一步。",
-      "tags": ["Claude Code", "Anthropic", "工具", "Agent"]
+      "tags": [
+        "Claude Code",
+        "Anthropic",
+        "工具",
+        "Agent"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +86,12 @@
       "url": "https://github.com/benjismith/ai-randomness",
       "source": "GitHub / Machine Creativity",
       "tldr": "研究者跨五个 Claude 模型发出 37,500 次「随机取一个名字」请求，发现「Marcus」被选择 4,367 次（占 23.6%）。更震撼的是：Opus 4.5 用最简单 prompt 时，100 次里 100 次都选了 Marcus，零熵！复杂化 prompt 后多样性提升一倍，但引入了不同偏差。LLM 的「随机性」本质上是统计模式的极端放大——任何依赖模型生成随机内容的系统都应该提前测一测。",
-      "tags": ["AI偏见", "随机性", "Claude", "实验"]
+      "tags": [
+        "AI偏见",
+        "随机性",
+        "Claude",
+        "实验"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +99,12 @@
       "url": "https://www.marginalia.nu/weird-ai-crap/hn/",
       "source": "marginalia.nu",
       "tldr": "研究者爬取 HN 的 /newcomments 和 /noobcomments，统计发现新注册账号的评论中有 17.47% 使用了破折号（em-dash），而老账号只有 1.83%（p=7e-20），差距接近 10 倍。新账号提到 AI/LLM 的比例也更高（18.67% vs 11.8%）。这不仅是检测 AI 生成内容的实用信号，也侧面说明 LLM 已经大规模入侵了技术社区的真实讨论。",
-      "tags": ["AI检测", "HN", "机器人", "写作特征"]
+      "tags": [
+        "AI检测",
+        "HN",
+        "机器人",
+        "写作特征"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +112,12 @@
       "url": "https://simonwillison.net/2026/Feb/25/closed-tests/",
       "source": "Simon Willison",
       "tldr": "tldraw 开发者宣布将测试套件移至私有 repo，起因是 Cloudflare 用 AI 在一周内用 Vite 复刻了 Next.js——而完整的测试套件实际上等于一份详尽的「行为规格说明书」，足以指导 AI 从头重建任何开源库。这对依靠代码护城河的开源商业模式是个根本性挑战：当 AI 能把测试当需求文档来克隆产品，「开源代码+闭源商业服务」的边界在哪里？",
-      "tags": ["开源", "AI影响", "tldraw", "知识产权"]
+      "tags": [
+        "开源",
+        "AI影响",
+        "tldraw",
+        "知识产权"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +125,16 @@
       "url": "https://tedium.co/2026/02/25/vibe-coded-email-spam/",
       "source": "Tedium",
       "tldr": "作者长期观察垃圾邮件规律，发现近几个月收到的钓鱼邮件设计突然变精美了——排版规整、内容流畅、视觉层次清晰，活脱脱像出自 Claude 之手。Vibe Coding 工具不仅让合法开发者提效，也让垃圾邮件生产者的「创作门槛」降到了接近零。AI 能力普惠化的另一面：低技术门槛意味着坏人也能跑上生产力曲线。",
-      "tags": ["副作用", "垃圾邮件", "Vibe Coding", "安全"]
+      "tags": [
+        "副作用",
+        "垃圾邮件",
+        "Vibe Coding",
+        "安全"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/699f956f1aaffc9df4bfa949.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/699f956f1aaffc9df4bfa94b",
+  "podcastTitle": "2月26日AI日报：Anthropic弃安全，OpenAI曝监控网",
+  "podcastVoice": "uma"
 }

@@ -1935,6 +1935,8 @@ User ──▶ <span style="color:#6ea8fe;">Session/Agent</span> ──▶ <span
   'use strict';
 
   let originalHTML = '';
+  let fileHandle = null; // File System Access API handle for in-place save
+
   const EDITABLE_SELECTORS = [
     '.section', '.callout', '.idea', '.pair',
     '.impl-box', '.question', '.code-block', '.rtable-scroll',
@@ -2011,7 +2013,8 @@ User ──▶ <span style="color:#6ea8fe;">Session/Agent</span> ──▶ <span
     }
   };
 
-  window.saveDoc = function() {
+  // Build clean HTML string from current DOM (strips edit UI)
+  function buildCleanHTML() {
     const page = document.querySelector('.page');
 
     // Clean up: remove contentEditable, delete buttons, editing class
@@ -2032,36 +2035,72 @@ User ──▶ <span style="color:#6ea8fe;">Session/Agent</span> ──▶ <span
     if (toolbar) toolbar.remove();
     const toastEl = clone.querySelector('#editToast');
     if (toastEl) toastEl.remove();
-    // Remove the edit script and styles (last <style> and <script> in body)
+    // Remove the edit script and styles (last style and script in body)
     const bodyClone = clone.querySelector('body');
     const editComment = Array.from(bodyClone.childNodes).find(n =>
       n.nodeType === 8 && n.textContent.includes('EDIT MODE')
     );
     if (editComment) {
-      // Remove everything after the edit comment
       let node = editComment;
       while (node) {
         const next = node.nextSibling;
         node.remove();
         node = next;
       }
-      // Re-add closing page div tag context (it's inside .page already)
     }
 
-    const html = '<!DOCTYPE html>\n' + clone.outerHTML;
-    const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'openclaw-alva-final-edited.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    return '<!DOCTYPE html>\n' + clone.outerHTML;
+  }
 
-    // Clear original cache
+  // Check if File System Access API is available
+  const hasFileSystemAccess = ('showSaveFilePicker' in window);
+
+  window.saveDoc = async function() {
+    const html = buildCleanHTML();
+
+    try {
+      if (hasFileSystemAccess) {
+        // Use File System Access API — can overwrite in place
+        if (!fileHandle) {
+          // First save: ask user to pick location (defaults to original filename)
+          fileHandle = await window.showSaveFilePicker({
+            suggestedName: 'openclaw-alva-final.html',
+            types: [{
+              description: 'HTML Document',
+              accept: { 'text/html': ['.html'] }
+            }]
+          });
+        }
+        // Write directly to the file (overwrites)
+        const writable = await fileHandle.createWritable();
+        await writable.write(html);
+        await writable.close();
+        toast('已保存到原文件 ✓');
+      } else {
+        // Fallback: download (Safari / Firefox)
+        const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'openclaw-alva-final.html';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        toast('已下载（浏览器不支持原地保存）');
+      }
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        // User cancelled the file picker — re-enter edit mode
+        toast('取消保存');
+        window.toggleEdit(true);
+        return;
+      }
+      console.error('Save failed:', err);
+      toast('保存失败: ' + err.message);
+    }
+
     originalHTML = '';
-    toast('已保存并下载 ✓');
   };
 })();
 </script>

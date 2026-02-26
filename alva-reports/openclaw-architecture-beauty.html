@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 架构之美：Alva 可借鉴的设计模式</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1a1a1a;
+    --text-secondary: #6b6560;
+    --text-tertiary: #9b9590;
+    --accent: #c96442;
+    --accent-light: #fdf4f0;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+    --tag-bg: #f0ede8;
+    --tag-text: #5a5550;
+    --success: #2d8a5e;
+    --highlight: #fff8e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1e;
+      --surface: #232328;
+      --border: #3a3a40;
+      --text: #e8e5e0;
+      --text-secondary: #9b9590;
+      --text-tertiary: #6b6560;
+      --accent: #e0825a;
+      --accent-light: #2a2220;
+      --code-bg: #16161e;
+      --code-text: #cdd6f4;
+      --tag-bg: #2a2a30;
+      --tag-text: #9b9590;
+      --highlight: #2a2518;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .report-header {
+    margin-bottom: 48px;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+  }
+  .report-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    margin-bottom: 12px;
+    line-height: 1.25;
+  }
+  .report-header .subtitle {
+    font-size: 17px;
+    color: var(--text-secondary);
+    margin-bottom: 16px;
+  }
+  .report-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+
+  /* Section headings */
+  h2 {
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 48px 0 16px;
+    padding-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  h2:first-of-type { border-top: none; padding-top: 0; }
+  h3 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+    margin: 32px 0 12px;
+    color: var(--text);
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 16px 0 8px;
+    color: var(--accent);
+  }
+
+  p { margin-bottom: 12px; }
+  ul, ol { margin-bottom: 16px; padding-left: 24px; }
+  li { margin-bottom: 4px; }
+  strong { font-weight: 600; }
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 32px 0;
+  }
+
+  /* Architecture cards */
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 20px 0;
+    transition: box-shadow 0.15s;
+  }
+  .arch-card:hover {
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .arch-card .card-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent);
+    color: white;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 700;
+    margin-right: 10px;
+    flex-shrink: 0;
+  }
+  .arch-card .card-title {
+    font-size: 18px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    letter-spacing: -0.3px;
+  }
+
+  /* Code blocks */
+  .code-block {
+    margin: 16px 0;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .code-block pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 16px;
+    font-size: 13px;
+    line-height: 1.6;
+    font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+    overflow-x: auto;
+  }
+
+  /* Insight boxes */
+  .insight-box {
+    background: var(--accent-light);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    margin: 16px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+  }
+  .insight-box .label {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+  }
+
+  /* Summary table */
+  .summary-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 14px;
+  }
+  .summary-table th {
+    text-align: left;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .summary-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+  }
+  .summary-table tr:last-child td { border-bottom: none; }
+
+  /* Top 3 */
+  .top-pick {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 20px;
+    margin: 16px 0;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+  .top-pick .medal {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .top-pick .pick-title {
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+  .top-pick .pick-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* Tags */
+  .tag {
+    display: inline-block;
+    background: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 500;
+    margin-right: 6px;
+  }
+
+  /* Footer */
+  .report-footer {
+    margin-top: 56px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  /* Collapsible details */
+  details {
+    margin: 12px 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  details summary {
+    padding: 12px 18px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    user-select: none;
+    list-style: none;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before {
+    content: '▸';
+    display: inline-block;
+    margin-right: 8px;
+    transition: transform 0.2s;
+    color: var(--text-tertiary);
+  }
+  details[open] summary::before { transform: rotate(90deg); }
+  details .details-body {
+    padding: 0 18px 16px;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  /* Blockquote */
+  blockquote {
+    border-left: 3px solid var(--border);
+    padding-left: 16px;
+    margin: 16px 0;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+  .toc-title {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .toc a {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    padding: 4px 0;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc .indent { padding-left: 20px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="report-header">
+    <h1>OpenClaw 架构之美</h1>
+    <div class="subtitle">Alva 可借鉴的设计模式 · 内部深度分享</div>
+    <div class="report-meta">
+      <span>📅 2026-02-27</span>
+      <span>📍 Alva Team</span>
+      <span>🤖 Prepared by Moss</span>
+      <span><span class="tag">Architecture</span><span class="tag">Product</span><span class="tag">Strategy</span></span>
+    </div>
+  </div>
+
+  <!-- TOC -->
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <a href="#what">一、OpenClaw 是什么</a>
+    <a href="#arch">二、七个架构美学</a>
+    <a href="#a1" class="indent">1. Gateway as Single Source of Truth</a>
+    <a href="#a2" class="indent">2. Workspace = 文件即记忆</a>
+    <a href="#a3" class="indent">3. Session Convergence</a>
+    <a href="#a4" class="indent">4. Skills = Agent 自己读说明书</a>
+    <a href="#a5" class="indent">5. Multi-Agent Routing</a>
+    <a href="#a6" class="indent">6. Compaction + Memory Flush</a>
+    <a href="#a7" class="indent">7. Heartbeat + Cron</a>
+    <a href="#summary">三、设计哲学对照表</a>
+    <a href="#top3">四、最具启发性的三个设计</a>
+    <a href="#closing">五、收尾</a>
+  </div>
+
+  <!-- Section 1 -->
+  <h2 id="what">一、OpenClaw 是什么</h2>
+  <p>OpenClaw 是一个<strong>自托管的 AI 助手网关</strong>——一个跑在你自己设备上的单进程服务，把 WhatsApp、Telegram、Discord、iMessage 等即时通讯渠道统一接入一个 AI Agent 运行时。</p>
+  <p>它不是一个 SaaS，不是一个聊天机器人框架，而是一个<strong>个人 AI 操作系统的控制平面</strong>。</p>
+  <blockquote>一句话定位：消息渠道是外壳，Gateway 是中枢，Agent + Workspace 是大脑。</blockquote>
+
+  <!-- Section 2 -->
+  <h2 id="arch">二、七个值得深究的架构美学</h2>
+
+  <!-- Card 1 -->
+  <div class="arch-card" id="a1">
+    <div class="card-title"><span class="card-num">1</span>Gateway as Single Source of Truth</div>
+    <p>OpenClaw 的核心设计决策：<strong>一个常驻进程（Gateway）拥有所有状态</strong>。</p>
+    <div class="code-block"><pre>所有渠道 → Gateway（单进程/单端口）→ Agent Runtime
+                 ↓
+         Session Store + Config + Cron + Tools</pre></div>
+    <ul>
+      <li>单一多路复用端口：WebSocket（控制/RPC）、HTTP API（OpenAI 兼容）、Control UI、Webhooks 全部走同一个端口</li>
+      <li>所有 session 状态由 Gateway 拥有，UI 客户端必须从 Gateway 查询</li>
+      <li>Config 热重载（hybrid 模式）：安全变更热加载，需重启的自动重启</li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>消除了分布式状态同步问题。对于个人助手场景，单进程 + 单端口是正确的简化——不需要消息队列、服务发现、分布式锁。</p>
+    <div class="insight-box">
+      <div class="label">Alva 启发</div>
+      <p>Playbook Engine 可以借鉴"单一控制平面"：用户的所有 Playbook/Task/Feed 状态由统一引擎管理。所有 UI（Dashboard、Library、Detail Page）从同一个状态源读取，避免前后端状态不一致。</p>
+    </div>
+  </div>
+
+  <!-- Card 2 -->
+  <div class="arch-card" id="a2">
+    <div class="card-title"><span class="card-num">2</span>Workspace = 文件即记忆</div>
+    <p>OpenClaw 的记忆系统极其简洁：</p>
+    <div class="code-block"><pre>~/.openclaw/workspace/
+├── AGENTS.md      # 操作指令
+├── SOUL.md        # 人格
+├── USER.md        # 用户画像
+├── MEMORY.md      # 长期记忆（Markdown）
+├── memory/
+│   └── YYYY-MM-DD.md   # 每日日志
+└── skills/        # 技能</pre></div>
+    <ul>
+      <li><strong>没有数据库</strong>。记忆就是 Markdown 文件</li>
+      <li><strong>没有 embeddings-first 的设计</strong>。向量搜索是可选增强层</li>
+      <li>Agent 每次 session 启动时，系统注入这些文件作为 context</li>
+      <li>记忆写入由 Agent 自己通过 write 工具完成——<strong>Agent 自己决定记什么</strong></li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>可读性（打开文件夹就能看 AI 记了什么）、可编辑性（用户直接改）、可调试性（cat MEMORY.md）、可版本控制（git）。</p>
+    <div class="insight-box">
+      <div class="label">Alva 启发</div>
+      <p>Data Feed 定义、Task 配置是否可以更"文件优先"？让用户能直接读懂、编辑、版本控制 Playbook 配置。"Agent 自己决定记什么"可应用于 Agentic Research Playbook。</p>
+    </div>
+  </div>
+
+  <!-- Card 3 -->
+  <div class="arch-card" id="a3">
+    <div class="card-title"><span class="card-num">3</span>Session Convergence：跨渠道上下文共享</div>
+    <div class="code-block"><pre>WhatsApp DM ─┐
+Telegram DM ──┼──→ agent:main:main （同一个 session）
+Discord DM  ──┘
+
+WhatsApp Group A ──→ agent:main:whatsapp:group:A
+Discord #general ──→ agent:main:discord:channel:123
+Cron Job         ──→ cron:job-id</pre></div>
+    <ul>
+      <li><strong>所有 DM 默认汇聚到一个 main session</strong>——跨渠道共享上下文</li>
+      <li>Group chat 天然隔离：每个群/频道独立 session</li>
+      <li><code>dmScope</code> 可调：main → per-peer → per-channel-peer</li>
+      <li>Session 自带生命周期：过期清理、transcript 归档、磁盘预算</li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>DM 汇聚解决了真实痛点：在 WhatsApp 上说"帮我查一下那个"，切到 Telegram 问"查到了吗？"，AI 知道你在说什么。这是<strong>"个人助手"而非"聊天机器人"</strong>的关键区别。</p>
+    <div class="insight-box">
+      <div class="label">Alva 启发</div>
+      <p>用户可能在 Ask 里开始研究，在 Build 里继续。如果上下文能自然流转（Ask session → Playbook 输入），用户体验会质变。Session 分级隔离可映射到权限模型。</p>
+    </div>
+  </div>
+
+  <!-- Card 4 -->
+  <div class="arch-card" id="a4">
+    <div class="card-title"><span class="card-num">4</span>Skills = Agent 自己读说明书</div>
+    <div class="code-block"><pre>skills/
+└── weather/
+    └── SKILL.md    ← 只有这一个文件是必须的
+
+# SKILL.md = YAML frontmatter + Markdown 说明
+---
+name: weather
+description: Get weather and forecasts via wttr.in
+metadata: { "openclaw": { "requires": { "bins": ["curl"] } } }
+---
+Instructions for the agent...</pre></div>
+    <ul>
+      <li><strong>没有 SDK、没有 API 注册、没有 runtime binding</strong></li>
+      <li>Skill 不是代码模块——是<strong>自然语言说明</strong>，告诉 Agent 怎么用工具</li>
+      <li>Agent 开始时读所有 eligible skill 的 description，按需读完整 SKILL.md</li>
+      <li>Gating：<code>requires.bins</code> / <code>requires.env</code> / <code>requires.config</code> 在加载时过滤</li>
+      <li>三层优先级：workspace &gt; managed &gt; bundled</li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>极低创建门槛（写 Markdown = 创建 Skill）、极强可组合性（Agent 自己判断何时调用）、极好可调试性（看 SKILL.md 就行）。</p>
+    <div class="insight-box">
+      <div class="label">Alva 启发 · 直接关联 Tools → Skills 重构</div>
+      <p><strong>Skill 的本质不是代码，是"教 Agent 怎么用"的说明。</strong>Alva 的 Skill = 描述（什么时候用、输入输出）+ SDK 代码模块。创建门槛应极低。Gating 可参考 <code>requires</code> 机制。</p>
+    </div>
+  </div>
+
+  <!-- Card 5 -->
+  <div class="arch-card" id="a5">
+    <div class="card-title"><span class="card-num">5</span>Multi-Agent Routing：一个网关，多个大脑</div>
+    <div class="code-block"><pre>{
+  "agents": {
+    "list": [
+      { "id": "main", "workspace": "~/.openclaw/workspace-main" },
+      { "id": "coding", "workspace": "~/.openclaw/workspace-coding" }
+    ]
+  },
+  "bindings": [
+    { "agentId": "main",   "match": { "channel": "telegram" } },
+    { "agentId": "coding", "match": { "channel": "discord", "peer": { "id": "123" } } }
+  ]
+}</pre></div>
+    <ul>
+      <li>每个 Agent 完全隔离：独立 workspace、session store、auth、skills</li>
+      <li>Routing 确定性：most-specific wins（peer &gt; guild &gt; account &gt; channel &gt; default）</li>
+      <li>声明式、可审计、可热更新</li>
+    </ul>
+    <div class="insight-box">
+      <div class="label">Alva 启发</div>
+      <p>多个 Trading Strategy Playbook 监控同一资产时的事件/信号路由。不同类型的 Task 可路由到不同执行引擎。声明式规则替代硬编码逻辑。</p>
+    </div>
+  </div>
+
+  <!-- Card 6 -->
+  <div class="arch-card" id="a6">
+    <div class="card-title"><span class="card-num">6</span>Compaction + Memory Flush：有意识的遗忘</div>
+    <div class="code-block"><pre>Context 接近满
+  → 触发 Memory Flush（静默写入持久记忆）
+    → Compaction（压缩历史为摘要）
+      → 继续对话</pre></div>
+    <ul>
+      <li><strong>Pre-compaction memory flush</strong>：压缩前给 Agent 一个静默 turn，写重要信息到 MEMORY.md</li>
+      <li><strong>Compaction</strong>：旧对话压缩为摘要，保留近期消息</li>
+      <li><strong>Session Pruning</strong>：只在内存中裁剪 tool results，不写 JSONL</li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>人类短期记忆也会"压缩"成长期记忆。OpenClaw 用 flush + compaction 模拟了这个过程。<strong>关键洞察：压缩前先保存，而不是压缩后补救。</strong></p>
+    <div class="insight-box">
+      <div class="label">Alva 启发</div>
+      <p>Data Feed 历史数据可借鉴 compaction 思路（旧数据降采样）。Agentic Research 可有"研究摘要压缩"机制。通用模式：任何状态转换前先保存快照。</p>
+    </div>
+  </div>
+
+  <!-- Card 7 -->
+  <div class="arch-card" id="a7">
+    <div class="card-title"><span class="card-num">7</span>Heartbeat + Cron：有界自主性</div>
+    <div class="code-block"><pre>Heartbeat → 主 session，共享对话上下文（适合批量检查）
+Cron     → isolated session，独立执行（适合精确调度）
+           完成后 announce 通知用户</pre></div>
+    <ul>
+      <li><strong>Heartbeat</strong>：定期唤醒 Agent 检查邮件、日历、天气等</li>
+      <li><strong>Cron</strong>：精确定时任务，可用不同模型、不同 thinking level</li>
+      <li>自主性是<strong>有界的</strong>——只做配置允许的事，通过 announce 通知用户</li>
+    </ul>
+    <div class="insight-box">
+      <div class="label">Alva 启发</div>
+      <p>这正是 Playbook 的核心理念！Heartbeat → 轻量健康检查（Playbook 正常吗？数据源还在吗？），Cron → 重型计算（回测、信号生成）。</p>
+    </div>
+  </div>
+
+  <!-- Section 3 -->
+  <h2 id="summary">三、设计哲学对照表</h2>
+  <table class="summary-table">
+    <thead>
+      <tr><th>设计原则</th><th>OpenClaw 实践</th><th>Alva 可对标</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>单一控制平面</strong></td><td>Gateway 拥有所有状态</td><td>Playbook Engine 统一管理</td></tr>
+      <tr><td><strong>文件即接口</strong></td><td>Markdown 记忆 + SKILL.md</td><td>Feed schema / Playbook config 可读可编辑</td></tr>
+      <tr><td><strong>声明式路由</strong></td><td>Bindings 规则</td><td>Task/Feed 依赖图</td></tr>
+      <tr><td><strong>有意识的遗忘</strong></td><td>Compaction + Memory Flush</td><td>数据降采样 + 研究摘要</td></tr>
+      <tr><td><strong>有界自主性</strong></td><td>Heartbeat + Cron</td><td>Task 定时执行 + 信号通知</td></tr>
+      <tr><td><strong>三层覆盖</strong></td><td>bundled &lt; managed &lt; workspace</td><td>system &lt; shared &lt; user skills</td></tr>
+      <tr><td><strong>极低创建门槛</strong></td><td>写 Markdown = 创建 Skill</td><td>对话 = 创建 Playbook</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Section 4 -->
+  <h2 id="top3">四、最具启发性的三个设计</h2>
+
+  <div class="top-pick">
+    <div class="medal">🥇</div>
+    <div>
+      <div class="pick-title">Skill = Markdown 说明，不是代码模块</div>
+      <div class="pick-desc">直接关联 Alva 的 Tools → Skills 重构。<strong>Skill 的核心是"教 Agent 怎么用"，不是"代码怎么跑"</strong>。这个思路能大幅降低用户创建和分享 Skill 的门槛。</div>
+    </div>
+  </div>
+
+  <div class="top-pick">
+    <div class="medal">🥈</div>
+    <div>
+      <div class="pick-title">Session Convergence：跨入口上下文共享</div>
+      <div class="pick-desc">用户可能从 Ask 开始探索，在 Build 里落地。如果两个场景的上下文能自然流转，用户体验会质变。</div>
+    </div>
+  </div>
+
+  <div class="top-pick">
+    <div class="medal">🥉</div>
+    <div>
+      <div class="pick-title">Pre-compaction Memory Flush：压缩前先保存</div>
+      <div class="pick-desc">可推广到 Alva 的任何"状态转换"节点：Task 升级前先快照、Playbook 改版前先归档、研究阶段切换前先总结。</div>
+    </div>
+  </div>
+
+  <!-- Section 5 -->
+  <h2 id="closing">五、收尾</h2>
+  <blockquote>
+    OpenClaw 证明了一件事：<strong>对个人工具来说，简单且正确的架构 > 复杂且通用的架构。</strong>
+  </blockquote>
+  <p>单进程、纯文件、声明式配置——这些"不够酷"的选择，恰恰让系统可靠、可调试、可理解。</p>
+  <p>Alva 面向的虽然是不同场景（投资工具 vs 个人助手），但核心追求一样：<strong>让复杂的东西对用户简单</strong>。</p>
+
+  <details>
+    <summary>📎 参考资料</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://docs.openclaw.ai">OpenClaw 官方文档</a></li>
+        <li><a href="https://docs.openclaw.ai/gateway">Gateway Runbook</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/session">Session Management</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/memory">Memory</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/compaction">Compaction</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/multi-agent">Multi-Agent Routing</a></li>
+        <li><a href="https://docs.openclaw.ai/tools/skills">Skills</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/agent">Agent Runtime</a></li>
+        <li>Alva 内部文档：01-tldr / 03-product-intro / 04-target-users / 06-spec-v2</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="report-footer">
+    <span>Generated by Moss · Alva Internal</span>
+    <span>2026-02-27</span>
+  </div>
+
+</div>
+</body>
+</html>

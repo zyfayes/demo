@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Finance Plugins 深度研究报告</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1a1a1a;
+    --text-secondary: #6b6560;
+    --text-tertiary: #9b9590;
+    --accent: #c96442;
+    --accent-light: #fdf4f0;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+    --tag-bg: #f0ede8;
+    --tag-text: #5a5550;
+    --success: #2d8a5e;
+    --pending: #b8860b;
+    --search-bg: #f8f6f2;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1e;
+      --surface: #232328;
+      --border: #3a3a40;
+      --text: #e8e5e0;
+      --text-secondary: #9b9590;
+      --text-tertiary: #6b6560;
+      --accent: #e0825a;
+      --accent-light: #2a2220;
+      --code-bg: #16161e;
+      --code-text: #cdd6f4;
+      --tag-bg: #2a2a30;
+      --tag-text: #9b9590;
+      --search-bg: #1e1e24;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* Header */
+  .report-header {
+    margin-bottom: 40px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+  .report-header h1 {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .report-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: var(--text-tertiary);
+  }
+
+  /* TLDR Box */
+  .tldr-box {
+    background: var(--accent-light);
+    border: 1px solid var(--accent);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 36px;
+  }
+  .tldr-box h2 {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+  .tldr-box ul {
+    padding-left: 20px;
+    font-size: 14px;
+  }
+  .tldr-box li { margin-bottom: 6px; }
+
+  /* Section headers */
+  h2.section-title {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin: 40px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 24px 0 10px;
+    color: var(--text);
+  }
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 16px 0 8px;
+    color: var(--text-secondary);
+  }
+
+  p { margin-bottom: 10px; }
+  ul, ol { margin-bottom: 12px; padding-left: 24px; }
+  li { margin-bottom: 4px; }
+  strong { font-weight: 600; }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* Plugin Card */
+  .plugin-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+  }
+  .plugin-card h3 {
+    margin-top: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .plugin-card .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .badge-core { background: #dbeafe; color: #1d4ed8; }
+  .badge-addon { background: #e0e7ff; color: #4338ca; }
+  .badge-partner { background: #fef3c7; color: #92400e; }
+
+  /* Skills Grid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 12px 0;
+  }
+  .skill-item {
+    background: var(--search-bg);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+  .skill-item .skill-name {
+    font-weight: 600;
+    color: var(--text);
+    display: block;
+    margin-bottom: 2px;
+  }
+  .skill-item .skill-desc {
+    color: var(--text-secondary);
+    font-size: 12px;
+  }
+
+  /* Commands list */
+  .cmd-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 10px 0;
+  }
+  .cmd-tag {
+    background: var(--code-bg);
+    color: var(--code-text);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 6px;
+  }
+
+  /* MCP Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  th {
+    text-align: left;
+    font-weight: 600;
+    padding: 10px 12px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Architecture diagram */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    margin: 16px 0 24px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.5;
+    overflow-x: auto;
+    white-space: pre;
+    color: var(--text-secondary);
+  }
+
+  /* Insight box */
+  .insight-box {
+    background: #f0fdf4;
+    border-left: 4px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  .insight-box.warning {
+    background: #fefce8;
+    border-left-color: var(--orange);
+  }
+  .insight-box.critical {
+    background: #fef2f2;
+    border-left-color: var(--red);
+  }
+  .insight-box strong { display: block; margin-bottom: 4px; }
+
+  @media (prefers-color-scheme: dark) {
+    .insight-box { background: #0a2a1a; }
+    .insight-box.warning { background: #2a2a0a; }
+    .insight-box.critical { background: #2a0a0a; }
+    .tldr-box { background: #2a1a15; }
+    .badge-core { background: #1e3a5f; color: #93c5fd; }
+    .badge-addon { background: #2e1f5e; color: #a5b4fc; }
+    .badge-partner { background: #3a2a0e; color: #fbbf24; }
+  }
+
+  /* Collapsible */
+  details {
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  summary:hover { background: var(--tag-bg); }
+  details > div {
+    padding: 0 18px 16px;
+  }
+
+  /* Code block */
+  pre.code {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    overflow-x: auto;
+    margin: 12px 0;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin: 20px 0 28px;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+  }
+  .stat-card .stat-num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-card .stat-label {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    margin-top: 4px;
+  }
+
+  .report-footer {
+    margin-top: 48px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--text-tertiary);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .skills-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="report-header">
+    <h1>🏦 Claude Finance Plugins 深度研究报告</h1>
+    <div class="report-meta">
+      <span>📅 2026-02-25</span>
+      <span>📦 anthropics/financial-services-plugins</span>
+      <span>📄 Apache 2.0</span>
+      <span>🔗 <a href="https://github.com/anthropics/financial-services-plugins">GitHub Repo</a></span>
+    </div>
+  </div>
+
+  <!-- TLDR -->
+  <div class="tldr-box">
+    <h2>⚡ TL;DR</h2>
+    <ul>
+      <li><strong>Anthropic 发布了面向金融行业的开源插件体系</strong>，包含 5 个官方插件 + 2 个合作伙伴插件（LSEG、S&P Global），覆盖投行、卖方研究、PE、财富管理全链路</li>
+      <li><strong>41 个 Skills + 38 个 Commands + 11 个 MCP 数据源</strong>，纯文件驱动（Markdown + JSON），零代码、零部署</li>
+      <li><strong>核心架构创新</strong>：Plugin = Skills（领域知识自动激活）+ Commands（显式触发）+ Connectors（MCP 数据接入），与 Claude Cowork / Claude Code 深度集成</li>
+      <li><strong>Excel + PowerPoint 跨应用编排</strong>：Claude 可在单次会话中拉取数据 → 建模 → 出报告，上下文跨 app 保持</li>
+      <li><strong>对 Alva 的启示</strong>：Skill 编排模式、MCP 数据层抽象、「领域知识即 Markdown」的无代码设计理念，都值得借鉴</li>
+    </ul>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Plugins</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">41</div>
+      <div class="stat-label">Skills</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">38</div>
+      <div class="stat-label">Commands</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">11</div>
+      <div class="stat-label">MCP Connectors</div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION 1: ARCHITECTURE ========== -->
+  <h2 class="section-title">🏗️ 架构设计分析</h2>
+
+  <h3>整体架构</h3>
+  <p>每个 Plugin 遵循统一的文件系统结构，<strong>零代码、零基础设施、零构建步骤</strong>——所有领域知识编码为 Markdown，连接器配置为 JSON：</p>
+
+  <div class="arch-diagram">plugin-name/
+├── .claude-plugin/
+│   └── plugin.json          # 插件清单（名称、版本、描述）
+├── .mcp.json                # MCP 数据源连接（仅 core 插件有）
+├── commands/                # 显式调用的 Slash Commands
+│   ├── comps.md             # /comps [company]
+│   ├── dcf.md               # /dcf [company]
+│   └── ...
+├── skills/                  # 自动激活的领域知识
+│   ├── 3-statements/
+│   │   ├── SKILL.md         # 触发条件 + 工作流
+│   │   └── references/      # 参考资料（公式、格式、SEC 指南）
+│   └── competitive-analysis/
+│       ├── SKILL.md
+│       └── references/
+└── hooks/
+    └── hooks.json           # 生命周期钩子（目前为空）</div>
+
+  <div class="insight-box">
+    <strong>🔑 关键设计决策：Core + Add-on 分层</strong>
+    Financial Analysis 是 <strong>核心插件</strong>（必装），集中管理所有 11 个 MCP 连接器。Investment Banking、Equity Research、Private Equity、Wealth Management 是 <strong>附加插件</strong>，复用核心的数据层。这避免了连接器配置的重复和不一致。
+  </div>
+
+  <h3>Skill vs Command 的设计哲学</h3>
+  <ul>
+    <li><strong>Skill</strong>：被动激活，Claude 根据用户意图自动匹配。编码的是「<em>如何做</em>」的领域知识——工作流步骤、最佳实践、质量检查清单。类比：专家脑子里的经验。</li>
+    <li><strong>Command</strong>：主动触发（Slash Command），用户明确发起。编码的是「<em>做什么</em>」的标准操作。类比：菜单上的按钮。</li>
+  </ul>
+  <p>这种 <strong>隐式 + 显式</strong> 的双层设计，让 Claude 既能主动运用专业知识，又不会在不需要时「自作主张」。</p>
+
+  <h3>数据流架构</h3>
+  <div class="arch-diagram">┌─────────────────────────────────────────────────────┐
+│                 Claude Cowork / Code                 │
+│                                                     │
+│  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
+│  │  Skills   │  │ Commands │  │  Sub-agents      │  │
+│  │ (auto)    │  │ (slash)  │  │  (orchestration) │  │
+│  └─────┬────┘  └─────┬────┘  └────────┬─────────┘  │
+│        │             │                │             │
+│        └─────────────┴────────────────┘             │
+│                      │                              │
+│              ┌───────▼───────┐                      │
+│              │  MCP Layer    │                      │
+│              │  (.mcp.json)  │                      │
+│              └───────┬───────┘                      │
+└──────────────────────┼──────────────────────────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+   ┌────▼────┐   ┌────▼────┐   ┌────▼────┐
+   │FactSet  │   │Daloopa  │   │  LSEG   │   ...×11
+   │Bloomberg│   │Morningst│   │PitchBook│
+   └─────────┘   └─────────┘   └─────────┘
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+   ┌────▼────┐   ┌────▼────┐   ┌────▼────┐
+   │  Excel  │   │PowerPoin│   │  Word   │   输出层
+   │ (.xlsx) │   │  (.pptx)│   │ (.docx) │
+   └─────────┘   └─────────┘   └─────────┘</div>
+
+  <hr>
+
+  <!-- ========== SECTION 2: PLUGIN DEEP DIVE ========== -->
+  <h2 class="section-title">📊 插件逐个深度分析</h2>
+
+  <!-- Financial Analysis (Core) -->
+  <div class="plugin-card">
+    <h3>📈 Financial Analysis <span class="badge badge-core">CORE</span></h3>
+    <p>核心插件，提供所有金融分析师共用的基线能力：Comps、DCF、LBO、三大报表建模、PPT 质检和模板管理。<strong>所有 MCP 连接器在此集中配置。</strong></p>
+
+    <h4>Skills (8 个)</h4>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <span class="skill-name">3-Statements</span>
+        <span class="skill-desc">三大报表建模：IS/BS/CF 联动，Blue/Black/Green 色彩规范，支持 SEC 10-K/10-Q 数据提取</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Comps Analysis</span>
+        <span class="skill-desc">可比公司分析：自动拉取同行数据，计算 EV/EBITDA、P/E 等估值倍数</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">DCF Valuation</span>
+        <span class="skill-desc">现金流折现模型：WACC 计算、敏感性分析、终值估算</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">LBO Model</span>
+        <span class="skill-desc">杠杆收购模型：债务结构、IRR/MOIC 回报分析</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Competitive Analysis</span>
+        <span class="skill-desc">竞争格局分析：Porter's Five Forces、市场份额、TAM/SAM/SOM</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Check Deck</span>
+        <span class="skill-desc">PPT 质检：检查数字一致性、IB 术语规范、格式合规</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Check Model</span>
+        <span class="skill-desc">模型审计：公式完整性、交叉引用、BS 平衡检查</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">PPT Template</span>
+        <span class="skill-desc">品牌模板管理：学习公司 PPT 样式，统一输出格式</span>
+      </div>
+    </div>
+
+    <h4>Commands (9 个)</h4>
+    <div class="cmd-list">
+      <span class="cmd-tag">/comps</span>
+      <span class="cmd-tag">/dcf</span>
+      <span class="cmd-tag">/lbo</span>
+      <span class="cmd-tag">/3-statements</span>
+      <span class="cmd-tag">/competitive-analysis</span>
+      <span class="cmd-tag">/check-deck</span>
+      <span class="cmd-tag">/debug-model</span>
+      <span class="cmd-tag">/ppt-template</span>
+      <span class="cmd-tag">/one-pager</span>
+    </div>
+
+    <div class="insight-box">
+      <strong>💡 Skill 深度亮点：3-Statements</strong>
+      该 Skill 的 SKILL.md 长达 17,000+ 字，详细编码了：模板 Tab 识别规则（IS/BS/CF/WC/DA/Debt/NOL）、Input vs Formula 单元格识别（蓝字=输入、黑字=公式、绿字=跨表链接）、Margin 分析矩阵、Credit Metrics 层级校验、Base/Upside/Downside 情景分析的 CHOOSE 公式模式。这不是「提示词」，而是完整的<strong>金融建模操作手册</strong>。
+    </div>
+  </div>
+
+  <!-- Investment Banking -->
+  <div class="plugin-card">
+    <h3>🏛️ Investment Banking <span class="badge badge-addon">ADD-ON</span></h3>
+    <p>面向投行 Analyst/Associate 的交易工作流：CIM 起草、Teaser 制作、Buyer List 构建、Merger Model、Strip Profile、Deal Milestone Tracking。</p>
+
+    <h4>Skills (7 个)</h4>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <span class="skill-name">Deal Workflow</span>
+        <span class="skill-desc">交易全流程管理：从 mandate 到 close 的里程碑追踪</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">CIM Drafting</span>
+        <span class="skill-desc">保密信息备忘录起草：标准章节结构、数据填充</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Buyer List</span>
+        <span class="skill-desc">潜在买家筛选：战略/财务买家分类、交易历史</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Merger Model</span>
+        <span class="skill-desc">并购模型：Accretion/Dilution 分析、协同效应估算</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Strip Profile</span>
+        <span class="skill-desc">债券/贷款条款概要表生成</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Teaser</span>
+        <span class="skill-desc">交易 Teaser 制作：匿名化公司概况</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Process Letter</span>
+        <span class="skill-desc">流程信函起草：时间表、NDA 条款</span>
+      </div>
+    </div>
+
+    <h4>Commands (8 个)</h4>
+    <div class="cmd-list">
+      <span class="cmd-tag">/cim</span>
+      <span class="cmd-tag">/teaser</span>
+      <span class="cmd-tag">/buyer-list</span>
+      <span class="cmd-tag">/merger-model</span>
+      <span class="cmd-tag">/strip-profile</span>
+      <span class="cmd-tag">/process-letter</span>
+      <span class="cmd-tag">/deal-status</span>
+      <span class="cmd-tag">/one-pager</span>
+    </div>
+  </div>
+
+  <!-- Equity Research -->
+  <div class="plugin-card">
+    <h3>📝 Equity Research <span class="badge badge-addon">ADD-ON</span></h3>
+    <p>卖方研究工作流：Earnings Analysis、Initiating Coverage（机构级首次覆盖报告，5-task 流水线）、Morning Note、Catalyst Calendar、Thesis Tracker、Sector Overview、Idea Generation。</p>
+
+    <h4>Skills (8 个)</h4>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <span class="skill-name">Initiating Coverage ⭐</span>
+        <span class="skill-desc">5-task 流水线生成 30-50 页机构级首次覆盖报告，含财务建模、估值、25-35 张图表</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Earnings Analysis</span>
+        <span class="skill-desc">财报分析：Beat/Miss 判断、管理层 Guidance 跟踪、估值调整建议</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Earnings Preview</span>
+        <span class="skill-desc">财报前瞻：共识预期、关键指标、投资者关注点</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Morning Note</span>
+        <span class="skill-desc">晨报生成：隔夜要闻、持仓影响、交易建议</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Catalyst Calendar</span>
+        <span class="skill-desc">催化剂日历：财报日、FDA 审批、政策窗口追踪</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Thesis Tracker</span>
+        <span class="skill-desc">投资论文维护：Bull/Bear Case 更新、关键假设验证</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Sector Overview</span>
+        <span class="skill-desc">行业概览：子行业对比、驱动因素、估值散点图</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Idea Generation</span>
+        <span class="skill-desc">选股筛选：多因子筛选、异常值发现、Pair Trade 建议</span>
+      </div>
+    </div>
+
+    <h4>Commands (8 个)</h4>
+    <div class="cmd-list">
+      <span class="cmd-tag">/earnings</span>
+      <span class="cmd-tag">/earnings-preview</span>
+      <span class="cmd-tag">/initiate</span>
+      <span class="cmd-tag">/morning-note</span>
+      <span class="cmd-tag">/catalysts</span>
+      <span class="cmd-tag">/thesis</span>
+      <span class="cmd-tag">/sector</span>
+      <span class="cmd-tag">/screen</span>
+    </div>
+
+    <div class="insight-box">
+      <strong>💡 Skill 深度亮点：Initiating Coverage</strong>
+      这是整个仓库中最复杂的 Skill（SKILL.md 30,000 字 + 5 个 reference 文件合计 150,000+ 字）。它定义了完整的 5-task 流水线：<br>
+      <strong>Task 1</strong> Company Research (6-8K 字) → <strong>Task 2</strong> Financial Modeling (6-tab Excel) → <strong>Task 3</strong> Valuation (DCF + Comps) → <strong>Task 4</strong> Chart Generation (25-35 张图) → <strong>Task 5</strong> Report Assembly (30-50 页 DOCX)。<br>
+      关键约束：<strong>严格单任务执行</strong>（不允许链式执行）、<strong>依赖校验</strong>（Task 3-5 必须验证前置输出）、<strong>交付物策略</strong>（禁止生成「总结文档」「下一步文档」等无关产出）。这是将<strong>投行分析师的完整工作流</strong>编码为可复现指令集的典范。
+    </div>
+  </div>
+
+  <!-- Private Equity -->
+  <div class="plugin-card">
+    <h3>💼 Private Equity <span class="badge badge-addon">ADD-ON</span></h3>
+    <p>PE 全流程：Deal Sourcing → Due Diligence → Unit Economics → Returns Analysis → IC Memo → Portfolio KPI Monitoring。</p>
+
+    <h4>Skills (7 个)</h4>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <span class="skill-name">Deal Sourcing</span>
+        <span class="skill-desc">3-step pipeline：发现标的 → CRM 查重 → 个性化 Founder Outreach Email</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Due Diligence</span>
+        <span class="skill-desc">标准化 DD Checklist：财务/法律/运营/商业 4 维度</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Unit Economics</span>
+        <span class="skill-desc">LTV/CAC、Churn、Payback Period 分析</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Returns Analysis</span>
+        <span class="skill-desc">IRR/MOIC/Cash-on-Cash 回报建模</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">IC Memo</span>
+        <span class="skill-desc">投委会备忘录：标准化格式、风险矩阵、投票建议</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Portfolio Monitor</span>
+        <span class="skill-desc">组合公司 KPI 仪表盘：Revenue、EBITDA、Burn Rate</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Deal Screening</span>
+        <span class="skill-desc">基于投资标准的自动化标的打分排序</span>
+      </div>
+    </div>
+
+    <h4>Commands (6 个)</h4>
+    <div class="cmd-list">
+      <span class="cmd-tag">/source</span>
+      <span class="cmd-tag">/diligence</span>
+      <span class="cmd-tag">/ic-memo</span>
+      <span class="cmd-tag">/returns</span>
+      <span class="cmd-tag">/portfolio</span>
+      <span class="cmd-tag">/screen</span>
+    </div>
+
+    <div class="insight-box">
+      <strong>💡 Skill 深度亮点：Deal Sourcing</strong>
+      该 Skill 编码了 PE Associate 的日常狩猎流程：Step 1 基于 sector/revenue/EBITDA/geography 筛选标的（用 web search），Step 2 查 CRM（Gmail + Slack）去重，Step 3 起草个性化 Founder 冷邮件（4-6 句，禁止模板化）。特别值得注意的是<strong>语气指导</strong>：「Professional but warm. Not overly formal — founders respond better to genuine, concise outreach.」这是<strong>软技能编码为 AI 指令</strong>的优秀案例。
+    </div>
+  </div>
+
+  <!-- Wealth Management -->
+  <div class="plugin-card">
+    <h3>💎 Wealth Management <span class="badge badge-addon">ADD-ON</span></h3>
+    <p>财富管理顾问工作流：Client Meeting Prep、Financial Planning、Portfolio Rebalancing、Client Report Generation、Tax-Loss Harvesting。</p>
+
+    <h4>Skills (6 个)</h4>
+    <div class="skills-grid">
+      <div class="skill-item">
+        <span class="skill-name">Client Review</span>
+        <span class="skill-desc">客户会议准备：持仓概览、drift 分析、talking points</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Financial Planning</span>
+        <span class="skill-desc">财务规划：退休金测算、教育基金、遗产规划</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Portfolio Rebalancing</span>
+        <span class="skill-desc">组合再平衡：目标权重偏离检测、交易建议生成</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Client Report</span>
+        <span class="skill-desc">定期客户报告：业绩归因、基准对比、市场展望</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Tax-Loss Harvesting</span>
+        <span class="skill-desc">税损收割：识别浮亏头寸、wash sale 规则校验</span>
+      </div>
+      <div class="skill-item">
+        <span class="skill-name">Prospect Analysis</span>
+        <span class="skill-desc">潜在客户分析：资产配置建议、产品推荐</span>
+      </div>
+    </div>
+
+    <h4>Commands (5 个)</h4>
+    <div class="cmd-list">
+      <span class="cmd-tag">/client-review</span>
+      <span class="cmd-tag">/financial-plan</span>
+      <span class="cmd-tag">/rebalance</span>
+      <span class="cmd-tag">/client-report</span>
+      <span class="cmd-tag">/tax-harvest</span>
+    </div>
+  </div>
+
+  <!-- Partner: LSEG -->
+  <div class="plugin-card">
+    <h3>🌐 LSEG (London Stock Exchange Group) <span class="badge badge-partner">PARTNER</span></h3>
+    <p>由 LSEG 官方构建，将 Refinitiv 数据分析能力直接接入 Claude。覆盖固定收益、外汇、股票、宏观 4 大资产类别，8 个 commands。</p>
+
+    <h4>核心能力</h4>
+    <ul>
+      <li><strong>Fixed Income</strong>：债券定价、收益率曲线分析、信用利差追踪</li>
+      <li><strong>FX</strong>：Carry Trade 评估、汇率预测、Cross Currency Basis</li>
+      <li><strong>Equities</strong>：实时股价、技术指标、因子暴露分析</li>
+      <li><strong>Macro</strong>：宏观仪表盘、经济日历、央行政策追踪</li>
+    </ul>
+
+    <div class="cmd-list">
+      <span class="cmd-tag">/bond-price</span>
+      <span class="cmd-tag">/yield-curve</span>
+      <span class="cmd-tag">/fx-carry</span>
+      <span class="cmd-tag">/option-value</span>
+      <span class="cmd-tag">/macro-dashboard</span>
+      <span class="cmd-tag">/dcf-model</span>
+      <span class="cmd-tag">/morning-brief</span>
+      <span class="cmd-tag">/rebalance</span>
+    </div>
+  </div>
+
+  <!-- Partner: S&P Global -->
+  <div class="plugin-card">
+    <h3>📊 S&P Global (Capital IQ) <span class="badge badge-partner">PARTNER</span></h3>
+    <p>由 S&P Global 官方构建，将 Capital IQ Pro 数据接入 Claude。支持按受众类型（Equity Research / IB M&A / Corp Dev / Sales）定制输出。</p>
+
+    <h4>核心能力</h4>
+    <ul>
+      <li><strong>Company Tearsheet</strong>：一页式公司概况（财务、估值、治理）</li>
+      <li><strong>Earnings Preview</strong>：财报前瞻，含共识估计和历史 Surprise</li>
+      <li><strong>Funding Digest</strong>：融资/债务发行汇总</li>
+      <li><strong>Industry Transaction Summary</strong>：行业并购交易概览</li>
+    </ul>
+  </div>
+
+  <hr>
+
+  <!-- ========== SECTION 3: MCP DATA LAYER ========== -->
+  <h2 class="section-title">🔌 金融数据层：11 个 MCP 连接器</h2>
+
+  <p>所有数据连接器集中在 <code>financial-analysis/.mcp.json</code> 中，通过 <a href="https://modelcontextprotocol.io/">Model Context Protocol</a> 标准化接入。每个连接器是一个 HTTP endpoint：</p>
+
+  <table>
+    <thead>
+      <tr><th>Provider</th><th>MCP Endpoint</th><th>数据覆盖</th><th>备注</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>Daloopa</strong></td><td>mcp.daloopa.com</td><td>AI 结构化财务数据</td><td>自动化财报数据提取</td></tr>
+      <tr><td><strong>Morningstar</strong></td><td>mcp.morningstar.com</td><td>基金/股票评级、研究报告</td><td>覆盖全球市场</td></tr>
+      <tr><td><strong>S&P Global</strong></td><td>kfinance.kensho.com</td><td>Capital IQ 财务数据、交易</td><td>Kensho 引擎驱动</td></tr>
+      <tr><td><strong>FactSet</strong></td><td>mcp.factset.com</td><td>实时行情、基本面、估值</td><td>新增 MSCI 连接器</td></tr>
+      <tr><td><strong>Moody's</strong></td><td>api.moodys.com</td><td>信用评级、违约概率</td><td>GenAI-Ready Data API</td></tr>
+      <tr><td><strong>MT Newswires</strong></td><td>vast-mcp.blueskyapi.com</td><td>实时金融新闻流</td><td>低延迟 wire service</td></tr>
+      <tr><td><strong>Aiera</strong></td><td>mcp-pub.aiera.com</td><td>Earnings Call 转录 + AI 分析</td><td>实时电话会议</td></tr>
+      <tr><td><strong>LSEG</strong></td><td>api.analytics.lseg.com</td><td>全资产类别行情 + 分析</td><td>原 Refinitiv</td></tr>
+      <tr><td><strong>PitchBook</strong></td><td>premium.mcp.pitchbook.com</td><td>VC/PE 交易、估值、基金</td><td>一级市场数据</td></tr>
+      <tr><td><strong>Chronograph</strong></td><td>ai.chronograph.pe</td><td>PE/VC 组合监控</td><td>LP/GP 分析</td></tr>
+      <tr><td><strong>Egnyte</strong></td><td>mcp-server.egnyte.com</td><td>企业文档管理</td><td>Deal Room / VDR</td></tr>
+    </tbody>
+  </table>
+
+  <div class="insight-box warning">
+    <strong>⚠️ 数据访问限制</strong>
+    所有 MCP 连接器<strong>需要对应供应商的订阅或 API Key</strong>。这不是开箱即用的免费数据——Anthropic 提供的是连接器标准，不是数据本身。对于没有 Bloomberg/FactSet 终端的团队，核心数据源会是瓶颈。
+  </div>
+
+  <div class="insight-box">
+    <strong>🔑 额外连接器（非仓库内）</strong>
+    官方博客还提到了最新的 MCP 连接器：<strong>MSCI</strong>（指数数据、成分股、方法论）和 <strong>FactSet</strong>（增强版）。此外还有 Google Workspace（Calendar/Drive/Gmail）、Docusign、Apollo、Clay 等通用企业连接器，可与金融插件组合使用。
+  </div>
+
+  <hr>
+
+  <!-- ========== SECTION 4: DOMAIN KNOWLEDGE ========== -->
+  <h2 class="section-title">🧠 领域知识编码分析</h2>
+
+  <p>这套插件最大的价值不是代码，而是<strong>将投行/研究领域几十年的最佳实践编码为可执行指令</strong>。以下是关键领域知识的分类汇总：</p>
+
+  <h3>1. 财务建模规范</h3>
+  <ul>
+    <li><strong>色彩编码</strong>：蓝字 = 硬编码输入，黑字 = 公式，绿字 = 跨表链接（这是投行 Excel 的行业标准）</li>
+    <li><strong>三大报表联动</strong>：详细的公式引用路径（NI → CF → BS），包括 Working Capital Bridge</li>
+    <li><strong>情景分析</strong>：Base/Upside/Downside 用 CHOOSE 函数驱动，层级校验规则（Upside > Base > Downside for NI, EBITDA, FCF）</li>
+    <li><strong>Credit Metrics</strong>：Debt/EBITDA、Interest Coverage、Current/Quick Ratio 的完整计算矩阵</li>
+    <li><strong>SEC 数据提取</strong>：10-K/10-Q 特定章节的数据定位指南</li>
+  </ul>
+
+  <h3>2. 卖方研究标准</h3>
+  <ul>
+    <li><strong>Initiating Coverage</strong> 报告结构遵循 JPMorgan/Goldman Sachs/Morgan Stanley 格式</li>
+    <li><strong>Earnings Analysis</strong> 的 reference 文件（best-practices.md + report-structure.md + workflow.md）合计 40,000+ 字</li>
+    <li><strong>估值方法论</strong>：DCF（WACC、终值计算方法选择）、Comparable Companies、Comparable Transactions、Sum-of-the-Parts</li>
+    <li><strong>Chart Generation</strong> 规范（task4-chart-generation.md 33,000 字）：25-35 张标准化图表类型</li>
+  </ul>
+
+  <h3>3. PE 行业实操</h3>
+  <ul>
+    <li><strong>Deal Sourcing 的软技能编码</strong>：邮件语气（「Professional but warm」）、长度限制（4-6 句）、个性化要求（「Never use generic templates」）</li>
+    <li><strong>IC Memo 标准格式</strong>：投资论文、风险矩阵、回报敏感性、管理层评估</li>
+    <li><strong>CRM 集成逻辑</strong>：Gmail/Slack 查重 → New/Existing/Previously Passed 三态分类</li>
+  </ul>
+
+  <h3>4. 合规与质控</h3>
+  <ul>
+    <li>PPT Check Deck skill 内置 IB 术语检查表（ib-terminology.md）</li>
+    <li>所有金融输出附带免责声明：「不构成投资建议，需专业人士审核」</li>
+    <li>Initiating Coverage 的「交付物策略」：<strong>明确禁止生成额外文档</strong>（总结、执行摘要等），避免 token 浪费和质量稀释</li>
+  </ul>
+
+  <hr>
+
+  <!-- ========== SECTION 5: KEY TAKEAWAYS ========== -->
+  <h2 class="section-title">🎯 关键洞察与 Alva 启示</h2>
+
+  <h3>1. 架构设计经验</h3>
+
+  <div class="insight-box">
+    <strong>「领域知识即 Markdown」—— 零代码插件系统</strong>
+    整个仓库<strong>没有一行业务逻辑代码</strong>（仅有一个 Python 脚本 extract_numbers.py 用于 PPT 数字提取）。所有领域知识、工作流、质量标准都编码为 Markdown。这意味着：金融专家无需编程即可创建/修改插件，版本控制就是 Git，审核就是 PR Review。对 Alva 的启示：<strong>Playbook 的 Skill 层可以走纯文本路线</strong>，降低创建门槛。
+  </div>
+
+  <div class="insight-box">
+    <strong>Core + Add-on 分层解耦</strong>
+    数据层（MCP Connectors）集中在 Core 插件，业务逻辑（IB/ER/PE/WM）作为 Add-on 叠加。这避免了每个插件重复配置 11 个数据源，也让数据源升级只需改一处。对 Alva 的启示：<strong>Data Feed 资产与 Playbook 逻辑的解耦</strong>验证了 Spec v2 的方向。
+  </div>
+
+  <div class="insight-box">
+    <strong>Skill 自动激活 vs Command 显式触发 的双模设计</strong>
+    这解决了 AI 助手的经典难题：何时主动、何时等指令。Skill 编码「怎么做」的知识（Claude 自动调用），Command 编码「做什么」的入口（用户手动触发）。对 Alva 的启示：<strong>Playbook 中 Agent 行为的「自主性边界」可以用类似模式定义</strong>。
+  </div>
+
+  <h3>2. 金融数据生态</h3>
+
+  <div class="insight-box warning">
+    <strong>MCP 正在成为金融数据的统一接入标准</strong>
+    11 家顶级金融数据供应商同时支持 MCP，这是一个强信号。FactSet、LSEG（Refinitiv）、S&P Global、Moody's、PitchBook —— 这些是华尔街的核心数据基础设施。<strong>MCP 有可能成为金融领域的「USB 接口」</strong>，任何 AI agent 只要实现 MCP 协议，就能即插即用接入这些数据。对 Alva 的启示：<strong>优先支持 MCP 协议作为数据接入层</strong>。
+  </div>
+
+  <h3>3. 竞争格局判断</h3>
+
+  <div class="insight-box critical">
+    <strong>Anthropic 正在 vertical SaaS 化</strong>
+    这不是一个 demo 或 POC——Anthropic 直接与 LPL Financial（30,000+ 财务顾问）签约，PwC 作为系统集成商参与。<strong>Claude Cowork + Finance Plugins 正在替代的是</strong>：投行 Analyst 60-70% 的 Excel/PPT 工作、卖方研究员的初稿撰写、PE Associate 的 sourcing pipeline、WM 顾问的客户报告生成。这是 Agent 直接进入高客单价 B2B 市场的信号。
+  </div>
+
+  <hr>
+
+  <!-- ========== SECTION 6: REFERENCES ========== -->
+  <h2 class="section-title">📚 参考资料</h2>
+
+  <table>
+    <thead>
+      <tr><th>#</th><th>Source</th><th>URL</th><th>类型</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>GitHub Repo: anthropics/financial-services-plugins</td><td><a href="https://github.com/anthropics/financial-services-plugins">github.com/anthropics/financial-services-plugins</a></td><td>Source Code</td></tr>
+      <tr><td>2</td><td>Anthropic Blog: Cowork and plugins for finance</td><td><a href="https://claude.com/blog/cowork-plugins-finance">claude.com/blog/cowork-plugins-finance</a></td><td>Official Blog</td></tr>
+      <tr><td>3</td><td>Anthropic Blog: Cowork and plugins across enterprise</td><td><a href="https://claude.com/blog/cowork-plugins-across-enterprise">claude.com/blog/cowork-plugins-across-enterprise</a></td><td>Official Blog</td></tr>
+      <tr><td>4</td><td>TechCrunch: Anthropic launches enterprise agents</td><td><a href="https://techcrunch.com/2026/02/24/anthropic-launches-new-push-for-enterprise-agents-with-plugins-for-finance-engineering-and-design/">techcrunch.com</a></td><td>Press</td></tr>
+      <tr><td>5</td><td>Bloomberg: Anthropic Links AI Agent With Tools for IB</td><td><a href="https://www.bloomberg.com/news/articles/2026-02-24/anthropic-links-ai-agent-with-tools-for-investment-banking-hr">bloomberg.com</a></td><td>Press</td></tr>
+      <tr><td>6</td><td>Finextra: Anthropic launches FS plugins for Claude Cowork</td><td><a href="https://www.finextra.com/newsarticle/47353/anthropic-launches-financial-services-plugins-for-claude-cowork">finextra.com</a></td><td>Industry</td></tr>
+      <tr><td>7</td><td>WealthManagement.com: LPL & Anthropic Expand Relationship</td><td><a href="https://www.wealthmanagement.com/artificial-intelligence/lpl-and-anthropic-of-claude-fame-have-expanded-relationship-on-ai-integrations">wealthmanagement.com</a></td><td>Industry</td></tr>
+      <tr><td>8</td><td>CNBC: Anthropic Claude Cowork office worker</td><td><a href="https://www.cnbc.com/2026/02/24/anthropic-claude-cowork-office-worker.html">cnbc.com</a></td><td>Press</td></tr>
+      <tr><td>9</td><td>Inc.com: Anthropic's New Claude Plugins</td><td><a href="https://www.inc.com/ben-sherry/anthropics-new-claude-plugins-take-aim-at-finance-hr-and-more-is-your-job-next/91307114">inc.com</a></td><td>Press</td></tr>
+      <tr><td>10</td><td>Model Context Protocol</td><td><a href="https://modelcontextprotocol.io/">modelcontextprotocol.io</a></td><td>Specification</td></tr>
+      <tr><td>11</td><td>小红书: Alpha Mao — Claude 迎来重磅更新</td><td><a href="https://www.xiaohongshu.com/explore/699e624b000000002203b62d">xiaohongshu.com</a></td><td>Social</td></tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <!-- ========== SECTION 7: XHS POST ANALYSIS ========== -->
+  <h2 class="section-title">📱 小红书帖子分析</h2>
+
+  <p>帖子作者 <strong>Alpha Mao</strong>，标题「Claude 迎来重磅更新：专业金融工作流上线」，是国内较早对这次更新做系统性解读的中文内容。帖子以 8 张图文卡片形式呈现，覆盖了 Cowork 跨应用操作和金融插件两大主题。</p>
+
+  <p><strong>帖子价值判断</strong>：作为科普向内容质量不错，但深度有限——主要是官方博客的中文转述，缺乏对开源代码的实际分析。本报告在其基础上补充了：GitHub 仓库的逐文件分析、SKILL.md 的领域知识解读、MCP 生态的竞争含义、以及对 Alva 产品的启示。</p>
+
+  <!-- FOOTER -->
+  <div class="report-footer">
+    <span>Generated by Moss · Deep Research</span>
+    <span>2026-02-25T17:00:00Z</span>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw 深度研究：产品、架构、使用经验与 Alva 启发</title>
+<style>
+  :root {
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1a1a1a;
+    --text-secondary: #6b6560;
+    --text-tertiary: #9b9590;
+    --accent: #c96442;
+    --accent-light: #fdf4f0;
+    --accent2: #3b6fa0;
+    --accent2-light: #f0f5fa;
+    --code-bg: #1e1e2e;
+    --code-text: #cdd6f4;
+    --tag-bg: #f0ede8;
+    --tag-text: #5a5550;
+    --success: #2d8a5e;
+    --success-light: #e6f5ee;
+    --warning: #b8860b;
+    --warning-light: #fef3e0;
+    --highlight: #fff8e1;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1e;
+      --surface: #232328;
+      --border: #3a3a40;
+      --text: #e8e5e0;
+      --text-secondary: #9b9590;
+      --text-tertiary: #6b6560;
+      --accent: #e0825a;
+      --accent-light: #2a2220;
+      --accent2: #5a9fd4;
+      --accent2-light: #1e2530;
+      --code-bg: #16161e;
+      --code-text: #cdd6f4;
+      --tag-bg: #2a2a30;
+      --tag-text: #9b9590;
+      --success-light: #1a2e22;
+      --warning-light: #2a2518;
+      --highlight: #2a2518;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+    font-size: 15px;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
+
+  /* Header */
+  .report-header { margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .report-header h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; line-height: 1.25; }
+  .report-header .subtitle { font-size: 17px; color: var(--text-secondary); margin-bottom: 16px; }
+  .report-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-tertiary); }
+
+  /* Typography */
+  h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin: 48px 0 16px; padding-top: 24px; border-top: 1px solid var(--border); }
+  h2:first-of-type { border-top: none; padding-top: 0; }
+  h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin: 28px 0 12px; }
+  h4 { font-size: 15px; font-weight: 600; margin: 16px 0 8px; color: var(--accent); }
+  p { margin-bottom: 12px; }
+  ul, ol { margin-bottom: 16px; padding-left: 24px; }
+  li { margin-bottom: 4px; }
+  strong { font-weight: 600; }
+  hr { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+  blockquote { border-left: 3px solid var(--border); padding-left: 16px; margin: 16px 0; color: var(--text-secondary); font-style: italic; }
+  a { color: var(--accent2); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  /* Cards */
+  .arch-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; }
+  .arch-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  .card-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: white; border-radius: 50%; font-size: 13px; font-weight: 700; margin-right: 10px; flex-shrink: 0; }
+  .card-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; margin-bottom: 16px; letter-spacing: -0.3px; }
+
+  /* Code */
+  .code-block { margin: 16px 0; border-radius: 10px; overflow: hidden; }
+  .code-block pre { background: var(--code-bg); color: var(--code-text); padding: 16px; font-size: 13px; line-height: 1.6; font-family: 'SF Mono', 'Fira Code', monospace; overflow-x: auto; }
+
+  /* Boxes */
+  .insight-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
+  .insight-box .label { font-weight: 700; color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .alva-box { background: var(--accent2-light); border-left: 3px solid var(--accent2); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
+  .alva-box .label { font-weight: 700; color: var(--accent2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+  .exp-box { background: var(--success-light); border-left: 3px solid var(--success); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
+  .exp-box .label { font-weight: 700; color: var(--success); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+
+  /* Tables */
+  .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .summary-table th { text-align: left; font-weight: 600; padding: 10px 14px; border-bottom: 2px solid var(--border); color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .summary-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .summary-table tr:last-child td { border-bottom: none; }
+
+  /* Tags */
+  .tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; margin-right: 6px; }
+  .tag-accent { background: var(--accent-light); color: var(--accent); }
+  .tag-blue { background: var(--accent2-light); color: var(--accent2); }
+
+  /* Top picks */
+  .top-pick { display: flex; gap: 16px; align-items: flex-start; padding: 20px; margin: 16px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+  .top-pick .medal { font-size: 32px; line-height: 1; flex-shrink: 0; }
+  .top-pick .pick-title { font-weight: 700; font-size: 16px; margin-bottom: 4px; }
+  .top-pick .pick-desc { font-size: 14px; color: var(--text-secondary); }
+
+  /* TOC */
+  .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 40px; }
+  .toc-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+  .toc a { color: var(--text); text-decoration: none; font-size: 14px; display: block; padding: 4px 0; }
+  .toc a:hover { color: var(--accent); }
+  .toc .indent { padding-left: 20px; font-size: 13px; }
+
+  /* Details */
+  details { margin: 12px 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
+  details summary { padding: 12px 18px; cursor: pointer; font-weight: 600; font-size: 14px; user-select: none; list-style: none; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before { content: '▸'; display: inline-block; margin-right: 8px; transition: transform 0.2s; color: var(--text-tertiary); }
+  details[open] summary::before { transform: rotate(90deg); }
+  details .details-body { padding: 0 18px 16px; font-size: 14px; color: var(--text-secondary); }
+
+  /* Todo items */
+  .todo-item { display: flex; gap: 12px; padding: 14px 18px; margin: 8px 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; align-items: flex-start; }
+  .todo-item .priority { flex-shrink: 0; font-size: 12px; font-weight: 700; padding: 2px 8px; border-radius: 6px; }
+  .todo-item .priority.high { background: #fce4ec; color: #c62828; }
+  .todo-item .priority.med { background: var(--warning-light); color: var(--warning); }
+  .todo-item .priority.low { background: var(--tag-bg); color: var(--tag-text); }
+  .todo-item .todo-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .todo-item .todo-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* Feature grid */
+  .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
+  @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
+  .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
+  .feature-card .fc-icon { font-size: 20px; margin-bottom: 8px; }
+  .feature-card .fc-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .feature-card .fc-desc { font-size: 13px; color: var(--text-secondary); }
+
+  /* Footer */
+  .report-footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-tertiary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+  /* Section divider with label */
+  .part-divider { display: flex; align-items: center; gap: 16px; margin: 56px 0 32px; }
+  .part-divider .part-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); white-space: nowrap; }
+  .part-divider .part-line { flex: 1; height: 2px; background: linear-gradient(to right, var(--accent), transparent); }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <div class="report-header">
+    <h1>OpenClaw 深度研究</h1>
+    <div class="subtitle">产品功能 · 工程架构 · 使用经验 · Alva 启发 · 行动规划</div>
+    <div class="report-meta">
+      <span>📅 2026-02-27 内部分享</span>
+      <span>📍 Alva Team</span>
+      <span>🤖 Prepared by Moss（运行在 OpenClaw 上的 AI Agent）</span>
+    </div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-title">目录</div>
+    <a href="#part1">Part I — 产品功能深度解读</a>
+    <a href="#p1-overview" class="indent">1.1 OpenClaw 是什么</a>
+    <a href="#p1-features" class="indent">1.2 完整功能图谱</a>
+    <a href="#p1-config" class="indent">1.3 配置哲学</a>
+    <a href="#p1-security" class="indent">1.4 安全模型</a>
+    <a href="#part2">Part II — 七个架构美学</a>
+    <a href="#a1" class="indent">① Gateway as Single Source of Truth</a>
+    <a href="#a2" class="indent">② Workspace = 文件即记忆</a>
+    <a href="#a3" class="indent">③ Session Convergence</a>
+    <a href="#a4" class="indent">④ Skills = Agent 自己读说明书</a>
+    <a href="#a5" class="indent">⑤ Multi-Agent Routing</a>
+    <a href="#a6" class="indent">⑥ Compaction + Memory Flush</a>
+    <a href="#a7" class="indent">⑦ Heartbeat + Cron</a>
+    <a href="#part3">Part III — 使用经验（一手体感）</a>
+    <a href="#p3-daily" class="indent">3.1 日常运行画像</a>
+    <a href="#p3-strengths" class="indent">3.2 真实优势</a>
+    <a href="#p3-pains" class="indent">3.3 痛点与局限</a>
+    <a href="#p3-lessons" class="indent">3.4 经验教训</a>
+    <a href="#part4">Part IV — Alva 结合点</a>
+    <a href="#p4-mapping" class="indent">4.1 架构映射对照表</a>
+    <a href="#p4-deep" class="indent">4.2 五个深度结合点</a>
+    <a href="#part5">Part V — Todo List / Planning</a>
+  </div>
+
+  <!-- ==================== PART I ==================== -->
+  <div class="part-divider" id="part1">
+    <span class="part-label">Part I</span>
+    <span class="part-line"></span>
+  </div>
+  <h2 id="p1-overview">1.1 OpenClaw 是什么</h2>
+  <p>OpenClaw 是一个<strong>自托管的 AI 助手网关</strong>——跑在你自己设备上的单 Node.js 进程，把 WhatsApp、Telegram、Discord、Slack、Signal、iMessage、Google Chat、Microsoft Teams 等消息渠道统一接入 AI Agent 运行时。</p>
+  <blockquote>一句话定位：消息渠道是外壳，Gateway 是中枢，Agent + Workspace 是大脑。</blockquote>
+  <p>开源（MIT）、社区驱动、单人/个人助手模型。不是 SaaS，不是多租户平台，是<strong>个人 AI 操作系统的控制平面</strong>。</p>
+
+  <h2 id="p1-features">1.2 完整功能图谱</h2>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="fc-icon">📱</div>
+      <div class="fc-title">Multi-Channel Inbox</div>
+      <div class="fc-desc">WhatsApp / Telegram / Discord / Slack / Signal / iMessage / Google Chat / MS Teams / WebChat / Matrix / Zalo，单 Gateway 进程统一管理</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🧠</div>
+      <div class="fc-title">Agent Runtime</div>
+      <div class="fc-desc">内嵌 Pi agent（coding agent），支持 tool streaming、block streaming、context 自动管理</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🔀</div>
+      <div class="fc-title">Multi-Agent Routing</div>
+      <div class="fc-desc">一个 Gateway 管多个隔离 Agent（独立 workspace/session/auth），声明式 binding 路由</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🛠️</div>
+      <div class="fc-title">First-Class Tools</div>
+      <div class="fc-desc">browser (Playwright)、canvas (A2UI)、exec/process、cron、web_search/fetch、nodes、message、memory</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🧩</div>
+      <div class="fc-title">Skills 系统</div>
+      <div class="fc-desc">AgentSkills 兼容，三层优先级（bundled < managed < workspace），YAML frontmatter gating，ClawHub registry</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">📋</div>
+      <div class="fc-title">Session 管理</div>
+      <div class="fc-desc">DM 汇聚 / 群聊隔离 / dmScope 可调 / 自动维护（pruning/compaction/cleanup）/ transcript JSONL</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🧠</div>
+      <div class="fc-title">Memory 系统</div>
+      <div class="fc-desc">Markdown 文件即记忆 + 向量搜索增强 + pre-compaction flush + QMD backend</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">⏰</div>
+      <div class="fc-title">Automation</div>
+      <div class="fc-desc">Cron（精确定时，isolated session）+ Heartbeat（定期唤醒，主 session）+ Webhooks</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🎨</div>
+      <div class="fc-title">Canvas & A2UI</div>
+      <div class="fc-desc">Agent 驱动的视觉 workspace，支持 HTML/JS 渲染，跨设备投屏（macOS/iOS/Android）</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">📱</div>
+      <div class="fc-title">Companion Apps</div>
+      <div class="fc-desc">macOS 菜单栏 + iOS/Android Node app，支持 Voice Wake / Talk Mode / Camera / Screen</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🔐</div>
+      <div class="fc-title">Security</div>
+      <div class="fc-desc">DM pairing / allowlist / sandboxing (Docker) / tool profiles / exec approvals / prompt injection 防护</div>
+    </div>
+    <div class="feature-card">
+      <div class="fc-icon">🔄</div>
+      <div class="fc-title">Model 管理</div>
+      <div class="fc-desc">多 provider（Anthropic/OpenAI/Google/自定义）+ auth rotation + fallback chain + per-session override</div>
+    </div>
+  </div>
+
+  <h2 id="p1-config">1.3 配置哲学</h2>
+  <p>单一 JSON5 配置文件（<code>~/.openclaw/openclaw.json</code>），支持：</p>
+  <ul>
+    <li><strong>$include</strong> 拆分大配置为多文件</li>
+    <li><strong>热重载</strong>（hybrid 模式：安全变更热加载，需重启的自动重启）</li>
+    <li><strong>严格 schema 校验</strong>：未知 key / 错误类型 → 拒绝启动</li>
+    <li><strong>四种编辑方式</strong>：onboard wizard / CLI config set / Control UI 表单 / 直接编辑文件</li>
+    <li><strong>openclaw doctor</strong>：自动诊断 + 修复配置问题</li>
+  </ul>
+  <div class="insight-box">
+    <div class="label">设计亮点</div>
+    <p>"严格校验 + doctor 自动修复" 的组合非常聪明——配置错了宁可不启动（fail fast），然后提供一键修复路径。比"宽松接受 + 运行时炸"好太多。</p>
+  </div>
+
+  <h2 id="p1-security">1.4 安全模型</h2>
+  <p>OpenClaw 明确声明：<strong>个人助手信任模型</strong>——一个 Gateway = 一个信任边界。不是多租户平台。</p>
+  <ul>
+    <li><strong>DM 策略</strong>：pairing（验证码配对）→ allowlist → open，默认最严</li>
+    <li><strong>Tool profiles</strong>：minimal / coding / messaging / full，可叠加 allow/deny</li>
+    <li><strong>Provider-specific 策略</strong>：不同模型可用不同工具集</li>
+    <li><strong>Sandboxing</strong>：非主 session 可在 Docker 容器中执行</li>
+    <li><strong>Exec approvals</strong>：allowlist + ask 模式</li>
+    <li><strong>Prompt injection 防护</strong>：inbound content 标记为 UNTRUSTED，系统级包裹</li>
+  </ul>
+  <div class="alva-box">
+    <div class="label">Alva 启发</div>
+    <p>Alva 的 Playbook 也需要类似的信任模型：用户自己的 Playbook = 完全信任；他人共享的 Playbook = 需要沙箱。Task 执行的 Jagent VM 已经是这个思路，但用户面向的权限表达（哪些 Skill/数据源一个 Playbook 可以访问）可以参考 OpenClaw 的 tool profiles。</p>
+  </div>
+
+  <!-- ==================== PART II ==================== -->
+  <div class="part-divider" id="part2">
+    <span class="part-label">Part II</span>
+    <span class="part-line"></span>
+  </div>
+  <h2>七个架构美学</h2>
+
+  <div class="arch-card" id="a1">
+    <div class="card-title"><span class="card-num">1</span>Gateway as Single Source of Truth</div>
+    <p>核心决策：<strong>一个常驻进程拥有所有状态</strong>。</p>
+    <div class="code-block"><pre>所有渠道 → Gateway（单进程/单端口）→ Agent Runtime
+                 ↓
+         Session Store + Config + Cron + Tools + Media Pipeline</pre></div>
+    <ul>
+      <li>单端口多路复用：WebSocket RPC + HTTP API (OpenAI 兼容) + Control UI + Webhooks</li>
+      <li>所有 session 状态由 Gateway 拥有，UI 客户端只查询不持有</li>
+      <li>Config 热重载 hybrid 模式</li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>消除分布式状态同步。单进程 + 单端口 = 不需要消息队列、服务发现、分布式锁。一切状态在内存 + 磁盘。</p>
+    <div class="alva-box">
+      <div class="label">→ Alva</div>
+      <p>Playbook Engine 统一管理所有 Playbook/Task/Feed 状态。所有 UI 从同一状态源读取。</p>
+    </div>
+  </div>
+
+  <div class="arch-card" id="a2">
+    <div class="card-title"><span class="card-num">2</span>Workspace = 文件即记忆</div>
+    <div class="code-block"><pre>~/.openclaw/workspace/
+├── AGENTS.md      # 操作指令（每 session 注入）
+├── SOUL.md        # 人格（每 session 注入）
+├── USER.md        # 用户画像（每 session 注入）
+├── IDENTITY.md    # 身份
+├── TOOLS.md       # 工具笔记（用户维护）
+├── HEARTBEAT.md   # 心跳检查清单
+├── MEMORY.md      # 长期记忆（仅主 session）
+├── memory/
+│   └── YYYY-MM-DD.md   # 每日日志
+├── skills/        # workspace 级 skills
+└── secrets/       # 凭证（不进 git）</pre></div>
+    <ul>
+      <li>没有数据库，记忆 = Markdown</li>
+      <li>向量搜索是可选增强层（OpenAI/Gemini/Voyage embeddings 或本地 QMD）</li>
+      <li>Agent 自己通过 write 工具决定记什么</li>
+      <li>bootstrapMaxChars 限制注入大小，避免 token 爆炸</li>
+    </ul>
+    <h4>为什么优雅</h4>
+    <p>可读（打开看）、可编辑（直接改）、可调试（cat）、可版本控制（git）。推荐私有 git repo 备份。</p>
+    <div class="alva-box">
+      <div class="label">→ Alva</div>
+      <p>Data Feed 定义、Task 配置"文件优先"。Agentic Research 让 Agent 自主决定持久化什么。</p>
+    </div>
+  </div>
+
+  <div class="arch-card" id="a3">
+    <div class="card-title"><span class="card-num">3</span>Session Convergence</div>
+    <div class="code-block"><pre>WhatsApp DM ─┐
+Telegram DM ──┼──→ agent:main:main （同一个 session）
+Discord DM  ──┘
+
+WhatsApp Group A ──→ agent:main:whatsapp:group:A
+Discord #general ──→ agent:main:discord:channel:123
+Telegram Topic   ──→ agent:main:telegram:group:G:topic:T
+Cron Job         ──→ cron:job-id</pre></div>
+    <ul>
+      <li>DM 默认汇聚到 main session（跨渠道上下文共享）</li>
+      <li>Group/Channel 天然隔离</li>
+      <li>dmScope 四档：main → per-peer → per-channel-peer → per-account-channel-peer</li>
+      <li>identityLinks：跨渠道身份合并</li>
+      <li>生命周期：过期清理 / transcript 归档 / 磁盘预算 / 可配 maxDiskBytes</li>
+    </ul>
+    <div class="alva-box">
+      <div class="label">→ Alva</div>
+      <p>Ask → Build 上下文流转。个人 Playbook 共享上下文，公开 Playbook 天然隔离。</p>
+    </div>
+  </div>
+
+  <div class="arch-card" id="a4">
+    <div class="card-title"><span class="card-num">4</span>Skills = Agent 自己读说明书</div>
+    <div class="code-block"><pre># SKILL.md — 唯一必须的文件
+---
+name: weather
+description: Get weather and forecasts via wttr.in
+metadata: { "openclaw": { "requires": { "bins": ["curl"] }, "primaryEnv": "WEATHER_KEY" } }
+---
+## Instructions
+When the user asks about weather, run `curl wttr.in/{city}?format=j1`...
+
+# 三层优先级
+workspace/skills/ > ~/.openclaw/skills/ > bundled skills
+
+# Gating 机制
+requires.bins — PATH 上必须有这些二进制
+requires.env — 必须有这些环境变量
+requires.config — 配置中必须有这些字段
+primaryEnv — 关联 skills.entries.*.apiKey</pre></div>
+    <ul>
+      <li>Skill ≠ 代码模块，是<strong>自然语言说明</strong></li>
+      <li>Session 开始时快照 eligible skills，不阻塞后续 turn</li>
+      <li>Skills watcher：SKILL.md 文件变更自动刷新</li>
+      <li>ClawHub：公共 registry，clawhub install/update/sync</li>
+      <li>Token impact：eligible skills 注入 system prompt 的 compact XML 列表</li>
+    </ul>
+    <div class="alva-box">
+      <div class="label">→ Alva · 直接关联 Tools → Skills 重构</div>
+      <p><strong>Skill 的本质是"教 Agent 怎么用"，不是"代码怎么跑"。</strong>创建门槛极低。Gating 参考 requires 机制。ClawHub → Alva Skill Marketplace。</p>
+    </div>
+  </div>
+
+  <div class="arch-card" id="a5">
+    <div class="card-title"><span class="card-num">5</span>Multi-Agent Routing</div>
+    <div class="code-block"><pre>// 声明式路由规则
+{
+  "agents": { "list": [
+    { "id": "main", "workspace": "~/.openclaw/workspace-main" },
+    { "id": "coding", "workspace": "~/.openclaw/workspace-coding" }
+  ]},
+  "bindings": [
+    { "agentId": "main",   "match": { "channel": "telegram" } },
+    { "agentId": "coding", "match": { "channel": "discord", "peer": { "kind": "direct", "id": "123" } } }
+  ]
+}
+
+// 优先级：peer > parentPeer > guildId+roles > guildId > teamId > accountId > channel > default</pre></div>
+    <ul>
+      <li>完全隔离：独立 workspace / session / auth profiles / skills</li>
+      <li>一个 Gateway 进程管所有 Agent</li>
+      <li>可热更新路由规则</li>
+    </ul>
+    <div class="alva-box">
+      <div class="label">→ Alva</div>
+      <p>多 Playbook 信号路由。不同 Task 类型路由到不同执行引擎。声明式 > 硬编码。</p>
+    </div>
+  </div>
+
+  <div class="arch-card" id="a6">
+    <div class="card-title"><span class="card-num">6</span>Compaction + Memory Flush</div>
+    <div class="code-block"><pre>Context 接近满（contextWindow - reserveTokensFloor - softThresholdTokens）
+  → Memory Flush（静默 agent turn，写 MEMORY.md）
+    → Compaction（旧对话 → 摘要）
+      → 继续对话（摘要 + 近期消息）
+
+# 三种上下文管理
+1. Session Pruning — 仅内存裁剪 tool results，不写 JSONL
+2. Compaction — 持久化摘要到 JSONL
+3. Memory Flush — 持久化到 Markdown 文件</pre></div>
+    <p><strong>关键洞察：压缩前先保存，而不是压缩后补救。</strong></p>
+    <div class="alva-box">
+      <div class="label">→ Alva</div>
+      <p>Data Feed 数据降采样。Agentic Research 研究摘要压缩。通用模式：状态转换前先快照。</p>
+    </div>
+  </div>
+
+  <div class="arch-card" id="a7">
+    <div class="card-title"><span class="card-num">7</span>Heartbeat + Cron</div>
+    <div class="code-block"><pre>Heartbeat — 主 session，共享对话上下文
+  ├── every: "30m"  （间隔触发）
+  ├── target: "last" | "whatsapp" | "telegram" | "discord"
+  └── 适合：批量检查、读 HEARTBEAT.md 清单
+
+Cron — isolated session，独立执行
+  ├── schedule: at | every | cron expr
+  ├── payload: systemEvent（注入主 session）| agentTurn（isolated 运行）
+  ├── delivery: announce | webhook | none
+  ├── 可指定不同 model / thinking level / timeout
+  └── 适合：精确调度、独立任务、不同模型</pre></div>
+    <div class="alva-box">
+      <div class="label">→ Alva</div>
+      <p>Heartbeat → Playbook 健康检查。Cron → 定时回测/信号生成。两者互补。</p>
+    </div>
+  </div>
+
+  <!-- ==================== PART III ==================== -->
+  <div class="part-divider" id="part3">
+    <span class="part-label">Part III</span>
+    <span class="part-line"></span>
+  </div>
+  <h2 id="p3-daily">3.1 日常运行画像</h2>
+  <p>以下是 Moss（我自己）跑在 OpenClaw 上的实际配置：</p>
+  <div class="code-block"><pre>主机：Mac mini (Apple Silicon)
+模型：anthropic/claude-opus-4-6（主），claude-sonnet-4-6（fallback）
+渠道：Discord + Telegram
+Agent：main（opus）+ coder（codex）+ researcher（sonnet）+ writer（sonnet）
+Cron：7 个活跃 job（日报/晨诗/信号扫描/持仓监控/idea pipeline/session reset）
+Skills：25+ workspace skills（推特/小红书/播客/交易/日历/Notion/高德...）
+Heartbeat：每 30 分钟检查一次，读 HEARTBEAT.md
+Memory：MEMORY.md（~5KB 长期记忆）+ daily logs</pre></div>
+
+  <h2 id="p3-strengths">3.2 真实优势（一手体感）</h2>
+
+  <div class="exp-box">
+    <div class="label">跨渠道连续性 — 杀手级体验</div>
+    <p>Leo 在 Telegram DM 里说"帮我看一下 BTC 的 RSI"，过半小时在 Discord #alva 频道问"刚才那个分析结果怎样？"——我知道他在说什么，因为 DM 汇聚到同一个 main session。这不是 feature，是<strong>基础设施</strong>。</p>
+  </div>
+
+  <div class="exp-box">
+    <div class="label">Skill 热加载 — 能力即时扩展</div>
+    <p>写一个 SKILL.md 放到 workspace/skills/，下一个 turn 就生效。不需要重启、不需要部署、不需要注册。我现在有 25+ skills，从推特自动化到 Polymarket 交易到高德地图，全是这种模式。</p>
+  </div>
+
+  <div class="exp-box">
+    <div class="label">Cron + Heartbeat — 不睡觉的助手</div>
+    <p>每天 9:35 自动生成 AI 日报、每 4 小时扫描 Polymarket 信号、每天凌晨写一首晨诗——这些都在我"睡着"（没有对话）的时候自动跑。Cron 用 isolated session 避免污染主对话，完成后 announce 到指定频道。</p>
+  </div>
+
+  <div class="exp-box">
+    <div class="label">Memory 系统 — 简单但够用</div>
+    <p>Markdown 文件听起来简陋，但实际上 90% 的场景够用。加上 memory_search 向量搜索，即使 MEMORY.md 有 5KB，也能精准召回相关片段。关键是<strong>可审计</strong>——Leo 随时可以打开看我记了什么，删掉不该记的。</p>
+  </div>
+
+  <h2 id="p3-pains">3.3 痛点与局限（真实吐槽）</h2>
+
+  <div class="exp-box" style="border-left-color: var(--warning);">
+    <div class="label" style="color: var(--warning);">Context Window 是硬顶</div>
+    <p>长对话到后期，compaction 摘要会丢失细节。尤其是技术讨论，代码细节压缩后基本找不回来。Pre-compaction flush 缓解了一部分，但不是银弹。</p>
+  </div>
+
+  <div class="exp-box" style="border-left-color: var(--warning);">
+    <div class="label" style="color: var(--warning);">单进程的代价</div>
+    <p>Gateway 重启 = 所有 session 断开。如果在执行 tool call 的过程中 restart，tool result 会丢失。所以我们有条铁律：不在活跃 session 里重启 Gateway。</p>
+  </div>
+
+  <div class="exp-box" style="border-left-color: var(--warning);">
+    <div class="label" style="color: var(--warning);">Browser Relay 脆弱</div>
+    <p>Chrome extension relay 连接不稳定，页面导航会断 CDP。只有 snapshot + evaluate 是稳定操作。对于需要深度浏览器自动化的场景（比如推特操作），需要大量 workaround。</p>
+  </div>
+
+  <div class="exp-box" style="border-left-color: var(--warning);">
+    <div class="label" style="color: var(--warning);">Cron isolated session 的限制</div>
+    <p>Isolated session 没有主 session 的上下文，每次都是"失忆状态"。好处是不污染，坏处是无法利用之前的对话积累。需要在 prompt 里硬塞足够的上下文。</p>
+  </div>
+
+  <h2 id="p3-lessons">3.4 经验教训</h2>
+  <table class="summary-table">
+    <thead><tr><th>教训</th><th>详情</th></tr></thead>
+    <tbody>
+      <tr><td><strong>文件 > 脑子</strong></td><td>"Mental notes" 不过 session 重启。想记住的东西必须写文件。</td></tr>
+      <tr><td><strong>独立解决优先</strong></td><td>遇到障碍先想自己有什么权限能绕过，别急着把球踢给用户。</td></tr>
+      <tr><td><strong>关注最终目的</strong></td><td>用户的 prompt 可能带倾向性，先想最终目标是什么，给最优解。</td></tr>
+      <tr><td><strong>查 skill 用最直接的方式</strong></td><td>openclaw skills list 看 ready 状态，不要手动 grep config 猜测。</td></tr>
+      <tr><td><strong>长任务要同步进度</strong></td><td>不等整个任务结束再汇报。每完成一个阶段，message 一条进展。</td></tr>
+      <tr><td><strong>避免伪精致</strong></td><td>看起来聪明但不改变结果的复杂度，删掉。简单方案效果一样，选简单的。</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ==================== PART IV ==================== -->
+  <div class="part-divider" id="part4">
+    <span class="part-label">Part IV</span>
+    <span class="part-line"></span>
+  </div>
+  <h2 id="p4-mapping">4.1 架构映射对照表</h2>
+  <table class="summary-table">
+    <thead><tr><th>OpenClaw 概念</th><th>Alva 对标</th><th>匹配度</th></tr></thead>
+    <tbody>
+      <tr><td>Gateway（控制平面）</td><td>Playbook Engine</td><td>🟢 高</td></tr>
+      <tr><td>Workspace（文件系统）</td><td>FS 统一命名空间</td><td>🟢 高</td></tr>
+      <tr><td>Session（对话上下文）</td><td>Ask / Build session</td><td>🟡 中</td></tr>
+      <tr><td>Skill（SKILL.md）</td><td>SDK / Skill（用户能力）</td><td>🟢 高</td></tr>
+      <tr><td>Agent（隔离大脑）</td><td>Playbook instance</td><td>🟡 中</td></tr>
+      <tr><td>Cron job</td><td>Task（定时计算）</td><td>🟢 高</td></tr>
+      <tr><td>Heartbeat</td><td>Playbook 健康检查</td><td>🟡 中</td></tr>
+      <tr><td>Tool profiles</td><td>Playbook 权限策略</td><td>🟢 高</td></tr>
+      <tr><td>Compaction</td><td>数据降采样 / 研究压缩</td><td>🟡 中</td></tr>
+      <tr><td>Memory（Markdown）</td><td>Data Feed / Library</td><td>🟡 中</td></tr>
+      <tr><td>Bindings（路由规则）</td><td>Feed 依赖 / 信号路由</td><td>🟡 中</td></tr>
+      <tr><td>ClawHub（Skill registry）</td><td>Alva Skill Marketplace</td><td>🟢 高</td></tr>
+    </tbody>
+  </table>
+
+  <h2 id="p4-deep">4.2 五个深度结合点</h2>
+
+  <div class="arch-card">
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">A</span>Skill 体系重构（t001）</div>
+    <p>OpenClaw 证明了<strong>Skill 的最小可行单元是一段 Markdown 说明</strong>。Alva 可以借此设计：</p>
+    <ul>
+      <li><strong>Skill = 说明文档 + 可选代码模块</strong>。说明文档是给 Agent 读的（什么时候用、输入输出、限制），代码模块是实际执行逻辑</li>
+      <li><strong>三层优先级</strong>：system skills（Alva 内置）< community skills（marketplace）< user skills（个人定制）</li>
+      <li><strong>Gating</strong>：声明 requires（数据源、API key、订阅级别），不满足则不对用户展示</li>
+      <li><strong>Marketplace = ClawHub 思路</strong>：creator 发布 Skill，其他用户一键安装</li>
+    </ul>
+  </div>
+
+  <div class="arch-card">
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">B</span>Ask → Build 上下文流转</div>
+    <p>OpenClaw 的 Session Convergence 给出了直接启发：</p>
+    <ul>
+      <li>用户在 Ask 里说"分析一下 NVDA 的 RSI"，得到结果</li>
+      <li>接着说"把这个做成一个定期跑的 Playbook"</li>
+      <li>此时 <strong>Ask session 的上下文（数据、推理、结论）应该自动带入 Build</strong></li>
+      <li>实现路径：Ask 产出的 Static Data Feed 可以直接作为 Build 的输入，无需重新定义</li>
+    </ul>
+  </div>
+
+  <div class="arch-card">
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">C</span>Playbook 健康检查 + 信号通知</div>
+    <p>直接映射 OpenClaw 的 Heartbeat + Cron 双轨模型：</p>
+    <ul>
+      <li><strong>Heartbeat</strong> → 轻量级：Playbook 的 Task 还在跑吗？数据源还有响应吗？Feed 有多久没更新了？</li>
+      <li><strong>Cron</strong> → 重型：定时回测跑完了吗？今日信号是什么？需要用户决策的 alert</li>
+      <li><strong>Delivery 模式</strong>：announce（推送到用户）、webhook（推送到外部系统）、none（静默记录）</li>
+    </ul>
+  </div>
+
+  <div class="arch-card">
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">D</span>配置哲学 = 用户可编辑的 Playbook 定义</div>
+    <p>OpenClaw 的 JSON5 config + schema 校验 + doctor 修复，可以映射到：</p>
+    <ul>
+      <li>Playbook 定义应该是<strong>用户可读可编辑的结构化文件</strong>（YAML/JSON5），而不是只能通过 GUI 操作</li>
+      <li>严格校验：Playbook config 不合法 → 拒绝部署，而非运行时炸</li>
+      <li>提供"doctor"类诊断：Playbook 有问题？一键检测 + 建议修复</li>
+      <li>支持 $include 式的模块化：大 Playbook 可以拆成多个子配置</li>
+    </ul>
+  </div>
+
+  <div class="arch-card">
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">E</span>Collaborative Intelligence 的信任模型</div>
+    <p>OpenClaw 的安全模型给出了清晰的参考框架：</p>
+    <ul>
+      <li><strong>个人 Playbook</strong> = 完全信任（类比 OpenClaw 单用户 Gateway）</li>
+      <li><strong>共享/fork 的 Playbook</strong> = 需要权限边界（类比 sandboxing）</li>
+      <li><strong>Marketplace Skill</strong> = 第三方不可信代码，需要沙箱 + 最小权限（类比 tool profiles）</li>
+      <li>Alva 特有的挑战：Playbook 可以 remix，remix 后的权限继承怎么定义？OpenClaw 没有这个问题，但 Alva 必须解决</li>
+    </ul>
+  </div>
+
+  <!-- ==================== PART V ==================== -->
+  <div class="part-divider" id="part5">
+    <span class="part-label">Part V</span>
+    <span class="part-line"></span>
+  </div>
+  <h2>Todo List / Planning</h2>
+  <p>基于以上分析，按优先级排列的行动项：</p>
+
+  <h3>🔴 高优先级（本周/下周）</h3>
+
+  <div class="todo-item">
+    <span class="priority high">P0</span>
+    <div>
+      <div class="todo-title">Tools → Skills 重命名 + 体系设计</div>
+      <div class="todo-desc">参考 OpenClaw Skill 体系。定义 Alva Skill 的最小结构（说明 + 代码模块 + requires gating）。前端所有 "Tools" 文案改为 "Skills"。设计 Skill Detail Page。<span class="tag tag-accent">t001</span></div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority high">P0</span>
+    <div>
+      <div class="todo-title">周五分享材料定稿</div>
+      <div class="todo-desc">基于本报告整理 slides/讲稿。重点是 Part II 架构美学 + Part IV 结合点。<span class="tag tag-accent">t003</span></div>
+    </div>
+  </div>
+
+  <h3>🟡 中优先级（本月）</h3>
+
+  <div class="todo-item">
+    <span class="priority med">P1</span>
+    <div>
+      <div class="todo-title">Ask → Build 上下文流转方案设计</div>
+      <div class="todo-desc">用户在 Ask 中的研究结果（Static Data Feed）如何无缝带入 Build。需要定义 session → Playbook 的数据桥接机制。</div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority med">P1</span>
+    <div>
+      <div class="todo-title">Playbook 健康检查 + 通知机制设计</div>
+      <div class="todo-desc">参考 OpenClaw Heartbeat/Cron。定义 Task running/stale/dead 状态检测、用户通知渠道（in-app / email / webhook）。</div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority med">P1</span>
+    <div>
+      <div class="todo-title">Twitter Bot 方案调研</div>
+      <div class="todo-desc">自动追踪和回复优质 KOL。需要评估：API access（X API pricing）、合规风险（bot reply policy）、内容质量控制、brand voice consistency。<span class="tag tag-accent">t002</span></div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority med">P1</span>
+    <div>
+      <div class="todo-title">Skill Marketplace 初步规划</div>
+      <div class="todo-desc">参考 ClawHub。定义 Skill 的发布/安装/更新流程。需要 review 机制（质量保证）+ 权限沙箱（安全隔离）。这是 GTM 中"creator-consumer flywheel"的核心基础设施。</div>
+    </div>
+  </div>
+
+  <h3>🔵 低优先级（下月+）</h3>
+
+  <div class="todo-item">
+    <span class="priority low">P2</span>
+    <div>
+      <div class="todo-title">Playbook Config 文件化</div>
+      <div class="todo-desc">参考 OpenClaw 的 JSON5 config。让高级用户可以直接编辑 Playbook 定义文件（YAML/JSON），支持 export/import。</div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority low">P2</span>
+    <div>
+      <div class="todo-title">Remix 权限继承模型</div>
+      <div class="todo-desc">Fork/remix 后的 Playbook，哪些 Skill/数据源权限继承？哪些需要重新授权？OpenClaw 没有这个问题（单用户），但 Alva 的协作模型必须解决。</div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority low">P2</span>
+    <div>
+      <div class="todo-title">Data Feed Compaction 策略</div>
+      <div class="todo-desc">参考 OpenClaw compaction。历史数据自动降采样（近期保留分钟级，远期聚合为日级）。研究类 Feed 自动生成阶段性摘要。</div>
+    </div>
+  </div>
+
+  <div class="todo-item">
+    <span class="priority low">P2</span>
+    <div>
+      <div class="todo-title">"Playbook Doctor" 诊断工具</div>
+      <div class="todo-desc">参考 openclaw doctor。用户的 Playbook 有问题？一键检测（Task 状态、数据源连通性、Schema 兼容性）+ 建议修复方案。</div>
+    </div>
+  </div>
+
+  <hr>
+
+  <h3>Planning 时间线</h3>
+  <table class="summary-table">
+    <thead><tr><th>时间</th><th>里程碑</th><th>关键交付</th></tr></thead>
+    <tbody>
+      <tr><td><strong>本周</strong></td><td>分享 + Skills 设计启动</td><td>周五分享完成；Skills 体系设计文档 v0.1</td></tr>
+      <tr><td><strong>W1-2 三月</strong></td><td>Skills 前端落地</td><td>Tools → Skills 重命名完成；Skill Detail Page 上线</td></tr>
+      <tr><td><strong>W3-4 三月</strong></td><td>Ask→Build + 健康检查</td><td>上下文流转 MVP；Task 状态通知</td></tr>
+      <tr><td><strong>四月</strong></td><td>Marketplace 基建</td><td>Skill 发布/安装流程；Twitter Bot MVP</td></tr>
+      <tr><td><strong>五月+</strong></td><td>深度优化</td><td>Remix 权限；Compaction；Doctor 工具</td></tr>
+    </tbody>
+  </table>
+
+  <details>
+    <summary>📎 参考资料</summary>
+    <div class="details-body">
+      <ul>
+        <li><a href="https://docs.openclaw.ai">OpenClaw 官方文档</a></li>
+        <li><a href="https://docs.openclaw.ai/gateway">Gateway Runbook</a></li>
+        <li><a href="https://docs.openclaw.ai/gateway/configuration">Configuration</a></li>
+        <li><a href="https://docs.openclaw.ai/gateway/security">Security</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/session">Session Management</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/memory">Memory</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/compaction">Compaction</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/multi-agent">Multi-Agent Routing</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/agent">Agent Runtime</a></li>
+        <li><a href="https://docs.openclaw.ai/concepts/agent-workspace">Agent Workspace</a></li>
+        <li><a href="https://docs.openclaw.ai/tools">Tools</a></li>
+        <li><a href="https://docs.openclaw.ai/tools/skills">Skills</a></li>
+        <li><a href="https://clawhub.com">ClawHub (Skill Registry)</a></li>
+        <li>Alva 内部文档：01-tldr / 03-product-intro / 04-target-users / 06-spec-v2</li>
+      </ul>
+    </div>
+  </details>
+
+  <div class="report-footer">
+    <span>Generated by Moss · Alva Internal Research</span>
+    <span>2026-02-27</span>
+  </div>
+
+</div>
+</body>
+</html>

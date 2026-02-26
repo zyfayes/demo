@@ -1,0 +1,132 @@
+{
+  "date": "2026-02-26",
+  "summary": "今日精选聚焦两个主线：一是前沿 AI 公司的“速度竞争与治理再平衡”，二是教育领域从试点走向制度化落地。产业侧，Anthropic 安全承诺调整、Claude Remote Control 与 Mercury 2 低时延路线共同表明，竞争焦点正从“单模型能力”转向“工作流效率 + 风险治理框架”。生态侧，Moonshine 这类端侧语音开源项目继续降低实时交互应用门槛。教育科技方面本期共 4 条，覆盖国会听证、学生选校行为、州级部署与平台级 AI 助教产品，显示 EdTech 已进入“高频使用 + 高要求监管”并存阶段。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "the watchers: how openai, the US government, and persona built an identity surveillance machine",
+      "url": "https://vmfunc.re/blog/persona/",
+      "source": "vmfunc.re / 安全研究",
+      "tldr": "一份公开安全研究称，研究者通过被动情报发现 Persona 与 OpenAI 相关的“watchlistdb”基础设施暴露了大量源码与流程线索，涉及身份核验、风险筛查与可疑活动报告流程。文章核心并非“黑客入侵”，而是强调公开可见元数据与配置本身已足以重构系统画像。它把 AI 账号实名链路与更广泛的合规监控体系联系起来，触发了对数据边界与监管透明度的讨论。",
+      "excerpt": "文章披露，研究者通过 CT 日志、Shodan、DNS 和未鉴权资源等公开线索追踪到疑似 OpenAI 相关的 watchlistdb 服务。文中称，系统并非面向公众，但其公开可见外围信息已能揭示内部风控与身份核验的技术结构。报道强调“未使用凭据、未入侵系统”，争议焦点在于公开暴露面与合规审计是否充分。若其结论被进一步证实，将意味着 AI 产品的 KYC 流程正深度接入金融反洗钱式筛查范式。对行业而言，这类事件会推动企业重新审视第三方身份服务的最小暴露面、日志保留策略与外部沟通机制。对用户而言，实名验证不再只是一次性门槛，而可能是持续风险重评估链路中的长期节点。政策层面，这也把“模型安全”讨论延伸到“身份基础设施安全”和可问责性。",
+      "tags": [
+        "AI治理",
+        "身份验证",
+        "隐私合规",
+        "安全研究"
+      ]
+    },
+    {
+      "num": 2,
+      "title": "Exclusive: Anthropic Drops Flagship Safety Pledge",
+      "url": "https://time.com/7380854/exclusive-anthropic-drops-flagship-safety-pledge/",
+      "source": "TIME",
+      "tldr": "TIME 报道称，Anthropic 调整了其 Responsible Scaling Policy，删除了“若无法预先保证足够缓解措施则不训练更强模型”的关键承诺。公司解释是单边停训在竞争环境下未必提升整体安全，转向“透明披露+阶段延后”的治理方式。此举被视为前沿实验室从“硬阈值承诺”转向“动态风险管理”的标志性信号。",
+      "excerpt": "新政策强调发布更频繁的风险报告与安全路线图，并承诺在特定高风险条件下延后开发节奏。Anthropic 的表述是：如果只有一家负责任公司停下，而其他对手继续推进，全球风险可能反而上升。支持者认为，这种框架更贴近现实竞争与不确定评测能力，避免把安全目标绑定在难以验证的单点阈值上。批评者则担心，删除硬约束会削弱外界可审计性，使“安全优先”更依赖企业自律。事件同时反映监管真空：当联邦层面的统一规则不足时，企业内部政策就成了事实标准。接下来值得观察的是其风险报告是否具备足够可比性、可复核性与外部审阅机制。对产业链上下游而言，这会影响采购方如何评估模型供应商的治理成熟度。",
+      "tags": [
+        "AI安全",
+        "政策治理",
+        "前沿模型",
+        "产业竞争"
+      ]
+    },
+    {
+      "num": 3,
+      "title": "Continue local sessions from any device with Remote Control",
+      "url": "https://code.claude.com/docs/en/remote-control",
+      "source": "Claude Code Docs",
+      "tldr": "Claude Code 发布 Remote Control 预览，可把本地运行的会话接到网页或手机端继续操作。它强调“会话仍在本地执行”，远端只是界面转发，支持文件系统、MCP 与本地工具链不迁移。这让“本地安全边界 + 跨设备连续性”成为新的开发体验组合。",
+      "excerpt": "文档显示该能力面向 Pro/Max 计划，支持通过 URL 或二维码在多设备接续同一会话。技术上采用本地进程向外发起 HTTPS 连接并轮询/流式通信，不需要在本机开放入站端口。与纯云端 coding agent 的关键差异在于：Remote Control 保留了本地仓库、凭据上下文与自定义工具生态。对团队而言，这降低了在移动场景中中断任务的成本，并提高故障恢复与会话连续性。安全层面，它把“云端代理风险”转化为“本地端点风险”，使设备管理和终端权限治理更重要。产品层面，这类能力意味着 AI 编程竞争正从“模型效果”延伸到“会话编排与工作流体验”。未来若结合更细粒度审计、沙箱与策略控制，企业采用门槛会进一步下降。",
+      "tags": [
+        "AI编程",
+        "Agent工作流",
+        "开发者工具",
+        "远程协作"
+      ]
+    },
+    {
+      "num": 4,
+      "title": "Introducing Mercury 2",
+      "url": "https://www.inceptionlabs.ai/blog/introducing-mercury-2",
+      "source": "Inception Labs",
+      "tldr": "Inception Labs 发布 Mercury 2，主打 diffusion 架构推理模型在高并发下的超低延迟，宣称可达千 token/s 级别。其卖点是通过并行细化替代传统逐 token 解码，在代理循环、语音交互和实时编码场景压缩响应时间。这代表“速度曲线”正在成为新一轮模型竞争主轴。",
+      "excerpt": "官方称 Mercury 2 在 Blackwell GPU 上达到约 1,009 tokens/s，并提供 128K 上下文、工具调用与结构化输出。与自回归模型不同，diffusion 风格生成通过并行修订草稿来缩短端到端等待时间。对生产系统最直接的价值不是单次回答更快，而是多步 agent 链路中累计延迟显著下降。其商业意义在于：当时延下降后，企业可在同一交互预算内引入更多检索、校验和重试步骤，提高最终质量。与此同时，这类宣传仍需第三方基准验证，尤其是复杂任务质量、稳定性和成本在真实流量下的平衡。若后续生态工具链跟进，diffusion LLM 可能从“研究亮点”转为“实时应用标配选项”。",
+      "tags": [
+        "模型发布",
+        "Diffusion LLM",
+        "低延迟",
+        "生产部署"
+      ]
+    },
+    {
+      "num": 5,
+      "title": "moonshine-ai/moonshine: Fast and accurate automatic speech recognition (ASR) for edge devices",
+      "url": "https://github.com/moonshine-ai/moonshine",
+      "source": "GitHub / Moonshine",
+      "tldr": "Moonshine 开源实时语音识别工具链，强调端侧运行、隐私友好和跨平台部署，并给出相较 Whisper 的延迟/精度对比。项目覆盖 Python、iOS、Android、Raspberry Pi 等多端，适合构建低时延语音入口。对语音 Agent 来说，它补上了“本地听写层”的关键基础设施。",
+      "excerpt": "仓库定位为面向实时语音应用的开源 ASR 套件，核心特点是流式推理与端侧可部署。官方提供从 tiny 到 medium 的多档模型，平衡设备算力与识别准确率。与传统云端语音 API 相比，本地方案在隐私、离线可用性和成本可控性上更具吸引力。项目还提供意图识别、说话人相关能力与多语言支持，降低了语音产品从 demo 到可用系统的工程门槛。若其基准在第三方环境下保持稳定，将推动更多“语音 + Agent”应用从云端回流到端侧。对开发者生态而言，这类项目的价值不仅在模型本身，更在统一 SDK 与跨平台工程化经验的沉淀。",
+      "tags": [
+        "开源项目",
+        "语音识别",
+        "边缘AI",
+        "实时交互"
+      ]
+    },
+    {
+      "num": 6,
+      "title": "Teachers Want 'Guardrails and Guidance' on AI Use, Experts Tell Congress",
+      "url": "https://www.edweek.org/technology/teachers-wants-guardrails-and-guidance-on-ai-use-experts-tell-congress/2026/02",
+      "source": "Education Week",
+      "tldr": "美国国会听证与教育界反馈显示，教师群体对 AI 进入课堂并非单纯抵触，而是强烈要求更统一的“护栏与指引”。当前培训来源分散于州政府、工会、科技公司和民间渠道，质量不一。教育系统的核心诉求正在从“要不要用 AI”转向“如何可控地用”。",
+      "excerpt": "报道指出，K-12 教师 AI 使用率持续上升，但配套规范、隐私要求与教学边界仍不统一。多方证词强调“教师主导、AI辅助”的原则，反对把课堂决策权外包给工具提供方。现实挑战是，学校既要提升教师 AI 素养，又要避免被单一厂商培训路径锁定。文章还提到州级指南迭代很快，说明政策更新速度难以跟上工具演化节奏。对学校管理者而言，下一步重点将是标准化采购评估、数据治理与教师持续培训体系。对 EdTech 公司来说，真正可持续的竞争力不只在功能，而在可解释性、审计能力和课堂落地支持。",
+      "tags": [
+        "教育科技",
+        "K12",
+        "AI治理",
+        "教师发展"
+      ]
+    },
+    {
+      "num": 7,
+      "title": "Teens Are Using AI to Research Colleges. Is That a Good Thing?",
+      "url": "https://www.edweek.org/teaching-learning/teens-are-putting-ai-to-use-in-researching-colleges/2026/02",
+      "source": "Education Week",
+      "tldr": "一项面向 5000+ 高中生的调查显示，约半数学生已用生成式 AI 辅助选校，并实际影响申请名单和专业选择。AI 让信息获取更快，但也可能放大错误建议、偏见与“提示词能力差异”。这意味着升学咨询正进入“人类顾问 + 机器助手”并存的新阶段。",
+      "excerpt": "报道披露，学生正用聊天机器人做院校筛选、申请流程梳理、备考与专业探索，并出现持续对话式咨询行为。积极面在于，AI 为缺乏优质升学辅导资源的学生提供了更低门槛的支持。风险在于，学生可能把不稳定或错误输出当成高置信结论，进而改变关键人生决策。研究同时显示不少学生对 AI 保持怀疑，这反而是健康信号，说明“工具即答案”的心态尚未固化。对学校而言，重要任务是把 AI 使用规范纳入生涯教育课程，教授验证来源与交叉求证能力。对产业而言，面向未成年人的教育 AI 产品将越来越依赖责任设计、透明披露与结果可追溯机制。",
+      "tags": [
+        "教育科技",
+        "升学辅导",
+        "青少年AI使用",
+        "数字素养"
+      ]
+    },
+    {
+      "num": 8,
+      "title": "Louisiana is cautiously embracing AI in schools",
+      "url": "https://americanpress.com/2026/02/24/louisiana-is-cautiously-embracing-ai-in-schools/",
+      "source": "American Press / The Center Square",
+      "tldr": "路易斯安那州在“谨慎推进”框架下引入 AI 阅读辅导、助教与写作评估工具，并同步投入教师培训和计算机科学资金。其策略是边试点边设防，尤其强调基础学科能力与学生数据隐私。该州路径可视为美国地方教育 AI 落地的务实样本。",
+      "excerpt": "报道提到州教育体系已为多款 AI 教学工具提供专项资金，并在阅读、写作反馈和课堂支持场景先行。与此同时，州方公开强调不会让 AI 破坏“读写算与思辨”基本盘，把技术定位为增效而非替代。政策层面还在持续听取供应商与地方学校反馈，显示其采购和评估机制仍处于迭代期。此类“有限场景验证 + 教师培训先行”的做法，有助于降低大规模一次性部署风险。对其他地区的借鉴意义在于：教育 AI 成败往往不取决于单个工具能力，而取决于治理节奏、师训投入与问责机制是否同步。",
+      "tags": [
+        "教育科技",
+        "州级政策",
+        "智能教辅",
+        "数据隐私"
+      ]
+    },
+    {
+      "num": 9,
+      "title": "Thinkific Launches Thinker: An AI Assistant That Personalizes Learner Support at Scale",
+      "url": "https://canadiansme.ca/thinkific-launches-thinker-an-ai-assistant-that-personalizes-learner-support-at-scale/",
+      "source": "Thinkific / CanadianSME",
+      "tldr": "Thinkific 推出 Thinker，定位为嵌入课程体系的 7x24 AI 教学助理，可基于机构私有内容提供个性化答疑与推荐。产品强调在扩大学习服务规模时降低人工支持成本，并声明不以客户内容训练基础大模型。这反映出职业教育与学习商业化平台正加速把 AI 做成“默认能力层”。",
+      "excerpt": "公告显示 Thinker 已集成于 Thinkific Plus，并采用额度制计费，优先面向有规模化课程运营需求的机构。其差异化点在于把回答范围锚定在客户自有课程与资产，减少通用模型“泛化幻觉”对学习体验的破坏。对培训机构而言，这类能力可缓解夜间与高峰期支持压力，并提升课程完成率和学习留存。挑战在于，教育场景对答案准确性、语气一致性和合规要求比通用客服更严苛。若平台能持续证明学习效果与商业 ROI，AI 助教将从增值插件升级为 LMS/LXP 的基础配置。",
+      "tags": [
+        "教育科技",
+        "学习平台",
+        "AI助教",
+        "商业化"
+      ]
+    }
+  ]
+}

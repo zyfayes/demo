@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRAM Price Trend</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+<style>
+  :root {
+    /* Text */
+    --text-n10: rgb(0, 0, 0);
+    --text-n9: rgba(0,0,0,0.9);
+    --text-n7: rgba(0,0,0,0.7);
+    --text-n5: rgba(0,0,0,0.5);
+    --text-n3: rgba(0,0,0,0.3);
+    --text-n2: rgba(0,0,0,0.2);
+
+    /* Semantic */
+    --main-m1: #49A3A6;
+
+    /* Chart */
+    --chart-cyan1-main: #49A3A6;
+    --chart-orange1-main: #FF9800;
+
+    /* Background */
+    --b0-page: #ffffff;
+    --b0-container: #ffffff;
+    --grey-g01: #fafafa;
+    --line-l07: rgba(0,0,0,0.05);
+
+    /* Spacing */
+    --spacing-xxs: 4px;
+    --spacing-xs: 8px;
+    --spacing-s: 12px;
+    --spacing-m: 16px;
+    --spacing-l: 20px;
+
+    /* Radius */
+    --radius-ct-s: 4px;
+    --radius-ct-m: 6px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--b0-page);
+    font-family: 'Delight', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .widget-card {
+    width: 720px;
+    height: 364px;
+    background: transparent;
+    border-radius: var(--radius-ct-s);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .widget-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 22px;
+    margin-bottom: var(--spacing-m);
+  }
+
+  .widget-title-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-n9);
+    letter-spacing: 0.14px;
+    line-height: 22px;
+  }
+
+  .widget-timestamp {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xxs);
+    font-size: 12px;
+    color: var(--text-n5);
+    line-height: 20px;
+  }
+
+  .chart-body {
+    flex: 1;
+    padding: var(--spacing-m);
+    border-radius: var(--radius-ct-m);
+    position: relative;
+    background-color: #ffffff;
+    background-image: radial-gradient(circle, rgba(0, 0, 0, 0.18) 0.6px, transparent 0.6px);
+    background-size: 3px 3px;
+  }
+
+  .chart-legend {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-xs);
+    height: 16px;
+    margin-bottom: var(--spacing-xxs);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xxs);
+    font-size: 10px;
+    color: var(--text-n5);
+    line-height: 16px;
+    font-weight: 400;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .chart-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 20px);
+  }
+
+  .alva-watermark {
+    position: absolute;
+    bottom: var(--spacing-m);
+    left: var(--spacing-m);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-n10);
+    opacity: 0.2;
+  }
+</style>
+</head>
+<body>
+
+<div class="widget-card">
+  <div class="widget-title">
+    <span class="widget-title-text">DRAM Price Trend</span>
+    <span class="widget-timestamp">02/12/2026 12:30</span>
+  </div>
+  <div class="chart-body">
+    <div class="chart-legend">
+      <div class="legend-item">
+        <span class="legend-dot" style="background: #49A3A6;"></span>
+        <span>DDR5 16Gb</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: #FF9800;"></span>
+        <span>DDR4 16Gb</span>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="dramChart"></canvas>
+    </div>
+    <div class="alva-watermark">Alva</div>
+  </div>
+</div>
+
+<script>
+// DDR4 16Gb (2Gx8) 3200 - Avg price data
+const ddr4Data = [
+  { date: '2025-02-10', avg: 3.061 },
+  { date: '2025-02-11', avg: 3.034 },
+  { date: '2025-02-12', avg: 3.034 },
+  { date: '2025-02-13', avg: 3.034 },
+  { date: '2025-02-14', avg: 3.008 },
+  { date: '2025-02-17', avg: 3.008 },
+  { date: '2025-02-18', avg: 2.997 },
+  { date: '2025-02-19', avg: 2.987 },
+  { date: '2025-02-20', avg: 2.968 },
+  { date: '2025-02-21', avg: 2.968 },
+  { date: '2025-02-24', avg: 2.955 },
+  { date: '2025-02-25', avg: 2.955 },
+  { date: '2025-02-26', avg: 2.955 },
+  { date: '2025-02-27', avg: 2.945 },
+  { date: '2025-02-28', avg: 2.945 },
+  { date: '2025-03-03', avg: 2.934 },
+  { date: '2025-03-04', avg: 2.934 },
+  { date: '2025-03-05', avg: 2.934 },
+  { date: '2025-03-06', avg: 2.934 },
+  { date: '2025-03-07', avg: 2.934 },
+  { date: '2025-03-10', avg: 2.929 },
+  { date: '2025-03-11', avg: 2.934 },
+  { date: '2025-03-12', avg: 2.934 },
+  { date: '2025-03-13', avg: 2.934 },
+  { date: '2025-03-14', avg: 2.945 },
+  { date: '2025-03-17', avg: 2.961 },
+  { date: '2025-03-18', avg: 2.971 },
+  { date: '2025-03-19', avg: 2.997 },
+  { date: '2025-03-20', avg: 3.024 },
+  { date: '2025-03-21', avg: 3.050 },
+  { date: '2025-03-24', avg: 3.076 },
+  { date: '2025-03-25', avg: 3.103 },
+  { date: '2025-03-26', avg: 3.153 },
+  { date: '2025-03-27', avg: 3.194 },
+  { date: '2025-03-28', avg: 3.222 },
+  { date: '2025-03-31', avg: 3.244 },
+  { date: '2025-04-01', avg: 3.266 },
+  { date: '2025-04-02', avg: 3.272 },
+  { date: '2025-04-03', avg: 3.279 },
+  { date: '2025-04-07', avg: 3.279 },
+  { date: '2025-04-08', avg: 3.278 },
+  { date: '2025-04-09', avg: 3.283 },
+  { date: '2025-04-10', avg: 3.283 },
+  { date: '2025-04-11', avg: 3.283 },
+  { date: '2025-04-14', avg: 3.300 },
+  { date: '2025-04-15', avg: 3.311 },
+  { date: '2025-04-16', avg: 3.322 },
+  { date: '2025-04-17', avg: 3.356 },
+  { date: '2025-04-18', avg: 3.392 },
+  { date: '2025-04-21', avg: 3.436 },
+  { date: '2025-04-22', avg: 3.474 },
+  { date: '2025-04-23', avg: 3.499 },
+  { date: '2025-04-24', avg: 3.528 },
+  { date: '2025-04-25', avg: 3.552 },
+  { date: '2025-04-28', avg: 3.581 },
+  { date: '2025-04-29', avg: 3.698 },
+  { date: '2025-04-30', avg: 3.758 },
+  { date: '2025-05-02', avg: 3.800 },
+  { date: '2025-05-05', avg: 3.830 },
+  { date: '2025-05-06', avg: 3.890 },
+  { date: '2025-05-07', avg: 3.940 },
+  { date: '2025-05-08', avg: 4.034 },
+  { date: '2025-05-09', avg: 4.113 },
+  { date: '2025-05-12', avg: 4.163 },
+  { date: '2025-05-13', avg: 4.220 },
+  { date: '2025-05-14', avg: 4.216 },
+  { date: '2025-05-15', avg: 4.213 },
+  { date: '2025-05-16', avg: 4.223 },
+  { date: '2025-05-19', avg: 4.223 },
+  { date: '2025-05-20', avg: 4.248 },
+  { date: '2025-05-21', avg: 4.288 },
+  { date: '2025-05-22', avg: 4.400 },
+  { date: '2025-05-23', avg: 4.550 },
+  { date: '2025-05-26', avg: 4.640 },
+  { date: '2025-05-27', avg: 4.801 },
+  { date: '2025-05-28', avg: 4.940 },
+  { date: '2025-05-29', avg: 5.098 },
+  { date: '2025-05-30', avg: 5.198 },
+  { date: '2025-06-02', avg: 5.171 },
+  { date: '2025-06-03', avg: 5.220 },
+  { date: '2025-06-04', avg: 5.423 },
+  { date: '2025-06-05', avg: 5.533 },
+  { date: '2025-06-06', avg: 5.651 },
+  { date: '2025-06-09', avg: 5.860 },
+  { date: '2025-06-10', avg: 6.010 },
+  { date: '2025-06-11', avg: 6.140 },
+  { date: '2025-06-12', avg: 6.290 },
+  { date: '2025-06-13', avg: 6.460 },
+  { date: '2025-06-16', avg: 6.837 },
+  { date: '2025-06-17', avg: 7.021 },
+  { date: '2025-06-18', avg: 7.600 },
+  { date: '2025-06-19', avg: 8.063 },
+  { date: '2025-06-20', avg: 8.563 },
+  { date: '2025-06-23', avg: 8.633 },
+  { date: '2025-06-24', avg: 8.600 },
+  { date: '2025-06-25', avg: 8.556 },
+  { date: '2025-06-26', avg: 8.537 },
+  { date: '2025-06-27', avg: 8.534 },
+  { date: '2025-06-30', avg: 8.534 },
+  { date: '2025-07-01', avg: 8.534 },
+  { date: '2025-07-02', avg: 8.512 },
+  { date: '2025-07-03', avg: 8.449 },
+  { date: '2025-07-04', avg: 8.426 },
+  { date: '2025-07-07', avg: 8.404 },
+  { date: '2025-07-08', avg: 8.397 },
+  { date: '2025-07-09', avg: 8.388 },
+  { date: '2025-07-10', avg: 8.391 },
+  { date: '2025-07-11', avg: 8.524 },
+  { date: '2025-07-14', avg: 8.524 },
+  { date: '2025-07-15', avg: 8.612 },
+  { date: '2025-07-16', avg: 8.621 },
+  { date: '2025-07-17', avg: 8.625 },
+  { date: '2025-07-18', avg: 8.634 },
+  { date: '2025-07-21', avg: 8.628 },
+  { date: '2025-07-22', avg: 8.650 },
+  { date: '2025-07-23', avg: 8.644 },
+  { date: '2025-07-24', avg: 8.622 },
+  { date: '2025-07-25', avg: 8.590 },
+  { date: '2025-07-28', avg: 8.568 },
+  { date: '2025-07-29', avg: 8.558 },
+  { date: '2025-07-30', avg: 8.558 },
+  { date: '2025-07-31', avg: 8.593 },
+  { date: '2025-08-01', avg: 8.589 },
+  { date: '2025-08-04', avg: 8.585 },
+  { date: '2025-08-05', avg: 8.585 },
+  { date: '2025-08-06', avg: 8.572 },
+  { date: '2025-08-07', avg: 8.572 },
+  { date: '2025-08-08', avg: 8.581 },
+  { date: '2025-08-11', avg: 8.678 },
+  { date: '2025-08-12', avg: 8.734 },
+  { date: '2025-08-13', avg: 8.792 },
+  { date: '2025-08-14', avg: 8.851 },
+  { date: '2025-08-15', avg: 8.940 },
+  { date: '2025-08-18', avg: 8.998 },
+  { date: '2025-08-19', avg: 8.998 },
+  { date: '2025-08-20', avg: 9.034 },
+  { date: '2025-08-21', avg: 9.093 },
+  { date: '2025-08-22', avg: 9.115 },
+  { date: '2025-08-25', avg: 9.129 },
+  { date: '2025-08-26', avg: 9.189 },
+  { date: '2025-08-27', avg: 9.301 },
+  { date: '2025-08-28', avg: 9.301 },
+  { date: '2025-08-29', avg: 9.376 },
+  { date: '2025-09-01', avg: 9.377 },
+  { date: '2025-09-02', avg: 9.466 },
+  { date: '2025-09-03', avg: 9.503 },
+  { date: '2025-09-04', avg: 9.571 },
+  { date: '2025-09-05', avg: 9.658 },
+  { date: '2025-09-08', avg: 9.710 },
+  { date: '2025-09-09', avg: 9.731 },
+  { date: '2025-09-10', avg: 9.876 },
+  { date: '2025-09-11', avg: 10.158 },
+  { date: '2025-09-12', avg: 10.245 },
+  { date: '2025-09-15', avg: 10.293 },
+  { date: '2025-09-16', avg: 10.459 },
+  { date: '2025-09-17', avg: 10.720 },
+  { date: '2025-09-18', avg: 10.855 },
+  { date: '2025-09-19', avg: 11.127 },
+  { date: '2025-09-22', avg: 11.318 },
+  { date: '2025-09-23', avg: 11.500 },
+  { date: '2025-09-24', avg: 11.682 },
+  { date: '2025-09-25', avg: 12.164 },
+  { date: '2025-09-26', avg: 12.400 },
+  { date: '2025-09-29', avg: 12.627 },
+  { date: '2025-09-30', avg: 12.962 },
+  { date: '2025-10-01', avg: 13.314 },
+  { date: '2025-10-02', avg: 13.676 },
+  { date: '2025-10-03', avg: 13.981 },
+  { date: '2025-10-07', avg: 14.318 },
+  { date: '2025-10-08', avg: 14.573 },
+  { date: '2025-10-09', avg: 14.964 },
+  { date: '2025-10-10', avg: 15.218 },
+  { date: '2025-10-13', avg: 15.636 },
+  { date: '2025-10-14', avg: 15.918 },
+  { date: '2025-10-15', avg: 16.500 },
+  { date: '2025-10-16', avg: 17.055 },
+  { date: '2025-10-17', avg: 17.909 },
+  { date: '2025-10-20', avg: 18.300 },
+  { date: '2025-10-21', avg: 18.630 },
+  { date: '2025-10-22', avg: 19.250 },
+  { date: '2025-10-23', avg: 19.800 },
+  { date: '2025-10-24', avg: 20.550 },
+  { date: '2025-10-27', avg: 21.350 },
+  { date: '2025-10-28', avg: 22.500 },
+  { date: '2025-10-29', avg: 23.560 },
+  { date: '2025-10-30', avg: 24.550 },
+  { date: '2025-10-31', avg: 25.500 },
+  { date: '2025-11-03', avg: 26.100 },
+  { date: '2025-11-04', avg: 26.900 },
+  { date: '2025-11-05', avg: 28.000 },
+  { date: '2025-11-06', avg: 29.100 },
+  { date: '2025-11-07', avg: 30.500 },
+  { date: '2025-11-10', avg: 31.900 },
+  { date: '2025-11-11', avg: 33.250 },
+  { date: '2025-11-12', avg: 33.950 },
+  { date: '2025-11-13', avg: 34.010 },
+  { date: '2025-11-14', avg: 34.375 },
+  { date: '2025-11-17', avg: 34.750 },
+  { date: '2025-11-18', avg: 35.000 },
+  { date: '2025-11-19', avg: 35.250 },
+  { date: '2025-11-20', avg: 36.500 },
+  { date: '2025-11-21', avg: 37.500 },
+  { date: '2025-11-24', avg: 38.525 },
+  { date: '2025-11-25', avg: 39.375 },
+  { date: '2025-11-26', avg: 40.750 },
+  { date: '2025-11-27', avg: 42.000 },
+  { date: '2025-11-28', avg: 42.500 },
+  { date: '2025-12-01', avg: 43.625 },
+  { date: '2025-12-02', avg: 44.550 },
+  { date: '2025-12-03', avg: 45.500 },
+  { date: '2025-12-04', avg: 45.750 },
+  { date: '2025-12-05', avg: 46.500 },
+  { date: '2025-12-08', avg: 46.875 },
+  { date: '2025-12-09', avg: 47.125 },
+  { date: '2025-12-10', avg: 47.875 },
+  { date: '2025-12-11', avg: 49.000 },
+  { date: '2025-12-12', avg: 50.125 },
+  { date: '2025-12-15', avg: 50.750 },
+  { date: '2025-12-16', avg: 51.250 },
+  { date: '2025-12-17', avg: 52.375 },
+  { date: '2025-12-18', avg: 53.625 },
+  { date: '2025-12-19', avg: 55.000 },
+  { date: '2025-12-22', avg: 56.875 },
+  { date: '2025-12-23', avg: 58.125 },
+  { date: '2025-12-24', avg: 59.500 },
+  { date: '2025-12-25', avg: 60.692 },
+  { date: '2025-12-26', avg: 61.846 },
+  { date: '2025-12-29', avg: 62.385 },
+  { date: '2025-12-30', avg: 63.564 },
+  { date: '2025-12-31', avg: 64.488 },
+  { date: '2026-01-02', avg: 65.561 },
+  { date: '2026-01-05', avg: 66.488 },
+  { date: '2026-01-06', avg: 67.415 },
+  { date: '2026-01-07', avg: 68.683 },
+  { date: '2026-01-08', avg: 70.000 },
+  { date: '2026-01-09', avg: 71.000 },
+  { date: '2026-01-12', avg: 71.500 },
+  { date: '2026-01-13', avg: 73.500 },
+  { date: '2026-01-14', avg: 74.500 },
+  { date: '2026-01-15', avg: 75.545 },
+  { date: '2026-01-16', avg: 76.909 },
+  { date: '2026-01-19', avg: 77.864 },
+  { date: '2026-01-20', avg: 78.364 },
+  { date: '2026-01-21', avg: 78.364 },
+  { date: '2026-01-22', avg: 78.636 },
+  { date: '2026-01-23', avg: 78.750 },
+  { date: '2026-01-26', avg: 78.805 },
+  { date: '2026-01-27', avg: 78.750 },
+  { date: '2026-01-28', avg: 78.205 },
+  { date: '2026-01-29', avg: 77.932 },
+  { date: '2026-01-30', avg: 77.705 },
+  { date: '2026-02-02', avg: 77.591 },
+  { date: '2026-02-03', avg: 77.205 },
+  { date: '2026-02-04', avg: 77.084 },
+  { date: '2026-02-05', avg: 76.949 },
+  { date: '2026-02-06', avg: 76.966 },
+  { date: '2026-02-09', avg: 76.848 },
+  { date: '2026-02-10', avg: 76.966 },
+];
+
+// DDR5 16Gb (2Gx8) 4800/5600 - Avg price data
+const ddr5Data = [
+  { date: '2025-02-10', avg: 4.707 },
+  { date: '2025-02-11', avg: 4.725 },
+  { date: '2025-02-12', avg: 4.750 },
+  { date: '2025-02-13', avg: 4.761 },
+  { date: '2025-02-14', avg: 4.773 },
+  { date: '2025-02-17', avg: 4.781 },
+  { date: '2025-02-18', avg: 4.787 },
+  { date: '2025-02-19', avg: 4.787 },
+  { date: '2025-02-20', avg: 4.797 },
+  { date: '2025-02-21', avg: 4.809 },
+  { date: '2025-02-24', avg: 4.822 },
+  { date: '2025-02-25', avg: 4.831 },
+  { date: '2025-02-26', avg: 4.837 },
+  { date: '2025-02-27', avg: 4.889 },
+  { date: '2025-02-28', avg: 4.900 },
+  { date: '2025-03-03', avg: 4.929 },
+  { date: '2025-03-04', avg: 4.931 },
+  { date: '2025-03-05', avg: 4.943 },
+  { date: '2025-03-06', avg: 4.957 },
+  { date: '2025-03-07', avg: 5.000 },
+  { date: '2025-03-10', avg: 5.025 },
+  { date: '2025-03-11', avg: 5.038 },
+  { date: '2025-03-12', avg: 5.053 },
+  { date: '2025-03-13', avg: 5.068 },
+  { date: '2025-03-14', avg: 5.078 },
+  { date: '2025-03-17', avg: 5.088 },
+  { date: '2025-03-18', avg: 5.113 },
+  { date: '2025-03-19', avg: 5.113 },
+  { date: '2025-03-20', avg: 5.138 },
+  { date: '2025-03-21', avg: 5.163 },
+  { date: '2025-03-24', avg: 5.188 },
+  { date: '2025-03-25', avg: 5.213 },
+  { date: '2025-03-26', avg: 5.238 },
+  { date: '2025-03-27', avg: 5.288 },
+  { date: '2025-03-28', avg: 5.300 },
+  { date: '2025-03-31', avg: 5.320 },
+  { date: '2025-04-01', avg: 5.334 },
+  { date: '2025-04-02', avg: 5.342 },
+  { date: '2025-04-03', avg: 5.343 },
+  { date: '2025-04-07', avg: 5.343 },
+  { date: '2025-04-08', avg: 5.343 },
+  { date: '2025-04-09', avg: 5.304 },
+  { date: '2025-04-10', avg: 5.304 },
+  { date: '2025-04-11', avg: 5.312 },
+  { date: '2025-04-14', avg: 5.316 },
+  { date: '2025-04-15', avg: 5.330 },
+  { date: '2025-04-16', avg: 5.340 },
+  { date: '2025-04-17', avg: 5.360 },
+  { date: '2025-04-18', avg: 5.400 },
+  { date: '2025-04-21', avg: 5.440 },
+  { date: '2025-04-22', avg: 5.480 },
+  { date: '2025-04-23', avg: 5.520 },
+  { date: '2025-04-24', avg: 5.544 },
+  { date: '2025-04-25', avg: 5.540 },
+  { date: '2025-04-28', avg: 5.526 },
+  { date: '2025-04-29', avg: 5.526 },
+  { date: '2025-04-30', avg: 5.524 },
+  { date: '2025-05-02', avg: 5.524 },
+  { date: '2025-05-05', avg: 5.524 },
+  { date: '2025-05-06', avg: 5.524 },
+  { date: '2025-05-07', avg: 5.524 },
+  { date: '2025-05-08', avg: 5.524 },
+  { date: '2025-05-09', avg: 5.524 },
+  { date: '2025-05-12', avg: 5.522 },
+  { date: '2025-05-13', avg: 5.522 },
+  { date: '2025-05-14', avg: 5.507 },
+  { date: '2025-05-15', avg: 5.499 },
+  { date: '2025-05-16', avg: 5.491 },
+  { date: '2025-05-19', avg: 5.489 },
+  { date: '2025-05-20', avg: 5.489 },
+  { date: '2025-05-21', avg: 5.489 },
+  { date: '2025-05-22', avg: 5.489 },
+  { date: '2025-05-23', avg: 5.489 },
+  { date: '2025-05-26', avg: 5.511 },
+  { date: '2025-05-27', avg: 5.511 },
+  { date: '2025-05-28', avg: 5.548 },
+  { date: '2025-05-29', avg: 5.561 },
+  { date: '2025-05-30', avg: 5.561 },
+  { date: '2025-06-02', avg: 5.561 },
+  { date: '2025-06-03', avg: 5.561 },
+  { date: '2025-06-04', avg: 5.574 },
+  { date: '2025-06-05', avg: 5.624 },
+  { date: '2025-06-06', avg: 5.643 },
+  { date: '2025-06-09', avg: 5.711 },
+  { date: '2025-06-10', avg: 5.782 },
+  { date: '2025-06-11', avg: 5.782 },
+  { date: '2025-06-12', avg: 5.782 },
+  { date: '2025-06-13', avg: 5.854 },
+  { date: '2025-06-16', avg: 5.901 },
+  { date: '2025-06-17', avg: 5.901 },
+  { date: '2025-06-18', avg: 5.901 },
+  { date: '2025-06-19', avg: 5.947 },
+  { date: '2025-06-20', avg: 6.014 },
+  { date: '2025-06-23', avg: 6.014 },
+  { date: '2025-06-24', avg: 6.053 },
+  { date: '2025-06-25', avg: 6.053 },
+  { date: '2025-06-26', avg: 6.047 },
+  { date: '2025-06-27', avg: 6.062 },
+  { date: '2025-06-30', avg: 6.078 },
+  { date: '2025-07-01', avg: 6.078 },
+  { date: '2025-07-02', avg: 6.095 },
+  { date: '2025-07-03', avg: 6.095 },
+  { date: '2025-07-04', avg: 6.095 },
+  { date: '2025-07-07', avg: 6.095 },
+  { date: '2025-07-08', avg: 6.079 },
+  { date: '2025-07-09', avg: 6.072 },
+  { date: '2025-07-10', avg: 6.066 },
+  { date: '2025-07-11', avg: 6.066 },
+  { date: '2025-07-14', avg: 6.066 },
+  { date: '2025-07-15', avg: 6.063 },
+  { date: '2025-07-16', avg: 6.063 },
+  { date: '2025-07-17', avg: 6.109 },
+  { date: '2025-07-18', avg: 6.109 },
+  { date: '2025-07-21', avg: 6.186 },
+  { date: '2025-07-22', avg: 6.202 },
+  { date: '2025-07-23', avg: 6.202 },
+  { date: '2025-07-24', avg: 6.168 },
+  { date: '2025-07-25', avg: 6.100 },
+  { date: '2025-07-28', avg: 6.097 },
+  { date: '2025-07-29', avg: 6.097 },
+  { date: '2025-07-30', avg: 6.117 },
+  { date: '2025-07-31', avg: 6.140 },
+  { date: '2025-08-01', avg: 6.167 },
+  { date: '2025-08-04', avg: 6.167 },
+  { date: '2025-08-05', avg: 6.160 },
+  { date: '2025-08-06', avg: 6.160 },
+  { date: '2025-08-07', avg: 6.160 },
+  { date: '2025-08-08', avg: 6.193 },
+  { date: '2025-08-11', avg: 6.200 },
+  { date: '2025-08-12', avg: 6.183 },
+  { date: '2025-08-13', avg: 6.183 },
+  { date: '2025-08-14', avg: 6.167 },
+  { date: '2025-08-15', avg: 6.167 },
+  { date: '2025-08-18', avg: 6.167 },
+  { date: '2025-08-19', avg: 6.143 },
+  { date: '2025-08-20', avg: 6.117 },
+  { date: '2025-08-21', avg: 6.083 },
+  { date: '2025-08-22', avg: 6.047 },
+  { date: '2025-08-25', avg: 6.033 },
+  { date: '2025-08-26', avg: 5.987 },
+  { date: '2025-08-27', avg: 6.000 },
+  { date: '2025-08-28', avg: 6.017 },
+  { date: '2025-08-29', avg: 6.017 },
+  { date: '2025-09-01', avg: 6.020 },
+  { date: '2025-09-02', avg: 6.050 },
+  { date: '2025-09-03', avg: 6.050 },
+  { date: '2025-09-04', avg: 6.050 },
+  { date: '2025-09-05', avg: 6.050 },
+  { date: '2025-09-08', avg: 6.050 },
+  { date: '2025-09-09', avg: 6.050 },
+  { date: '2025-09-10', avg: 6.067 },
+  { date: '2025-09-11', avg: 6.133 },
+  { date: '2025-09-12', avg: 6.200 },
+  { date: '2025-09-15', avg: 6.216 },
+  { date: '2025-09-16', avg: 6.263 },
+  { date: '2025-09-17', avg: 6.516 },
+  { date: '2025-09-18', avg: 6.727 },
+  { date: '2025-09-19', avg: 6.844 },
+  { date: '2025-09-22', avg: 6.927 },
+  { date: '2025-09-23', avg: 7.009 },
+  { date: '2025-09-24', avg: 7.190 },
+  { date: '2025-09-25', avg: 7.411 },
+  { date: '2025-09-26', avg: 7.475 },
+  { date: '2025-09-29', avg: 7.535 },
+  { date: '2025-09-30', avg: 7.676 },
+  { date: '2025-10-01', avg: 7.878 },
+  { date: '2025-10-02', avg: 8.022 },
+  { date: '2025-10-03', avg: 8.129 },
+  { date: '2025-10-07', avg: 8.242 },
+  { date: '2025-10-08', avg: 8.328 },
+  { date: '2025-10-09', avg: 8.473 },
+  { date: '2025-10-10', avg: 8.577 },
+  { date: '2025-10-13', avg: 8.867 },
+  { date: '2025-10-14', avg: 9.000 },
+  { date: '2025-10-15', avg: 9.367 },
+  { date: '2025-10-16', avg: 9.786 },
+  { date: '2025-10-17', avg: 10.343 },
+  { date: '2025-10-20', avg: 10.457 },
+  { date: '2025-10-21', avg: 10.743 },
+  { date: '2025-10-22', avg: 11.267 },
+  { date: '2025-10-23', avg: 11.867 },
+  { date: '2025-10-24', avg: 12.615 },
+  { date: '2025-10-27', avg: 13.300 },
+  { date: '2025-10-28', avg: 14.000 },
+  { date: '2025-10-29', avg: 14.654 },
+  { date: '2025-10-30', avg: 15.215 },
+  { date: '2025-10-31', avg: 15.488 },
+  { date: '2025-11-03', avg: 15.563 },
+  { date: '2025-11-04', avg: 16.125 },
+  { date: '2025-11-05', avg: 17.319 },
+  { date: '2025-11-06', avg: 19.156 },
+  { date: '2025-11-07', avg: 20.938 },
+  { date: '2025-11-10', avg: 22.100 },
+  { date: '2025-11-11', avg: 23.038 },
+  { date: '2025-11-12', avg: 23.819 },
+  { date: '2025-11-13', avg: 24.131 },
+  { date: '2025-11-14', avg: 24.505 },
+  { date: '2025-11-17', avg: 24.767 },
+  { date: '2025-11-18', avg: 24.833 },
+  { date: '2025-11-19', avg: 24.833 },
+  { date: '2025-11-20', avg: 25.000 },
+  { date: '2025-11-21', avg: 25.100 },
+  { date: '2025-11-24', avg: 25.767 },
+  { date: '2025-11-25', avg: 26.167 },
+  { date: '2025-11-26', avg: 26.833 },
+  { date: '2025-11-27', avg: 27.167 },
+  { date: '2025-11-28', avg: 27.167 },
+  { date: '2025-12-01', avg: 27.200 },
+  { date: '2025-12-02', avg: 27.200 },
+  { date: '2025-12-03', avg: 27.200 },
+  { date: '2025-12-04', avg: 26.933 },
+  { date: '2025-12-05', avg: 26.333 },
+  { date: '2025-12-08', avg: 26.333 },
+  { date: '2025-12-09', avg: 26.333 },
+  { date: '2025-12-10', avg: 26.267 },
+  { date: '2025-12-11', avg: 26.000 },
+  { date: '2025-12-12', avg: 26.167 },
+  { date: '2025-12-15', avg: 26.267 },
+  { date: '2025-12-16', avg: 26.333 },
+  { date: '2025-12-17', avg: 26.367 },
+  { date: '2025-12-18', avg: 26.400 },
+  { date: '2025-12-19', avg: 26.433 },
+  { date: '2025-12-22', avg: 26.733 },
+  { date: '2025-12-23', avg: 26.767 },
+  { date: '2025-12-24', avg: 27.333 },
+  { date: '2025-12-25', avg: 27.500 },
+  { date: '2025-12-26', avg: 27.833 },
+  { date: '2025-12-29', avg: 28.226 },
+  { date: '2025-12-30', avg: 28.581 },
+  { date: '2025-12-31', avg: 29.131 },
+  { date: '2026-01-02', avg: 29.803 },
+  { date: '2026-01-05', avg: 30.544 },
+  { date: '2026-01-06', avg: 31.074 },
+  { date: '2026-01-07', avg: 31.475 },
+  { date: '2026-01-08', avg: 31.656 },
+  { date: '2026-01-09', avg: 31.781 },
+  { date: '2026-01-12', avg: 32.500 },
+  { date: '2026-01-13', avg: 33.406 },
+  { date: '2026-01-14', avg: 34.075 },
+  { date: '2026-01-15', avg: 34.500 },
+  { date: '2026-01-16', avg: 35.000 },
+  { date: '2026-01-19', avg: 35.333 },
+  { date: '2026-01-20', avg: 36.333 },
+  { date: '2026-01-21', avg: 36.667 },
+  { date: '2026-01-22', avg: 36.667 },
+  { date: '2026-01-23', avg: 36.667 },
+  { date: '2026-01-26', avg: 36.667 },
+  { date: '2026-01-27', avg: 36.600 },
+  { date: '2026-01-28', avg: 36.600 },
+  { date: '2026-01-29', avg: 36.533 },
+  { date: '2026-01-30', avg: 37.167 },
+  { date: '2026-02-02', avg: 38.167 },
+  { date: '2026-02-03', avg: 38.000 },
+  { date: '2026-02-04', avg: 37.967 },
+  { date: '2026-02-05', avg: 37.933 },
+  { date: '2026-02-06', avg: 38.000 },
+  { date: '2026-02-09', avg: 37.833 },
+  { date: '2026-02-10', avg: 38.000 },
+];
+
+// Custom plugin: draw "Price (USD)" above Y-axis + dashed zero line
+const yAxisLabelPlugin = {
+  id: 'yAxisLabel',
+  afterDraw(chart) {
+    const yAxis = chart.scales.y;
+    const xAxis = chart.scales.x;
+    const ctx = chart.ctx;
+    ctx.save();
+
+    // Draw "Price (USD)" label 4px above the top tick ($80)
+    const topTickY = yAxis.getPixelForValue(yAxis.max);
+    ctx.font = "400 10px 'Delight', -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    // topTickY is center of "$80" text; move up half font (5px) + 4px gap
+    ctx.fillText('Price (USD)', yAxis.left, topTickY - 5 - 8);
+
+    // Draw dashed zero line (dash 3, gap 2)
+    const zeroY = yAxis.getPixelForValue(0);
+    if (zeroY >= yAxis.top && zeroY <= yAxis.bottom) {
+      ctx.beginPath();
+      ctx.setLineDash([3, 2]);
+      ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+      ctx.lineWidth = 1;
+      ctx.moveTo(xAxis.left, zeroY);
+      ctx.lineTo(xAxis.right, zeroY);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+};
+
+const ctx = document.getElementById('dramChart').getContext('2d');
+
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    datasets: [
+      {
+        label: 'DDR5 16Gb',
+        data: ddr5Data.map(d => ({ x: d.date, y: d.avg })),
+        borderColor: '#49A3A6',
+        backgroundColor: '#49A3A6',
+        borderWidth: 1,
+        tension: 0.1,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: '#49A3A6',
+        pointHoverBorderColor: '#ffffff',
+        pointHoverBorderWidth: 1,
+        fill: false,
+        order: 1,
+      },
+      {
+        label: 'DDR4 16Gb',
+        data: ddr4Data.map(d => ({ x: d.date, y: d.avg })),
+        borderColor: '#FF9800',
+        backgroundColor: '#FF9800',
+        borderWidth: 1,
+        tension: 0.1,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        pointHoverBackgroundColor: '#FF9800',
+        pointHoverBorderColor: '#ffffff',
+        pointHoverBorderWidth: 1,
+        fill: false,
+        order: 2,
+      }
+    ]
+  },
+  plugins: [yAxisLabelPlugin],
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    plugins: {
+      legend: {
+        display: false,
+      },
+      tooltip: {
+        backgroundColor: 'rgba(255,255,255,0.96)',
+        titleColor: 'rgba(0,0,0,0.7)',
+        bodyColor: 'rgba(0,0,0,0.9)',
+        borderColor: 'rgba(0,0,0,0.08)',
+        borderWidth: 1,
+        cornerRadius: 6,
+        caretSize: 0,
+        padding: { top: 12, bottom: 12, left: 12, right: 12 },
+        titleFont: {
+          family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+          size: 12,
+          weight: '400',
+        },
+        bodyFont: {
+          family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+          size: 12,
+          weight: '400',
+        },
+        displayColors: true,
+        boxWidth: 8,
+        boxHeight: 8,
+        boxPadding: 4,
+        usePointStyle: true,
+        pointStyle: 'circle',
+        callbacks: {
+          title: function(items) {
+            if (items.length) {
+              const d = new Date(items[0].parsed.x);
+              return d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            }
+            return '';
+          },
+          label: function(context) {
+            return ' ' + context.dataset.label + ': $' + context.parsed.y.toFixed(2);
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          unit: 'month',
+          displayFormats: {
+            month: 'MMM yy'
+          },
+          tooltipFormat: 'MMM dd, yyyy',
+        },
+        grid: {
+          display: false,
+        },
+        border: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+            size: 10,
+            weight: '400',
+          },
+          color: 'rgba(0,0,0,0.7)',
+          maxRotation: 0,
+          autoSkipPadding: 20,
+        },
+      },
+      y: {
+        position: 'left',
+        grid: {
+          color: function(context) {
+            if (context.tick.value === 0) {
+              return 'rgba(0,0,0,0.12)';
+            }
+            return 'rgba(0,0,0,0)';
+          },
+          lineWidth: function(context) {
+            return context.tick.value === 0 ? 1 : 0;
+          },
+          drawTicks: false,
+        },
+        border: {
+          display: false,
+        },
+        ticks: {
+          font: {
+            family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+            size: 10,
+            weight: '400',
+          },
+          color: 'rgba(0,0,0,0.7)',
+          padding: 8,
+          callback: function(value) {
+            return '$' + value;
+          },
+        },
+        beginAtZero: true,
+      }
+    },
+    layout: {
+      padding: {
+        top: 26,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

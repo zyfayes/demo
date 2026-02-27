@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valuation Comparison</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --b0-page: #ffffff;
+    --text-n10: rgb(0, 0, 0);
+    --text-n9: rgba(0,0,0,0.9);
+    --text-n7: rgba(0,0,0,0.7);
+    --text-n5: rgba(0,0,0,0.5);
+    --spacing-xxs: 4px;
+    --spacing-xs: 8px;
+    --spacing-m: 16px;
+    --radius-ct-s: 4px;
+    --radius-ct-m: 6px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: var(--b0-page);
+    font-family: 'Delight', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .widget-card {
+    width: 720px;
+    height: 364px;
+    background: transparent;
+    border-radius: var(--radius-ct-s);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .widget-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 22px;
+    margin-bottom: var(--spacing-m);
+  }
+
+  .widget-title-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-n9);
+    letter-spacing: 0.14px;
+    line-height: 22px;
+  }
+
+  .widget-timestamp {
+    font-size: 12px;
+    color: var(--text-n5);
+    line-height: 20px;
+  }
+
+  .chart-body {
+    flex: 1;
+    padding: var(--spacing-m);
+    border-radius: var(--radius-ct-m);
+    position: relative;
+    background-color: #ffffff;
+    background-image: radial-gradient(circle, rgba(0,0,0,0.18) 0.6px, transparent 0.6px);
+    background-size: 3px 3px;
+  }
+
+  .chart-legend {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--spacing-xs);
+    height: 16px;
+    margin-bottom: var(--spacing-xxs);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xxs);
+    font-size: 10px;
+    color: var(--text-n5);
+    line-height: 16px;
+    font-weight: 400;
+  }
+
+  .legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .chart-container {
+    position: relative;
+    width: 100%;
+    height: calc(100% - 20px);
+  }
+
+  .alva-watermark {
+    position: absolute;
+    bottom: var(--spacing-m);
+    left: var(--spacing-m);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-n10);
+    opacity: 0.2;
+  }
+</style>
+</head>
+<body>
+
+<div class="widget-card">
+  <div class="widget-title">
+    <span class="widget-title-text">Forward Valuation Comparison</span>
+    <span class="widget-timestamp">02/12/2026 12:30</span>
+  </div>
+  <div class="chart-body">
+    <div class="chart-legend">
+      <div class="legend-item">
+        <span class="legend-dot" style="background: #49A3A6;"></span>
+        <span>MU</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: #FF9800;"></span>
+        <span>SNDK</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: #40A544;"></span>
+        <span>WDC</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-dot" style="background: #5F75C9;"></span>
+        <span>STX</span>
+      </div>
+    </div>
+    <div class="chart-container">
+      <canvas id="valuationChart"></canvas>
+    </div>
+    <div class="alva-watermark">Alva</div>
+  </div>
+</div>
+
+<script>
+// Custom plugin: draw "Valuation" above Y-axis + dashed zero line
+const yAxisLabelPlugin = {
+  id: 'yAxisLabel',
+  afterDraw(chart) {
+    const yAxis = chart.scales.y;
+    const xAxis = chart.scales.x;
+    const ctx = chart.ctx;
+    ctx.save();
+
+    // Draw "Valuation" label
+    const topTickY = yAxis.getPixelForValue(yAxis.max);
+    ctx.font = "400 10px 'Delight', -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.fillStyle = 'rgba(0,0,0,0.5)';
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'bottom';
+    ctx.fillText('Valuation', yAxis.left, topTickY - 5 - 6);
+
+    // Draw dashed zero line
+    const zeroY = yAxis.getPixelForValue(0);
+    if (zeroY >= yAxis.top && zeroY <= yAxis.bottom) {
+      ctx.beginPath();
+      ctx.setLineDash([3, 2]);
+      ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+      ctx.lineWidth = 1;
+      ctx.moveTo(xAxis.left, zeroY);
+      ctx.lineTo(xAxis.right, zeroY);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }
+};
+
+// Custom plugin: draw value labels on top of bars
+const barLabelPlugin = {
+  id: 'barLabel',
+  afterDatasetsDraw(chart) {
+    const ctx = chart.ctx;
+    ctx.save();
+    ctx.font = "400 9px 'Delight', -apple-system, BlinkMacSystemFont, sans-serif";
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'bottom';
+
+    chart.data.datasets.forEach((dataset, i) => {
+      const meta = chart.getDatasetMeta(i);
+      meta.data.forEach((bar, index) => {
+        const value = dataset.data[index];
+        ctx.fillStyle = 'rgba(0,0,0,0.7)';
+        ctx.fillText(value.toFixed(1) + 'x', bar.x, bar.y - 4);
+      });
+    });
+
+    ctx.restore();
+  }
+};
+
+const ctx = document.getElementById('valuationChart').getContext('2d');
+
+new Chart(ctx, {
+  type: 'bar',
+  plugins: [yAxisLabelPlugin, barLabelPlugin],
+  data: {
+    labels: ['Forward P/E', 'Forward P/S', 'Forward EV/EBITDA'],
+    datasets: [
+      {
+        label: 'MU',
+        data: [11.45, 2.52, 5.54],
+        backgroundColor: '#49A3A6',
+        borderRadius: 2,
+        maxBarThickness: 16,
+        barPercentage: 0.667,
+        categoryPercentage: 0.44,
+      },
+      {
+        label: 'SNDK',
+        data: [25.10, 6.01, 20.0],
+        backgroundColor: '#FF9800',
+        borderRadius: 2,
+        maxBarThickness: 16,
+        barPercentage: 0.667,
+        categoryPercentage: 0.44,
+      },
+      {
+        label: 'WDC',
+        data: [11.36, 1.50, 11.25],
+        backgroundColor: '#40A544',
+        borderRadius: 2,
+        maxBarThickness: 16,
+        barPercentage: 0.667,
+        categoryPercentage: 0.44,
+      },
+      {
+        label: 'STX',
+        data: [22.04, 6.16, 30.10],
+        backgroundColor: '#5F75C9',
+        borderRadius: 2,
+        maxBarThickness: 16,
+        barPercentage: 0.667,
+        categoryPercentage: 0.44,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        backgroundColor: 'rgba(255,255,255,0.96)',
+        titleColor: 'rgba(0,0,0,0.7)',
+        bodyColor: 'rgba(0,0,0,0.9)',
+        borderColor: 'rgba(0,0,0,0.08)',
+        borderWidth: 1,
+        cornerRadius: 6,
+        caretSize: 0,
+        padding: { top: 12, bottom: 12, left: 12, right: 12 },
+        titleFont: {
+          family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+          size: 12,
+          weight: '400',
+        },
+        bodyFont: {
+          family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+          size: 12,
+          weight: '400',
+        },
+        displayColors: true,
+        boxWidth: 8,
+        boxHeight: 8,
+        boxPadding: 4,
+        usePointStyle: true,
+        pointStyle: 'circle',
+        callbacks: {
+          label: function(context) {
+            return ' ' + context.dataset.label + ': ' + context.parsed.y.toFixed(2) + 'x';
+          }
+        }
+      },
+    },
+    scales: {
+      x: {
+        grid: { display: false },
+        border: { display: false },
+        ticks: {
+          font: {
+            family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+            size: 10,
+            weight: '400',
+          },
+          color: 'rgba(0,0,0,0.7)',
+        },
+      },
+      y: {
+        position: 'left',
+        grid: {
+          color: function(context) {
+            if (context.tick.value === 0) return 'rgba(0,0,0,0.12)';
+            return 'rgba(0,0,0,0)';
+          },
+          lineWidth: function(context) {
+            return context.tick.value === 0 ? 1 : 0;
+          },
+          drawTicks: false,
+        },
+        border: { display: false },
+        ticks: {
+          font: {
+            family: "'Delight', -apple-system, BlinkMacSystemFont, sans-serif",
+            size: 10,
+            weight: '400',
+          },
+          color: 'rgba(0,0,0,0.7)',
+          padding: 8,
+          callback: function(value) {
+            return value + 'x';
+          },
+        },
+        beginAtZero: true,
+      }
+    },
+    layout: {
+      padding: {
+        top: 26,
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }
+    }
+  }
+});
+</script>
+
+</body>
+</html>

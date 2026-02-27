@@ -215,6 +215,39 @@
 <div class="container">
   <div class="summary">本周AI圈最大戏剧:Anthropic正面硬刚五角大楼,Dario Amodei公开声明拒绝开放Claude用于自主武器和大规模监控美国人,这是近年来AI公司与政府博弈最激烈的一次。技术面同样火热——Gemini 3.1 Pro以77.1%刷新ARC-AGI-2记录,Karpathy罕见发声称「上个月coding agent才真正能用了」,DeepSeek对美国芯片商拒绝开放最新模型,中美AI博弈进入新阶段。</div>
   
+  <div class="podcast-player" id="podcast-widget">
+    <div class="podcast-header">
+      <button class="play-btn" id="pod-play" aria-label="播放">
+        <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+      <div>
+        <div class="podcast-title"><a href="https://listenhub.ai/zh/app/episode/69a0e6d91c04f24e207f2b1b" target="_blank" rel="noopener" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3)">2月27日AI:Anthropic硬刚五角大楼,为AI伦理划下红线</a></div>
+        <div class="podcast-sub">🎙️ uma · via ListenHub <button class="speed-btn" id="pod-speed">1x</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+      <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+    </div>
+    <audio id="pod-audio" preload="none" src="https://assets.listenhub.ai/listenhub-public-prod/podcast/69a0e6d91c04f24e207f2b19.mp3"></audio>
+  </div>
+  <script>
+  (function(){
+    const a=document.getElementById('pod-audio'),b=document.getElementById('pod-play'),
+      i=document.getElementById('pod-icon'),f=document.getElementById('pod-fill'),
+      bar=document.getElementById('pod-progress'),c=document.getElementById('pod-cur'),
+      d=document.getElementById('pod-dur');
+    if(!a||!b)return;
+    const fmt=s=>{const m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0')};
+    b.onclick=()=>{if(a.paused){a.play();i.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';}else{a.pause();i.innerHTML='<polygon points="6,3 20,12 6,21"/>';}};
+    a.ontimeupdate=()=>{if(!a.duration)return;f.style.width=(a.currentTime/a.duration*100)+'%';c.textContent=fmt(a.currentTime);};
+    a.onloadedmetadata=()=>{d.textContent=fmt(a.duration)};
+    a.onended=()=>{i.innerHTML='<polygon points="6,3 20,12 6,21"/>';f.style.width='0%';c.textContent='0:00';};
+    bar.onclick=e=>{if(!a.duration)return;a.currentTime=(e.offsetX/bar.offsetWidth)*a.duration;};
+    const speeds=[1,1.25,1.5,1.75,2,0.75];let si=0;const sb=document.getElementById('pod-speed');
+    sb.onclick=()=>{si=(si+1)%speeds.length;a.playbackRate=speeds[si];sb.textContent=speeds[si]+'x';};
+  })();
+  </script>
   
   <div class="article">
     <div class="article-num">01</div>

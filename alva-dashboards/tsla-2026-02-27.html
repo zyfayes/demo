@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TSLA Intelligence Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root {
+  --text-n10: rgb(0,0,0);
+  --text-n9: rgba(0,0,0,0.9);
+  --text-n7: rgba(0,0,0,0.7);
+  --text-n5: rgba(0,0,0,0.5);
+  --text-n3: rgba(0,0,0,0.3);
+  --main-m1: #49A3A6;
+  --main-m3: #2a9b7d;
+  --main-m4: #e05357;
+  --main-m5: #E6A91A;
+  --b0-page: #ffffff;
+  --grey-g01: #fafafa;
+  --line-l07: rgba(0,0,0,0.07);
+  --line-l05: rgba(0,0,0,0.05);
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 20px;
+  --spacing-xl: 24px;
+  --radius-ct-s: 4px;
+  --radius-ct-m: 6px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--b0-page);
+  font-family: 'Delight', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: var(--spacing-xl);
+  max-width: 2560px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+.dashboard-header {
+  margin-bottom: var(--spacing-xl);
+}
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-n9);
+  letter-spacing: 0.3px;
+}
+.dashboard-desc {
+  font-size: 14px;
+  color: var(--text-n5);
+  margin-top: var(--spacing-xs);
+  line-height: 22px;
+}
+.row-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+.widget-card {
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.widget-card.full { grid-column: 1 / -1; }
+.widget-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  margin-bottom: var(--spacing-m);
+}
+.widget-title-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-n9);
+  letter-spacing: 0.14px;
+  line-height: 22px;
+}
+.widget-timestamp {
+  font-size: 12px;
+  color: var(--text-n5);
+  line-height: 20px;
+}
+.widget-body {
+  border-radius: var(--radius-ct-m);
+  overflow: hidden;
+}
+.chart-dotted-background {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.18) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+.chart-body {
+  flex: 1;
+  padding: var(--spacing-m);
+  position: relative;
+}
+.alva-watermark {
+  position: absolute;
+  bottom: var(--spacing-m);
+  left: var(--spacing-m);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-n10);
+  opacity: 0.2;
+}
+.footer {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-n3);
+}
+</style>
+</head>
+<body>
+
+<div class="dashboard-header">
+  <div class="dashboard-title">TSLA Intelligence Dashboard</div>
+  <div class="dashboard-desc">Comprehensive Tesla (TSLA) dashboard covering recent quarterly earnings trends, TSLA-focused news, curated X/Twitter discussions, and a TL;DR sentiment/talking-points synthesis.</div>
+</div>
+
+<div class="row-equal">
+  
+    <div class="widget-card">
+      <div class="widget-title">
+        <span class="widget-title-text">tsla_quarterly_earnings</span>
+        <span class="widget-timestamp">02/27/2026, 21:45</span>
+      </div>
+      <div class="widget-body chart-dotted-background">
+        <div class="chart-body">
+          <div id="chart_0" style="width:100%;height:340px;"></div>
+          <div class="alva-watermark">Alva</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="widget-card">
+      <div class="widget-title">
+        <span class="widget-title-text">tsla_news</span>
+        <span class="widget-timestamp">02/27/2026, 21:44</span>
+      </div>
+      <div class="widget-body chart-dotted-background">
+        <div class="chart-body">
+          <div id="chart_1" style="width:100%;height:340px;"></div>
+          <div class="alva-watermark">Alva</div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="footer">
+  Generated 2026/2/27 21:45:34 · Data by Alva · Rendered with Alva Design System
+</div>
+
+<script>
+
+    {
+      const chart = echarts.init(document.getElementById('chart_0'));
+      chart.setOption({"backgroundColor":"transparent","dataZoom":[{"type":"inside","xAxisIndex":[0]}],"grid":{"top":50,"right":12,"bottom":0,"left":60,"containLabel":true},"tooltip":{"trigger":"axis","backgroundColor":"#FFF","borderColor":"rgba(0,0,0,0.12)","borderWidth":1,"borderRadius":6,"padding":16,"textStyle":{"color":"rgba(0,0,0,0.9)"},"axisPointer":{"type":"line","lineStyle":{"color":"rgba(0,0,0,0.1)","width":1}},"extraCssText":"box-shadow:none;","confine":true},"legend":{"top":0,"right":0,"icon":"circle","itemWidth":8,"itemHeight":8,"textStyle":{"color":"rgba(0,0,0,0.5)","fontSize":10}},"xAxis":[{"type":"category","data":["2024 Q3","2024 Q4","2025 Q1","2025 Q2","2025 Q3","2025 Q4"],"axisLine":{"show":true,"lineStyle":{"color":"#ACACAC","type":"dashed"}},"axisTick":{"show":false},"axisLabel":{"fontSize":10,"color":"rgba(0,0,0,0.7)","fontFamily":"'Delight',-apple-system,BlinkMacSystemFont,sans-serif","margin":8},"splitLine":{"show":false}}],"yAxis":[{"type":"value","name":"Revenue (B USD)","scale":true,"axisLabel":{"fontSize":10,"color":"rgba(0,0,0,0.7)","fontFamily":"'Delight',-apple-system,BlinkMacSystemFont,sans-serif","margin":8},"nameTextStyle":{"color":"rgba(0,0,0,0.5)","fontSize":10},"axisLine":{"show":false},"axisTick":{"show":false},"splitLine":{"show":false}},{"type":"value","name":"EPS / Gross Margin (%)","scale":true,"axisLabel":{"fontSize":10,"color":"rgba(0,0,0,0.7)","fontFamily":"'Delight',-apple-system,BlinkMacSystemFont,sans-serif","margin":8},"nameTextStyle":{"color":"rgba(0,0,0,0.5)","fontSize":10},"axisLine":{"show":false},"axisTick":{"show":false},"splitLine":{"show":false}}],"series":[{"name":"Revenue","type":"bar","yAxisIndex":0,"data":[["2024 Q3","25.18"],["2024 Q4","25.71"],["2025 Q1","19.34"],["2025 Q2","22.50"],["2025 Q3","28.09"],["2025 Q4","24.90"]],"barMaxWidth":20},{"name":"Diluted EPS","type":"line","yAxisIndex":1,"smooth":true,"lineStyle":{"color":"#5499D6","width":1},"itemStyle":{"color":"#5499D6"},"data":[["2024 Q3","0.62"],["2024 Q4","0.65"],["2025 Q1","0.11"],["2025 Q2","0.33"],["2025 Q3","0.39"],["2025 Q4","0.24"]],"showSymbol":false,"symbol":"circle","symbolSize":10,"emphasis":{"itemStyle":{"borderColor":"#ffffff","borderWidth":1,"color":"#5499D6"}}},{"name":"Gross Margin","type":"line","yAxisIndex":1,"smooth":true,"lineStyle":{"color":"#FF9800","width":1},"itemStyle":{"color":"#FF9800"},"data":[["2024 Q3","19.84"],["2024 Q4","16.26"],["2025 Q1","16.31"],["2025 Q2","17.24"],["2025 Q3","17.99"],["2025 Q4","20.12"]],"showSymbol":false,"symbol":"circle","symbolSize":10,"emphasis":{"itemStyle":{"borderColor":"#ffffff","borderWidth":1,"color":"#FF9800"}}},{"name":"Quarterly Table","type":"custom","data":[{"date":1767139200000,"columns":[{"key":"fiscal_period","title":"Quarter"},{"key":"revenue_b","title":"Revenue (B USD)"},{"key":"revenue_qoq","title":"Rev QoQ (%)"},{"key":"revenue_yoy","title":"Rev YoY (%)"},{"key":"eps_diluted","title":"Diluted EPS"},{"key":"eps_diluted_qoq","title":"EPS QoQ"},{"key":"eps_diluted_yoy","title":"EPS YoY"},{"key":"gross_margin_pct","title":"Gross Margin (%)"},{"key":"gross_margin_qoq","title":"GM QoQ (pp)"},{"key":"gross_margin_yoy","title":"GM YoY (pp)"}],"rows":[{"date":1767139200000,"fiscal_period":"2025 Q4","revenue_b":"24.90","revenue_qoq":"","revenue_yoy":"-3.14","eps_diluted":"0.24","eps_diluted_qoq":"","eps_diluted_yoy":"-0.41","gross_margin_pct":"20.12","gross_margin_qoq":"","gross_margin_yoy":"3.86"}]},{"date":1759190400000,"columns":[{"key":"fiscal_period","title":"Quarter"},{"key":"revenue_b","title":"Revenue (B USD)"},{"key":"revenue_qoq","title":"Rev QoQ (%)"},{"key":"revenue_yoy","title":"Rev YoY (%)"},{"key":"eps_diluted","title":"Diluted EPS"},{"key":"eps_diluted_qoq","title":"EPS QoQ"},{"key":"eps_diluted_yoy","title":"EPS YoY"},{"key":"gross_margin_pct","title":"Gross Margin (%)"},{"key":"gross_margin_qoq","title":"GM QoQ (pp)"},{"key":"gross_margin_yoy","title":"GM YoY (pp)"}],"rows":[{"date":1759190400000,"fiscal_period":"2025 Q3","revenue_b":"28.09","revenue_qoq":"24.89","revenue_yoy":"11.57","eps_diluted":"0.39","eps_diluted_qoq":"0.06","eps_diluted_yoy":"-0.23","gross_margin_pct":"17.99","gross_margin_qoq":"0.75","gross_margin_yoy":"-1.85"}]},{"date":1751241600000,"columns":[{"key":"fiscal_period","title":"Quarter"},{"key":"revenue_b","title":"Revenue (B USD)"},{"key":"revenue_qoq","title":"Rev QoQ (%)"},{"key":"revenue_yoy","title":"Rev YoY (%)"},{"key":"eps_diluted","title":"Diluted EPS"},{"key":"eps_diluted_qoq","title":"EPS QoQ"},{"key":"eps_diluted_yoy","title":"EPS YoY"},{"key":"gross_margin_pct","title":"Gross Margin (%)"},{"key":"gross_margin_qoq","title":"GM QoQ (pp)"},{"key":"gross_margin_yoy","title":"GM YoY (pp)"}],"rows":[{"date":1751241600000,"fiscal_period":"2025 Q2","revenue_b":"22.50","revenue_qoq":"","revenue_yoy":"-11.78","eps_diluted":"0.33","eps_diluted_qoq":"","eps_diluted_yoy":"-0.07","gross_margin_pct":"17.24","gross_margin_qoq":"","gross_margin_yoy":"-0.71"}]},{"date":1743379200000,"columns":[{"key":"fiscal_period","title":"Quarter"},{"key":"revenue_b","title":"Revenue (B USD)"},{"key":"revenue_qoq","title":"Rev QoQ (%)"},{"key":"revenue_yoy","title":"Rev YoY (%)"},{"key":"eps_diluted","title":"Diluted EPS"},{"key":"eps_diluted_qoq","title":"EPS QoQ"},{"key":"eps_diluted_yoy","title":"EPS YoY"},{"key":"gross_margin_pct","title":"Gross Margin (%)"},{"key":"gross_margin_qoq","title":"GM QoQ (pp)"},{"key":"gross_margin_yoy","title":"GM YoY (pp)"}],"rows":[{"date":1743379200000,"fiscal_period":"2025 Q1","revenue_b":"19.34","revenue_qoq":"-24.79","revenue_yoy":"-9.23","eps_diluted":"0.11","eps_diluted_qoq":"-0.54","eps_diluted_yoy":"-0.30","gross_margin_pct":"16.31","gross_margin_qoq":"0.05","gross_margin_yoy":"-1.04"}]},{"date":1735603200000,"columns":[{"key":"fiscal_period","title":"Quarter"},{"key":"revenue_b","title":"Revenue (B USD)"},{"key":"revenue_qoq","title":"Rev QoQ (%)"},{"key":"revenue_yoy","title":"Rev YoY (%)"},{"key":"eps_diluted","title":"Diluted EPS"},{"key":"eps_diluted_qoq","title":"EPS QoQ"},{"key":"eps_diluted_yoy","title":"EPS YoY"},{"key":"gross_margin_pct","title":"Gross Margin (%)"},{"key":"gross_margin_qoq","title":"GM QoQ (pp)"},{"key":"gross_margin_yoy","title":"GM YoY (pp)"}],"rows":[{"date":1735603200000,"fiscal_period":"2024 Q4","revenue_b":"25.71","revenue_qoq":"","revenue_yoy":"2.15","eps_diluted":"0.65","eps_diluted_qoq":"","eps_diluted_yoy":"-1.62","gross_margin_pct":"16.26","gross_margin_qoq":"","gross_margin_yoy":"-1.38"}]},{"date":1727654400000,"columns":[{"key":"fiscal_period","title":"Quarter"},{"key":"revenue_b","title":"Revenue (B USD)"},{"key":"revenue_qoq","title":"Rev QoQ (%)"},{"key":"revenue_yoy","title":"Rev YoY (%)"},{"key":"eps_diluted","title":"Diluted EPS"},{"key":"eps_diluted_qoq","title":"EPS QoQ"},{"key":"eps_diluted_yoy","title":"EPS YoY"},{"key":"gross_margin_pct","title":"Gross Margin (%)"},{"key":"gross_margin_qoq","title":"GM QoQ (pp)"},{"key":"gross_margin_yoy","title":"GM YoY (pp)"}],"rows":[{"date":1727654400000,"fiscal_period":"2024 Q3","revenue_b":"25.18","revenue_qoq":"-1.25","revenue_yoy":"7.85","eps_diluted":"0.62","eps_diluted_qoq":"0.22","eps_diluted_yoy":"0.09","gross_margin_pct":"19.84","gross_margin_qoq":"1.89","gross_margin_yoy":"1.95"}]}],"renderItem":"function () { return null; }","silent":true}]});
+      window.addEventListener('resize', () => chart.resize());
+    }
+
+    {
+      const chart = echarts.init(document.getElementById('chart_1'));
+      chart.setOption({"data":["alva://time_series/2027378961398394881/tsla_news_latest/tsla_news?last=50"],"dataResolver":"(data) => {\n    const sorted = (Array.isArray(data) ? data : []).slice().sort((a,b) => (b.date ?? 0) - (a.date ?? 0));\n    return sorted.map(item => ({\n      date: item.date,\n      title: item.title,\n      description: item.description || item.summary || '',\n      url: item.url,\n      source_name: item.source_name || item.channel_title || '',\n      source_icon: item.source_icon || item.source_domain || '',\n      thumbnail: item.thumbnail || item.banner_image || '',\n      authors: Array.isArray(item.authors)\n        ? item.authors.map(a => (typeof a === 'string' ? a : (a && a.name) ? a.name : '')).filter(Boolean)\n        : []\n    }));\n  }","grid":{"top":50,"right":12,"bottom":0,"left":12,"containLabel":true},"tooltip":{"trigger":"axis","backgroundColor":"rgba(255,255,255,0.96)","borderColor":"rgba(0,0,0,0.08)","borderWidth":1,"borderRadius":6,"padding":12,"textStyle":{"fontFamily":"'Delight',-apple-system,BlinkMacSystemFont,sans-serif","fontSize":12,"fontWeight":400,"color":"rgba(0,0,0,0.9)"},"axisPointer":{"type":"line","lineStyle":{"color":"rgba(0,0,0,0.1)","width":1}},"extraCssText":"box-shadow:none;"},"backgroundColor":"transparent"});
+      window.addEventListener('resize', () => chart.resize());
+    }
+</script>
+</body>
+</html>

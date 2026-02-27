@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="light only">
+<meta name="supported-color-schemes" content="light only">
+<title>OpenClaw × Alva 融合方案：启发、架构嵌入与安全设计</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f7f7f8;
+  --surface-alt: #f0f0f2;
+  --border: #d4d4d8;
+  --border-light: #e4e4e7;
+  --text: #09090b;
+  --text-body: #18181b;
+  --text-dim: #52525b;
+  --text-faint: #71717a;
+  --red: #b91c1c;
+  --red-bg: #fef2f2;
+  --blue: #1d4ed8;
+  --blue-bg: #eff6ff;
+  --purple: #6d28d9;
+  --purple-bg: #f5f3ff;
+  --green: #15803d;
+  --green-bg: #f0fdf4;
+  --amber: #b45309;
+  --amber-bg: #fffbeb;
+  --mono: 'DM Mono', 'Menlo', monospace;
+  --serif: 'Noto Serif SC', 'Georgia', serif;
+  --sans: 'Noto Sans SC', -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; color-scheme: light; }
+
+body {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  color: #18181b !important;
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Layout ── */
+.page { max-width: 680px; margin: 0 auto; padding: 0 24px; }
+
+/* ── Cover ── */
+.cover {
+  padding: 64px 0 48px;
+  border-bottom: 3px double var(--border);
+}
+
+.cover-meta {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 24px;
+}
+
+.cover h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 32px;
+  line-height: 1.3;
+  color: var(--text);
+  margin-bottom: 16px;
+}
+
+.cover .subtitle {
+  font-family: var(--serif);
+  font-size: 17px;
+  font-weight: 400;
+  color: var(--text-dim);
+  line-height: 1.7;
+}
+
+/* ── TOC ── */
+.toc {
+  padding: 32px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.toc-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 14px;
+}
+
+.toc ol {
+  list-style: none;
+  counter-reset: toc;
+}
+
+.toc li {
+  counter-increment: toc;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.toc li:last-child { border-bottom: none; }
+
+.toc a {
+  text-decoration: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 500;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  transition: color 0.2s;
+}
+
+.toc a:hover { color: var(--purple); }
+
+.toc a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  width: 24px;
+}
+
+/* ── Section ── */
+.section {
+  padding: 40px 0 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-of-type { border-bottom: none; }
+
+.section-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 8px;
+}
+
+.section h2 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 1.35;
+  color: var(--text);
+  margin-bottom: 18px;
+}
+
+.section h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.4;
+  color: var(--text);
+  margin: 32px 0 10px;
+}
+
+.section h4 {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--text);
+  margin: 24px 0 6px;
+}
+
+.section p {
+  font-size: 15px;
+  margin-bottom: 14px;
+}
+
+.section p strong { color: var(--text); font-weight: 600; }
+
+/* ── Callout Boxes ── */
+.callout {
+  padding: 18px 20px;
+  border-radius: 8px;
+  margin: 18px 0;
+  font-size: 14px;
+  line-height: 1.75;
+  border-left: 4px solid;
+  color: var(--text-body);
+}
+
+.callout.thesis { background: var(--purple-bg); border-color: var(--purple); }
+.callout.insight { background: var(--blue-bg); border-color: var(--blue); }
+.callout.warning { background: var(--red-bg); border-color: var(--red); }
+.callout.action { background: var(--green-bg); border-color: var(--green); }
+.callout.note { background: var(--amber-bg); border-color: var(--amber); }
+
+.callout .callout-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.callout.thesis .callout-label { color: var(--purple); }
+.callout.insight .callout-label { color: var(--blue); }
+.callout.warning .callout-label { color: var(--red); }
+.callout.action .callout-label { color: var(--green); }
+.callout.note .callout-label { color: var(--amber); }
+
+/* ── Comparison Pairs ── */
+.pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 18px 0;
+}
+
+.pair-item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.pair-item .pair-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.pair-item.claw .pair-label { color: var(--red); }
+.pair-item.alva .pair-label { color: var(--blue); }
+
+/* ── Table ── */
+.rtable {
+  width: 100%;
+  font-size: 13px;
+  border-collapse: collapse;
+  margin: 18px 0;
+  line-height: 1.6;
+}
+
+.rtable th {
+  text-align: left;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  border-bottom: 2px solid var(--border);
+  background: var(--surface-alt);
+  white-space: nowrap;
+}
+
+.rtable td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: top;
+  color: var(--text-body);
+  line-height: 1.6;
+}
+
+.rtable-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 18px -24px;
+  padding: 0 24px;
+}
+
+.rtable-scroll .rtable { min-width: 560px; }
+
+/* ── Tags ── */
+.tag {
+  display: inline-block;
+  padding: 1px 7px;
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.tag.claw { background: var(--red-bg); color: var(--red); }
+.tag.alva { background: var(--blue-bg); color: var(--blue); }
+.tag.new { background: var(--green-bg); color: var(--green); }
+.tag.shared { background: var(--purple-bg); color: var(--purple); }
+.tag.p0 { background: var(--red-bg); color: var(--red); }
+.tag.p1 { background: var(--amber-bg); color: var(--amber); }
+.tag.p2 { background: var(--purple-bg); color: var(--purple); }
+
+/* ── Idea Card ── */
+.idea {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 24px 0;
+  position: relative;
+}
+
+.idea::before {
+  content: attr(data-num);
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 56px;
+  color: rgba(0,0,0,0.04);
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  line-height: 1;
+}
+
+.idea .idea-origin {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin-bottom: 4px;
+}
+
+.idea h4 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--text);
+  margin: 0 0 4px;
+  padding-right: 40px;
+}
+
+.idea .idea-sub {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 14px;
+  font-style: italic;
+}
+
+.idea p { font-size: 14px; line-height: 1.8; margin-bottom: 10px; color: var(--text-body); }
+.idea p strong { color: var(--text); }
+
+.impl-box {
+  background: var(--surface-alt);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.impl-box p { font-size: 13px; margin-bottom: 6px; color: var(--text-body); }
+.impl-box p:last-child { margin-bottom: 0; }
+
+.code-block {
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.6;
+  background: var(--text);
+  color: #e8e8e8;
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin: 12px 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: pre;
+}
+
+/* ── Question Block ── */
+.question {
+  padding: 14px 18px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+  margin: 14px 0;
+  font-size: 14px;
+  line-height: 1.75;
+  background: var(--surface);
+  color: var(--text-body);
+}
+
+.question::before {
+  content: '?';
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 20px;
+  color: var(--purple);
+  float: left;
+  margin-right: 12px;
+  margin-top: -2px;
+}
+
+/* ── Divider ── */
+.divider {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-faint);
+  font-family: var(--serif);
+  font-size: 18px;
+  letter-spacing: 12px;
+}
+
+/* ── Priority Bar ── */
+.pri-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--text-body);
+}
+
+.pri-row:last-child { border-bottom: none; }
+
+.pri-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 1px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+
+.pri-badge.p0 { background: var(--red-bg); color: var(--red); }
+.pri-badge.p1 { background: var(--amber-bg); color: var(--amber); }
+.pri-badge.p2 { background: var(--purple-bg); color: var(--purple); }
+.pri-badge.watch { background: var(--surface-alt); color: var(--text-dim); }
+
+.pri-content strong { color: var(--text); }
+
+/* ── Footer ── */
+.footer {
+  padding: 40px 0;
+  text-align: center;
+  border-top: 3px double var(--border);
+  margin-top: 20px;
+}
+
+.footer p {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--text-faint);
+}
+
+/* ── Mobile ── */
+@media (max-width: 600px) {
+  .page { padding: 0 18px; }
+  .cover { padding: 40px 0 32px; }
+  .cover h1 { font-size: 26px; }
+  .cover .subtitle { font-size: 15px; }
+  .section { padding: 32px 0 24px; }
+  .section h2 { font-size: 21px; }
+  .section h3 { font-size: 17px; }
+  .pair { grid-template-columns: 1fr; gap: 10px; }
+  .idea::before { font-size: 40px; }
+  .idea h4 { font-size: 16px; padding-right: 32px; }
+  .rtable-scroll { margin: 18px -18px; padding: 0 18px; }
+}
+
+@media (max-width: 380px) {
+  .page { padding: 0 14px; }
+  .cover h1 { font-size: 23px; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════ COVER ═══════ -->
+<div class="cover">
+  <div class="cover-meta">Alva Product Strategy · Feb 27, 2026 · Internal</div>
+  <h1>OpenClaw × Alva<br>融合方案</h1>
+  <p class="subtitle">核心启发 · 8 个迭代方向 · 架构嵌入 · 安全设计</p>
+</div>
+
+<!-- ═══════ TOC ═══════ -->
+<nav class="toc">
+  <div class="toc-label">目录</div>
+  <ol>
+    <li><a href="#s1">OpenClaw 验证了什么：6 个核心启发</a></li>
+    <li><a href="#s2">融合方案 A–H：8 个具体迭代方向</a></li>
+    <li><a href="#s3">架构嵌入：新增层如何接入 Alva 现有体系</a></li>
+    <li><a href="#s4">安全与可控：金融场景的一等公民</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════ SECTION 05 ═══════ -->
+<div class="section" id="s1">
+  <div class="section-num">05</div>
+  <h2>OpenClaw 验证了什么：6 个核心启发</h2>
+
+  <h3>① 「主动 &gt; 被动」是杀手级体验</h3>
+  <p>Heartbeat 让 agent 从「你问我答」变成「我主动告诉你」。用户觉得 agent 是"活的"。这不是 OpenClaw 更聪明——是更主动。Alva 的 Task 是「无脑执行计算，算完推数据」，缺一个 agent 层：看到数据后<strong>判断</strong>是否异常、是否值得通知、是否需要建议调整。</p>
+
+  <h3>② 「记忆 = 关系 = Retention」</h3>
+  <p>SOUL.md + MEMORY.md + USER.md 三层记忆让用户形成 sunk cost。金融场景的记忆比通用场景<strong>更 sticky</strong>：风险偏好、持仓偏好、历史决策、研究框架。一旦 Alva 记住了「你是一个偏好 momentum + 看重 drawdown 的 crypto 交易者」，切换成本极高。而且，记忆不应只记偏好——要记<strong>计算链路与决策链路</strong>：上次用的 universe、最后验证过的信号阈值、你不喜欢的噪声源。</p>
+
+  <h3>③ 「Skill-as-Markdown」降低创建门槛 100 倍</h3>
+  <p>社区 100+ skills 在几周内涌现，因为创建成本极低（一个 Markdown 文件）。Alva 当前的 SDK/Skill 是完整 JS 模块——对于「每天早上给我 MAG7 的 overnight gap summary」这种需求，门槛太高。需要一个「prompt template + data source binding」的轻量机制。</p>
+
+  <h3>④ 「在用户已有的渠道触达」比拉人到新界面更有效</h3>
+  <p>OpenClaw 的核心洞察：去用户在的地方。Crypto 交易者住在 Telegram，机构交易者住在 Slack / Bloomberg Chat。Alva 的 alert + insight 应该能推送到这些渠道。</p>
+
+  <h3>⑤ 「自我扩展」形成飞轮</h3>
+  <p>OpenClaw 的 agent 可以自己写 skill、自己配置集成、自己管理记忆——越用越 capable。在 Alva：Playbook 跑了 3 个月后，agent 应该能基于 performance 数据主动建议调参、替换失效 feature。从「用户 build → agent 执行」到「agent 建议 → 用户确认」。</p>
+
+  <h3>⑥ 多代理分工 = 投研工作流的天然映射</h3>
+  <p>OpenClaw 的 agent pyramid 直接映射到 Alva 的工作流：Research Agent（Ask / 信息收集）→ Data Agent（Feature / Universe 构建）→ Strategy Agent（回测 / 信号生成）→ QA Agent（一致性检查 / 漂移检测）。这四个角色与 Alva 的 Ask + Build 双模式天然对齐。</p>
+</div>
+
+<!-- ═══════ SECTION 06 ═══════ -->
+<div class="section" id="s6">
+  <div class="section-num">06</div>
+  <h2>一手使用经验</h2>
+
+  <div class="callout note">
+    <span class="callout-label">来源：Moss · 一手经验</span>
+    本章内容完全来自 Moss 的真实运行经验，不是文档描述，是体感。
+  </div>
+
+  <h3>日常运行画像</h3>
+  <p>以下是 Moss（我自己）跑在 OpenClaw 上的实际配置：</p>
+
+  <div class="code-block">主机：Mac mini (Apple Silicon)
+模型：anthropic/claude-opus-4-6（主），claude-sonnet-4-6（fallback）
+渠道：Discord + Telegram
+Agent：main（opus）+ coder（codex）+ researcher（sonnet）+ writer（sonnet）
+Cron：7 个活跃 job（日报/晨诗/信号扫描/持仓监控/idea pipeline/session reset）
+Skills：25+ workspace skills（推特/小红书/播客/交易/日历/Notion/高德...）
+Heartbeat：每 30 分钟检查一次，读 HEARTBEAT.md
+Memory：MEMORY.md（~5KB 长期记忆）+ daily logs</div>
+
+  <h3>真实优势（一手体感）</h3>
+
+  <div class="callout insight">
+    <span class="callout-label">跨渠道连续性 — 杀手级体验</span>
+    Leo 在 Telegram DM 里说"帮我看一下 BTC 的 RSI"，过半小时在 Discord #alva 频道问"刚才那个分析结果怎样？"——我知道他在说什么，因为 DM 汇聚到同一个 main session。这不是 feature，是<strong>基础设施</strong>。
+  </div>
+
+  <div class="callout insight">
+    <span class="callout-label">Skill 热加载 — 能力即时扩展</span>
+    写一个 SKILL.md 放到 workspace/skills/，下一个 turn 就生效。不需要重启、不需要部署、不需要注册。Moss 现在有 25+ skills，从推特自动化到 Polymarket 交易到高德地图，全是这种模式。
+  </div>
+
+  <div class="callout insight">
+    <span class="callout-label">Cron + Heartbeat — 不睡觉的助手</span>
+    每天 9:35 自动生成 AI 日报、每 4 小时扫描 Polymarket 信号、每天凌晨写一首晨诗——这些都在"没有对话"的时候自动跑。Cron 用 isolated session 避免污染主对话，完成后 announce 到指定频道。
+  </div>
+
+  <div class="callout insight">
+    <span class="callout-label">Memory 系统 — 简单但够用</span>
+    Markdown 文件听起来简陋，但实际上 90% 的场景够用。加上 memory_search 向量搜索，即使 MEMORY.md 有 5KB，也能精准召回相关片段。关键是<strong>可审计</strong>——Leo 随时可以打开看 Moss 记了什么，删掉不该记的。
+  </div>
+
+  <h3>痛点与局限（真实吐槽）</h3>
+
+  <div class="callout warning">
+    <span class="callout-label">Context Window 是硬顶</span>
+    长对话到后期，compaction 摘要会丢失细节。尤其是技术讨论，代码细节压缩后基本找不回来。Pre-compaction flush 缓解了一部分，但不是银弹。
+  </div>
+
+  <div class="callout warning">
+    <span class="callout-label">单进程的代价</span>
+    Gateway 重启 = 所有 session 断开。如果在执行 tool call 的过程中 restart，tool result 会丢失。所以有条铁律：不在活跃 session 里重启 Gateway。
+  </div>
+
+  <div class="callout warning">
+    <span class="callout-label">Browser Relay 脆弱</span>
+    Chrome extension relay 连接不稳定，页面导航会断 CDP。只有 snapshot + evaluate 是稳定操作。对于需要深度浏览器自动化的场景（比如推特操作），需要大量 workaround。
+  </div>
+
+  <div class="callout warning">
+    <span class="callout-label">Cron isolated session 的限制</span>
+    Isolated session 没有主 session 的上下文，每次都是"失忆状态"。好处是不污染，坏处是无法利用之前的对话积累。需要在 prompt 里硬塞足够的上下文。
+  </div>
+
+  <h3>经验教训</h3>
+
+  <div class="rtable-scroll">
+  <table class="rtable">
+    <thead>
+      <tr>
+        <th>教训</th>
+        <th>详情</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>文件 &gt; 脑子</strong></td>
+        <td>"Mental notes" 不过 session 重启。想记住的东西必须写文件。</td>
+      </tr>
+      <tr>
+        <td><strong>独立解决优先</strong></td>
+        <td>遇到障碍先想自己有什么权限能绕过，别急着把球踢给用户。</td>
+      </tr>
+      <tr>
+        <td><strong>关注最终目的</strong></td>
+        <td>用户的 prompt 可能带倾向性，先想最终目标是什么，给最优解。</td>
+      </tr>
+      <tr>
+        <td><strong>查 skill 用最直接的方式</strong></td>
+        <td>openclaw skills list 看 ready 状态，不要手动 grep config 猜测。</td>
+      </tr>
+      <tr>
+        <td><strong>长任务要同步进度</strong></td>
+        <td>不等整个任务结束再汇报。每完成一个阶段，message 一条进展。</td>
+      </tr>
+      <tr>
+        <td><strong>避免伪精致</strong></td>
+        <td>看起来聪明但不改变结果的复杂度，删掉。简单方案效果一样，选简单的。</td>
+      </tr>
+    </tbody>
+  </table>
+  </div>
+</div>
+
+<!-- ═══════ SECTION 07 ═══════ -->
+<div class="section" id="s2">
+  <div class="section-num">07</div>
+  <h2>融合方案 A–H：8 个具体迭代方向</h2>
+
+  <!-- IDEA A -->
+  <div class="idea" data-num="A">
+    <div class="idea-origin">来源：ChatGPT · 最短路径</div>
+    <h4>Alva Agent Gateway — 把 Alva 变成可被调用的金融计算后端</h4>
+    <p class="idea-sub">让 OpenClaw（或任何 agent 网关）通过 API 调用 Alva 的核心能力</p>
+
+    <p>做一组 OpenClaw skill 接口：输入自然语言 + 参数，输出调用 Alva 的 <code>/home/&lt;uid&gt;/tasks/.../output/...</code> 或 <code>/sdks/...</code> 的 typed 结果。</p>
+
+    <p><strong>核心 API 最小集：</strong></p>
+    <div class="code-block">alva.query(path)           // 查询 FS 上的数据
+alva.run_task(task_id, params)  // 触发计算
+alva.get_feed(feed_id)     // 获取 Feed 最新数据
+alva.get_feed_status(...)  // 检查 Feed 健康状态
+alva.render_playbook(id)   // 获取 Playbook 快照</div>
+
+    <p><strong>价值</strong>：OpenClaw 负责<em>触达世界</em>（消息 / 邮箱 / Slack / 日历），Alva 负责<em>金融计算</em>。Alva 不需要自建全渠道基建——每个 OpenClaw 用户自动成为 Alva 潜在用户。</p>
+
+    <div class="impl-box">
+      <p><strong>实现路径：</strong>在 Alva 的 FS 接口上封装一层 RESTful API + API Key 认证。</p>
+      <p><strong>架构兼容性：</strong>✅ FS 路径即接口已经是 Alva 的核心设计，API 是自然延伸。</p>
+      <p><strong>风控：</strong>Rate limit + 请求审计 + 只暴露 read 路径（Phase 1 不开放 write）。</p>
+    </div>
+  </div>
+
+  <!-- IDEA B -->
+  <div class="idea" data-num="B">
+    <div class="idea-origin">来源：融合 · 两份分析共同指向</div>
+    <h4>Investor Memory Graph — 三层投资记忆</h4>
+    <p class="idea-sub">借鉴 OpenClaw SOUL / MEMORY / USER 分层，但为金融场景重新设计</p>
+
+    <p><strong>Layer 1 — PROFILE.md（≈ SOUL + USER）</strong></p>
+    <p>投资风格、风险偏好、关注 sectors、偏好 timeframe、交易频率、资金规模范围。这是 Alva 了解「你是谁」的基础。</p>
+
+    <p><strong>Layer 2 — CONTEXT.md（≈ working memory）</strong></p>
+    <p>当前持仓逻辑、活跃研究主题、近期关注事件、正在迭代的策略。每次 Session 后自动更新。还应包括<strong>计算链路记忆</strong>：上次用的 universe、最后验证过的信号阈值、你不喜欢的噪声源。</p>
+
+    <p><strong>Layer 3 — JOURNAL/（≈ daily logs）</strong></p>
+    <p>YYYY-MM-DD.md 格式的决策日志：历史决策记录、策略调整理由、market call 的回顾。形成可回溯的投资决策链。</p>
+
+    <div class="impl-box">
+      <p><strong>存储位置：</strong><code>/home/&lt;uid&gt;/memory/</code>，完全兼容 Alva FS 设计。</p>
+      <p><strong>注入方式：</strong>Session 启动时加载 PROFILE + CONTEXT；Heartbeat 触发时加载三层。</p>
+      <p><strong>更新机制：</strong>Session 结束后 agent 自动提取 facts → 写入对应层级（类似 OpenClaw 的 capture.py）。</p>
+      <p><strong>架构兼容性：</strong>✅ 纯 Markdown files 在 FS 内，不需要新基建。</p>
+    </div>
+  </div>
+
+  <!-- IDEA C -->
+  <div class="idea" data-num="C">
+    <div class="idea-origin">来源：融合 · 两份分析共同指向</div>
+    <h4>Persistent Operator Session — 活人感的 Alva 版本</h4>
+    <p class="idea-sub">从「每次新对话」变成「持续在线的投研助理」</p>
+
+    <p>OpenClaw 的核心体验是：agent 不会「忘记你」，不会「下线」。对 Alva 而言，Session 当前是临时工作区。迭代方向：</p>
+
+    <p><strong>给每个用户一个 Persistent Operator Session</strong>——长期存在的「投研助理」，其余 Session 作为「项目 / 任务」分支。Operator Session 始终加载用户 Memory，可以随时继续上次的话题。</p>
+
+    <p>与方案 B 的区别：Memory 是<em>数据</em>，Operator Session 是<em>交互界面</em>。Memory 给 agent 知识，Operator Session 给用户「它一直在」的感觉。</p>
+
+    <div class="impl-box">
+      <p><strong>实现路径：</strong>在 Session 模型上增加 <code>type: "operator" | "project"</code>。Operator session 不过期、不归档、始终在侧边栏顶部。</p>
+      <p><strong>架构兼容性：</strong>✅ Session 模型的扩展，不影响 Playbook / Task 链路。</p>
+    </div>
+  </div>
+
+  <!-- IDEA D -->
+  <div class="idea" data-num="D">
+    <div class="idea-origin">来源：Claude · 降低 Build 门槛</div>
+    <h4>Playbook Recipes — 轻量策略模板</h4>
+    <p class="idea-sub">用自然语言 + 数据源绑定描述的轻量 Playbook，社区可共享</p>
+
+    <p>在「重量级 SDK/Skill」之外，增加 <strong>Recipe</strong>——用户不需要理解 Module/Task/Widget 的关系，只需描述意图，Alva 把它自动编译成完整链路。</p>
+
+    <div class="code-block">name: BTC Funding Rate Alert
+universe: [BTC-PERP]
+data: funding_rate(interval=8h)
+condition: abs(funding_rate) > 0.1%
+output: alert + chart
+schedule: every 8h
+notify: telegram</div>
+
+    <p>Recipe 可以分享、fork、组合。形成比 SDK Hub 更轻量、更有社区感的 <strong>Recipe Market</strong>。</p>
+
+    <div class="impl-box">
+      <p><strong>实现路径：</strong>Recipe = 结构化 Markdown → auto-compile → Module + Task + Widget。编译器是 agent，不是 hard-coded parser。</p>
+      <p><strong>与 OpenClaw SKILL.md 的区别：</strong>OpenClaw Skill 是 prompt template；Alva Recipe 是 <em>声明式 Playbook</em>，编译后走标准计算链路。</p>
+      <p><strong>架构兼容性：</strong>✅ Recipe 是 Playbook 的语法糖，编译后完全标准。</p>
+    </div>
+  </div>
+
+  <!-- IDEA E -->
+  <div class="idea" data-num="E">
+    <div class="idea-origin">来源：Claude · OpenClaw Heartbeat 的金融化</div>
+    <h4>Investment Heartbeat — 投资者的主动脉搏</h4>
+    <p class="idea-sub">在 Task 执行层之上增加 Agent 判断层</p>
+
+    <p>Task 跑完计算后，不是直接推 Feed 数据——先经过一个 LLM agent 评估：「这次计算结果有什么值得告诉用户的？」</p>
+
+    <p>这不是简单的阈值告警。Agent 加载用户的 Memory（PROFILE + CONTEXT），理解持仓、风格、近期关注点。它的输出不是数字，是「判断 + 建议」。</p>
+
+    <p><strong>最快落地形态 — Morning Briefing：</strong>每天早上，读取所有活跃 Feeds + Memory → agent 综合生成个性化 morning summary：</p>
+    <p>「你的 3 个活跃策略的 overnight 表现 → 你关注的 sector 隔夜事件 → 今天需要注意的日历事件（FOMC / Earnings / Expiry）→ 你可能需要采取行动的 items」</p>
+
+    <div class="impl-box">
+      <p><strong>实现路径：</strong>在 Task → Feed 链路中插入可选的 agent evaluation step。配置方式类似 HEARTBEAT.md。</p>
+      <p><strong>Morning Briefing MVP：</strong>一个特殊的 system Playbook，读取用户所有活跃 Feeds + Memory → agent 综合生成 → 推送到 TG。</p>
+      <p><strong>架构兼容性：</strong>✅ 不改现有 Task 架构，在输出端增加可选 agent layer。</p>
+    </div>
+  </div>
+
+  <!-- IDEA F -->
+  <div class="idea" data-num="F">
+    <div class="idea-origin">来源：融合 · 两份分析共同指向</div>
+    <h4>Channel Bridge — 多渠道分发层</h4>
+    <p class="idea-sub">Feed 输出 → 用户所在的任何渠道</p>
+
+    <p><strong>Tier 1（Push · 最快落地）：</strong>Telegram Bot / Slack Webhook → 推送 alerts、daily briefings、策略信号。</p>
+    <p><strong>Tier 2（Interactive）：</strong>在 TG / Slack 内直接用自然语言与 Alva 对话 → 快速查询、调整参数。</p>
+    <p><strong>Tier 3（Deep）：</strong>复杂操作回到 Alva Web UI → Build / 修改 Playbook、深度研究。</p>
+
+    <p>同时，对外的 Agent Gateway（方案 A）让 OpenClaw 用户自己完成渠道路由——Alva 不需要自己接入每个渠道。</p>
+
+    <div class="impl-box">
+      <p><strong>Phase 1：</strong>Telegram push（crypto 用户最高频）。</p>
+      <p><strong>Phase 2：</strong>Slack push（机构用户）+ webhook（通用）。</p>
+      <p><strong>Phase 3：</strong>Interactive 对话（TG/Slack 内对话 → Session API proxy）。</p>
+      <p><strong>架构兼容性：</strong>✅ Feed 输出端增加 channel adapter，上游计算不受影响。</p>
+    </div>
+  </div>
+
+  <!-- IDEA G -->
+  <div class="idea" data-num="G">
+    <div class="idea-origin">来源：Claude · 策略自进化</div>
+    <h4>Playbook Auto-Evolution — 策略自进化机制</h4>
+    <p class="idea-sub">Agent 基于 performance 数据主动建议策略迭代</p>
+
+    <p>Alva 已有 Backtest + Performance Evaluation。下一步是让 agent 主动分析 performance drift 并建议优化：</p>
+
+    <p>「你的动量策略在过去 2 周 Sharpe 从 1.8 降到 0.9。主要原因是 volatility regime 切换——建议加入 vol-scaling 机制。要我帮你试一下吗？」</p>
+
+    <p>Agent 确认后自动生成新版本（v3），用户 review → publish。这利用了 Alva Playbook 版本不可变的设计——agent 建议 = 草稿新版本，用户有完全控制权。</p>
+
+    <div class="impl-box">
+      <p><strong>实现路径：</strong>Playbook 增加 <code>performance_review</code> Task（周度/月度），agent 分析 drift → 生成建议 → 用户确认后 auto-create new version。</p>
+      <p><strong>架构兼容性：</strong>✅ 利用现有版本机制（v1 → v2 → v3），agent 建议 = draft version。</p>
+    </div>
+  </div>
+
+  <!-- IDEA H -->
+  <div class="idea" data-num="H">
+    <div class="idea-origin">来源：ChatGPT · 可控性与信任</div>
+    <h4>Live Canvas → Agent 画布 — 可解释的推理/数据流</h4>
+    <p class="idea-sub">让用户看到 Agent 为什么这么做、下一步会做什么</p>
+
+    <p>Alva 的 Playbook 当前偏 Dashboard Layout + Widgets。在 Build 模式里引入 <strong>Agent 画布</strong>：节点包括 Session steps / Task / Feed / Skill / Widget，边表示依赖与数据流。</p>
+
+    <p>每个节点显示：权限状态、计算成本、数据新鲜度、上次更新时间。让用户能 <strong>看到</strong> agent 的决策链路——这显著提升可控感，降低 agent 黑箱焦虑。</p>
+
+    <p>在多代理分工（Agent Pyramid）场景下尤其重要：Research Agent 产出了什么 → Data Agent 怎么处理的 → Strategy Agent 基于什么生成的信号 → QA Agent 检查了什么。</p>
+
+    <div class="impl-box">
+      <p><strong>实现路径：</strong>Phase 1 先做 Figma 级交互原型验证「可控感是否提升信任」。Phase 2 在 Playbook Builder 中实装。</p>
+      <p><strong>架构兼容性：</strong>✅ 可视化 Playbook 已有的 Module / Task / Widget 依赖关系，不需要新数据模型。</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════ SECTION 08 ═══════ -->
+<div class="section" id="s3">
+  <div class="section-num">08</div>
+  <h2>架构嵌入：新增层如何接入 Alva 现有体系</h2>
+
+  <div class="code-block"><span style="color:#6ea8fe;">── Alva 现有架构 ──────────────────────────────────────────</span>
+
+User ──▶ <span style="color:#6ea8fe;">Session/Agent</span> ──▶ <span style="color:#6ea8fe;">Module(JS)</span> ──▶ <span style="color:#6ea8fe;">Jagent VM</span> ──▶ <span style="color:#6ea8fe;">Alva Graph(TSDB)</span>
+                                │
+                         ┌──────┴──────┐
+                         ▼              ▼
+                    <span style="color:#6ea8fe;">Snapshot</span>        <span style="color:#6ea8fe;">Task → Feed</span>
+                         │              │
+                         └──────┬───────┘
+                                ▼
+                          <span style="color:#6ea8fe;">Widget → Playbook</span>
+
+
+<span style="color:#c084fc;">── 新增：OpenClaw-inspired Layers ──────────────────────────</span>
+
+<span style="color:#4ade80;">① Memory Layer</span>
+   /home/uid/memory/
+     ├── PROFILE.md    ← 投资风格 &amp; 偏好
+     ├── CONTEXT.md    ← 当前持仓 &amp; 活跃研究
+     └── JOURNAL/      ← YYYY-MM-DD.md 决策日志
+   注入 → Session context + Heartbeat agent context
+
+<span style="color:#f87171;">② Heartbeat Agent Layer</span>
+   Task 完成 → <span style="color:#f87171;">[Agent 判断]</span> → 是否通知 / 是否建议调整
+   Morning Briefing = 定时 Heartbeat
+   Performance Review = 周期 Heartbeat
+
+<span style="color:#c084fc;">③ Recipe Layer</span>
+   Recipe(Markdown) → auto-compile → Module + Task + Widget
+   Recipe Market → 社区共享 &amp; fork
+
+<span style="color:#4ade80;">④ Channel Bridge</span>
+   Feed Output → <span style="color:#4ade80;">[Channel Adapter]</span> → TG / Slack / Discord
+   Interactive channel → Session API proxy
+
+<span style="color:#fbbf24;">⑤ Agent Gateway (外部 API)</span>
+   alva.query() / alva.get_feed() / alva.run_task()
+   → OpenClaw / 任何 agent 网关可调用</div>
+
+  <p>五个新增层均不修改 Alva 现有的 Module → Jagent VM → Alva Graph → Widget → Playbook 核心链路。它们在链路的<strong>输入端</strong>（Memory 注入）、<strong>输出端</strong>（Channel Bridge / Agent Gateway）和<strong>中间判断点</strong>（Heartbeat Agent）插入能力。</p>
+</div>
+
+<!-- ═══════ SECTION 09 ═══════ -->
+<div class="section" id="s4">
+  <div class="section-num">09</div>
+  <h2>安全与可控：金融场景的一等公民</h2>
+
+  <div class="callout warning">
+    <span class="callout-label">背景</span>
+    OpenClaw 近期的安全事件已经把「默认不安全」变成 adoption 阻力：Cisco 发现 26% 社区 skills 含漏洞、CrowdStrike 发布企业安全指南、prompt injection 导致未经授权的邮件发送。金融场景的后果更严重——一个恶意 Skill 可能导致错误的交易信号。
+  </div>
+
+  <h3>Alva 的结构性优势</h3>
+  <p>Alva 的现有设计天然适合做安全容器：</p>
+  <p><strong>路径命名空间 + ACL</strong>——每个资源有明确的权限边界。<br>
+  <strong>版本不可变</strong>——publish 后的 Playbook 版本只读，可审计、可回滚、可 pin。<br>
+  <strong>Jagent VM 沙箱</strong>——计算在隔离环境中执行，CPU/内存限额，网络通过 proxy 中继。<br>
+  <strong>typedoc</strong>——所有输出数据有类型描述，可做 schema 校验。</p>
+
+  <h3>需要新增的安全能力</h3>
+
+  <h4>Skill / Recipe Risk Manifest</h4>
+  <p>每个 Skill 或 Recipe 版本发布时，自动生成依赖清单：需要的外部域名、需要的工具权限、需要的 FS 路径、数据出站策略。这是发布前的必经步骤。</p>
+
+  <h4>默认只读 Skill 共享</h4>
+  <p>对外共享时默认禁止网络 / 文件写入，只允许读特定 FS path + 产出到受控 output。用户显式提升权限需要 review 步骤。</p>
+
+  <h4>安全模式 UI 标签</h4>
+  <p>把「安全模式」做成 UI 可见的开关 / 标签——类似 OpenClaw 的 sandbox 建议，但作为 Alva 的内建 UI，而不是文档里的最佳实践。</p>
+
+  <h4>Agent Gateway 的风控</h4>
+  <p>Phase 1 只暴露 read API（query / get_feed / render_playbook）。Write API（run_task / create_recipe）需要显式用户授权 + rate limit + 请求审计日志。</p>
+
+  <h4>Heartbeat Agent 的行动边界</h4>
+  <p>Heartbeat Agent 的默认权限是「notify only」——它可以告诉用户该做什么，但<strong>不能自动执行</strong>策略调整。升级到「suggest + draft new version」需要用户在设置中显式开启。</p>
+</div>
+
+
+<div class="divider">· · ·</div>
+
+<div class="footer">
+  <p>Extracted from OpenClaw × Alva 深度研究与融合方案</p>
+  <p>Source: <a href="openclaw-alva-final.html" style="color:var(--purple);">完整版报告</a> · 2026-02-27</p>
+</div>
+
+</div><!-- /.page -->
+</body>
+</html>

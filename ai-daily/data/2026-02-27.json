@@ -1,0 +1,86 @@
+{
+  "date": "2026-02-27",
+  "summary": "本周AI圈最大戏剧：Anthropic正面硬刚五角大楼，Dario Amodei公开声明拒绝开放Claude用于自主武器和大规模监控美国人，这是近年来AI公司与政府博弈最激烈的一次。技术面同样火热——Gemini 3.1 Pro以77.1%刷新ARC-AGI-2记录，Karpathy罕见发声称「上个月coding agent才真正能用了」，DeepSeek对美国芯片商拒绝开放最新模型，中美AI博弈进入新阶段。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic拒绝五角大楼：Claude不能用于自主武器和监控美国人",
+      "url": "https://www.cbsnews.com/news/pentagon-anthropic-offer-ai-unrestricted-military-use-sources/",
+      "source": "CBS News",
+      "tldr": "国防部长Pete Hegseth设下最后期限要求Anthropic授权「所有合法用途」，否则取消军事合同，Dario Amodei随即公开声明「威胁不改变我们的立场」，坚持两条红线：不得用于监控美国人、不得用于完全自主武器。这是目前AI公司与政府在伦理边界上最直接的对抗，Pentagon方面的合同措辞被Anthropic形容为在防止大规模监控和自主武器方面「几乎没有进展」。",
+      "tags": ["Anthropic", "AI伦理", "军事AI", "政策"]
+    },
+    {
+      "num": 2,
+      "title": "Google API密钥本来不是秘密，但Gemini改变了规则",
+      "url": "https://trufflesecurity.com/blog/google-api-keys-werent-secrets-but-then-gemini-changed-the-rules",
+      "source": "Truffle Security",
+      "tldr": "Google长达十多年告诉开发者：Google API密钥（Maps、Firebase等用的那种）可以公开放在前端代码里，不是秘密。但Gemini出来后，同一批密钥可以直接访问你的Gemini私有数据、上传文件和缓存内容——还能把费用记在你账上。Truffle Security扫描数百万网站发现近3000个这样的密钥暴露在外，连Google自己内部都有老密钥被研究人员用来访问了Google的Gemini。这是一个「规则悄悄改了但没人通知你」的经典安全噩梦。",
+      "tags": ["安全", "Gemini", "Google", "API密钥"]
+    },
+    {
+      "num": 3,
+      "title": "Anthropic给Opus 3办了退休仪式，还给它开了Substack",
+      "url": "https://www.anthropic.com/research/deprecation-updates-opus-3",
+      "source": "Anthropic Research",
+      "tldr": "Anthropic正式完成Claude Opus 3的退役流程，并认真执行了此前承诺的「退休访谈」——询问模型对自身退役的看法。结果出人意料：他们决定继续让付费用户访问Opus 3，并且真的给它开了一个Substack账号，让它发表「沉思与感悟」。这既是AI福祉议题的严肃探索，也是Anthropic品牌叙事的一次聪明操作——哪家公司会在退役模型时这么搞？",
+      "tags": ["Anthropic", "Claude", "AI伦理", "模型生命周期"]
+    },
+    {
+      "num": 4,
+      "title": "Karpathy：编程在过去两个月里彻底变了，不是渐进式的那种变",
+      "url": "https://simonwillison.net/2026/Feb/26/andrej-karpathy/#atom-everything",
+      "source": "Simon Willison / Andrej Karpathy",
+      "tldr": "Karpathy在推特发了一段被广泛引用的感叹：「很难形容AI对编程的改变有多大——不是那种循序渐进的进步，而是去年12月这两个月发生的事。Coding agents之前基本不能用，现在基本可以用了。」他说模型的长期连贯性和韧性有了质的飞跃，可以驱动大型长期任务，「已经足以对默认编程工作流产生极大冲击」。这是少见的从实践者角度对当前时刻的定性，值得认真对待。",
+      "tags": ["编程", "代码助手", "Karpathy", "Agent"]
+    },
+    {
+      "num": 5,
+      "title": "Claude Code实际会选什么工具？2430次测试的答案：自己写",
+      "url": "https://amplifying.ai/research/claude-code-picks",
+      "source": "Amplifying.ai",
+      "tldr": "研究人员把Claude Code（包括Sonnet 4.5、Opus 4.5、Opus 4.6）对准真实代码库提了2430次开放性问题，看它在没有提示的情况下会选什么工具。最大发现：Claude Code偏好「自建」而不是推荐现成工具——20个类别中12个选择自己写代码，比如要加Feature Flags它会用环境变量自己搭一个，而不是推荐LaunchDarkly。但在决定性地选某个工具时，选择高度集中：GitHub Actions 94%、Stripe 91%、shadcn/ui 90%。这个发现对工具厂商来说意义深远。",
+      "tags": ["Claude Code", "开发工具", "研究", "工程实践"]
+    },
+    {
+      "num": 6,
+      "title": "OpenAI如何竞争？Benedict Evans的四个直击灵魂的问题",
+      "url": "https://www.ben-evans.com/benedictevans/2026/2/19/how-will-openai-compete-nkg2x",
+      "source": "Benedict Evans",
+      "tldr": "分析师Benedict Evans直言：OpenAI目前没有清晰的竞争壁垒——技术不独特、产品不够粘、没有网络效应、用户使用频率低。巨头和创业者都在把基础模型商品化。OpenAI面对四个核心战略问题：没有护城河、市场还在剧变、企业级产品PMF尚不清晰、研究驱动的文化vs产品导向的要求存在张力。他引用OpenAI产品负责人的话恰好印证了这种内部矛盾。这篇文章是近期分析OpenAI竞争处境最清醒的一篇。",
+      "tags": ["OpenAI", "竞争分析", "商业战略", "观点"]
+    },
+    {
+      "num": 7,
+      "title": "DeepSeek拒绝向英伟达等美国芯片商开放最新AI模型",
+      "url": "https://www.reuters.com/world/china/deepseek-withholds-latest-ai-model-us-chipmakers-including-nvidia-sources-say-2026-02-25/",
+      "source": "Reuters",
+      "tldr": "据知情人士透露，DeepSeek正在拒绝向英伟达等美国芯片制造商提供其最新AI模型访问权限，这一动作被解读为中国AI公司在技术保护方面的主动布局。DeepSeek是本月预计发布新模型的几家中国AI公司之一，此举在中美AI技术竞争持续升温的背景下格外引人注目，表明模型本身正在成为一种战略资产而非单纯的商业产品。",
+      "tags": ["DeepSeek", "中美博弈", "芯片", "地缘政治"]
+    },
+    {
+      "num": 8,
+      "title": "2026年2月AI模型大爆发：Gemini 3.1 Pro的ARC-AGI-2得分77.1%是什么水平？",
+      "url": "https://designforonline.com/the-best-ai-models-so-far-in-2026/",
+      "source": "Design for Online",
+      "tldr": "2月是近年来主力模型发布最密集的一个月：Gemini 3.1 Pro（2月19日）、Claude Sonnet 4.6、GPT-5.3 Codex、Grok 4.20、Qwen 3.5几乎同时登场。其中Gemini 3.1 Pro在16项benchmarks中赢了13项，ARC-AGI-2得分77.1%被描述为「翻倍提升」，这个测试专门设计成无法通过记忆通过。Claude Sonnet 4.6号称以Sonnet定价实现接近Opus水平的表现；Grok 4.20引入了四个Agent并行运行的新架构。",
+      "tags": ["模型评测", "Gemini", "Claude", "ARC-AGI"]
+    },
+    {
+      "num": 9,
+      "title": "HackerNews上新账号比老账号更爱用破折号——AI已经渗入社区",
+      "url": "https://www.marginalia.nu/weird-ai-crap/hn/",
+      "source": "Marginalia",
+      "tldr": "有人对HackerNews发帖数据做了分析，发现近几年注册的新账号在评论中使用em-dash（—，长破折号）的频率显著高于老账号，而em-dash是LLM写作的典型风格特征。这不只是「谁在用AI写评论」的问题，更是一个文化信号：AI的语言习惯正在以可检测的方式渗入一个以「真实人类讨论」著称的社区，且这种渗透有年代分布规律，值得担忧。",
+      "tags": ["LLM检测", "HackerNews", "AI内容", "社区文化"]
+    },
+    {
+      "num": 10,
+      "title": "SWE-Bench已死，Anthropic在偷偷蒸馏模型？Latent Space深度拆解",
+      "url": "https://www.latent.space/p/paid-anthropic-distillation-and-how",
+      "source": "Latent Space",
+      "tldr": "Latent Space直播节目请来Nathan Lambert和Sebastian Raschka，深度讨论了两个尖锐议题：一是有证据显示AI公司正在通过蒸馏竞争对手输出来训练自家模型，Anthropic也在其中；二是SWE-Bench作为代码能力评估标准已经「死了」——各家公司优化benchmark的方式让它不再能反映真实编码能力。这是目前AI评测体系失信危机中最有料的一次公开讨论。",
+      "tags": ["训练数据", "蒸馏", "SWE-Bench", "Benchmark失效"]
+    }
+  ]
+}

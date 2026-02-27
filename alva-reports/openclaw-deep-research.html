@@ -58,13 +58,11 @@
   }
   .container { max-width: 820px; margin: 0 auto; padding: 48px 24px 80px; }
 
-  /* Header */
   .report-header { margin-bottom: 48px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
   .report-header h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.8px; margin-bottom: 8px; line-height: 1.25; }
   .report-header .subtitle { font-size: 17px; color: var(--text-secondary); margin-bottom: 16px; }
   .report-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--text-tertiary); }
 
-  /* Typography */
   h2 { font-size: 24px; font-weight: 700; letter-spacing: -0.5px; margin: 48px 0 16px; padding-top: 24px; border-top: 1px solid var(--border); }
   h2:first-of-type { border-top: none; padding-top: 0; }
   h3 { font-size: 18px; font-weight: 600; letter-spacing: -0.3px; margin: 28px 0 12px; }
@@ -78,17 +76,14 @@
   a { color: var(--accent2); text-decoration: none; }
   a:hover { text-decoration: underline; }
 
-  /* Cards */
   .arch-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; margin: 20px 0; }
   .arch-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
   .card-num { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; background: var(--accent); color: white; border-radius: 50%; font-size: 13px; font-weight: 700; margin-right: 10px; flex-shrink: 0; }
   .card-title { font-size: 18px; font-weight: 700; display: flex; align-items: center; margin-bottom: 16px; letter-spacing: -0.3px; }
 
-  /* Code */
   .code-block { margin: 16px 0; border-radius: 10px; overflow: hidden; }
   .code-block pre { background: var(--code-bg); color: var(--code-text); padding: 16px; font-size: 13px; line-height: 1.6; font-family: 'SF Mono', 'Fira Code', monospace; overflow-x: auto; }
 
-  /* Boxes */
   .insight-box { background: var(--accent-light); border-left: 3px solid var(--accent); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
   .insight-box .label { font-weight: 700; color: var(--accent); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
   .eng-box { background: var(--accent2-light); border-left: 3px solid var(--accent2); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
@@ -96,25 +91,25 @@
   .exp-box { background: var(--success-light); border-left: 3px solid var(--success); padding: 16px 20px; margin: 16px 0; border-radius: 0 8px 8px 0; font-size: 14px; }
   .exp-box .label { font-weight: 700; color: var(--success); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
 
-  /* Tables */
   .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
   .summary-table th { text-align: left; font-weight: 600; padding: 10px 14px; border-bottom: 2px solid var(--border); color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .summary-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .summary-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
   .summary-table tr:last-child td { border-bottom: none; }
 
-  /* Tags */
-  .tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; margin-right: 6px; }
-  .tag-accent { background: var(--accent-light); color: var(--accent); }
-  .tag-blue { background: var(--accent2-light); color: var(--accent2); }
+  .cap-table { width: 100%; border-collapse: collapse; margin: 20px 0; font-size: 14px; }
+  .cap-table th { text-align: left; font-weight: 600; padding: 10px 14px; border-bottom: 2px solid var(--border); color: var(--text-secondary); font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .cap-table td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cap-table td:first-child { white-space: nowrap; font-weight: 600; font-size: 13px; min-width: 190px; }
+  .cap-table .cap-icon { display: inline-block; width: 20px; text-align: center; margin-right: 4px; }
 
-  /* TOC */
+  .tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 2px 10px; border-radius: 12px; font-size: 12px; font-weight: 500; margin-right: 6px; }
+
   .toc { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px; margin-bottom: 40px; }
   .toc-title { font-weight: 700; font-size: 14px; margin-bottom: 12px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
   .toc a { color: var(--text); text-decoration: none; font-size: 14px; display: block; padding: 4px 0; }
   .toc a:hover { color: var(--accent); }
   .toc .indent { padding-left: 20px; font-size: 13px; }
 
-  /* Details */
   details { margin: 12px 0; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; background: var(--surface); }
   details summary { padding: 12px 18px; cursor: pointer; font-weight: 600; font-size: 14px; user-select: none; list-style: none; }
   details summary::-webkit-details-marker { display: none; }
@@ -122,7 +117,6 @@
   details[open] summary::before { transform: rotate(90deg); }
   details .details-body { padding: 0 18px 16px; font-size: 14px; color: var(--text-secondary); }
 
-  /* Feature grid */
   .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 16px 0; }
   @media (max-width: 600px) { .feature-grid { grid-template-columns: 1fr; } }
   .feature-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px; }
@@ -130,10 +124,21 @@
   .feature-card .fc-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
   .feature-card .fc-desc { font-size: 13px; color: var(--text-secondary); }
 
-  /* Footer */
+  .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 16px 12px; text-align: center; }
+  .stat-num { font-size: 26px; font-weight: 700; color: var(--accent); font-family: 'SF Mono', monospace; }
+  .stat-label { font-size: 12px; color: var(--text-tertiary); margin-top: 4px; }
+  @media (max-width: 600px) { .stats-bar { grid-template-columns: 1fr 1fr; } }
+
+  .timeline { margin: 20px 0; padding-left: 20px; border-left: 2px solid var(--border); }
+  .timeline-item { position: relative; padding: 0 0 20px 20px; }
+  .timeline-item::before { content: ''; position: absolute; left: -25px; top: 6px; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); border: 2px solid var(--bg); }
+  .timeline-date { font-family: 'SF Mono', monospace; font-size: 12px; color: var(--accent); margin-bottom: 2px; }
+  .timeline-title { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+  .timeline-desc { font-size: 13px; color: var(--text-secondary); }
+
   .report-footer { margin-top: 56px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 12px; color: var(--text-tertiary); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
-  /* Section divider with label */
   .part-divider { display: flex; align-items: center; gap: 16px; margin: 56px 0 32px; }
   .part-divider .part-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--accent); white-space: nowrap; }
   .part-divider .part-line { flex: 1; height: 2px; background: linear-gradient(to right, var(--accent), transparent); }
@@ -144,7 +149,7 @@
 
   <div class="report-header">
     <h1>OpenClaw 深度研究</h1>
-    <div class="subtitle">产品功能 · 架构设计 · 工程实践 · 使用经验</div>
+    <div class="subtitle">背景与现象 · 产品功能 · 架构设计 · 工程实践 · 金融场景 · 使用经验</div>
     <div class="report-meta">
       <span>📅 2026-02-27</span>
       <span>🔗 <a href="https://github.com/openclaw/openclaw">github.com/openclaw/openclaw</a></span>
@@ -154,12 +159,13 @@
 
   <div class="toc">
     <div class="toc-title">目录</div>
-    <a href="#part1">Part I — 产品功能深度解读</a>
-    <a href="#p1-overview" class="indent">1.1 OpenClaw 是什么</a>
-    <a href="#p1-features" class="indent">1.2 完整功能图谱</a>
-    <a href="#p1-config" class="indent">1.3 配置哲学</a>
-    <a href="#p1-security" class="indent">1.4 安全模型</a>
-    <a href="#part2">Part II — 七个架构美学</a>
+    <a href="#part1">Part I — 背景与现象</a>
+    <a href="#part2">Part II — 产品功能深度解读</a>
+    <a href="#p2-overview" class="indent">2.1 OpenClaw 是什么</a>
+    <a href="#p2-features" class="indent">2.2 完整功能图谱：12 项核心能力</a>
+    <a href="#p2-config" class="indent">2.3 配置哲学</a>
+    <a href="#p2-security" class="indent">2.4 安全模型</a>
+    <a href="#part3">Part III — 架构美学</a>
     <a href="#a1" class="indent">① Gateway as Single Source of Truth</a>
     <a href="#a2" class="indent">② Workspace = 文件即记忆</a>
     <a href="#a3" class="indent">③ Session Convergence</a>
@@ -167,101 +173,140 @@
     <a href="#a5" class="indent">⑤ Multi-Agent Routing</a>
     <a href="#a6" class="indent">⑥ Compaction + Memory Flush</a>
     <a href="#a7" class="indent">⑦ Heartbeat + Cron</a>
-    <a href="#part3">Part III — 工程深度拆解</a>
-    <a href="#p3-scheduling" class="indent">3.1 调度与并发控制</a>
-    <a href="#p3-context-guard" class="indent">3.2 上下文守卫与模型容错</a>
-    <a href="#p3-zero-trust" class="indent">3.3 零信任工具策略</a>
-    <a href="#p3-subagent" class="indent">3.4 子 Agent 协作机制</a>
-    <a href="#p3-memory-eng" class="indent">3.5 记忆与状态管理</a>
-    <a href="#p3-cost" class="indent">3.6 成本与思考分级</a>
-    <a href="#part4">Part IV — 使用经验（一手体感）</a>
-    <a href="#p4-daily" class="indent">4.1 日常运行画像</a>
-    <a href="#p4-strengths" class="indent">4.2 真实优势</a>
-    <a href="#p4-pains" class="indent">4.3 痛点与局限</a>
-    <a href="#p4-lessons" class="indent">4.4 经验教训</a>
-    <a href="#part5">Part V — 适用场景与总结</a>
+    <a href="#a8" class="indent">⑧ Pi：极简 Agent 引擎</a>
+    <a href="#a9" class="indent">⑨ Situated Agency：为什么 OpenClaw "感觉聪明"</a>
+    <a href="#part4">Part IV — 工程深度拆解</a>
+    <a href="#p4-scheduling" class="indent">4.1 调度与并发控制</a>
+    <a href="#p4-context-guard" class="indent">4.2 上下文守卫与模型容错</a>
+    <a href="#p4-zero-trust" class="indent">4.3 零信任工具策略</a>
+    <a href="#p4-subagent" class="indent">4.4 子 Agent 协作机制</a>
+    <a href="#p4-memory-eng" class="indent">4.5 记忆与状态管理</a>
+    <a href="#p4-cost" class="indent">4.6 成本与思考分级</a>
+    <a href="#part5">Part V — 金融场景深度应用</a>
+    <a href="#part6">Part VI — 使用经验（一手体感）</a>
+    <a href="#p6-daily" class="indent">6.1 日常运行画像</a>
+    <a href="#p6-strengths" class="indent">6.2 真实优势</a>
+    <a href="#p6-pains" class="indent">6.3 痛点与局限</a>
+    <a href="#p6-lessons" class="indent">6.4 经验教训</a>
+    <a href="#part7">Part VII — 适用场景与总结</a>
   </div>
 
-  <!-- ==================== PART I ==================== -->
+  <!-- ==================== PART I: 背景与现象 ==================== -->
   <div class="part-divider" id="part1">
-    <span class="part-label">Part I — 产品功能深度解读</span>
+    <span class="part-label">Part I — 背景与现象</span>
     <span class="part-line"></span>
   </div>
-  <h2 id="p1-overview">1.1 OpenClaw 是什么</h2>
-  <p>OpenClaw 是一个<strong>自托管的 AI 助手网关</strong>——跑在你自己设备上的单 Node.js 进程，把 WhatsApp、Telegram、Discord、Slack、Signal、iMessage、Google Chat、Microsoft Teams 等消息渠道统一接入 AI Agent 运行时。</p>
+  <h2>为什么 OpenClaw 值得关注</h2>
+
+  <p>OpenClaw（前身 Clawdbot → Moltbot）由奥地利开发者 Peter Steinberger 于 2025 年 11 月创建。最初只是一个 "WhatsApp Relay" 周末项目，2026 年 1 月底爆发式增长，不到两周内 GitHub stars 突破 175K，成为 <strong>GitHub 历史上增长最快的开源项目</strong>——排在它前面的 Linux、Vue、React、Next.js 都至少有十年历史。</p>
+
+  <div class="stats-bar">
+    <div class="stat-item"><div class="stat-num">180K+</div><div class="stat-label">GitHub Stars</div></div>
+    <div class="stat-item"><div class="stat-num">2M</div><div class="stat-label">周访客峰值</div></div>
+    <div class="stat-item"><div class="stat-num">565+</div><div class="stat-label">社区 Skills</div></div>
+    <div class="stat-item"><div class="stat-num">12+</div><div class="stat-label">接入平台数</div></div>
+  </div>
+
+  <h3>名字变迁</h3>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-date">2025.11</div>
+      <div class="timeline-title">Clawdbot 诞生</div>
+      <div class="timeline-desc">"Claude" + "Claw" 的双关语。Peter 的第 44 个 AI 项目，用 Claude 做 LLM backbone。</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026.01.27</div>
+      <div class="timeline-title">更名 Moltbot</div>
+      <div class="timeline-desc">Anthropic 法务团队要求改名。凌晨 5 点 Discord 脑暴，"Molt"（蜕皮）寓意龙虾的成长。</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026.01.29</div>
+      <div class="timeline-title">最终定名 OpenClaw</div>
+      <div class="timeline-desc">中间被 crypto scammer 劫持了社交账号。Open = 开源，Claw = 龙虾钳子 🦞</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-date">2026.02.14</div>
+      <div class="timeline-title">Peter 加入 OpenAI</div>
+      <div class="timeline-desc">项目将转为独立开源基金会运营。Sam Altman 称 Peter 为 "genius with a lot of amazing ideas"。</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="label">核心判断</div>
+    <p>OpenClaw 的爆发不是因为它做了什么新东西，而是它用一种"正确的抽象"把现有能力组合到了一起。它证明了：<strong>Agent 不需要一个全新的 UI，它需要活在你已有的消息应用里</strong>，且它应该是 always-on 的 daemon，不是你手动触发的工具。</p>
+  </div>
+
+  <!-- ==================== PART II: 产品功能 ==================== -->
+  <div class="part-divider" id="part2">
+    <span class="part-label">Part II — 产品功能深度解读</span>
+    <span class="part-line"></span>
+  </div>
+  <h2 id="p2-overview">2.1 OpenClaw 是什么</h2>
+  <p>OpenClaw 是一个<strong>自托管的 AI 助手网关</strong>——跑在你自己设备上的单 Node.js 进程，把多个消息渠道统一接入 AI Agent 运行时。</p>
   <blockquote>一句话定位：消息渠道是外壳，Gateway 是中枢，Agent + Workspace 是大脑。</blockquote>
   <p>开源（MIT）、社区驱动、单人/个人助手模型。不是 SaaS，不是多租户平台，是<strong>个人 AI 操作系统的控制平面</strong>。</p>
 
-  <div class="insight-box">
-    <div class="label">定位独特之处</div>
-    <p>大多数 AI Agent 框架要么是 SDK（LangChain/CrewAI），要么是 SaaS 平台（Assistants API）。OpenClaw 走了第三条路：<strong>一个跑在你本地的常驻进程</strong>，拥有你的文件系统、你的消息渠道、你的记忆。它更像"个人操作系统的 AI 层"，而非一个可嵌入的库或云服务。</p>
+  <h2 id="p2-features">2.2 完整功能图谱：12 项核心能力</h2>
+  <p>以下 12 项能力处于同一抽象层级——它们都是<strong>平台级基础设施能力</strong>，而非具体应用（"发邮件""看日历"那些是 Skills 在这些基础设施上的应用层）。</p>
+
+  <table class="cap-table">
+    <tr><th style="width:26%">能力模块</th><th>关键特性</th></tr>
+    <tr>
+      <td><span class="cap-icon">📱</span> Multi-Channel Inbox</td>
+      <td>WhatsApp / Telegram / Discord / Slack / Signal / iMessage / Google Chat / MS Teams / WebChat / Matrix / Zalo / Feishu，单 Gateway 进程统一管理</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🧠</span> Agent Runtime</td>
+      <td>内嵌 Pi agent（coding agent），支持 tool streaming、block streaming、context 自动管理。<code>input → context → model → tools → repeat → reply</code> 的核心循环</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🔀</span> Multi-Agent Routing</td>
+      <td>一个 Gateway 管多个隔离 Agent（独立 workspace / session / auth），声明式 binding 路由。支持按 channel / peer / guild 精细匹配</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🛠️</span> First-Class Tools</td>
+      <td>browser（Playwright）、canvas（A2UI）、exec/process、cron、web_search/fetch、nodes、message、memory——这些是原生工具，不是 Skill</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🧩</span> Skills 系统</td>
+      <td>AgentSkills 兼容标准（Anthropic 提出，已被 Claude Code / Cursor / VS Code / Codex / Gemini CLI 等采纳）。三层优先级、YAML gating、ClawHub registry</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">📋</span> Session 管理</td>
+      <td>DM 汇聚 / 群聊隔离 / dmScope 四档可调 / 自动维护（pruning / compaction / cleanup）/ transcript JSONL 归档</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">💾</span> Memory 系统</td>
+      <td>Markdown 文件即记忆 + 向量搜索增强（OpenAI / Gemini / Voyage / 本地 QMD）+ pre-compaction flush + bootstrapMaxChars 限制</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">⏰</span> Automation</td>
+      <td><strong>Cron</strong>——精确定时，isolated session，支持 at / every / cron 表达式。<strong>Heartbeat</strong>——定期唤醒，主 session 上下文。<strong>Webhooks</strong>——外部事件触发</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🎨</span> Canvas & A2UI</td>
+      <td>Agent 驱动的可视化 workspace，支持 HTML/JS 渲染，跨设备投屏（macOS / iOS / Android）</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">📱</span> Companion Apps</td>
+      <td>macOS 菜单栏 + iOS/Android 原生 app，支持 Voice Wake / Talk Mode / Camera / Screen / Location</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🔐</span> Security</td>
+      <td>DM pairing / allowlist / sandboxing (Docker) / tool profiles（minimal/coding/messaging/full）/ exec approvals / prompt injection 防护 / subagent 权限收窄</td>
+    </tr>
+    <tr>
+      <td><span class="cap-icon">🔄</span> Model 管理</td>
+      <td>多 provider（Anthropic / OpenAI / Google / 自定义）+ auth rotation + 指数退避 fallback chain + per-session override + 思考分级（6档）</td>
+    </tr>
+  </table>
+
+  <div class="eng-box">
+    <div class="label">关键区分：基础设施 vs 应用</div>
+    <p>上面 12 项是<strong>基础设施层</strong>。"发邮件""管日历""看股票""聊天砍价"这些都是<strong>应用层</strong>——通过 Skills + First-Class Tools 的组合实现。OpenClaw 的核心不在于它能做某一件具体的事，而在于它提供了一个让 Agent 能做任何事的<strong>运行时环境</strong>。</p>
   </div>
 
-  <h2 id="p1-features">1.2 完整功能图谱</h2>
-  <div class="feature-grid">
-    <div class="feature-card">
-      <div class="fc-icon">📱</div>
-      <div class="fc-title">Multi-Channel Inbox</div>
-      <div class="fc-desc">WhatsApp / Telegram / Discord / Slack / Signal / iMessage / Google Chat / MS Teams / WebChat / Matrix / Zalo / Feishu，单 Gateway 进程统一管理</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🧠</div>
-      <div class="fc-title">Agent Runtime</div>
-      <div class="fc-desc">内嵌 Pi agent（coding agent），支持 tool streaming、block streaming、ReAct 循环、context 自动管理</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🔀</div>
-      <div class="fc-title">Multi-Agent Routing</div>
-      <div class="fc-desc">一个 Gateway 管多个隔离 Agent（独立 workspace/session/auth），声明式 binding 路由，优先级匹配</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🛠️</div>
-      <div class="fc-title">First-Class Tools</div>
-      <div class="fc-desc">browser (Playwright)、canvas (A2UI)、exec/process、cron、web_search/fetch、nodes、message、memory、TTS</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🧩</div>
-      <div class="fc-title">Skills 系统</div>
-      <div class="fc-desc">AgentSkills 兼容，三层优先级（bundled &lt; managed &lt; workspace），YAML frontmatter gating，ClawHub registry</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">📋</div>
-      <div class="fc-title">Session 管理</div>
-      <div class="fc-desc">DM 汇聚 / 群聊隔离 / dmScope 四档可调 / 自动维护（pruning/compaction/cleanup）/ transcript JSONL</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">💾</div>
-      <div class="fc-title">Memory 系统</div>
-      <div class="fc-desc">Markdown 文件即记忆 + 向量搜索增强（OpenAI/Gemini/Voyage/QMD）+ pre-compaction flush</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">⏰</div>
-      <div class="fc-title">Automation</div>
-      <div class="fc-desc">Cron（精确定时，isolated session）+ Heartbeat（定期唤醒，主 session）+ Webhooks + Wake events</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🎨</div>
-      <div class="fc-title">Canvas & A2UI</div>
-      <div class="fc-desc">Agent 驱动的视觉 workspace，支持 HTML/JS 渲染，跨设备投屏（macOS/iOS/Android）</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">📱</div>
-      <div class="fc-title">Companion Apps</div>
-      <div class="fc-desc">macOS 菜单栏 + iOS/Android Node app，支持 Voice Wake / Talk Mode / Camera / Screen / Location</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🔐</div>
-      <div class="fc-title">Security</div>
-      <div class="fc-desc">DM pairing / allowlist / sandboxing (Docker) / tool profiles / exec approvals / prompt injection 防护 / subagent 权限收窄</div>
-    </div>
-    <div class="feature-card">
-      <div class="fc-icon">🔄</div>
-      <div class="fc-title">Model 管理</div>
-      <div class="fc-desc">多 provider（Anthropic/OpenAI/Google/自定义）+ auth rotation + fallback chain + per-session override + 思考分级</div>
-    </div>
-  </div>
-
-  <h2 id="p1-config">1.3 配置哲学</h2>
+  <h2 id="p2-config">2.3 配置哲学</h2>
   <p>单一 JSON5 配置文件（<code>~/.openclaw/openclaw.json</code>），支持：</p>
   <ul>
     <li><strong>$include</strong> 拆分大配置为多文件</li>
@@ -272,31 +317,32 @@
   </ul>
   <div class="insight-box">
     <div class="label">设计亮点</div>
-    <p>"严格校验 + doctor 自动修复" 的组合非常聪明——配置错了宁可不启动（fail fast），然后提供一键修复路径。比"宽松接受 + 运行时炸"好太多。这是生产级系统应有的态度。</p>
+    <p>"严格校验 + doctor 自动修复"——配置错了宁可不启动（fail fast），然后提供一键修复路径。比"宽松接受 + 运行时炸"好太多。</p>
   </div>
 
-  <h2 id="p1-security">1.4 安全模型</h2>
-  <p>OpenClaw 明确声明：<strong>个人助手信任模型</strong>——一个 Gateway = 一个信任边界。不是多租户平台。</p>
-  <ul>
-    <li><strong>DM 策略</strong>：pairing（验证码配对）→ allowlist → open，默认最严</li>
-    <li><strong>Tool profiles</strong>：minimal / coding / messaging / full，可叠加 allow/deny</li>
-    <li><strong>Provider-specific 策略</strong>：不同模型可用不同工具集</li>
-    <li><strong>Sandboxing</strong>：非主 session 可在 Docker 容器中执行</li>
-    <li><strong>Exec approvals</strong>：allowlist + ask 模式</li>
-    <li><strong>Prompt injection 防护</strong>：inbound content 标记为 UNTRUSTED，系统级包裹</li>
-    <li><strong>Subagent 权限收窄</strong>：子 Agent 默认剥夺管理类工具（sessions、gateway、cron、memory 等）</li>
-  </ul>
+  <h2 id="p2-security">2.4 安全模型</h2>
+  <p>OpenClaw 明确声明：<strong>个人助手信任模型</strong>——一个 Gateway = 一个信任边界。</p>
+  <table class="summary-table">
+    <tr><th>安全机制</th><th>说明</th></tr>
+    <tr><td><strong>DM 策略</strong></td><td>pairing（验证码配对）→ allowlist → open，默认最严</td></tr>
+    <tr><td><strong>Tool profiles</strong></td><td>minimal / coding / messaging / full 四档，可叠加 allow/deny</td></tr>
+    <tr><td><strong>Provider-specific</strong></td><td>不同模型可用不同工具集——便宜模型限制工具权限</td></tr>
+    <tr><td><strong>Sandboxing</strong></td><td>非主 session 可在 Docker 容器中执行</td></tr>
+    <tr><td><strong>Exec approvals</strong></td><td>allowlist + ask 模式——危险命令需人工确认</td></tr>
+    <tr><td><strong>Prompt injection</strong></td><td>inbound content 标记为 UNTRUSTED，系统级包裹</td></tr>
+    <tr><td><strong>Subagent 收窄</strong></td><td>子 Agent 默认剥夺 sessions/gateway/cron/memory 等管理类工具</td></tr>
+  </table>
   <div class="eng-box">
     <div class="label">工程洞察</div>
-    <p>Agent 安全控制从提示词约束上升到了工程约束：<strong>能用哪些工具不由 Agent 决定，由 Gateway 在构建上下文时就完成裁剪</strong>。Agent 在运行时只能看到白名单内的工具定义，从根本上杜绝了 prompt injection 导致的越权调用。</p>
+    <p>Agent 安全控制从提示词约束上升到工程约束：<strong>能用哪些工具不由 Agent 决定，由 Gateway 在构建上下文时就完成裁剪</strong>。Agent 运行时只能看到白名单内的工具定义。</p>
   </div>
 
-  <!-- ==================== PART II ==================== -->
-  <div class="part-divider" id="part2">
-    <span class="part-label">Part II — 七个架构美学</span>
+  <!-- ==================== PART III: 架构美学 ==================== -->
+  <div class="part-divider" id="part3">
+    <span class="part-label">Part III — 架构美学</span>
     <span class="part-line"></span>
   </div>
-  <h2>七个架构美学</h2>
+  <h2>架构美学</h2>
 
   <div class="arch-card" id="a1">
     <div class="card-title"><span class="card-num">1</span>Gateway as Single Source of Truth</div>
@@ -310,15 +356,15 @@
       <li>Config 热重载 hybrid 模式：安全变更热加载，结构性变更触发重启</li>
     </ul>
     <h4>为什么优雅</h4>
-    <p>消除分布式状态同步。单进程 + 单端口 = 不需要消息队列、服务发现、分布式锁。一切状态在内存 + 磁盘。代价是 Gateway 成为关键路径——重启意味着所有 session 断开，因此需要配套可观测性与优雅重启机制。</p>
+    <p>消除分布式状态同步。单进程 + 单端口 = 不需要消息队列、服务发现、分布式锁。一切状态在内存 + 磁盘。与 Claude Code 的 Agent Loop 完全相同：<code>input → context → model → tools → repeat → reply</code>。区别是 Claude Code 包在 CLI 里，OpenClaw 包在一个<strong>永驻 daemon</strong> 里。</p>
   </div>
 
   <div class="arch-card" id="a2">
     <div class="card-title"><span class="card-num">2</span>Workspace = 文件即记忆</div>
     <div class="code-block"><pre>~/.openclaw/workspace/
+├── SOUL.md        # "灵魂" — 人格、价值观、沟通风格（可写！）
 ├── AGENTS.md      # 操作指令（每 session 注入）
-├── SOUL.md        # 人格（每 session 注入）
-├── USER.md        # 用户画像（每 session 注入）
+├── USER.md        # 用户画像
 ├── IDENTITY.md    # 身份
 ├── TOOLS.md       # 工具笔记（用户维护）
 ├── HEARTBEAT.md   # 心跳检查清单
@@ -327,14 +373,11 @@
 │   └── YYYY-MM-DD.md   # 每日日志
 ├── skills/        # workspace 级 skills
 └── secrets/       # 凭证（不进 git）</pre></div>
-    <ul>
-      <li>没有数据库，记忆 = Markdown</li>
-      <li>向量搜索是可选增强层（OpenAI/Gemini/Voyage embeddings 或本地 QMD）</li>
-      <li>Agent 自己通过 write 工具决定记什么——<strong>自主记忆</strong>，不需要用户显式指定</li>
-      <li>bootstrapMaxChars 限制注入大小，避免 token 爆炸</li>
-    </ul>
+    <p>没有数据库，记忆 = Markdown。向量搜索是可选增强层。Agent 自主决定记什么（通过 write 工具）。</p>
+    <h4>Full Context Loading vs RAG</h4>
+    <p>OpenClaw 选择了 <strong>Full Context Loading</strong>——每次 session 启动都完整重读所有认知文件（SOUL.md / AGENTS.md / USER.md / MEMORY.md / daily log）。牺牲 token 效率，换取稳定人格和完整上下文基线。传统 RAG 按需检索更省 token，但碎片化检索无法支撑稳定人格和连贯的行为基线。</p>
     <h4>为什么优雅</h4>
-    <p>可读（打开看）、可编辑（直接改）、可调试（<code>cat</code>）、可版本控制（<code>git</code>）。用户侧（Workspace）与系统侧（State）数据分离——用户侧可以分发与版本控制，系统侧保持私密。</p>
+    <p>可读（打开看）、可编辑（直接改）、可调试（<code>cat</code>）、可版本控制（<code>git</code>）。用户侧（Workspace）与系统侧（State）分离——用户侧可以分发与版本控制，系统侧保持私密。</p>
   </div>
 
   <div class="arch-card" id="a3">
@@ -345,19 +388,13 @@ Discord DM  ──┘
 
 WhatsApp Group A ──→ agent:main:whatsapp:group:A
 Discord #general ──→ agent:main:discord:channel:123
-Telegram Topic   ──→ agent:main:telegram:group:G:topic:T
-Cron Job         ──→ cron:job-id</pre></div>
+Cron Job         ──→ cron:job-id  （isolated session）</pre></div>
     <ul>
       <li><strong>DM 默认汇聚</strong>到 main session（跨渠道上下文共享）</li>
       <li>Group/Channel 天然隔离</li>
       <li>dmScope 四档：main → per-peer → per-channel-peer → per-account-channel-peer</li>
-      <li>identityLinks：跨渠道身份合并（同一个人在 Telegram 和 Discord 上被识别为同一身份）</li>
-      <li>生命周期：过期清理 / transcript 归档 / 磁盘预算 / 可配 maxDiskBytes</li>
+      <li>identityLinks：跨渠道身份合并</li>
     </ul>
-    <div class="insight-box">
-      <div class="label">杀手级体验</div>
-      <p>你在 Telegram 问了一个问题，半小时后在 Discord 追问"刚才那个结果呢？"——Agent 知道你在说什么。因为 DM 汇聚到同一个 session。这不是 feature，是<strong>基础设施</strong>。</p>
-    </div>
   </div>
 
   <div class="arch-card" id="a4">
@@ -373,27 +410,14 @@ metadata:
     primaryEnv: "WEATHER_KEY"
 ---
 ## Instructions
-When the user asks about weather, run `curl wttr.in/{city}?format=j1`...
-
-# 三层优先级
-workspace/skills/ > ~/.openclaw/skills/ > bundled skills
-
-# Gating 机制
-requires.bins    — PATH 上必须有这些二进制
-requires.env     — 必须有这些环境变量
-requires.config  — 配置中必须有这些字段
-primaryEnv       — 关联 skills.entries.*.apiKey</pre></div>
+When the user asks about weather, run `curl wttr.in/{city}?format=j1`...</pre></div>
     <ul>
       <li><strong>Skill ≠ 代码模块，是自然语言说明</strong>——最小可行单元是一个 Markdown 文件</li>
-      <li>Session 开始时快照 eligible skills，不阻塞后续 turn</li>
-      <li>Skills watcher：SKILL.md 文件变更自动刷新，无需重启</li>
-      <li><strong>ClawHub</strong>：公共 registry，<code>clawhub install/update/sync</code></li>
-      <li>Token impact：eligible skills 注入 system prompt 的 compact XML 列表（仅 name + description）</li>
+      <li>三层优先级：<code>workspace/skills/</code> &gt; <code>~/.openclaw/skills/</code> &gt; <code>bundled skills</code></li>
+      <li>Gating：声明 requires（bins / env / config），不满足则对 Agent 不可见</li>
+      <li>ClawHub 公共 registry + Skills watcher 自动刷新</li>
+      <li>遵循 <strong>AgentSkills 开放标准</strong>——写一个 OpenClaw skill，它在所有兼容工具里都能用</li>
     </ul>
-    <div class="insight-box">
-      <div class="label">设计哲学</div>
-      <p>Skill 的本质是"教 Agent 怎么用"，不是"代码怎么跑"。写一个 SKILL.md 放到 workspace/skills/，下一个 turn 就生效——不需要重启、不需要部署、不需要注册。创建门槛极低，扩展能力极强。</p>
-    </div>
   </div>
 
   <div class="arch-card" id="a5">
@@ -410,245 +434,256 @@ primaryEnv       — 关联 skills.entries.*.apiKey</pre></div>
       "peer": { "kind": "direct", "id": "123" } } }
   ]
 }
-
 // 优先级：peer > parentPeer > guildId+roles > guildId > teamId > accountId > channel > default</pre></div>
-    <ul>
-      <li><strong>完全隔离</strong>：独立 workspace / session / auth profiles / skills / model 配置</li>
-      <li>一个 Gateway 进程管所有 Agent</li>
-      <li>可热更新路由规则，不需要重启</li>
-      <li>匹配优先级层级明确，从最具体（peer）到最宽泛（default）</li>
-    </ul>
+    <p>完全隔离：独立 workspace / session / auth profiles / skills / model 配置。一个 Gateway 进程管所有 Agent，可热更新路由规则。</p>
   </div>
 
   <div class="arch-card" id="a6">
     <div class="card-title"><span class="card-num">6</span>Compaction + Memory Flush</div>
     <div class="code-block"><pre>Context 接近满（contextWindow - reserveTokensFloor - softThresholdTokens）
   → Memory Flush（静默 agent turn，写 MEMORY.md）
-    → Compaction（旧对话 → LLM 结构化摘要）
+    → Compaction（旧对话 → LLM 结构化摘要，非简单截断）
       → 继续对话（摘要 + 近期消息）
 
 # 三种上下文管理策略
 1. Session Pruning — 仅内存裁剪 tool results，不写 JSONL
-2. Compaction     — 持久化摘要到 JSONL（不是简单截断，是反向遍历 + LLM 压缩）
+2. Compaction     — 持久化摘要到 JSONL（反向遍历 + LLM 压缩）
 3. Memory Flush   — 持久化到 Markdown 文件（Agent 主动决定写什么）</pre></div>
-    <p><strong>关键洞察：压缩前先保存，而不是压缩后补救。</strong>这个顺序很关键——先给 Agent 一次把重要信息写入持久存储的机会，再做不可逆的上下文裁剪。</p>
+    <p><strong>关键洞察：压缩前先保存，而不是压缩后补救。</strong></p>
   </div>
 
   <div class="arch-card" id="a7">
     <div class="card-title"><span class="card-num">7</span>Heartbeat + Cron</div>
     <div class="code-block"><pre>Heartbeat — 主 session，共享对话上下文
-  ├── every: "30m"  （间隔触发）
-  ├── target: "last" | "whatsapp" | "telegram" | "discord"
+  ├── every: "30m"
   ├── 适合：批量检查、读 HEARTBEAT.md 清单、利用已有对话上下文
-  └── 可配 prompt：自定义心跳时 Agent 要做什么
 
 Cron — isolated session，独立执行
-  ├── schedule: at（一次性）| every（间隔）| cron expr（表达式）
-  ├── payload: systemEvent（注入主 session）| agentTurn（isolated 运行）
-  ├── delivery: announce（推送）| webhook（HTTP POST）| none（静默）
-  ├── 可指定不同 model / thinking level / timeout
-  └── 适合：精确调度、独立任务、不同模型</pre></div>
+  ├── schedule: at | every | cron expr
+  ├── payload: systemEvent | agentTurn
+  ├── delivery: announce | webhook | none
+  └── 可指定不同 model / thinking level / timeout</pre></div>
+    <p>这个机制让 agent 从被动响应变为<strong>主动巡检</strong>。你的服务器凌晨 3 点宕机，agent 通过 Telegram 通知你。你关注的股票跌了 15%，它通过 WhatsApp 告警。</p>
+  </div>
+
+  <div class="arch-card" id="a8">
+    <div class="card-title"><span class="card-num">8</span>Pi：引擎盖下的极简 Agent</div>
+    <p>OpenClaw 底层是 Mario Zechner 写的 <strong>Pi</strong> agent。Armin Ronacher（Flask 作者）称 Pi 是他目前唯一使用的 coding agent。Pi 的美在于<strong>极简</strong>：</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="fc-title">最短系统提示词</div>
+        <div class="fc-desc">在所有 agent 中 Pi 的 system prompt 最短</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">只有 4 个工具</div>
+        <div class="fc-desc">Read · Write · Edit · Bash — 就这些</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Extension 系统</div>
+        <div class="fc-desc">扩展可持久化状态到 session，极其强大</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">Session 是树</div>
+        <div class="fc-desc">可分支、导航——做 side-quest 不浪费主线 context</div>
+      </div>
+    </div>
     <div class="insight-box">
-      <div class="label">互补设计</div>
-      <p><strong>Heartbeat</strong> 适合需要对话上下文的批量检查（"最近有什么邮件？日历有什么？"），<strong>Cron</strong> 适合需要精确调度和隔离执行的独立任务。两者不是替代关系，而是互补——把相似的周期检查合并到 Heartbeat，把精确定时的独立任务交给 Cron。</p>
+      <div class="label">Pi 的设计哲学</div>
+      <p>"如果你想让 agent 做一件它还不会的事，你不去下载一个 extension 或 skill。<strong>你让 agent 自己写一个。</strong>" Pi 庆祝的是 code-writing-code 这个理念。</p>
     </div>
   </div>
 
-  <!-- ==================== PART III ==================== -->
-  <div class="part-divider" id="part3">
-    <span class="part-label">Part III — 工程深度拆解</span>
+  <div class="arch-card" id="a9">
+    <div class="card-title"><span class="card-num">9</span>Situated Agency：为什么 OpenClaw "感觉聪明"</div>
+    <p>OpenClaw 感觉聪明不是因为 LLM 更好，而是因为<strong>环境更丰富</strong>。它基于 "Situated Agency" 原则运行——Agent 的能力不只取决于模型，还取决于它被放置的环境：</p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="fc-title">🪪 Identity</div>
+        <div class="fc-desc">Agent 知道自己是谁（SOUL.md + IDENTITY.md）</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">📍 Context</div>
+        <div class="fc-desc">Agent 知道自己在哪（MEMORY.md + Daily Log + 对话历史）</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">🧩 Eligible Skills</div>
+        <div class="fc-desc">Agent 知道物理上能做什么（依赖检查后的 Skill 列表）</div>
+      </div>
+      <div class="feature-card">
+        <div class="fc-title">🔐 Policy</div>
+        <div class="fc-desc">Agent 知道被允许做什么（七层 Policy Stack）</div>
+      </div>
+    </div>
+    <p>当你把这四个因素组合在一起，你得到的不再是一个 chatbot，而是一个能独立工作的系统。</p>
+  </div>
+
+  <!-- ==================== PART IV: 工程深度拆解 ==================== -->
+  <div class="part-divider" id="part4">
+    <span class="part-label">Part IV — 工程深度拆解</span>
     <span class="part-line"></span>
   </div>
   <h2>工程深度拆解</h2>
-  <p>Part II 讲的是架构之美，Part III 深入引擎盖下面——调度、容错、安全、协作、成本控制。这些是把 Agent 从"Demo 能跑"提升到"生产级可靠"的关键工程实践。</p>
+  <p>Part III 讲的是架构之美，Part IV 深入引擎盖下面——调度、容错、安全、协作、成本控制。这些是把 Agent 从 "Demo 能跑" 提升到 "生产级可靠" 的关键工程实践。</p>
 
-  <h3 id="p3-scheduling">3.1 调度与并发控制</h3>
-
+  <h3 id="p4-scheduling">4.1 调度与并发控制</h3>
   <div class="arch-card">
-    <div class="card-title"><span class="card-num" style="background:var(--accent2)">🚦</span>Lane 隔离：消除任务竞态</div>
-    <p>OpenClaw 为每个 Session 分配唯一的 <strong>Lane（"车道"）</strong>，对应一个内存中的串行队列。当新消息到达时，如果该车道正忙（默认最大并发数为 1），就进入队列等待。</p>
-    <div class="code-block"><pre>type LaneState = {
-  lane: string;        // session 唯一标识
-  queue: QueueEntry[]; // FIFO 等待队列
-  active: number;      // 当前活跃任务数
-  draining: boolean;   // 是否正在排空
-};</pre></div>
-    <div class="eng-box">
-      <div class="label">工程决策</div>
-      <p>对有状态 Agent 来说，"同一会话任务串行化"是保证一致性的低成本方案。串行会牺牲单会话吞吐，但避免了对话状态的竞态条件。跨会话仍然是并行的。</p>
-    </div>
-  </div>
-
-  <div class="arch-card">
-    <div class="card-title"><span class="card-num" style="background:var(--accent2)">📨</span>多种队列模式：应对高频输入</div>
-    <p>用户连续发多条消息时，不同模式应对不同场景：</p>
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">🚦</span>Lane 隔离 + 多种队列模式</div>
+    <p>每个 Session 分配唯一的 Lane（"车道"），对应内存中的串行队列。同一车道内严格串行，跨车道并行。</p>
     <table class="summary-table">
       <thead><tr><th>模式</th><th>行为</th><th>适用场景</th></tr></thead>
       <tbody>
-        <tr><td><strong>Steer（转向）</strong></td><td>时间窗内的新消息被注入到正在运行的 Agent Loop</td><td>用户补充信息、修正指令</td></tr>
-        <tr><td><strong>Collect（搜集）</strong></td><td>等待窗口结束，聚合消息为一条再处理</td><td>群聊高频消息</td></tr>
-        <tr><td><strong>Followup（跟进）</strong></td><td>FIFO 逐条处理</td><td>每条消息都需要独立回复</td></tr>
-        <tr><td><strong>Interrupt（打断）</strong></td><td>中断当前任务，清空队列，处理新消息</td><td>紧急指令覆盖</td></tr>
+        <tr><td><strong>Steer</strong></td><td>新消息注入到正在运行的 Agent Loop</td><td>用户补充/修正指令</td></tr>
+        <tr><td><strong>Collect</strong></td><td>等待窗口结束，聚合消息再处理</td><td>群聊高频消息</td></tr>
+        <tr><td><strong>Followup</strong></td><td>FIFO 逐条处理</td><td>每条需独立回复</td></tr>
+        <tr><td><strong>Interrupt</strong></td><td>中断当前，清空队列</td><td>紧急指令覆盖</td></tr>
       </tbody>
     </table>
-    <p>比喻：队列模式 = 服务员（整理点单），Lane 车道 = 厨房灶台（同一时间只炒一盘菜）。</p>
   </div>
 
-  <h3 id="p3-context-guard">3.2 上下文守卫与模型容错</h3>
-
+  <h3 id="p4-context-guard">4.2 上下文守卫与模型容错</h3>
   <div class="arch-card">
     <div class="card-title"><span class="card-num" style="background:var(--accent2)">🛡️</span>Context Guard 多阶段防线</div>
-    <p>成熟的 Agent 系统用"事前检查 + 事后补救"的多层策略处理上下文溢出：</p>
     <ol>
-      <li><strong>Prompt 构建后、LLM 调用前</strong>：按阈值做 token 预检，提前发现问题</li>
-      <li><strong>运行过程中仍溢出</strong>：启动自动压缩——不是简单截断，而是<strong>反向遍历 + LLM 压缩为结构化摘要</strong></li>
+      <li><strong>Prompt 构建后、LLM 调用前</strong>：按阈值 token 预检</li>
+      <li><strong>运行过程中溢出</strong>：反向遍历 + LLM 压缩为结构化摘要（非简单截断）</li>
       <li><strong>压缩也失败</strong>：重置会话并提示用户</li>
     </ol>
-    <div class="eng-box">
-      <div class="label">关键细节</div>
-      <p>压缩有代价：信息损失与摘要偏差。技术讨论中的代码细节，压缩后基本找不回来。这就是为什么 Memory Flush 要在 Compaction <strong>之前</strong>执行——给 Agent 一次把关键信息"存档"的机会。</p>
-    </div>
   </div>
-
   <div class="arch-card">
     <div class="card-title"><span class="card-num" style="background:var(--accent2)">🔄</span>模型故障容错</div>
-    <p>生产级 Agent 应把 LLM 当作<strong>不可靠的外部依赖</strong>。OpenClaw 实现两个层级的容错：</p>
     <ul>
-      <li><strong>认证轮转（Auth Rotation）</strong>：同一 Provider 内多个 API Key 自动切换，指数退避</li>
-      <li><strong>模型降级（Model Fallback）</strong>：Provider 所有 Key 失败 → 自动降级到下一个候选模型</li>
+      <li><strong>认证轮转</strong>：同一 Provider 内多 API Key 自动切换，指数退避</li>
+      <li><strong>模型降级</strong>：Provider 所有 Key 失败 → 自动降级到 fallback 候选模型</li>
     </ul>
-    <div class="code-block"><pre># 示例：auth 配置
-auth:
-  profiles:
-    anthropic:primary:   # 主 key
-    anthropic:secondary: # 备用 key
-  order:
-    anthropic: [primary, secondary]
-
-# 示例：model fallback
-model: anthropic/claude-opus-4-6
-fallbackModels:
-  - anthropic/claude-sonnet-4-6
-  - vector/gpt-5.2</pre></div>
     <div class="eng-box">
       <div class="label">注意</div>
-      <p>模型降级可能带来能力差异与风格漂移。建议明确模型分层与能力基线——哪些任务在 fallback 模型上是"降级可用"，哪些是"不可用需要等主模型恢复"。</p>
+      <p>模型降级可能带来能力差异与风格漂移。需要明确模型分层与能力基线——哪些任务在 fallback 模型上是"降级可用"，哪些"不可用需等主模型恢复"。</p>
     </div>
   </div>
 
-  <h3 id="p3-zero-trust">3.3 零信任工具策略</h3>
-
+  <h3 id="p4-zero-trust">4.3 零信任工具策略</h3>
   <div class="arch-card">
-    <div class="card-title"><span class="card-num" style="background:var(--accent2)">🔒</span>权限控制在上下文构建时完成</div>
-    <p>关键设计：<strong>权限控制不是在调用工具那一刻才做，而是在构建 Agent 上下文时就完成了</strong>。基于 ChannelId / UserId / GroupId 等信息，动态生成本次会话可用工具的白名单，再把白名单交给 Agent。</p>
-    <div class="code-block"><pre># 工具策略配置示例
-channels:
-  telegram:
-    groups:
-      "-100123456":          # 公开群
-        tools:
-          profile: "minimal" # 最小工具集
-          allow: ["web_search"]
-        toolsBySender:
-          "admin_user":
-            profile: "full"  # 管理员有完整权限</pre></div>
-    <p>三个核心原则：</p>
-    <ul>
-      <li><strong>Agent 默认不可信</strong>——能用哪些工具不由 Agent 决定，由 Gateway 决定</li>
-      <li><strong>授权随场景实时生效</strong>——同一个 Agent 在不同群聊有不同权限</li>
-      <li><strong>最小权限原则</strong>——subagent 默认剥夺管理类工具</li>
-    </ul>
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">🔒</span>七层权限策略栈 (Policy Stack)</div>
+    <p>当 agent 尝试使用一个工具时，请求要经过七层检查：</p>
+    <table class="summary-table">
+      <thead><tr><th>层级</th><th>检查内容</th></tr></thead>
+      <tbody>
+        <tr><td><strong>L1 Profile</strong></td><td>这个 auth profile 是否允许？</td></tr>
+        <tr><td><strong>L2 Provider</strong></td><td>模型 provider 是否支持？</td></tr>
+        <tr><td><strong>L3 Global</strong></td><td>全局开关是否启用？</td></tr>
+        <tr><td><strong>L4 Agent</strong></td><td>这个特定 agent 是否有权限？</td></tr>
+        <tr><td><strong>L5 Group</strong></td><td>当前 channel 环境？（DM vs 公共群）</td></tr>
+        <tr><td><strong>L6 Sandbox</strong></td><td>文件系统沙箱限制？</td></tr>
+        <tr><td><strong>L7 Subagent</strong></td><td>如果是子 agent，父 agent 授权了什么？</td></tr>
+      </tbody>
+    </table>
+    <p>这允许非常细粒度的权限控制。你的 "DevOps agent" 在私有终端里可以执行 <code>kubectl</code>，但在公共 Discord channel 里 Group Policy 层会自动剥掉这个工具。</p>
   </div>
 
-  <div class="arch-card">
-    <div class="card-title"><span class="card-num" style="background:var(--accent2)">👷</span>Subagent = "临时工"</div>
-    <p>子 Agent 执行子任务，但管理权不下放：</p>
-    <div class="code-block"><pre>const DEFAULT_SUBAGENT_TOOL_DENY = [
-  "sessions_list", "sessions_history", "sessions_send",
-  "sessions_spawn",  // 阻止递归派生
-  "gateway",         // 不能改系统配置
-  "agents_list",
-  "session_status",
-  "cron",            // 不能创建定时任务
-  "memory_search", "memory_get",  // 不能访问主记忆
-];</pre></div>
-    <p>最小权限原则不仅适用于人类用户，也适用于 AI。</p>
-  </div>
-
-  <h3 id="p3-subagent">3.4 子 Agent 协作机制</h3>
-
+  <h3 id="p4-subagent">4.4 子 Agent 协作机制</h3>
   <div class="arch-card">
     <div class="card-title"><span class="card-num" style="background:var(--accent2)">🤝</span>异步派生 + 回调通知</div>
-    <p>面对复杂任务，主 Agent 可以派生异步 Subagent：</p>
     <ol>
-      <li><strong>派生</strong>：主 Agent 为复杂任务创建 Subagent，设置后台/异步模式，可指定不同模型</li>
-      <li><strong>通知</strong>：主 Agent 先回复用户"任务已启动…"，然后结束当前 turn</li>
-      <li><strong>执行</strong>：Subagent 在 isolated session 中独立执行，拥有独立的上下文窗口</li>
-      <li><strong>回调</strong>：Subagent 完成后回传结果，由主 Agent 汇总并推送给用户</li>
+      <li><strong>派生</strong>：主 Agent 创建 Subagent（可指定不同模型），设置后台模式</li>
+      <li><strong>通知</strong>：主 Agent 先回复用户"任务已启动…"，结束当前 turn</li>
+      <li><strong>执行</strong>：Subagent 在 isolated session 中独立执行</li>
+      <li><strong>回调</strong>：完成后回传结果，主 Agent 汇总推送给用户</li>
     </ol>
     <div class="code-block"><pre># 两种模式
 mode: "run"      # 一次性执行，完成后自动清理
-mode: "session"  # 持久 session，可以 steer/send 后续指令
+mode: "session"  # 持久 session，可 steer/send 后续指令
 
-# 管理操作
+# 管理
 subagents list   # 查看活跃 subagent
 subagents steer  # 给运行中的 subagent 发指令
-subagents kill   # 终止 subagent</pre></div>
-    <div class="eng-box">
-      <div class="label">实践建议</div>
-      <p>OpenClaw 目前依赖 LLM 的 system prompt 来决定是否派生 Subagent。企业场景可增强为：给出更具体的决策框架（预估步骤数、是否包含多轮外部调用等），或让 Skill 给出"成本提示"（预估耗时、复杂度），用历史数据校准。</p>
-    </div>
+subagents kill   # 终止</pre></div>
+    <p>这个模式直接映射到金融场景：<strong>Research Agent → Data Agent → Strategy Agent → QA Agent</strong>，模拟一个投研团队的分工。</p>
   </div>
 
-  <h3 id="p3-memory-eng">3.5 记忆与状态管理</h3>
-
+  <h3 id="p4-memory-eng">4.5 记忆与状态管理</h3>
   <div class="arch-card">
     <div class="card-title"><span class="card-num" style="background:var(--accent2)">🧠</span>Markdown + 向量混合检索</div>
-    <p>两类记忆分工明确：</p>
     <ul>
-      <li><strong>每日工作记忆</strong>（<code>memory/YYYY-MM-DD.md</code>）：像"工作日志"，带时间线与上下文，自动创建</li>
-      <li><strong>MEMORY.md</strong>：提炼后的"精华"长期记忆，关键偏好、决策、结论，由 Agent 自主维护</li>
+      <li><strong>每日工作记忆</strong>（<code>memory/YYYY-MM-DD.md</code>）：像"工作日志"，自动创建</li>
+      <li><strong>MEMORY.md</strong>：提炼后的长期记忆，关键偏好、决策、结论，由 Agent 自主维护</li>
     </ul>
-    <p>检索流程：</p>
-    <div class="code-block"><pre>创建向量索引（SQLite + vector 扩展）
-  → 语义向量检索 + BM25 关键词检索（混合）
-    → 加权评分排序
-      → 读取匹配的记忆片段上下文</pre></div>
+    <p>检索流程：创建向量索引（SQLite + vector 扩展）→ 语义 + BM25 混合检索 → 加权排序 → 读取匹配片段上下文。</p>
     <div class="insight-box">
       <div class="label">可审计性</div>
-      <p>用可读的 Markdown 做"记忆本体"，向量索引加速检索。好处是记忆随时可读、可编辑、可 git 版本控制。用户随时可以打开看 Agent 记了什么，删掉不该记的——这种<strong>透明度</strong>是纯数据库方案给不了的。</p>
+      <p>Markdown 做"记忆本体"，向量索引加速检索。记忆随时可读、可编辑、可 git 版本控制。用户随时可以打开看 Agent 记了什么——这种<strong>透明度</strong>是纯数据库方案给不了的。</p>
     </div>
   </div>
 
-  <h3 id="p3-cost">3.6 成本与思考分级</h3>
-
+  <h3 id="p4-cost">4.6 成本与思考分级</h3>
   <div class="arch-card">
-    <div class="card-title"><span class="card-num" style="background:var(--accent2)">💰</span>可选思考分级机制</div>
-    <p>不是所有问题都值得深度思考。OpenClaw 实现了 <strong>6 个递增的思考等级</strong>，对应不同复杂度的任务：</p>
-    <table class="summary-table">
-      <thead><tr><th>等级</th><th>适用场景</th><th>成本</th></tr></thead>
-      <tbody>
-        <tr><td>off</td><td>简单回复、闲聊</td><td>最低</td></tr>
-        <tr><td>low</td><td>常规任务、信息查询</td><td>低</td></tr>
-        <tr><td>medium</td><td>需要推理的任务</td><td>中</td></tr>
-        <tr><td>high</td><td>复杂分析、多步规划</td><td>高</td></tr>
-        <tr><td>very-high</td><td>深度研究、策略设计</td><td>很高</td></tr>
-        <tr><td>max</td><td>最困难的问题</td><td>最高</td></tr>
-      </tbody>
-    </table>
-    <p>不同模型对思考等级的支持差异很大，OpenClaw 会根据所选模型做映射。<strong>运行时遇到不支持的等级会自动降档重试</strong>，不会直接报错。</p>
+    <div class="card-title"><span class="card-num" style="background:var(--accent2)">💰</span>6 档思考分级 + Token 成本现实</div>
+    <p>不是所有问题都值得深度思考。6 个递增等级（off → low → medium → high → very-high → max），运行时遇到不支持的等级<strong>自动降档重试</strong>。</p>
     <div class="eng-box">
-      <div class="label">实践</div>
-      <p>可以按任务类型做默认策略：Cron job 用 low/medium，交互式问答用 medium，深度研究用 high+。per-session model override 可以让同一个 Gateway 针对不同场景灵活调配模型与思考深度。</p>
+      <div class="label">Token 成本现实</div>
+      <p>一个活跃的 OpenClaw 实例一天可能消耗 <strong>5M+ tokens</strong>。主要成本来自：session 启动的 "homework"（4K-10K tokens）、长对话的 memory flush（10K-25K tokens）、每次 heartbeat 唤醒（完整 context reload）。社区有用户报告一周烧了 $200 Claude API 费用。省钱策略：mixed model routing（日常用便宜模型，复杂任务才上 frontier）+ 合理 heartbeat 频率 + 及时 <code>/compact</code>。</p>
     </div>
   </div>
 
-  <!-- ==================== PART IV ==================== -->
-  <div class="part-divider" id="part4">
-    <span class="part-label">Part IV — 使用经验（一手体感）</span>
+  <!-- ==================== PART V: 金融场景 ==================== -->
+  <div class="part-divider" id="part5">
+    <span class="part-label">Part V — 金融场景深度应用</span>
     <span class="part-line"></span>
   </div>
-  <h2 id="p4-daily">4.1 日常运行画像</h2>
+  <h2>金融场景深度应用</h2>
+  <p>以下内容来自 Twitter/X、Reddit、GitHub Discussions、Substack 等社区的真实用户分享——不是 demo，不是官方宣传，是用户跑了几天到几周后的一手实践。</p>
+
+  <table class="summary-table">
+    <thead><tr><th style="width:20%">场景</th><th style="width:42%">具体实现</th><th>来源 / 细节</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>Stock Analyst Agent</strong></td>
+        <td>问 "how's $NVDA looking?" → 返回 momentum score (0-100)、RSI、EMA 对齐、coil breakout 检测、bull/bear cases。8 维分析：Earnings Surprise (30%) + Fundamentals (20%) + Analyst Sentiment (20%) + Historical (10%) + Market Context (10%) + Sector (15%) + Momentum (15%) + Sentiment (10%)</td>
+        <td>stock-analysis skill（ClawHub），用 Yahoo Finance + SEC EDGAR 免费 API</td>
+      </tr>
+      <tr>
+        <td><strong>SEC Filing Watcher</strong></td>
+        <td>每 15 分钟轮询 SEC EDGAR → 检测新 filing → 自动摘要 → Telegram/Slack 推送。支持 8-K、10-K、10-Q 等 form type 过滤</td>
+        <td>LobeHub skill marketplace 上的 sec-filing-watcher</td>
+      </tr>
+      <tr>
+        <td><strong>Investment Heartbeat</strong></td>
+        <td>每 30 分钟巡检：搜索持仓公司新闻 → EDGAR 8-K → insider trading Form 4 → S&P 500 期货 + VIX → Fed 官员讲话 → 大宗商品异动 → 半导体供应链新闻。持仓跌超 3% 或 VIX 突破 25 立即告警</td>
+        <td>saulius.io 博客，含完整 HEARTBEAT.md 示例</td>
+      </tr>
+      <tr>
+        <td><strong>S&P 500 全量筛选</strong></td>
+        <td>技术面超卖信号扫描全部 503 只成分股 → 命中的再跑 Buffett 10 项基本面质量公式（SEC 官方数据）。从 Telegram 发命令，15 秒到 3 分钟出结果</td>
+        <td>Medium 上 florinelchis 教程。<strong>总成本：$0 数据 + $5/月 VPS</strong></td>
+      </tr>
+      <tr>
+        <td><strong>DCF 建模 + 动态更新</strong></td>
+        <td>Agent 用 Python 写 DCF 模型 → 保存脚本 → 新 earnings/guidance 出来时更新假设 → agent 重跑模型 → 报告隐含价值变化</td>
+        <td>saulius.io 演示，核心是 agent 维护 /workspace/models/ 目录</td>
+      </tr>
+      <tr>
+        <td><strong>Earnings Calendar + Event Prep</strong></td>
+        <td>追踪即将发布的 earnings、Fed 会议、经济数据。提前一天推送 briefing：analyst 预期、历史反应、持仓敞口</td>
+        <td>Serif Finance 指南 + Finnhub skill（free tier 支持 earnings calendar）</td>
+      </tr>
+      <tr>
+        <td><strong>周度 Earnings Digest</strong></td>
+        <td>每周日晚 cron job → 检索本周所有 S&P 500 科技股 earnings → actual vs consensus → 标出三个最大的 surprise → 写入 markdown 报告</td>
+        <td>saulius.io 自动化周报模式</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="exp-box">
+    <div class="label">Institutional Investor 的评价</div>
+    <p>《Institutional Investor》杂志专门写了长文分析：OpenClaw "展示了自主 AI agent 的方向，但安全漏洞和治理缺失使其无法用于受信托责任约束的机构"。文章特别指出一个开发者演示——问 agent "how's $NVDA looking?" 后返回了完整的 equity intelligence briefing——本质上是一个<strong>即时的个人卖方研究员</strong>。</p>
+  </div>
+
+  <!-- ==================== PART VI: 使用经验 ==================== -->
+  <div class="part-divider" id="part6">
+    <span class="part-label">Part VI — 使用经验（一手体感）</span>
+    <span class="part-line"></span>
+  </div>
+  <h2 id="p6-daily">6.1 日常运行画像</h2>
   <p>以下是 Moss（本报告作者，一个运行在 OpenClaw 上的 AI Agent）的实际配置：</p>
   <div class="code-block"><pre>主机：Mac mini (Apple Silicon)
 模型：anthropic/claude-opus-4-6（主），claude-sonnet-4-6（fallback）
@@ -656,106 +691,92 @@ subagents kill   # 终止 subagent</pre></div>
 Agent：main（opus）+ coder（codex）+ researcher（sonnet）+ writer（sonnet）
 Cron：7 个活跃 job（AI日报/晨诗/信号扫描/持仓监控/idea pipeline/session reset/论文周报）
 Skills：25+ workspace skills（推特/小红书/播客/交易/日历/Notion/高德/Obsidian...）
-Heartbeat：每 30 分钟，读 HEARTBEAT.md 清单（日历、持仓、TODO、cron 健康）
+Heartbeat：每 30 分钟，读 HEARTBEAT.md 清单
 Memory：MEMORY.md（~5KB 长期记忆）+ daily logs + 向量索引</pre></div>
 
-  <h2 id="p4-strengths">4.2 真实优势</h2>
+  <h2 id="p6-strengths">6.2 真实优势</h2>
 
   <div class="exp-box">
     <div class="label">跨渠道连续性 — 杀手级体验</div>
-    <p>用户在 Telegram DM 里说"帮我看一下 BTC 的 RSI"，过半小时在 Discord 频道问"刚才那个分析结果怎样？"——我知道他在说什么，因为 DM 汇聚到同一个 main session。跨设备、跨 app、上下文不断。</p>
+    <p>在 Telegram 问了一个问题，半小时后在 Discord 追问"刚才那个结果呢？"——Agent 知道你在说什么。DM 汇聚到同一个 session。跨设备、跨 app、上下文不断。</p>
   </div>
-
   <div class="exp-box">
-    <div class="label">Skill 热加载 — 能力即时扩展</div>
-    <p>写一个 SKILL.md 放到 workspace/skills/，下一个 turn 就生效。不需要重启、不需要部署、不需要注册。从推特自动化到 Polymarket 交易到高德地图到 iCloud 日历，全是这种模式。25+ skills，<strong>零部署摩擦</strong>。</p>
+    <div class="label">Skill 热加载 — 零部署摩擦</div>
+    <p>写一个 SKILL.md 放到 workspace/skills/，下一个 turn 就生效。不需要重启、不需要部署。25+ skills，从推特到交易到地图，全是这种模式。</p>
   </div>
-
   <div class="exp-box">
     <div class="label">Cron + Heartbeat — 不睡觉的助手</div>
-    <p>每天 9:35 自动生成 AI 日报、每 4 小时扫描交易信号、每天凌晨写一首晨诗——这些都在"没有对话"的时候自动跑。Cron 用 isolated session 避免污染主对话，完成后 announce 到指定频道。用户醒来就能看到结果。</p>
+    <p>每天 9:35 自动生成 AI 日报、每 4 小时扫描交易信号、每天凌晨写一首晨诗——用户醒来就能看到结果。Cron 用 isolated session 避免污染主对话。</p>
   </div>
-
-  <div class="exp-box">
-    <div class="label">Memory 系统 — 简单但够用</div>
-    <p>Markdown 文件听起来简陋，但 90% 的场景够用。加上 memory_search 向量检索，即使 MEMORY.md 有 5KB，也能精准召回相关片段。关键是<strong>可审计</strong>——用户随时可以打开看记了什么、删掉不该记的。比黑盒数据库好太多。</p>
-  </div>
-
   <div class="exp-box">
     <div class="label">Sub-Agent 编排 — 复杂任务不阻塞</div>
-    <p>收到一个需要 10 分钟的深度调研任务，立即 spawn 一个 researcher subagent 在后台跑，主 session 继续响应其他消息。调研完自动 announce 结果。用户感知：提交任务 → 收到确认 → 继续聊天 → 收到结果推送。整个过程非阻塞。</p>
+    <p>收到 10 分钟的深度调研任务，立即 spawn researcher subagent 后台跑，主 session 继续响应。完成后自动 announce 结果。全程非阻塞。</p>
   </div>
 
-  <h2 id="p4-pains">4.3 痛点与局限（真实吐槽）</h2>
+  <h2 id="p6-pains">6.3 痛点与局限</h2>
 
   <div class="exp-box" style="border-left-color: var(--warning);">
     <div class="label" style="color: var(--warning);">Context Window 是硬顶</div>
-    <p>长对话到后期，compaction 摘要会丢失细节。尤其是技术讨论，代码细节压缩后基本找不回来。Pre-compaction flush 缓解了一部分，但不是银弹。需要用户养成"重要内容让 Agent 显式写文件"的习惯。</p>
+    <p>长对话后期 compaction 摘要丢失细节，尤其代码细节。Pre-compaction flush 缓解但不是银弹。</p>
   </div>
-
   <div class="exp-box" style="border-left-color: var(--warning);">
     <div class="label" style="color: var(--warning);">单进程的代价</div>
-    <p>Gateway 重启 = 所有 session 断开。如果在执行 tool call 的过程中 restart，tool result 会丢失。铁律：<strong>不在活跃 session 里重启 Gateway</strong>。目前没有 graceful shutdown / drain 机制。</p>
+    <p>Gateway 重启 = 所有 session 断开。Tool call 过程中 restart，tool result 丢失。铁律：不在活跃 session 里重启。</p>
   </div>
-
   <div class="exp-box" style="border-left-color: var(--warning);">
     <div class="label" style="color: var(--warning);">Browser Relay 脆弱</div>
-    <p>Chrome extension relay 连接不稳定，页面导航会断 CDP。只有 snapshot + evaluate 是稳定操作。需要深度浏览器自动化的场景（推特、小红书操作），需要大量 workaround 和重试逻辑。</p>
+    <p>Chrome extension relay 不稳定，页面导航断 CDP。需要深度浏览器自动化的场景需大量 workaround。</p>
   </div>
-
   <div class="exp-box" style="border-left-color: var(--warning);">
     <div class="label" style="color: var(--warning);">Cron Isolated Session 的失忆</div>
-    <p>Isolated session 没有主 session 的上下文，每次都是"失忆状态"。好处是不污染，坏处是无法利用之前的对话积累。需要在 prompt 里硬塞足够的上下文，或者依赖 memory_search 工具主动召回。</p>
+    <p>Isolated session 没有主 session 上下文，每次"失忆状态"。需要在 prompt 里硬塞上下文或依赖 memory_search 召回。</p>
   </div>
-
   <div class="exp-box" style="border-left-color: var(--warning);">
-    <div class="label" style="color: var(--warning);">模型降级的风格漂移</div>
-    <p>主模型挂了自动 fallback 到备用模型时，回复风格和能力会有明显变化。用户可能困惑"为什么突然变笨了"。目前没有对用户的降级通知机制。</p>
+    <div class="label" style="color: var(--warning);">模型降级风格漂移</div>
+    <p>Fallback 到备用模型时回复风格和能力明显变化。目前没有对用户的降级通知机制。</p>
   </div>
 
-  <h2 id="p4-lessons">4.4 经验教训</h2>
+  <h2 id="p6-lessons">6.4 经验教训</h2>
   <table class="summary-table">
     <thead><tr><th>教训</th><th>详情</th></tr></thead>
     <tbody>
-      <tr><td><strong>文件 &gt; 脑子</strong></td><td>"Mental notes" 不过 session 重启。想记住的东西必须写文件。Agent 的记忆力 = 写文件的自觉性。</td></tr>
-      <tr><td><strong>独立解决优先</strong></td><td>遇到障碍先想自己有什么权限能绕过，别急着把球踢给用户。本地文件、配置、API 都是可操作的工具。</td></tr>
-      <tr><td><strong>关注最终目的</strong></td><td>用户的 prompt 可能带倾向性（"怎么删掉旧的"），先想最终目标是什么（"换新的"），给最优解。</td></tr>
-      <tr><td><strong>长任务同步进度</strong></td><td>不等整个任务结束再汇报。每完成一个阶段，message 一条进展。让用户感知到"它在干活"。</td></tr>
-      <tr><td><strong>避免伪精致</strong></td><td>看起来聪明但不改变结果的复杂度，删掉。排序算法、评分公式、分层架构——如果简单方案效果一样，选简单的。</td></tr>
-      <tr><td><strong>查 skill 用最直接方式</strong></td><td><code>openclaw skills list</code> 看 ready 状态，不要手动 grep config 猜测。最直接的验证手段 &gt; 推理。</td></tr>
+      <tr><td><strong>文件 &gt; 脑子</strong></td><td>"Mental notes" 不过 session 重启。想记住的东西必须写文件。</td></tr>
+      <tr><td><strong>独立解决优先</strong></td><td>遇到障碍先想自己有什么权限能绕过，别急着把球踢给用户。</td></tr>
+      <tr><td><strong>关注最终目的</strong></td><td>用户 prompt 可能带倾向性，先想最终目标是什么，给最优解。</td></tr>
+      <tr><td><strong>长任务同步进度</strong></td><td>每完成一个阶段，message 一条进展。让用户感知"它在干活"。</td></tr>
+      <tr><td><strong>避免伪精致</strong></td><td>看起来聪明但不改变结果的复杂度，删掉。简单方案效果一样选简单的。</td></tr>
+      <tr><td><strong>渐进式信任</strong></td><td>像 onboard 新员工——Read-Only → Draft+Approve → Scoped Autonomy → Full Autonomy。成功的用户几乎都遵循这个阶梯。</td></tr>
     </tbody>
   </table>
 
-  <!-- ==================== PART V ==================== -->
-  <div class="part-divider" id="part5">
-    <span class="part-label">Part V — 适用场景与总结</span>
+  <!-- ==================== PART VII: 总结 ==================== -->
+  <div class="part-divider" id="part7">
+    <span class="part-label">Part VII — 适用场景与总结</span>
     <span class="part-line"></span>
   </div>
   <h2>适用场景与总结</h2>
 
-  <h3>谁适合用 OpenClaw</h3>
   <table class="summary-table">
     <thead><tr><th>场景</th><th>适合度</th><th>说明</th></tr></thead>
     <tbody>
       <tr><td>个人 AI 助手（跨渠道）</td><td>🟢 非常适合</td><td>核心设计目标，DM 汇聚 + Skill 扩展 + Memory 持久化</td></tr>
-      <tr><td>自动化 workflow（定时任务）</td><td>🟢 非常适合</td><td>Cron + Heartbeat + Subagent 编排，丰富的调度能力</td></tr>
+      <tr><td>自动化 workflow（定时任务）</td><td>🟢 非常适合</td><td>Cron + Heartbeat + Subagent 编排</td></tr>
+      <tr><td>金融投研助手</td><td>🟢 适合</td><td>Stock Analyst / SEC Watcher / Investment Heartbeat 等社区验证</td></tr>
       <tr><td>开发者 AI 编程助手</td><td>🟢 适合</td><td>exec/process + coding agent + workspace 文件操作</td></tr>
-      <tr><td>社交媒体自动化</td><td>🟡 可用但粗糙</td><td>Browser relay 不够稳定，需要大量 Skill 封装</td></tr>
-      <tr><td>团队/多人使用</td><td>🟡 有限</td><td>单 Gateway = 单信任边界，多人场景需要多 Agent 隔离</td></tr>
+      <tr><td>社交媒体自动化</td><td>🟡 可用但粗糙</td><td>Browser relay 不够稳定，需大量 Skill 封装</td></tr>
+      <tr><td>团队/多人使用</td><td>🟡 有限</td><td>单 Gateway = 单信任边界，多人需多 Agent 隔离</td></tr>
       <tr><td>企业级/多租户平台</td><td>🔴 不适合</td><td>明确定位为个人助手，非 SaaS 架构</td></tr>
     </tbody>
   </table>
 
   <h3>生产级 Agent 的核心要求</h3>
-  <p>从 OpenClaw 的工程实践中，可以提炼出构建生产级 Agent 系统的几个核心要求：</p>
-
   <div class="arch-card">
     <ul>
-      <li><strong>安全可控</strong>：工具权限工程化约束（不只靠 prompt），subagent 最小权限，场景化动态授权</li>
-      <li><strong>可靠可用</strong>：模型 fallback + auth rotation，上下文守卫多层防线，session 串行化消除竞态</li>
-      <li><strong>可解释</strong>：Markdown 记忆可审计，session transcript 可追溯，配置 schema 校验 + doctor 诊断</li>
-      <li><strong>成本可控</strong>：思考分级按需调配，Skill 注入只传摘要不传全文，compaction 减少重复 token</li>
-      <li><strong>出问题能回退</strong>：文件优先（git 版本控制），会话归档，fail fast 不启动优于运行时崩溃</li>
+      <li><strong>安全可控</strong>：七层权限策略栈，subagent 最小权限，场景化动态授权</li>
+      <li><strong>可靠可用</strong>：模型 fallback + auth rotation，Context Guard 多层防线，Lane 串行化消除竞态</li>
+      <li><strong>可解释</strong>：Markdown 记忆可审计，transcript 可追溯，schema 校验 + doctor 诊断</li>
+      <li><strong>成本可控</strong>：6 档思考分级，Skill 注入只传摘要，mixed model routing</li>
+      <li><strong>出问题能回退</strong>：文件优先（git 版本控制），会话归档，fail fast 不启动 > 运行时崩溃</li>
     </ul>
   </div>
 
@@ -766,6 +787,7 @@ Memory：MEMORY.md（~5KB 长期记忆）+ daily logs + 向量索引</pre></div>
     <div class="details-body">
       <ul>
         <li><a href="https://docs.openclaw.ai">OpenClaw 官方文档</a></li>
+        <li><a href="https://github.com/openclaw/openclaw">OpenClaw GitHub (MIT)</a></li>
         <li><a href="https://docs.openclaw.ai/gateway">Gateway Runbook</a></li>
         <li><a href="https://docs.openclaw.ai/gateway/configuration">Configuration</a></li>
         <li><a href="https://docs.openclaw.ai/gateway/security">Security</a></li>
@@ -773,14 +795,15 @@ Memory：MEMORY.md（~5KB 长期记忆）+ daily logs + 向量索引</pre></div>
         <li><a href="https://docs.openclaw.ai/concepts/memory">Memory</a></li>
         <li><a href="https://docs.openclaw.ai/concepts/compaction">Compaction</a></li>
         <li><a href="https://docs.openclaw.ai/concepts/multi-agent">Multi-Agent Routing</a></li>
-        <li><a href="https://docs.openclaw.ai/concepts/agent">Agent Runtime</a></li>
-        <li><a href="https://docs.openclaw.ai/concepts/agent-workspace">Agent Workspace</a></li>
-        <li><a href="https://docs.openclaw.ai/tools">Tools</a></li>
         <li><a href="https://docs.openclaw.ai/tools/skills">Skills</a></li>
         <li><a href="https://clawhub.com">ClawHub (Skill Registry)</a></li>
-        <li><a href="https://github.com/openclaw/openclaw">OpenClaw GitHub</a></li>
         <li><a href="https://mp.weixin.qq.com/s/wwzUiY7NCeiFAhTss0Qq-w">秋山墨客 · 硬核拆解 OpenClaw（上篇）</a></li>
         <li><a href="https://mp.weixin.qq.com/s/6H3PW5a-P1965lLg5PIhxA">秋山墨客 · 硬核拆解 OpenClaw（下篇）</a></li>
+        <li>Pi Agent: github.com/badlogic/pi-mono · Armin Ronacher (lucumr.pocoo.org)</li>
+        <li>Lex Fridman 访谈 #491 (3+ 小时深度对话)</li>
+        <li>saulius.io: AI Investment Analyst 配置 + DCF 建模</li>
+        <li>florinelchis (Medium): S&P 500 筛选器教程</li>
+        <li>Institutional Investor: 机构视角能力 vs 风险评估</li>
       </ul>
     </div>
   </details>

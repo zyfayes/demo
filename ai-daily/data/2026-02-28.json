@@ -1,0 +1,86 @@
+{
+  "date": "2026-02-28",
+  "summary": "本周最大的戏剧性事件不是某个模型发布，而是 Anthropic 硬刚五角大楼——Dario 拒绝移除 AI 安全护栏以支持自主武器，特朗普随即下令全联邦机构断绝与 Anthropic 的往来。与此同时，Gemini 3.1 Flash 悄悄刷新了图像生成 SOTA，Karpathy 公开宣布「编程已经变了」——coding agents 在去年12月之后基本上就跑通了。AI 圈的现实感这周格外浓烈。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Dario Amodei 就 Anthropic 与「战争部」谈判发表声明",
+      "url": "https://www.anthropic.com/news/statement-department-of-war",
+      "source": "Anthropic / HackerNews",
+      "tldr": "五角大楼要求 Anthropic 修改 Claude 以支持「致命自主武器系统」，Dario 公开拒绝，声明 Anthropic 不会移除核心安全护栏。这是一次极具象征意义的表态：AI 公司在商业利益与安全原则之间选择了后者，哪怕代价是失去政府合同。HN 2800+ 分，1500+ 评论，本周最高热度帖子。",
+      "tags": ["Anthropic", "AI安全", "政策", "五角大楼"]
+    },
+    {
+      "num": 2,
+      "title": "特朗普下令联邦机构停用 Anthropic，战争部将其列为「供应链风险」",
+      "url": "https://techcrunch.com/2026/02/27/president-trump-orders-federal-agencies-to-stop-using-anthropic-after-pentagon-dispute/",
+      "source": "TechCrunch / HackerNews",
+      "tldr": "Anthropic 拒绝配合之后，政治报复随即而来：特朗普签署行政令，战争部将 Anthropic 列为供应链风险，全联邦机构须切断与其合作关系。Claude 将从大量政府工作流中下线——短期商业打击明显，但 Anthropic 在 AI 安全社区赢得了大量声誉资本。",
+      "tags": ["Anthropic", "政策", "特朗普", "联邦政府"]
+    },
+    {
+      "num": 3,
+      "title": "Gemini 3.1 Flash 图像预览版登场，号称图像生成新 SOTA",
+      "url": "https://www.latent.space/p/ainews-nano-banana-2-aka-gemini-31",
+      "source": "Latent Space AINews",
+      "tldr": "Google 发布了 Gemini 3.1 Flash 图像生成预览版（内部代号 Nano Banana 2），latent.space 的 AINews 将其评为目前图像生成的新 SOTA。Flash 系列的速度和成本优势叠加图像能力升级，对 Midjourney 和 DALL-E 的市场地位构成实质压力。",
+      "tags": ["Google", "Gemini", "图像生成", "SOTA"]
+    },
+    {
+      "num": 4,
+      "title": "一个 AI coding agent 怀疑论者深度实测 coding agents（超详细）",
+      "url": "https://minimaxir.com/2026/02/ai-agent-coding/",
+      "source": "Max Woolf / minimaxir.com",
+      "tldr": "Max Woolf 写了一篇极其详细的实测报告，从简单的 YouTube 元数据抓取器一路做到复杂工程项目。结论：coding agents 在「已知答案」的任务上已真实可用，但对探索性工程仍力不从心。Simon Willison 专门推荐，这是本周最值得工程师读的一篇。",
+      "tags": ["Coding Agent", "实测", "AI工具", "开发者"]
+    },
+    {
+      "num": 5,
+      "title": "Karpathy：过去两个月编程已经变了，coding agents 从去年12月起基本跑通了",
+      "url": "https://simonwillison.net/2026/Feb/26/andrej-karpathy/#atom-everything",
+      "source": "Andrej Karpathy via Simon Willison",
+      "tldr": "Karpathy 写道：「很难形容过去两个月 AI 给编程带来的变化——不是渐进式进步，而是从去年12月开始的断点式跃升。Coding agents 之前基本不能用，现在基本能用了。」说这话的人极少夸大其词，这句话值得认真对待。",
+      "tags": ["Karpathy", "Coding Agent", "观点", "技术趋势"]
+    },
+    {
+      "num": 6,
+      "title": "METR 的 Joel Becker 谈指数级 Time Horizon 评估与 AI 能力边界",
+      "url": "https://www.latent.space/p/metr",
+      "source": "Latent Space Podcast",
+      "tldr": "METR 是目前最严肃的 AI 能力评估机构之一，Joel Becker 详细拆解了 Time Horizon Evals 框架——用「AI 能独立完成多长时间跨度的任务」来衡量模型能力。当前顶级模型大约能独立处理1-2小时的工程任务，而这条线每几个月都在移动。",
+      "tags": ["AI安全", "评估", "METR", "能力评测"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic 蒸馏技术解析 + SWE-Bench 已死：模型是如何在基准上作弊的",
+      "url": "https://www.latent.space/p/paid-anthropic-distillation-and-how",
+      "source": "Latent Space / Nathan Lambert & Sebastian Raschka",
+      "tldr": "Nathan Lambert 和 Sebastian Raschka 在 SAIL Live 上讨论了 Anthropic 的蒸馏策略，以及 SWE-Bench 基准污染问题——大量证据表明顶级模型在 SWE-Bench 上存在数据泄露或过拟合。Benchmark 作为标尺正在加速失效，行业需要新的评估方式。",
+      "tags": ["Anthropic", "蒸馏", "Benchmark", "SWE-Bench"]
+    },
+    {
+      "num": 8,
+      "title": "Anthropic 向大型开源项目维护者免费提供 Claude Max 20x（$200/月，免费6个月）",
+      "url": "https://claude.com/contact-sales/claude-for-oss",
+      "source": "Anthropic / HackerNews",
+      "tldr": "Anthropic 对大型开源项目核心维护者免费提供 Claude Max 20x，为期六个月。条件是公共知名项目的主要维护者、项目有明显社区影响力。时机恰在五角大楼风波期间，这波生态投资同时也是品牌修复。",
+      "tags": ["Anthropic", "开源", "Claude", "开发者"]
+    },
+    {
+      "num": 9,
+      "title": "Parakeet.cpp：纯 C++ 实现 Parakeet ASR 推理，支持 Apple Metal GPU 加速",
+      "url": "https://github.com/Frikallo/parakeet.cpp",
+      "source": "HackerNews / GitHub",
+      "tldr": "开源项目 parakeet.cpp 把 NVIDIA 的 Parakeet ASR 模型移植到纯 C++ 实现，并支持 Apple Silicon 的 Metal GPU 加速。在 Mac 上实现高质量本地语音识别又少了一个依赖，对隐私敏感或离线场景很有价值。HN 100+ 分，受关注度超出预期。",
+      "tags": ["开源", "ASR", "C++", "本地推理", "Apple Silicon"]
+    },
+    {
+      "num": 10,
+      "title": "Block（Jack Dorsey）宣布裁员4000人，接近砍半，转向「AI优先」运营模式",
+      "url": "https://www.cnbc.com/2026/02/26/block-laying-off-about-4000-employees-nearly-half-of-its-workforce.html",
+      "source": "CNBC",
+      "tldr": "Jack Dorsey 的 Block 裁员4000人（从10000降至6000），理由是转向 AI 优先运营模式——股票随即暴涨24%。市场对「AI替换人力」的叙事仍然买单，「AI重组」作为裁员合法化的包装正在成为行业模板，值得警惕。",
+      "tags": ["Block", "裁员", "AI优先", "产业影响"]
+    }
+  ]
+}

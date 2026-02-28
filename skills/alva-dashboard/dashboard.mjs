@@ -188,6 +188,47 @@ function parseDataUri(uri) {
   return { jagentId: m[1], nodeName: m[2], outputName: m[3] };
 }
 
+/**
+ * Parse typedoc string into structured field definitions.
+ * Format: "Description.\nfields:\n- name(type): desc\n- name2(type): desc2"
+ * Returns { description, fields: [{ name, type, desc }] }
+ */
+function parseTypedoc(typedocStr) {
+  if (!typedocStr) return null;
+  const lines = typedocStr.split('\n');
+  const descLines = [];
+  const fields = [];
+  let inFields = false;
+  for (const line of lines) {
+    if (/^fields:\s*$/i.test(line.trim())) { inFields = true; continue; }
+    if (inFields) {
+      const m = line.match(/^-\s*(\w+)\((\w+)\):\s*(.+)$/);
+      if (m) fields.push({ name: m[1], type: m[2], desc: m[3].trim() });
+    } else {
+      if (line.trim()) descLines.push(line.trim());
+    }
+  }
+  return { description: descLines.join(' '), fields };
+}
+
+/**
+ * Infer field roles from parsed typedoc fields.
+ * Returns { timeField, valueFields: [{ name, desc }], labelFields, boolFields }
+ */
+function inferFieldRoles(fields) {
+  const roles = { timeField: null, valueFields: [], labelFields: [], boolFields: [] };
+  for (const f of fields) {
+    if (f.type === 'boolean') { roles.boolFields.push(f); continue; }
+    if (f.type === 'string') { roles.labelFields.push(f); continue; }
+    // number: check if it's a time field
+    if (f.type === 'number' && /\b(date|time|timestamp|epoch)\b/i.test(f.name + ' ' + f.desc)) {
+      if (!roles.timeField) { roles.timeField = f; continue; }
+    }
+    if (f.type === 'number') roles.valueFields.push(f);
+  }
+  return roles;
+}
+
 function extractDataUris(chartDataStr) {
   const uris = new Set();
   const re = /alva:\/\/time_series\/[^"'\s]+/g;
@@ -261,13 +302,85 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
     const props = echartsWidget.props || {};
     const resolvedProps = resolveEChartsData(props, widgetDataMap);
 
+    // Collect parsed typedocs for this widget's data
+    const docs = getWidgetTypedocs(w);
+    const parsedDocs = docs.map(d => parseTypedoc(d.typedoc)).filter(Boolean);
+    // Merge all fields from all typedocs (dedup by name)
+    const allFields = new Map();
+    for (const pd of parsedDocs) {
+      for (const f of pd.fields) {
+        if (!allFields.has(f.name)) allFields.set(f.name, f);
+      }
+    }
+    const fieldMap = Object.fromEntries(allFields);
+
     // Apply Alva design tokens to the resolved props
-    applyAlvaDesignTokens(resolvedProps);
+    applyAlvaDesignTokens(resolvedProps, fieldMap);
+
+    // Build series name → description map for tooltip
+    // Match strategy: exact field name → normalized name → keyword in desc → fuzzy
+    const seriesDescMap = {};
+    if (resolvedProps.series) {
+      const fieldEntries = Object.entries(fieldMap);
+      for (const s of resolvedProps.series) {
+        if (!s.name) continue;
+        const sn = s.name;
+        const snLower = sn.toLowerCase().replace(/[^a-z0-9]/g, '');
+        
+        // 1. Exact match: series name === field name
+        if (fieldMap[sn]) { seriesDescMap[sn] = fieldMap[sn].desc; continue; }
+        
+        // 2. Normalized match: strip special chars
+        for (const [fname, fdef] of fieldEntries) {
+          if (fname.toLowerCase().replace(/[^a-z0-9]/g, '') === snLower) {
+            seriesDescMap[sn] = fdef.desc; break;
+          }
+        }
+        if (seriesDescMap[sn]) continue;
+        
+        // 3. Series name appears in field desc (e.g. "RSI(14)" in "RSI(14) value (0-100)")
+        for (const [fname, fdef] of fieldEntries) {
+          if (fdef.desc.toLowerCase().includes(sn.toLowerCase()) || fdef.desc.includes(sn)) {
+            seriesDescMap[sn] = fdef.desc; break;
+          }
+        }
+        if (seriesDescMap[sn]) continue;
+        
+        // 4. Field name appears in series name (e.g. field "rsi14" in series "RSI(14)")
+        for (const [fname, fdef] of fieldEntries) {
+          if (fdef.type === 'number' && snLower.includes(fname.toLowerCase().replace(/[^a-z0-9]/g, ''))) {
+            seriesDescMap[sn] = fdef.desc; break;
+          }
+        }
+      }
+    }
+
+    const hasDescMap = Object.keys(seriesDescMap).length > 0;
 
     return `
     {
       const chart = echarts.init(document.getElementById('chart_${idx}'));
-      chart.setOption(${JSON.stringify(resolvedProps)});
+      ${hasDescMap ? `const _descMap = ${JSON.stringify(seriesDescMap)};` : ''}
+      const opts = ${JSON.stringify(resolvedProps)};
+      ${hasDescMap ? `
+      // Enhanced tooltip with typedoc field descriptions
+      opts.tooltip = opts.tooltip || {};
+      opts.tooltip.formatter = function(params) {
+        if (!Array.isArray(params)) params = [params];
+        let header = params[0]?.axisValueLabel || params[0]?.name || '';
+        let html = '<div style="font-weight:500;margin-bottom:6px;font-size:12px">' + header + '</div>';
+        for (const p of params) {
+          const desc = _descMap[p.seriesName] || '';
+          const label = desc ? '<span style="color:rgba(0,0,0,0.5);font-size:10px"> ' + desc + '</span>' : '';
+          const val = typeof p.value === 'number' ? p.value.toLocaleString() :
+                      Array.isArray(p.value) ? (p.value[1] ?? p.value).toLocaleString() : p.value;
+          html += '<div style="display:flex;align-items:center;gap:6px;margin:3px 0">'
+            + (p.marker || '') + '<span style="font-size:12px">' + p.seriesName + ': <b>' + val + '</b></span>'
+            + label + '</div>';
+        }
+        return html;
+      };` : ''}
+      chart.setOption(opts);
       window.addEventListener('resize', () => chart.resize());
     }`;
   }).filter(Boolean);
@@ -452,7 +565,7 @@ function resolveEChartsData(props, dataMap) {
   return resolved;
 }
 
-function applyAlvaDesignTokens(props) {
+function applyAlvaDesignTokens(props, fieldMap = {}) {
   // Override axis styles with Alva AX standard
   const AX = {
     axisLine: { show: false },

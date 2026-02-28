@@ -654,26 +654,40 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
         break;
     }
     if (result) {
-      // Auto-assign span based on kind
-      const span = result.span || autoSpan(kind, widgets.length);
-      const wrapped = result.html.replace('<div class="widget-card">', `<div class="widget-card span-${span}">`);
-      renderedWidgets.push(wrapped);
-      if (result.script) scripts.push(result.script);
+      // Determine size: feeds/text → full, charts/KPI → half (can pair)
+      let size;
+      if (result.span === 6) size = 'half';
+      else if (['news', 'twitter', 'text'].includes(kind)) size = 'full';
+      else if (kind === 'chart') size = 'half';
+      else size = 'full';
+      renderedWidgets.push({ html: result.html, script: result.script || '', size, kind });
     }
   }
 
-  // Smart span assignment
-  function autoSpan(kind, totalWidgets) {
-    // Feed types always full width
-    if (['news', 'twitter', 'text'].includes(kind)) return 12;
-    // If only 1 chart, full width; 2 charts = half each; 3+ = mixed
-    if (kind === 'chart' || kind === 'unknown') {
-      if (totalWidgets === 1) return 12;
-      if (totalWidgets === 2) return 6;
-      if (totalWidgets === 3) return 4;
-      return 6;
+  // Group widgets into rows using Alva Design System layout classes
+  function buildRows(items) {
+    const rows = [];
+    let i = 0;
+    while (i < items.length) {
+      const cur = items[i];
+      if (cur.size === 'full') {
+        rows.push({ layout: 'row-full', widgets: [cur] });
+        i++;
+      } else if (i + 1 < items.length && items[i + 1].size === 'half') {
+        // Pair two half-width widgets
+        rows.push({ layout: 'row-equal', widgets: [cur, items[i + 1]] });
+        i += 2;
+      } else if (i + 2 < items.length && items[i + 1].size === 'half' && items[i + 2].size === 'half') {
+        // Three half-width → row-thirds
+        rows.push({ layout: 'row-thirds', widgets: [cur, items[i + 1], items[i + 2]] });
+        i += 3;
+      } else {
+        // Lone half-width → full row
+        rows.push({ layout: 'row-full', widgets: [cur] });
+        i++;
+      }
     }
-    return 6;
+    return rows;
   }
 
   function buildSeriesDescMap(series, fieldMap) {
@@ -754,11 +768,12 @@ body {
   margin-top: var(--spacing-xs);
   line-height: 22px;
 }
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: var(--spacing-xl);
-}
+/* Alva Design System layout rows */
+.row-equal { display: grid; grid-template-columns: 1fr 1fr; gap: var(--spacing-xl); }
+.row-narrow-wide { display: grid; grid-template-columns: 2fr 3fr; gap: var(--spacing-xl); }
+.row-wide-narrow { display: grid; grid-template-columns: 3fr 2fr; gap: var(--spacing-xl); }
+.row-thirds { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-xl); }
+.row-full { display: grid; grid-template-columns: 1fr; gap: var(--spacing-xl); }
 .widget-card {
   background: transparent;
   display: flex;
@@ -766,13 +781,8 @@ body {
   position: relative;
   overflow: hidden;
 }
-/* Span classes: span-4 (1/3), span-6 (1/2), span-8 (2/3), span-12 (full) */
-.span-4  { grid-column: span 4; }
-.span-6  { grid-column: span 6; }
-.span-8  { grid-column: span 8; }
-.span-12 { grid-column: span 12; }
 @media (max-width: 900px) {
-  .span-4, .span-6, .span-8 { grid-column: span 12; }
+  .row-equal, .row-narrow-wide, .row-wide-narrow, .row-thirds { grid-template-columns: 1fr; }
 }
 .widget-title {
   display: flex;
@@ -882,16 +892,14 @@ body {
   ${dashboardDesc ? `<div class="dashboard-desc">${escapeHtml(dashboardDesc)}</div>` : ''}
 </div>
 
-<div class="dashboard-grid">
-  ${renderedWidgets.join('\n')}
-</div>
+${buildRows(renderedWidgets).map(row => `<div class="${row.layout}">\n${row.widgets.map(w => w.html).join('\n')}\n</div>`).join('\n')}
 
 <div class="footer">
   Generated ${timestamp} · Data by Alva · Rendered with Alva Design System
 </div>
 
 <script>
-${scripts.join('\n')}
+${renderedWidgets.filter(w => w.script).map(w => w.script).join('\n')}
 </script>
 </body>
 </html>`;

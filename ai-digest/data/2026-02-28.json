@@ -1,0 +1,118 @@
+{
+  "date": "2026-02-28",
+  "summary": "今天的信号很清晰：Agent 正从“能跑通”转向“能按团队规范稳定协作”，评测体系也开始补上过程合规这块短板。与此同时，工程侧的数据基础设施（如大规模日志+SQL）正在把排障效率拉到秒级，形成真实生产力增益。教育科技线里，主线是“AI 应用落地进入治理与效果并重阶段”：一边是学校级项目的合规与采购风险暴露，一边是面向职业人群的快速 AI 技能认证加速。整体看，2026 的关键分水岭不是模型参数，而是流程可靠性、场景可复现性和组织级可部署性。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "MiniMax Open-Sources New Benchmark: Defining Production-Grade Standards for Coding Agent",
+      "url": "https://www.minimax.io/news/production-grade-benchmark-for-coding-agents",
+      "source": "MiniMax",
+      "tldr": "这篇发布把 Coding Agent 的评测重心从“结果是否通过”转向“过程是否合规”，提出 CSR/ISR 双指标。它指出主流模型在单条规则上表现不错，但在多约束同时满足时成功率明显下滑，暴露出生产落地的真实痛点。",
+      "tags": [
+        "Coding Agent",
+        "Benchmark",
+        "Process Compliance",
+        "SWE"
+      ],
+      "excerpt": "文章核心观点是：真实工程里用户最不满的不是 Agent 做不完，而是做事不守规矩。作者把这类“结果正确但过程违规”的问题定义为当前评测盲区。为此提出 OctoCodingBench，显式覆盖系统提示、用户多轮指令、仓库规范文件、Skills 与 Memory 等多层约束。两个指标里，CSR 反映单条规则命中率，ISR 反映一次任务是否全规则通过，后者更接近生产可用性。实验结论是多数模型 CSR 可观，但 ISR 仍偏低，说明组合约束能力不足。这个结论直接挑战了仅看 pass rate 的排行榜叙事。它也提示下一阶段训练需要“过程监督”与“指令层级冲突处理”数据。对团队而言，价值在于把 Agent 视为协作者而非一次性代码生成器。"
+    },
+    {
+      "num": 2,
+      "title": "MiniMax M2.1: Significantly Enhanced Multi-Language Programming, Built for Real-World Complex Tasks",
+      "url": "https://www.minimax.io/news/minimax-m21",
+      "source": "MiniMax",
+      "tldr": "M2.1 重点强调多语言编程、复杂约束执行与 Agent 框架泛化，而不再只卷 Python 单点能力。发布信息显示其在多种 coding 框架和自建 VIBE 基准中主打“可交付的端到端开发”。",
+      "tags": [
+        "Model Release",
+        "Multilingual Coding",
+        "Agent Tooling",
+        "VIBE"
+      ],
+      "excerpt": "这次升级的叙事很明确：从“会写代码”升级到“能在复杂工作流中稳定工作”。官方强调 Rust/Java/Golang/C++/Kotlin/ObjC/TS 等多语言能力提升，指向企业真实代码栈。另一条主线是复合指令约束执行，意味着模型要同时遵守风格、流程和上下文规则。发布中还强调在 Claude Code、Cline、Roo 等框架中的泛化稳定性，试图证明并非单一脚手架调优。VIBE 基准则把评估从函数级扩展到 Web/移动/后端完整应用体验。即便这些数据仍需第三方复核，方向已经很清楚：模型竞争进入“工程可运维性”阶段。对团队采购来说，今后的关键指标会是稳定性与总拥有成本，而非一次 demo 的惊艳程度。"
+    },
+    {
+      "num": 3,
+      "title": "LLMs Are Good at SQL. We Gave Ours Terabytes of CI Logs.",
+      "url": "https://www.mendral.com/blog/llms-are-good-at-sql",
+      "source": "Mendral Blog",
+      "tldr": "Mendral 把 Agent 直接接入组织级 SQL 查询能力，让它在海量 CI 历史中自主追因。数据显示典型调查只需数次查询即可定位问题，极端场景也可在可接受时延内完成。",
+      "tags": [
+        "LLM Ops",
+        "Observability",
+        "ClickHouse",
+        "CI"
+      ],
+      "excerpt": "这篇工程复盘最有价值的点，是把“Agent+观测数据”做成了可量化系统而非概念演示。其架构选择让 Agent 自行写 SQL，而不是限制在预定义 API，换来更强的探索性排障能力。数据规模达到每周约 15 亿日志行、70 万 CI 作业，但通过列式存储和去范式设计保持查询效率。作者给出的会话统计显示，Agent 常以“先广后深”的模式逐步收敛根因。很多查询在毫秒到秒级完成，支撑了连续调查链路。文章也揭示关键前提：数据建模与索引策略必须为 Agent 查询习惯优化。可迁移经验是，Agent 生产力不只取决于模型，更取决于底层数据可访问性。对研发团队而言，这是比“换更大模型”更可控的提效杠杆。"
+    },
+    {
+      "num": 4,
+      "title": "MobilityBench: A Benchmark for Evaluating Route-Planning Agents in Real-World Mobility Scenarios",
+      "url": "https://huggingface.co/papers/2602.22638",
+      "source": "Hugging Face Papers / arXiv",
+      "tldr": "MobilityBench 用真实匿名出行查询构建了路线规划 Agent 基准，并引入可复现的 API 回放沙箱。结果显示模型在基础路线任务表现尚可，但在偏好约束规划上仍有明显短板。",
+      "tags": [
+        "Agent Benchmark",
+        "Route Planning",
+        "Deterministic Sandbox",
+        "Amap"
+      ],
+      "excerpt": "这项工作的贡献在于把“现实世界 Agent 评测”从玩具任务推向了城市级真实查询。作者使用大规模匿名用户请求覆盖多城市、多意图场景，避免了数据分布过窄。通过确定性 API 回放，研究团队降低了线上地图服务波动带来的评测噪声。评测维度不仅看终点是否正确，也看指令理解、规划质量、工具调用和效率。论文结论是模型在基础查询和常规路线规划尚可，但在带偏好约束任务上失分明显。这个结果与工业感受一致：个性化决策比标准问答难得多。对 Agent 产品团队来说，这类可复现实验平台比单次线上 AB 更能指导模型迭代。"
+    },
+    {
+      "num": 5,
+      "title": "How LAUSD Supt. Carvalho's bet on AI went bust and led to FBI raids",
+      "url": "https://www.latimes.com/california/story/2026-02-27/lausd-ai-chatbot-superintendent-carvalho-fbi-raid",
+      "source": "Los Angeles Times",
+      "tldr": "洛杉矶学区 AI 聊天机器人项目在短期内失败并引发联邦调查，事件焦点从“技术先进性”转向采购合规与治理透明。它给教育系统的警示是：AI 项目失败多数不是模型不行，而是治理与交付链条断裂。",
+      "tags": [
+        "EdTech",
+        "School District",
+        "Procurement Risk",
+        "AI Governance"
+      ],
+      "excerpt": "报道梳理了 LAUSD 的“Ed”项目从高调发布到快速失效的全过程，并与后续调查线索关联起来。核心信息是项目商业对手方在合作期内经营恶化、最终破产，造成学校侧落地中断。公开信息显示，项目愿景与实际交付之间存在明显落差。文章没有把问题简化为“反 AI”，而是把焦点放在合同流程、责任界面和监督机制。对教育科技从业者而言，这比产品功能争论更关键。学校系统采购周期长、参与方多、问责链复杂，一旦前置尽调不足，后期代价极高。可执行启示是把“供应商韧性评估”和“阶段性交付验收”前置为硬门槛。"
+    },
+    {
+      "num": 6,
+      "title": "Google AI professional certificate targets India’s AI talent gap",
+      "url": "https://www.dqindia.com/news/google-ai-professional-certificate-targets-indias-ai-talent-gap-ai-jobs-are-rising-faster-than-skills-11160813",
+      "source": "DQ India",
+      "tldr": "Google 在 Coursera 推出 AI 职业证书，定位是用短周期、项目化训练缓解企业 AI 技能缺口。课程将 Gemini、NotebookLM、AI Studio 纳入实操，强调“可立即上岗”的工具能力。",
+      "tags": [
+        "EdTech",
+        "Workforce Upskilling",
+        "Coursera",
+        "AI Literacy"
+      ],
+      "excerpt": "这条动态反映了 AI 教育从“学概念”转向“学工作流”的趋势。项目把学习时长压缩到约 10 小时，并加入 capstone，目标是降低在职人群学习门槛。文章引用的就业预测强调印度市场 AI 岗位增长快于人才供给，需求缺口正在扩大。课程设计强调真实任务场景，如研究、内容生产、自动化与数据分析。相比传统长周期课程，这种证书更像企业培训模块而非学历替代品。它对 edtech 平台的启发是：未来竞争点在“完成率+就业转化”，不在课时堆叠。若配套企业认可机制完善，这类轻量认证会持续扩张。"
+    },
+    {
+      "num": 7,
+      "title": "Alpha School replaces teachers with AI. Is the future of education here?",
+      "url": "https://theweek.com/education/alpha-school-replaces-teachers-ai",
+      "source": "The Week",
+      "tldr": "Alpha School 的 AI-first 模式把学科学习大量交给 AI Tutor、人类角色转向“学习引导”。该模式引发高关注，也同步放大了教育质量、公平性和教师专业角色重构的争议。",
+      "tags": [
+        "EdTech",
+        "AI Tutor",
+        "School Model",
+        "Human-in-the-loop"
+      ],
+      "excerpt": "文章呈现的是一种激进教学组织形态：把标准化学科学习高度平台化，再由人类指导员承接非标准化支持。支持者认为这能提升个性化效率并压缩教学成本。质疑者则担心学生长期认知发展、社会化能力和评估可信度。报道还提到其定价区间较高，意味着可及性问题短期难解。对教育产品经理来说，关键问题不是“要不要 AI”，而是“哪些学习环节可自动化、哪些必须保留高质量人际互动”。这背后需要严格的学习结果证据，而不仅是营销叙事。Alpha 这类实验值得持续跟踪，但不适合被简单复制。"
+    },
+    {
+      "num": 8,
+      "title": "Pearson says its AI delivers better grades, general AI does not",
+      "url": "https://startupnews.fyi/2026/02/27/pearson-says-its-ai-delivers-better-grades-general-ai-does-not/",
+      "source": "StartupNews.fyi（转载）",
+      "tldr": "Pearson 声称其垂直教育 AI 在学习效果上优于通用模型，并强调通用 AI 可能带来推理能力副作用。信号是教育行业正强化“场景化 AI”而非直接依赖通用助手。",
+      "tags": [
+        "EdTech",
+        "Vertical AI",
+        "Learning Outcomes",
+        "Assessment"
+      ],
+      "excerpt": "这条信息代表大型教育公司正在主动重构“被通用模型替代”的市场叙事。核心主张是：与其让学生直接使用通用助手，不如在课程、评测与反馈闭环中嵌入受控 AI。若该论点成立，教育企业的护城河将回到内容资产、测评体系与教学流程整合能力。需要注意的是，目前公开信息更偏公司口径，独立第三方效果评估仍是关键缺口。即便如此，方向判断依然有参考价值：edtech 的下一轮竞争是“可验证学习增益”，不是“AI 功能数量”。这也意味着 B 端学校/机构采购会更看重效果证据与可审计性。"
+    }
+  ]
+}

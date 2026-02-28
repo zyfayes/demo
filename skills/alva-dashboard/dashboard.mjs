@@ -377,7 +377,7 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
       </a>`).join('');
 
     return { html: `
-    <div class="widget-card full">
+    <div class="widget-card">
       <div class="widget-title">
         <span class="widget-title-text">${escapeHtml(w.name)}</span>
         <span class="widget-timestamp">${widgetTs(w)}</span>
@@ -411,7 +411,7 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
       </a>`).join('');
 
     return { html: `
-    <div class="widget-card full">
+    <div class="widget-card">
       <div class="widget-title">
         <span class="widget-title-text">${escapeHtml(w.name)}</span>
         <span class="widget-timestamp">${widgetTs(w)}</span>
@@ -439,7 +439,7 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
       .replace(/\n/g, '<br>');
 
     return { html: `
-    <div class="widget-card full">
+    <div class="widget-card">
       <div class="widget-title">
         <span class="widget-title-text">${escapeHtml(w.name)}</span>
         <span class="widget-timestamp">${widgetTs(w)}</span>
@@ -536,7 +536,7 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
         <div class="kpi-grid">${kpis}</div>
         <div class="alva-watermark">Alva</div>
       </div>
-    </div>`, script: '' };
+    </div>`, span: 6, script: '' };
   }
 
   // Auto-generated line chart from time series data
@@ -609,7 +609,7 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
     }).join('');
 
     return { html: `
-    <div class="widget-card full">
+    <div class="widget-card">
       <div class="widget-title">
         <span class="widget-title-text">${escapeHtml(w.name)}</span>
         <span class="widget-timestamp">${widgetTs(w)}</span>
@@ -654,9 +654,26 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
         break;
     }
     if (result) {
-      renderedWidgets.push(result.html);
+      // Auto-assign span based on kind
+      const span = result.span || autoSpan(kind, widgets.length);
+      const wrapped = result.html.replace('<div class="widget-card">', `<div class="widget-card span-${span}">`);
+      renderedWidgets.push(wrapped);
       if (result.script) scripts.push(result.script);
     }
+  }
+
+  // Smart span assignment
+  function autoSpan(kind, totalWidgets) {
+    // Feed types always full width
+    if (['news', 'twitter', 'text'].includes(kind)) return 12;
+    // If only 1 chart, full width; 2 charts = half each; 3+ = mixed
+    if (kind === 'chart' || kind === 'unknown') {
+      if (totalWidgets === 1) return 12;
+      if (totalWidgets === 2) return 6;
+      if (totalWidgets === 3) return 4;
+      return 6;
+    }
+    return 6;
   }
 
   function buildSeriesDescMap(series, fieldMap) {
@@ -737,9 +754,9 @@ body {
   margin-top: var(--spacing-xs);
   line-height: 22px;
 }
-.row-equal {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(12, 1fr);
   gap: var(--spacing-xl);
 }
 .widget-card {
@@ -749,7 +766,14 @@ body {
   position: relative;
   overflow: hidden;
 }
-.widget-card.full { grid-column: 1 / -1; }
+/* Span classes: span-4 (1/3), span-6 (1/2), span-8 (2/3), span-12 (full) */
+.span-4  { grid-column: span 4; }
+.span-6  { grid-column: span 6; }
+.span-8  { grid-column: span 8; }
+.span-12 { grid-column: span 12; }
+@media (max-width: 900px) {
+  .span-4, .span-6, .span-8 { grid-column: span 12; }
+}
 .widget-title {
   display: flex;
   align-items: center;
@@ -858,7 +882,7 @@ body {
   ${dashboardDesc ? `<div class="dashboard-desc">${escapeHtml(dashboardDesc)}</div>` : ''}
 </div>
 
-<div class="row-equal">
+<div class="dashboard-grid">
   ${renderedWidgets.join('\n')}
 </div>
 

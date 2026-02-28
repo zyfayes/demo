@@ -124,7 +124,7 @@ body {
 
 <div class="row-equal">
   
-    <div class="widget-card">
+    <div class="widget-card" data-typedoc="[{&quot;node&quot;:&quot;nvda_rsi14&quot;,&quot;output&quot;:&quot;rsi14&quot;,&quot;typedoc&quot;:&quot;RSI(14) computed from NVDA daily close prices.\nfields:\n- date(number): candle open time (ms since epoch, UTC)\n- close(number): daily close price used for RSI computation\n- rsi14(number): RSI(14) value (0-100)\n- in_6m_window(boolean): true if record is within the last 6 months window&quot;},{&quot;node&quot;:&quot;nvda_rsi14&quot;,&quot;output&quot;:&quot;latest_rsi_label&quot;,&quot;typedoc&quot;:&quot;Latest RSI value label.\nfields:\n- date(number): timestamp (ms since epoch, UTC) of the latest RSI point\n- rsi14(number): latest RSI(14)\n- label(string): formatted label for chart annotation&quot;}]">
       <div class="widget-title">
         <span class="widget-title-text">nvda_rsi14</span>
         <span class="widget-timestamp">02/27/2026, 21:20</span>
@@ -137,7 +137,7 @@ body {
       </div>
     </div>
 
-    <div class="widget-card">
+    <div class="widget-card" data-typedoc="[{&quot;node&quot;:&quot;nvda_last_8_quarters_table&quot;,&quot;output&quot;:&quot;quarters_table&quot;,&quot;typedoc&quot;:&quot;Last 8 reported fiscal quarters for NVDA with revenue and EPS (diluted fallback to basic), optionally including YoY growth when computable.\nfields:\n- date(number): fiscal period end date (UTC ms)\n- fiscal_period_end(string): fiscal period end date (YYYY-MM-DD)\n- fiscal_year(string): fiscal year label\n- period(string): fiscal quarter label, e.g., Q1\n- revenue_usd(number): total revenue (reported) in USD\n- revenue_formatted(string): revenue formatted as USD B/M/K\n- eps_value(number): EPS value used (diluted if available, otherwise basic)\n- eps_type(string): eps_diluted or eps_basic\n- eps_formatted(string): EPS formatted to 2 decimals\n- revenue_yoy_present(boolean): whether YoY revenue growth is available\n- revenue_yoy_pct(number): YoY revenue growth percent\n- eps_yoy_present(boolean): whether YoY EPS growth is available\n- eps_yoy_pct(number): YoY EPS growth percent&quot;}]">
       <div class="widget-title">
         <span class="widget-title-text">nvda_last_8_quarters_revenue_eps</span>
         <span class="widget-timestamp">02/27/2026, 21:23</span>
@@ -152,7 +152,7 @@ body {
 </div>
 
 <div class="footer">
-  Generated 2026/2/27 21:23:25 · Data by Alva · Rendered with Alva Design System
+  Generated 2026/2/28 11:06:40 · Data by Alva · Rendered with Alva Design System
 </div>
 
 <script>
@@ -170,4 +170,4 @@ body {
     }
 </script>
 </body>
-</html><!-- cache bust Fri Feb 27 21:27:16 CST 2026 -->
+</html>

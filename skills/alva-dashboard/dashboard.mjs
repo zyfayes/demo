@@ -158,6 +158,36 @@ async function getTimeSeriesData(token, uri) {
   return JSON.parse(data.GetTimeSeriesData.data);
 }
 
+async function getNodeTypedoc(token, jagentId, nodeName, outputName) {
+  const query = `query GetNodeTypedoc($input: GetNodeTypedocInput!) { GetNodeTypedoc(input: $input) { typedoc } }`;
+  const proxy = process.env.HTTPS_PROXY || process.env.https_proxy;
+  const opts = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Authorization: token },
+    body: JSON.stringify({
+      operationName: 'GetNodeTypedoc',
+      query,
+      variables: { input: { jagentId, nodeName, outputName } },
+    }),
+  };
+  if (proxy) {
+    try {
+      const { ProxyAgent } = await import('undici');
+      opts.dispatcher = new ProxyAgent(proxy);
+    } catch {}
+  }
+  const resp = await fetch(QUERY_ENDPOINT, opts);
+  const json = await resp.json();
+  return json.data?.GetNodeTypedoc?.typedoc || null;
+}
+
+/** Parse alva://time_series/{jagentId}/{node}/{output}?last=N → {jagentId, nodeName, outputName} */
+function parseDataUri(uri) {
+  const m = uri.match(/alva:\/\/time_series\/(\d+)\/([^/?]+)\/([^/?]+)/);
+  if (!m) return null;
+  return { jagentId: m[1], nodeName: m[2], outputName: m[3] };
+}
+
 function extractDataUris(chartDataStr) {
   const uris = new Set();
   const re = /alva:\/\/time_series\/[^"'\s]+/g;
@@ -168,10 +198,25 @@ function extractDataUris(chartDataStr) {
   return [...uris];
 }
 
-function renderHTML(config, widgetDataMap, timestamp) {
+function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
   const dashboardName = config.name || 'Alva Dashboard';
   const dashboardDesc = config.description || '';
   const widgets = config.config || [];
+
+  // Collect typedocs for each widget (keyed by widget name)
+  function getWidgetTypedocs(w) {
+    if (!w.chartData) return [];
+    const uris = extractDataUris(w.chartData);
+    const docs = [];
+    for (const uri of uris) {
+      const doc = typedocMap?.[uri];
+      if (doc) {
+        const parsed = parseDataUri(uri);
+        docs.push({ node: parsed?.nodeName, output: parsed?.outputName, typedoc: doc });
+      }
+    }
+    return docs;
+  }
 
   // Build widget HTML
   const widgetCards = widgets.map((w, idx) => {
@@ -180,8 +225,6 @@ function renderHTML(config, widgetDataMap, timestamp) {
 
     const echartsWidget = chartData.widgets[0];
     const props = echartsWidget.props || {};
-
-    // Resolve data URIs in props
     const resolvedProps = resolveEChartsData(props, widgetDataMap);
 
     const widgetId = `chart_${idx}`;
@@ -190,8 +233,12 @@ function renderHTML(config, widgetDataMap, timestamp) {
       hour: '2-digit', minute: '2-digit', hour12: false 
     });
 
+    // Typedoc metadata as hidden data attribute
+    const docs = getWidgetTypedocs(w);
+    const typedocAttr = docs.length ? ` data-typedoc="${escapeHtml(JSON.stringify(docs))}"` : '';
+
     return `
-    <div class="widget-card">
+    <div class="widget-card"${typedocAttr}>
       <div class="widget-title">
         <span class="widget-title-text">${escapeHtml(w.name)}</span>
         <span class="widget-timestamp">${ts}</span>
@@ -499,7 +546,7 @@ async function main() {
   const config = await getDashboardConfig(creds.token, sessionId);
   console.error(`📊 Dashboard: ${config.name} (${(config.config || []).length} widgets)`);
 
-  // Step 3: Extract all data URIs and fetch time series
+  // Step 3: Extract all data URIs, fetch time series + typedocs in parallel
   const allUris = new Set();
   for (const w of config.config || []) {
     if (w.chartData) {
@@ -507,29 +554,46 @@ async function main() {
     }
   }
 
-  console.error(`📡 Fetching ${allUris.size} time series...`);
-  const dataMap = {};
   const uriArray = [...allUris];
+  console.error(`📡 Fetching ${uriArray.length} time series + typedocs...`);
+  const dataMap = {};
+  const typedocMap = {}; // uri → typedoc string
   
-  // Fetch in parallel (batches of 5)
+  // Fetch data + typedocs in parallel (batches of 5)
   for (let i = 0; i < uriArray.length; i += 5) {
     const batch = uriArray.slice(i, i + 5);
     const results = await Promise.allSettled(
-      batch.map(uri => getTimeSeriesData(creds.token, uri).then(d => ({ uri, data: d })))
+      batch.flatMap(uri => {
+        const parsed = parseDataUri(uri);
+        const dataFetch = getTimeSeriesData(creds.token, uri)
+          .then(d => ({ type: 'data', uri, data: d }));
+        const docFetch = parsed
+          ? getNodeTypedoc(creds.token, parsed.jagentId, parsed.nodeName, parsed.outputName)
+              .then(doc => ({ type: 'typedoc', uri, doc }))
+              .catch(() => ({ type: 'typedoc', uri, doc: null }))
+          : Promise.resolve({ type: 'typedoc', uri, doc: null });
+        return [dataFetch, docFetch];
+      })
     );
     for (const r of results) {
-      if (r.status === 'fulfilled') {
-        dataMap[r.value.uri] = r.value.data;
-        console.error(`  ✅ ${r.value.uri.split('/').slice(-2).join('/')} (${r.value.data.length} pts)`);
-      } else {
-        console.error(`  ❌ ${r.reason.message}`);
+      if (r.status !== 'fulfilled') {
+        console.error(`  ❌ ${r.reason?.message || 'fetch failed'}`);
+        continue;
+      }
+      const v = r.value;
+      if (v.type === 'data') {
+        dataMap[v.uri] = v.data;
+        console.error(`  ✅ ${v.uri.split('/').slice(-2).join('/')} (${v.data.length} pts)`);
+      } else if (v.type === 'typedoc' && v.doc) {
+        typedocMap[v.uri] = v.doc;
+        console.error(`  📄 ${v.uri.split('/').slice(-2).join('/')} typedoc OK`);
       }
     }
   }
 
   // Step 4: Render HTML
   const now = new Date().toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
-  const html = renderHTML(config, dataMap, now);
+  const html = renderHTML(config, dataMap, typedocMap, now);
 
   // Step 5: Output
   const outputPath = flags.output || `/tmp/alva-dashboard-${sessionId}.html`;

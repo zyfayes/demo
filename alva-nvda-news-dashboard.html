@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVDA Intelligence Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root {
+  --text-n10: rgb(0,0,0);
+  --text-n9: rgba(0,0,0,0.9);
+  --text-n7: rgba(0,0,0,0.7);
+  --text-n5: rgba(0,0,0,0.5);
+  --text-n3: rgba(0,0,0,0.3);
+  --main-m1: #49A3A6;
+  --main-m3: #2a9b7d;
+  --main-m4: #e05357;
+  --main-m5: #E6A91A;
+  --b0-page: #ffffff;
+  --grey-g01: #fafafa;
+  --line-l07: rgba(0,0,0,0.07);
+  --line-l05: rgba(0,0,0,0.05);
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 20px;
+  --spacing-xl: 24px;
+  --radius-ct-s: 4px;
+  --radius-ct-m: 6px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--b0-page);
+  font-family: 'Delight', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: var(--spacing-xl);
+  max-width: 2560px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+.dashboard-header {
+  margin-bottom: var(--spacing-xl);
+}
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-n9);
+  letter-spacing: 0.3px;
+}
+.dashboard-desc {
+  font-size: 14px;
+  color: var(--text-n5);
+  margin-top: var(--spacing-xs);
+  line-height: 22px;
+}
+.row-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+.widget-card {
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.widget-card.full { grid-column: 1 / -1; }
+.widget-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  margin-bottom: var(--spacing-m);
+}
+.widget-title-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-n9);
+  letter-spacing: 0.14px;
+  line-height: 22px;
+}
+.widget-timestamp {
+  font-size: 12px;
+  color: var(--text-n5);
+  line-height: 20px;
+}
+.widget-body {
+  border-radius: var(--radius-ct-m);
+  overflow: hidden;
+}
+.chart-dotted-background {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.18) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+.chart-body {
+  flex: 1;
+  padding: var(--spacing-m);
+  position: relative;
+}
+.alva-watermark {
+  position: absolute;
+  bottom: var(--spacing-m);
+  left: var(--spacing-m);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-n10);
+  opacity: 0.2;
+}
+.footer {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-n3);
+}
+/* Feed (news) styles */
+.feed-body { background: var(--grey-g01); padding: var(--spacing-m); max-height: 600px; overflow-y: auto; position: relative; }
+.feed-item { display: flex; gap: var(--spacing-s); padding: var(--spacing-s) 0; border-bottom: 1px solid var(--line-l05); text-decoration: none; color: inherit; }
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: var(--line-l05); border-radius: var(--radius-ct-s); }
+.feed-thumb { width: 72px; height: 54px; object-fit: cover; border-radius: var(--radius-ct-s); flex-shrink: 0; }
+.feed-content { flex: 1; min-width: 0; }
+.feed-item-title { font-size: 13px; font-weight: 500; color: var(--text-n9); line-height: 1.4; margin-bottom: 2px; }
+.feed-item-desc { font-size: 12px; color: var(--text-n5); line-height: 1.4; }
+.feed-meta { display: flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 11px; color: var(--text-n3); }
+.feed-source-icon { width: 14px; height: 14px; border-radius: 2px; }
+.feed-empty { text-align: center; padding: 40px; color: var(--text-n3); font-size: 13px; }
+/* Tweet styles */
+.tweet-feed { max-height: 700px; overflow-y: auto; }
+.tweet-card { display: block; padding: var(--spacing-s); border-bottom: 1px solid var(--line-l05); text-decoration: none; color: inherit; }
+.tweet-card:hover { background: var(--line-l05); }
+.tweet-header { display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: 6px; }
+.tweet-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; }
+.tweet-avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; background: var(--line-l07); flex-shrink: 0; }
+.tweet-author { flex: 1; min-width: 0; }
+.tweet-name { font-size: 13px; font-weight: 500; color: var(--text-n9); display: flex; align-items: center; gap: 2px; }
+.tweet-handle { font-size: 12px; color: var(--text-n5); }
+.tweet-time { font-size: 11px; color: var(--text-n3); white-space: nowrap; }
+.tweet-text { font-size: 13px; color: var(--text-n9); line-height: 1.5; margin-bottom: 6px; white-space: pre-wrap; word-break: break-word; }
+.tweet-images { display: flex; gap: 4px; margin-bottom: 6px; }
+.tweet-img { max-width: 200px; max-height: 150px; border-radius: var(--radius-ct-s); object-fit: cover; }
+.tweet-stats { display: flex; gap: var(--spacing-m); font-size: 12px; color: var(--text-n5); }
+/* Text widget styles */
+.text-body { background: var(--grey-g01); padding: var(--spacing-l); position: relative; max-height: 600px; overflow-y: auto; }
+.text-content { font-size: 13px; color: var(--text-n9); line-height: 1.7; }
+.text-content h2 { font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
+.text-content h3 { font-size: 15px; font-weight: 500; margin: 12px 0 6px; }
+.text-content h4 { font-size: 13px; font-weight: 500; margin: 10px 0 4px; }
+.text-content ul { padding-left: 20px; margin: 8px 0; }
+.text-content li { margin: 4px 0; }
+.text-content a { color: var(--main-m1); text-decoration: none; }
+.text-content a:hover { text-decoration: underline; }
+.text-content strong { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="dashboard-header">
+  <div class="dashboard-title">NVDA Intelligence Dashboard</div>
+  <div class="dashboard-desc">Real-time monitoring for NVIDIA (NVDA): curated X/Twitter sentiment sources, NVDA-related news headlines, and Reddit community mentions for trading and research.</div>
+</div>
+
+<div class="row-equal">
+  
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">nvda_news</span>
+        <span class="widget-timestamp">02/28/2026, 12:43</span>
+      </div>
+      <div class="widget-body feed-body">
+        
+      <a href="https://simplywall.st/stocks/us/semiconductors/nasdaq-mu/micron-technology/news/assessing-micron-technology-mu-valuation-as-ai-demand-drives" target="_blank" class="feed-item">
+        <img src="https://images.ctfassets.net/n07nr2koi959/1txW1Rnk3fUjh2FW939y6e/a1bb305c92d46eae2c7f925893392fdd/avatar-v2.png?w=64&amp;h=64&amp;q=90&amp;fit=fill&amp;f=top" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Assessing Micron Technology (MU) Valuation As AI Demand Drives Fully Booked HBM Capacity And Major US Expansion Plans</div>
+          <div class="feed-item-desc">Micron Technology (MU) is under valuation scrutiny as its High Bandwidth Memory (HBM) capacity is fully booked due to AI demand, alongside extensive US manufact…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Simply Wall St&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Simply Wall St</span>
+            <span>· Feb 26, 10:43</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://finviz.com/news/322729/is-oracle-corporation-orcl-the-best-stock-in-technology-sector" target="_blank" class="feed-item">
+        <img src="https://d2gr5kl7dt2z3t.cloudfront.net/blog/wp-content/uploads/2015/06/Oracle-ORCL.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Is Oracle Corporation (ORCL) The Best Stock In Technology Sector?</div>
+          <div class="feed-item-desc">Oracle Corporation (ORCL) is considered among the top stocks in the technology sector for 2026, with 77% of analysts rating it a &quot;buy&quot; and a significant upside …</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Finviz&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Finviz</span>
+            <span>· Feb 26, 10:30</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.hpcwire.com/off-the-wire/supermicro-and-vast-data-launch-new-enterprise-ai-data-platform-solution-with-nvidia/" target="_blank" class="feed-item">
+        <img src="https://www.hpcwire.com/wp-content/uploads/2026/02/Supermicro_VAST_Data-300x300.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Supermicro and VAST Data Launch New Enterprise AI Data Platform Solution with NVIDIA</div>
+          <div class="feed-item-desc">Supermicro and VAST Data have introduced the CNode-X Solution, a new enterprise AI data platform integrating Supermicro's GPU and storage servers with the VAST …</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=HPCwire&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>HPCwire</span>
+            <span>· Feb 26, 04:25</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://investingnews.com/nyse-content-update-two-msci-indexes-to-begin-trading-on-nyse-arca-options/" target="_blank" class="feed-item">
+        <img src="https://investingnews.com/media-library/image.jpg?id=65018549&amp;width=400" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">NYSE Content Update: Two MSCI Indexes to Begin Trading on NYSE Arca Options</div>
+          <div class="feed-item-desc">The NYSE announced that MSCI Emerging Markets Index Options and MSCI EAFE Index Options will begin trading today on NYSE Arca Options. The daily pre-market upda…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Investing News Network&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Investing News Network</span>
+            <span>· Feb 26, 00:20</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.benzinga.com/news/26/02/50855875/memory-stocks-rally-valuation-discount-ai-shortage" target="_blank" class="feed-item">
+        <img src="https://cdn.benzinga.com/files/images/story/2026/02/25/Milpitas--Ca---Feb--12--2017-Sandisk---A.jpeg?quality=85&amp;auto=webp&amp;width=850" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">SanDisk Stock Is Up 133% This Year, Yet The Memory Trade Still Looks Cheap</div>
+          <div class="feed-item-desc">Shares of SanDisk Corporation have soared 133% year-to-date, outperforming the S&amp;P 500 significantly due to a global memory shortage. Despite these explosive ga…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Benzinga&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Benzinga</span>
+            <span>· Feb 26, 00:08</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://finviz.com/news/321882/is-it-worth-investing-in-albemarle-alb-based-on-wall-streets-bullish-views" target="_blank" class="feed-item">
+        
+        <div class="feed-content">
+          <div class="feed-item-title">Is It Worth Investing in Albemarle (ALB) Based on Wall Street's Bullish Views?</div>
+          <div class="feed-item-desc">Albemarle (ALB) currently holds an average brokerage recommendation (ABR) of 1.85, indicating a bullish outlook with 14 out of 26 firms rating it a &quot;Strong Buy.…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Finviz - Stock Screener&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Finviz - Stock Screener</span>
+            <span>· Feb 26, 00:00</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.stocktitan.net/news/SMCI/c-power-bentaus-and-supermicro-successfully-flex-ai-compute-load-for-04v1r8aiuuiw.html" target="_blank" class="feed-item">
+        <img src="https://mma.prnewswire.com/media/1492238/CPower_v1_Logo.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">AI GPU servers slash power use 75% in Supermicro grid test</div>
+          <div class="feed-item-desc">CPower, Bentaus, and Supermicro successfully demonstrated that GPU-based AI compute infrastructure can provide rapid and reliable demand response to wholesale p…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Stock Titan&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Stock Titan</span>
+            <span>· Feb 25, 22:01</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.insidermonkey.com/blog/digitalocean-holdings-inc-nysedocn-q4-2025-earnings-call-transcript-1703091/" target="_blank" class="feed-item">
+        <img src="https://imonkey-blog.imgix.net/blog/wp-content/uploads/2023/10/20212555/DOCN-insidermonkey-1697851552871.jpg?auto=format&amp;fit=clip&amp;expires=1803513600&amp;width=480&amp;height=269" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">DigitalOcean Holdings, Inc. (NYSE:DOCN) Q4 2025 Earnings Call Transcript</div>
+          <div class="feed-item-desc">DigitalOcean Holdings, Inc. (NYSE: DOCN) reported its Q4 2025 earnings, showcasing significant acceleration in revenue growth and profitability driven by its fo…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Insider Monkey&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Insider Monkey</span>
+            <span>· Feb 25, 21:53</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://finviz.com/news/321323/2-reasons-to-like-cdns-and-1-to-stay-skeptical" target="_blank" class="feed-item">
+        <img src="https://news-assets.stockstory.org/cover-images/_1400x700_crop_center-center_none/cadence-design-systems-cover-image-d759d9b2f567_2023-03-21-165223_vyny.jpeg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">2 Reasons to Like CDNS and 1 to Stay Skeptical</div>
+          <div class="feed-item-desc">Cadence Design Systems (CDNS) has experienced a 15.8% loss in share price over the past six months, despite the S&amp;P 500's gain. The article highlights two posit…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Finviz - Stock Screener&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Finviz - Stock Screener</span>
+            <span>· Feb 25, 18:41</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://finviz.com/news/321328/3-reasons-to-avoid-avav-and-1-stock-to-buy-instead" target="_blank" class="feed-item">
+        <img src="https://news-assets.stockstory.org/cover-images/_1400x700_crop_center-center_none/aerovironment-cover-image-a410ad880dde_2024-06-03-094228_uosp.jpeg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">3 Reasons to Avoid AVAV and 1 Stock to Buy Instead</div>
+          <div class="feed-item-desc">This article advises against investing in AeroVironment (AVAV) due to three main concerns: a shrinking operating margin, a decline in EPS over the last two year…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Finviz - Stock Screener&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Finviz - Stock Screener</span>
+            <span>· Feb 25, 18:27</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.benzinga.com/markets/equities/26/02/50842124/stock-market-today-dow-jones-nasdaq-100-futures-rise-after-trumps-state-of-the-union-address-nvi" target="_blank" class="feed-item">
+        <img src="https://cdn.benzinga.com/files/images/story/2026/02/25/Wall-Street.jpeg?width=1200&amp;height=800&amp;fit=crop" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Stock Market Today: Dow Jones, Nasdaq 100 Futures Rise After Trump's State Of The Union Address-Nvidia, HSBC, Workday In Focus - State Street SPDR S&amp;P 500 ETF Trust  ( ARCA:SPY ) </div>
+          <div class="feed-item-desc">U.S. stock futures rose on Wednesday after closing higher on Tuesday. Futures of all the major benchmark indices were positive. He touted 53 all-time stock mark…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=www.benzinga.com&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Benzinga</span>
+            <span>· Feb 25, 18:14</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.marketbeat.com/instant-alerts/filing-alphabet-inc-googl-shares-sold-by-general-pension-society-pzu-joint-stock-co-2026-02-25/" target="_blank" class="feed-item">
+        <img src="https://www.marketbeat.com/logos/google-inc-logo-1200x675.png" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Alphabet Inc. $GOOGL Shares Sold by General Pension Society PZU Joint Stock Co</div>
+          <div class="feed-item-desc">General Pension Society PZU Joint Stock Co reduced its stake in Alphabet Inc. ($GOOGL) by 14.2% in the third quarter, selling 23,000 shares but still holding 13…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=MarketBeat&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>MarketBeat</span>
+            <span>· Feb 25, 18:10</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.marketbeat.com/instant-alerts/filing-principal-financial-group-inc-increases-position-in-nvidia-corporation-nvda-2026-02-25/" target="_blank" class="feed-item">
+        <img src="https://www.marketbeat.com/logos/nvidia-co-logo-1200x675.jpg?v=20221020142916" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Principal Financial Group Inc. Increases Position in NVIDIA Corporation $NVDA</div>
+          <div class="feed-item-desc">Principal Financial Group Inc. significantly increased its stake in NVIDIA Corporation, purchasing an additional 1.8 million shares in Q3, making NVDA its secon…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=MarketBeat&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>MarketBeat</span>
+            <span>· Feb 25, 18:10</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.marketbeat.com/instant-alerts/filing-cisco-systems-inc-csco-shares-acquired-by-empirical-asset-management-llc-2026-02-25/" target="_blank" class="feed-item">
+        <img src="https://www.marketbeat.com/logos/cisco-systems-inc-logo-1200x675.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Cisco Systems, Inc. $CSCO Shares Acquired by Empirical Asset Management LLC</div>
+          <div class="feed-item-desc">Empirical Asset Management LLC significantly increased its stake in Cisco Systems, Inc. by 226.6% during the third quarter, bringing its total holdings to $3,95…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=MarketBeat&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>MarketBeat</span>
+            <span>· Feb 25, 18:08</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.benzinga.com/markets/private-markets/26/02/50841797/microsoft-nvidia-backed-wayve-gets-1-5-billion-funding-boost-for-robotaxi-tech-rollout" target="_blank" class="feed-item">
+        <img src="https://cdn.benzinga.com/files/images/story/2026/02/25/Self-Driving-Car-On-A-Road--Autonomous-V.jpeg?quality=85&amp;auto=webp&amp;width=850" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Microsoft, Nvidia-Backed Wayve Gets $1.5 Billion Funding Boost For Robotaxi Tech Rollout</div>
+          <div class="feed-item-desc">British robotaxi startup Wayve has secured $1.5 billion in new funding, raising its valuation to $8.6 billion. The investment, led by Eclipse, Balderton, and So…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Benzinga&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Benzinga</span>
+            <span>· Feb 25, 17:51</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.morningstar.com/stocks/meta-chip-deal-with-amd-provides-more-color-firms-multivendor-silicon-strategy" target="_blank" class="feed-item">
+        <img src="https://cloudfront-us-east-1.images.arcpublishing.com/morningstar/MS4KWDCTZBET3GTVZDPFCK44EQ.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Meta: Chip Deal with AMD Provides More Color on the Firm’s Multivendor Silicon Strategy</div>
+          <div class="feed-item-desc">Meta and AMD have announced an expanded strategic partnership where Meta plans to deploy AMD's customized GPU solutions, with the first gigawatt expected in the…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Morningstar&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Morningstar</span>
+            <span>· Feb 25, 05:07</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://siliconangle.com/2026/02/24/amd-shares-jump-8-100b-ai-chip-deal-meta/" target="_blank" class="feed-item">
+        <img src="https://d15shllkswkct0.cloudfront.net/wp-content/blogs.dir/1/files/2026/02/meta-1.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">AMD shares jump 8% on $100B+ AI chip deal with Meta</div>
+          <div class="feed-item-desc">Shares of Advanced Micro Devices Inc. rose 8% after announcing a significant deal with Meta Platforms Inc. for AI chips, potentially valued at over $100 billion…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=SiliconANGLE&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>SiliconANGLE</span>
+            <span>· Feb 25, 05:02</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.theglobeandmail.com/investing/markets/stocks/MU/pressreleases/397209/will-micron-technology-stock-split/" target="_blank" class="feed-item">
+        <img src="https://barchart-news-media-prod.aws.barchart.com/FC/0f9787a33e61e2026b51ad68fbea3f4f/%3Furl%3Dhttps%253a%252f%252fg.foolcdn.com%252feditorial%252fimages%252f857012%252fmicron-technology-building-with-micon-logo-on-sign-and-building_micron-8.jpg%26amp%3Bw%3D700" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Will Micron Technology Stock Split?</div>
+          <div class="feed-item-desc">Micron Technology stock has significantly outperformed other tech giants over the past year, leading to speculation about a potential stock split. The article e…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=The Globe and Mail&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>The Globe and Mail</span>
+            <span>· Feb 25, 04:50</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.inc.com/leila-sheridan/meta-just-made-a-massive-ai-chip-bet-and-its-not-on-nvidia/91307164" target="_blank" class="feed-item">
+        <img src="https://img-cdn.inc.com/image/upload/f_webp,c_fit,w_1920,q_auto/vip/2026/02/meta-amd-inc-1244644879.jpg" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">Meta Just Made a Massive AI Chip Bet—And It’s Not on Nvidia</div>
+          <div class="feed-item-desc">Meta has reportedly signed a multiyear agreement with Advanced Micro Devices (AMD) to deploy up to six gigawatts of AI computing capacity in its data centers, s…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Inc.com&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Inc.com</span>
+            <span>· Feb 25, 01:49</span>
+          </div>
+        </div>
+      </a>
+      <a href="https://www.benzinga.com/markets/tech/26/02/50824199/this-ai-feedback-loop-could-crush-saas-stocks-even-as-nvidia-keeps-winning-says-citrini-research" target="_blank" class="feed-item">
+        <img src="https://cdn.benzinga.com/files/images/story/2026/02/24/Software-As-A-Service-Saas--Software-Con.jpeg?quality=85&amp;auto=webp&amp;width=850" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">
+        <div class="feed-content">
+          <div class="feed-item-title">AI Feedback Loop Could Threaten SaaS Stocks, Boost Nvidia - Salesforce (NYSE:CRM), ServiceNow (NYSE:NOW)</div>
+          <div class="feed-item-desc">Citrini Research suggests that an AI feedback loop, where companies use AI to cut labor costs and then reinvest savings into more AI, is threatening SaaS compan…</div>
+          <div class="feed-meta">
+            <img src="http://www.google.com/s2/favicons?domain=Benzinga&amp;sz=128" class="feed-source-icon" onerror="this.style.display='none'">
+            <span>Benzinga</span>
+            <span>· Feb 25, 01:22</span>
+          </div>
+        </div>
+      </a>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>
+</div>
+
+<div class="footer">
+  Generated 2026/2/28 14:10:09 · Data by Alva · Rendered with Alva Design System
+</div>
+
+<script>
+
+</script>
+</body>
+</html>

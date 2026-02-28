@@ -244,126 +244,100 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
   const dashboardDesc = config.description || '';
   const widgets = config.config || [];
 
-  // Collect typedocs for each widget (keyed by widget name)
+  // Helpers
   function getWidgetTypedocs(w) {
     if (!w.chartData) return [];
     const uris = extractDataUris(w.chartData);
-    const docs = [];
-    for (const uri of uris) {
+    return uris.map(uri => {
       const doc = typedocMap?.[uri];
-      if (doc) {
-        const parsed = parseDataUri(uri);
-        docs.push({ node: parsed?.nodeName, output: parsed?.outputName, typedoc: doc });
-      }
-    }
-    return docs;
+      if (!doc) return null;
+      const parsed = parseDataUri(uri);
+      return { node: parsed?.nodeName, output: parsed?.outputName, typedoc: doc };
+    }).filter(Boolean);
   }
 
-  // Build widget HTML
-  const widgetCards = widgets.map((w, idx) => {
-    const chartData = w.chartData ? JSON.parse(w.chartData) : null;
-    if (!chartData?.widgets?.length) return '';
-
-    const echartsWidget = chartData.widgets[0];
-    const props = echartsWidget.props || {};
-    const resolvedProps = resolveEChartsData(props, widgetDataMap);
-
-    const widgetId = `chart_${idx}`;
-    const ts = new Date(w.create_time).toLocaleString('en-US', { 
-      month: '2-digit', day: '2-digit', year: 'numeric', 
-      hour: '2-digit', minute: '2-digit', hour12: false 
-    });
-
-    // Typedoc metadata as hidden data attribute
+  function getFieldMap(w) {
     const docs = getWidgetTypedocs(w);
-    const typedocAttr = docs.length ? ` data-typedoc="${escapeHtml(JSON.stringify(docs))}"` : '';
+    const allFields = new Map();
+    for (const d of docs) {
+      const pd = parseTypedoc(d.typedoc);
+      if (pd) for (const f of pd.fields) if (!allFields.has(f.name)) allFields.set(f.name, f);
+    }
+    return Object.fromEntries(allFields);
+  }
 
-    return `
-    <div class="widget-card"${typedocAttr}>
+  function getWidgetKind(w) {
+    if (!w.chartData) return 'unknown';
+    try {
+      const cd = JSON.parse(w.chartData);
+      return cd.widgets?.[0]?.kind || 'chart';
+    } catch { return 'unknown'; }
+  }
+
+  function resolveWidgetData(w) {
+    if (!w.chartData) return null;
+    try {
+      const cd = JSON.parse(w.chartData);
+      const wg = cd.widgets?.[0];
+      if (!wg?.props) return null;
+      const { data, dataResolver } = wg.props;
+      if (dataResolver) {
+        const fn = eval(dataResolver);
+        if (data && Array.isArray(data) && data.length && typeof data[0] === 'string' && data[0].startsWith('alva://')) {
+          const tsData = widgetDataMap[data[0]] || [];
+          return fn(tsData);
+        }
+        return fn(data || []);
+      }
+      return data;
+    } catch { return null; }
+  }
+
+  function fmtTime(ms) {
+    return new Date(ms).toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false });
+  }
+
+  function fmtNum(n) {
+    if (n == null) return '—';
+    if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
+    if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
+    return n.toLocaleString();
+  }
+
+  const widgetTs = (w) => w.create_time ? new Date(w.create_time).toLocaleString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+
+  // --- Renderers by kind ---
+  function renderChartWidget(w, idx) {
+    const cd = JSON.parse(w.chartData);
+    const props = cd.widgets[0].props;
+    const resolvedProps = resolveEChartsData(props, widgetDataMap);
+    const fieldMap = getFieldMap(w);
+    applyAlvaDesignTokens(resolvedProps, fieldMap);
+
+    // Series → desc map for tooltip
+    const seriesDescMap = buildSeriesDescMap(resolvedProps.series, fieldMap);
+    const hasDescMap = Object.keys(seriesDescMap).length > 0;
+
+    const html = `
+    <div class="widget-card">
       <div class="widget-title">
         <span class="widget-title-text">${escapeHtml(w.name)}</span>
-        <span class="widget-timestamp">${ts}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
       </div>
       <div class="widget-body chart-dotted-background">
         <div class="chart-body">
-          <div id="${widgetId}" style="width:100%;height:340px;"></div>
+          <div id="chart_${idx}" style="width:100%;height:340px;"></div>
           <div class="alva-watermark">Alva</div>
         </div>
       </div>
     </div>`;
-  }).filter(Boolean);
 
-  // Build ECharts init scripts
-  const initScripts = widgets.map((w, idx) => {
-    const chartData = w.chartData ? JSON.parse(w.chartData) : null;
-    if (!chartData?.widgets?.length) return '';
-
-    const echartsWidget = chartData.widgets[0];
-    const props = echartsWidget.props || {};
-    const resolvedProps = resolveEChartsData(props, widgetDataMap);
-
-    // Collect parsed typedocs for this widget's data
-    const docs = getWidgetTypedocs(w);
-    const parsedDocs = docs.map(d => parseTypedoc(d.typedoc)).filter(Boolean);
-    // Merge all fields from all typedocs (dedup by name)
-    const allFields = new Map();
-    for (const pd of parsedDocs) {
-      for (const f of pd.fields) {
-        if (!allFields.has(f.name)) allFields.set(f.name, f);
-      }
-    }
-    const fieldMap = Object.fromEntries(allFields);
-
-    // Apply Alva design tokens to the resolved props
-    applyAlvaDesignTokens(resolvedProps, fieldMap);
-
-    // Build series name → description map for tooltip
-    // Match strategy: exact field name → normalized name → keyword in desc → fuzzy
-    const seriesDescMap = {};
-    if (resolvedProps.series) {
-      const fieldEntries = Object.entries(fieldMap);
-      for (const s of resolvedProps.series) {
-        if (!s.name) continue;
-        const sn = s.name;
-        const snLower = sn.toLowerCase().replace(/[^a-z0-9]/g, '');
-        
-        // 1. Exact match: series name === field name
-        if (fieldMap[sn]) { seriesDescMap[sn] = fieldMap[sn].desc; continue; }
-        
-        // 2. Normalized match: strip special chars
-        for (const [fname, fdef] of fieldEntries) {
-          if (fname.toLowerCase().replace(/[^a-z0-9]/g, '') === snLower) {
-            seriesDescMap[sn] = fdef.desc; break;
-          }
-        }
-        if (seriesDescMap[sn]) continue;
-        
-        // 3. Series name appears in field desc (e.g. "RSI(14)" in "RSI(14) value (0-100)")
-        for (const [fname, fdef] of fieldEntries) {
-          if (fdef.desc.toLowerCase().includes(sn.toLowerCase()) || fdef.desc.includes(sn)) {
-            seriesDescMap[sn] = fdef.desc; break;
-          }
-        }
-        if (seriesDescMap[sn]) continue;
-        
-        // 4. Field name appears in series name (e.g. field "rsi14" in series "RSI(14)")
-        for (const [fname, fdef] of fieldEntries) {
-          if (fdef.type === 'number' && snLower.includes(fname.toLowerCase().replace(/[^a-z0-9]/g, ''))) {
-            seriesDescMap[sn] = fdef.desc; break;
-          }
-        }
-      }
-    }
-
-    const hasDescMap = Object.keys(seriesDescMap).length > 0;
-
-    return `
+    const script = `
     {
       const chart = echarts.init(document.getElementById('chart_${idx}'));
       ${hasDescMap ? `const _descMap = ${JSON.stringify(seriesDescMap)};` : ''}
       const opts = ${JSON.stringify(resolvedProps)};
       ${hasDescMap ? `
-      // Enhanced tooltip with typedoc field descriptions
       opts.tooltip = opts.tooltip || {};
       opts.tooltip.formatter = function(params) {
         if (!Array.isArray(params)) params = [params];
@@ -383,7 +357,156 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
       chart.setOption(opts);
       window.addEventListener('resize', () => chart.resize());
     }`;
-  }).filter(Boolean);
+    return { html, script };
+  }
+
+  function renderNewsWidget(w) {
+    const items = resolveWidgetData(w) || [];
+    const cards = items.slice(0, 20).map(item => `
+      <a href="${escapeHtml(item.url || '#')}" target="_blank" class="feed-item">
+        ${item.thumbnail ? `<img src="${escapeHtml(item.thumbnail)}" class="feed-thumb" loading="lazy" onerror="this.style.display='none'">` : ''}
+        <div class="feed-content">
+          <div class="feed-item-title">${escapeHtml(item.title || '')}</div>
+          <div class="feed-item-desc">${escapeHtml((item.description || '').slice(0, 160))}${(item.description || '').length > 160 ? '…' : ''}</div>
+          <div class="feed-meta">
+            ${item.source_icon ? `<img src="${escapeHtml(item.source_icon)}" class="feed-source-icon" onerror="this.style.display='none'">` : ''}
+            <span>${escapeHtml(item.source_name || '')}</span>
+            ${item.date ? `<span>· ${fmtTime(item.date)}</span>` : ''}
+          </div>
+        </div>
+      </a>`).join('');
+
+    return { html: `
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">${escapeHtml(w.name)}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
+      </div>
+      <div class="widget-body feed-body">
+        ${cards || '<div class="feed-empty">No news available</div>'}
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>`, script: '' };
+  }
+
+  function renderTwitterWidget(w) {
+    const items = resolveWidgetData(w) || [];
+    const tweets = items.slice(0, 30).map(t => `
+      <a href="${escapeHtml(t.url || '#')}" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          ${t.author_profile_image ? `<img src="${escapeHtml(t.author_profile_image)}" class="tweet-avatar">` : '<div class="tweet-avatar-placeholder"></div>'}
+          <div class="tweet-author">
+            <span class="tweet-name">${escapeHtml(t.author_name || '')}${t.author_verified ? ' <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg>' : ''}</span>
+            <span class="tweet-handle">@${escapeHtml(t.author_username || '')}</span>
+          </div>
+          ${t.date ? `<span class="tweet-time">${fmtTime(t.date)}</span>` : ''}
+        </div>
+        <div class="tweet-text">${escapeHtml((t.content || '').slice(0, 280))}${(t.content || '').length > 280 ? '…' : ''}</div>
+        ${t.image_urls?.length ? `<div class="tweet-images">${t.image_urls.slice(0, 4).map(u => `<img src="${escapeHtml(typeof u === 'string' ? u : u?.url || '')}" class="tweet-img" loading="lazy" onerror="this.style.display='none'">`).join('')}</div>` : ''}
+        <div class="tweet-stats">
+          <span>💬 ${fmtNum(t.comment_count)}</span>
+          <span>🔁 ${fmtNum(t.retweets)}</span>
+          <span>❤️ ${fmtNum(t.likes)}</span>
+        </div>
+      </a>`).join('');
+
+    return { html: `
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">${escapeHtml(w.name)}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
+      </div>
+      <div class="widget-body feed-body">
+        <div class="tweet-feed">${tweets || '<div class="feed-empty">No tweets available</div>'}</div>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>`, script: '' };
+  }
+
+  function renderTextWidget(w) {
+    const md = resolveWidgetData(w) || '';
+    // Simple markdown → HTML (headers, bold, italic, lists, links)
+    const html = String(md)
+      .replace(/^### (.+)$/gm, '<h4>$1</h4>')
+      .replace(/^## (.+)$/gm, '<h3>$1</h3>')
+      .replace(/^# (.+)$/gm, '<h2>$1</h2>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>')
+      .replace(/^- (.+)$/gm, '<li>$1</li>')
+      .replace(/(<li>.*<\/li>\n?)+/g, '<ul>$&</ul>')
+      .replace(/\n\n/g, '</p><p>')
+      .replace(/\n/g, '<br>');
+
+    return { html: `
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">${escapeHtml(w.name)}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
+      </div>
+      <div class="widget-body text-body">
+        <div class="text-content"><p>${html}</p></div>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>`, script: '' };
+  }
+
+  // --- Build all widgets ---
+  const renderedWidgets = [];
+  const scripts = [];
+  let chartIdx = 0;
+
+  for (const w of widgets) {
+    if (w.status === 'FAILED' || !w.chartData) {
+      console.error(`  ⚠️ Skipping ${w.name} (${w.status || 'no chartData'})`);
+      continue;
+    }
+    const kind = getWidgetKind(w);
+    let result;
+    switch (kind) {
+      case 'news':
+        result = renderNewsWidget(w);
+        break;
+      case 'twitter':
+        result = renderTwitterWidget(w);
+        break;
+      case 'text':
+        result = renderTextWidget(w);
+        break;
+      case 'chart':
+      default:
+        result = renderChartWidget(w, chartIdx++);
+        break;
+    }
+    if (result) {
+      renderedWidgets.push(result.html);
+      if (result.script) scripts.push(result.script);
+    }
+  }
+
+  function buildSeriesDescMap(series, fieldMap) {
+    const map = {};
+    if (!series) return map;
+    const fieldEntries = Object.entries(fieldMap);
+    for (const s of series) {
+      if (!s.name) continue;
+      const sn = s.name;
+      const snLower = sn.toLowerCase().replace(/[^a-z0-9]/g, '');
+      if (fieldMap[sn]) { map[sn] = fieldMap[sn].desc; continue; }
+      for (const [fname, fdef] of fieldEntries) {
+        if (fname.toLowerCase().replace(/[^a-z0-9]/g, '') === snLower) { map[sn] = fdef.desc; break; }
+      }
+      if (map[sn]) continue;
+      for (const [fname, fdef] of fieldEntries) {
+        if (fdef.desc.toLowerCase().includes(sn.toLowerCase())) { map[sn] = fdef.desc; break; }
+      }
+      if (map[sn]) continue;
+      for (const [fname, fdef] of fieldEntries) {
+        if (fdef.type === 'number' && snLower.includes(fname.toLowerCase().replace(/[^a-z0-9]/g, ''))) { map[sn] = fdef.desc; break; }
+      }
+    }
+    return map;
+  }
 
   return `<!DOCTYPE html>
 <html lang="zh">
@@ -500,6 +623,44 @@ body {
   font-size: 11px;
   color: var(--text-n3);
 }
+/* Feed (news) styles */
+.feed-body { background: var(--grey-g01); padding: var(--spacing-m); max-height: 600px; overflow-y: auto; position: relative; }
+.feed-item { display: flex; gap: var(--spacing-s); padding: var(--spacing-s) 0; border-bottom: 1px solid var(--line-l05); text-decoration: none; color: inherit; }
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: var(--line-l05); border-radius: var(--radius-ct-s); }
+.feed-thumb { width: 72px; height: 54px; object-fit: cover; border-radius: var(--radius-ct-s); flex-shrink: 0; }
+.feed-content { flex: 1; min-width: 0; }
+.feed-item-title { font-size: 13px; font-weight: 500; color: var(--text-n9); line-height: 1.4; margin-bottom: 2px; }
+.feed-item-desc { font-size: 12px; color: var(--text-n5); line-height: 1.4; }
+.feed-meta { display: flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 11px; color: var(--text-n3); }
+.feed-source-icon { width: 14px; height: 14px; border-radius: 2px; }
+.feed-empty { text-align: center; padding: 40px; color: var(--text-n3); font-size: 13px; }
+/* Tweet styles */
+.tweet-feed { max-height: 700px; overflow-y: auto; }
+.tweet-card { display: block; padding: var(--spacing-s); border-bottom: 1px solid var(--line-l05); text-decoration: none; color: inherit; }
+.tweet-card:hover { background: var(--line-l05); }
+.tweet-header { display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: 6px; }
+.tweet-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; }
+.tweet-avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; background: var(--line-l07); flex-shrink: 0; }
+.tweet-author { flex: 1; min-width: 0; }
+.tweet-name { font-size: 13px; font-weight: 500; color: var(--text-n9); display: flex; align-items: center; gap: 2px; }
+.tweet-handle { font-size: 12px; color: var(--text-n5); }
+.tweet-time { font-size: 11px; color: var(--text-n3); white-space: nowrap; }
+.tweet-text { font-size: 13px; color: var(--text-n9); line-height: 1.5; margin-bottom: 6px; white-space: pre-wrap; word-break: break-word; }
+.tweet-images { display: flex; gap: 4px; margin-bottom: 6px; }
+.tweet-img { max-width: 200px; max-height: 150px; border-radius: var(--radius-ct-s); object-fit: cover; }
+.tweet-stats { display: flex; gap: var(--spacing-m); font-size: 12px; color: var(--text-n5); }
+/* Text widget styles */
+.text-body { background: var(--grey-g01); padding: var(--spacing-l); position: relative; max-height: 600px; overflow-y: auto; }
+.text-content { font-size: 13px; color: var(--text-n9); line-height: 1.7; }
+.text-content h2 { font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
+.text-content h3 { font-size: 15px; font-weight: 500; margin: 12px 0 6px; }
+.text-content h4 { font-size: 13px; font-weight: 500; margin: 10px 0 4px; }
+.text-content ul { padding-left: 20px; margin: 8px 0; }
+.text-content li { margin: 4px 0; }
+.text-content a { color: var(--main-m1); text-decoration: none; }
+.text-content a:hover { text-decoration: underline; }
+.text-content strong { font-weight: 500; }
 </style>
 </head>
 <body>
@@ -510,7 +671,7 @@ body {
 </div>
 
 <div class="row-equal">
-  ${widgetCards.join('\n')}
+  ${renderedWidgets.join('\n')}
 </div>
 
 <div class="footer">
@@ -518,7 +679,7 @@ body {
 </div>
 
 <script>
-${initScripts.join('\n')}
+${scripts.join('\n')}
 </script>
 </body>
 </html>`;

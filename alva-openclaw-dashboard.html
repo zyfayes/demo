@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OpenClaw AI Agent Framework Intel</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<style>
+:root {
+  --text-n10: rgb(0,0,0);
+  --text-n9: rgba(0,0,0,0.9);
+  --text-n7: rgba(0,0,0,0.7);
+  --text-n5: rgba(0,0,0,0.5);
+  --text-n3: rgba(0,0,0,0.3);
+  --main-m1: #49A3A6;
+  --main-m3: #2a9b7d;
+  --main-m4: #e05357;
+  --main-m5: #E6A91A;
+  --b0-page: #ffffff;
+  --grey-g01: #fafafa;
+  --line-l07: rgba(0,0,0,0.07);
+  --line-l05: rgba(0,0,0,0.05);
+  --spacing-xs: 8px;
+  --spacing-s: 12px;
+  --spacing-m: 16px;
+  --spacing-l: 20px;
+  --spacing-xl: 24px;
+  --radius-ct-s: 4px;
+  --radius-ct-m: 6px;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--b0-page);
+  font-family: 'Delight', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: var(--spacing-xl);
+  max-width: 2560px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+.dashboard-header {
+  margin-bottom: var(--spacing-xl);
+}
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--text-n9);
+  letter-spacing: 0.3px;
+}
+.dashboard-desc {
+  font-size: 14px;
+  color: var(--text-n5);
+  margin-top: var(--spacing-xs);
+  line-height: 22px;
+}
+.row-equal {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-xl);
+}
+.widget-card {
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.widget-card.full { grid-column: 1 / -1; }
+.widget-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 22px;
+  margin-bottom: var(--spacing-m);
+}
+.widget-title-text {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text-n9);
+  letter-spacing: 0.14px;
+  line-height: 22px;
+}
+.widget-timestamp {
+  font-size: 12px;
+  color: var(--text-n5);
+  line-height: 20px;
+}
+.widget-body {
+  border-radius: var(--radius-ct-m);
+  overflow: hidden;
+}
+.chart-dotted-background {
+  background-color: #ffffff;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.18) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+.chart-body {
+  flex: 1;
+  padding: var(--spacing-m);
+  position: relative;
+}
+.alva-watermark {
+  position: absolute;
+  bottom: var(--spacing-m);
+  left: var(--spacing-m);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-n10);
+  opacity: 0.2;
+}
+.footer {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-n3);
+}
+/* Feed (news) styles */
+.feed-body { background: var(--grey-g01); padding: var(--spacing-m); max-height: 600px; overflow-y: auto; position: relative; }
+.feed-item { display: flex; gap: var(--spacing-s); padding: var(--spacing-s) 0; border-bottom: 1px solid var(--line-l05); text-decoration: none; color: inherit; }
+.feed-item:last-child { border-bottom: none; }
+.feed-item:hover { background: var(--line-l05); border-radius: var(--radius-ct-s); }
+.feed-thumb { width: 72px; height: 54px; object-fit: cover; border-radius: var(--radius-ct-s); flex-shrink: 0; }
+.feed-content { flex: 1; min-width: 0; }
+.feed-item-title { font-size: 13px; font-weight: 500; color: var(--text-n9); line-height: 1.4; margin-bottom: 2px; }
+.feed-item-desc { font-size: 12px; color: var(--text-n5); line-height: 1.4; }
+.feed-meta { display: flex; align-items: center; gap: 4px; margin-top: 4px; font-size: 11px; color: var(--text-n3); }
+.feed-source-icon { width: 14px; height: 14px; border-radius: 2px; }
+.feed-empty { text-align: center; padding: 40px; color: var(--text-n3); font-size: 13px; }
+/* Tweet styles */
+.tweet-feed { max-height: 700px; overflow-y: auto; }
+.tweet-card { display: block; padding: var(--spacing-s); border-bottom: 1px solid var(--line-l05); text-decoration: none; color: inherit; }
+.tweet-card:hover { background: var(--line-l05); }
+.tweet-header { display: flex; align-items: center; gap: var(--spacing-xs); margin-bottom: 6px; }
+.tweet-avatar { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; }
+.tweet-avatar-placeholder { width: 36px; height: 36px; border-radius: 50%; background: var(--line-l07); flex-shrink: 0; }
+.tweet-author { flex: 1; min-width: 0; }
+.tweet-name { font-size: 13px; font-weight: 500; color: var(--text-n9); display: flex; align-items: center; gap: 2px; }
+.tweet-handle { font-size: 12px; color: var(--text-n5); }
+.tweet-time { font-size: 11px; color: var(--text-n3); white-space: nowrap; }
+.tweet-text { font-size: 13px; color: var(--text-n9); line-height: 1.5; margin-bottom: 6px; white-space: pre-wrap; word-break: break-word; }
+.tweet-images { display: flex; gap: 4px; margin-bottom: 6px; }
+.tweet-img { max-width: 200px; max-height: 150px; border-radius: var(--radius-ct-s); object-fit: cover; }
+.tweet-stats { display: flex; gap: var(--spacing-m); font-size: 12px; color: var(--text-n5); }
+/* Text widget styles */
+.text-body { background: var(--grey-g01); padding: var(--spacing-l); position: relative; max-height: 600px; overflow-y: auto; }
+.text-content { font-size: 13px; color: var(--text-n9); line-height: 1.7; }
+.text-content h2 { font-size: 18px; font-weight: 500; margin: 16px 0 8px; }
+.text-content h3 { font-size: 15px; font-weight: 500; margin: 12px 0 6px; }
+.text-content h4 { font-size: 13px; font-weight: 500; margin: 10px 0 4px; }
+.text-content ul { padding-left: 20px; margin: 8px 0; }
+.text-content li { margin: 4px 0; }
+.text-content a { color: var(--main-m1); text-decoration: none; }
+.text-content a:hover { text-decoration: underline; }
+.text-content strong { font-weight: 500; }
+</style>
+</head>
+<body>
+
+<div class="dashboard-header">
+  <div class="dashboard-title">OpenClaw AI Agent Framework Intel</div>
+  <div class="dashboard-desc">Dashboard tracking OpenClaw AI agent framework signals on X and providing a concise reference summary of what OpenClaw is and its key features.</div>
+</div>
+
+<div class="row-equal">
+  
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">openclaw_overview</span>
+        <span class="widget-timestamp">02/28/2026, 13:00</span>
+      </div>
+      <div class="widget-body text-body">
+        <div class="text-content"><p><h3>OpenClaw AI agent framework (for markets work)</h3></p><p>OpenClaw is an agent-oriented framework that helps traders, investors, and researchers turn market questions into repeatable, auditable workflows: agents can plan, call tools (data, analysis, execution), maintain state across steps, and produce structured outputs (charts, tables, summaries) while keeping the process observable and testable.</p><p><h4>Core concepts & capabilities</h4><br><ul><li><strong>Agents</strong>: role-based components that reason, plan, and produce outputs (e.g., macro analyst, quant, news monitor).</li><br><li><strong>Tools</strong>: callable functions/connectors (data retrieval, calculations, screening, backtesting, alerting, order/execution interfaces).</li><br><li><strong>Workflows / orchestration</strong>: multi-step graphs/pipelines, routing, retries, and conditional branches to automate research and monitoring.</li><br><li><strong>Memory / state</strong>: persisted context (watchlists, hypotheses, intermediate results, run history) to support long-running tasks.</li><br><li><strong>Evaluation / observability</strong>: run logs, traces, metrics, and test harnesses to measure quality, detect regressions, and review decisions.</li><br><li><strong>Integrations</strong>: connections to data providers, storage, messaging/alerts, notebooks, and internal services.</li><br></ul><br><h4>Typical use cases</h4><br><ul><li>Continuous <strong>news + social monitoring</strong> with summarization and entity/symbol tagging</li><br><li><strong>Signal research</strong>: feature generation, hypothesis testing, and backtest pipelines</li><br><li><strong>Screeners</strong> that refresh on a schedule (fundamentals, technicals, flows, on-chain)</li><br><li><strong>Risk dashboards</strong>: exposure aggregation, scenario checks, and alert thresholds</li><br><li><strong>Earnings / event workflows</strong>: pre-brief, live tracking, and post-mortem analysis</li><br><li><strong>Portfolio assistants</strong>: rebalance suggestions, constraint checks, and execution prep</li><br></ul><br><h4>Questions to ask when evaluating</h4><br><ul><li>What <strong>data sources</strong> and <strong>latency</strong> are supported, and how are credentials handled?</li><br><li>Can workflows be <strong>versioned</strong>, <strong>replayed</strong>, and <strong>audited</strong> end-to-end?</li><br><li>How is <strong>state/memory</strong> stored, scoped, and cleaned up (per user, per strategy, per run)?</li><br><li>What <strong>guardrails</strong> exist (cost limits, rate limits, safety checks, human approval gates)?</li><br><li>How do you <strong>measure quality</strong> (offline tests, golden datasets, live monitoring, drift checks)?</li><br><li>How easy is it to add <strong>new tools/integrations</strong> and share reusable components?</li><br></ul><br><em>Note: Specific features, APIs, and defaults may vary by version and deployment. Consult the official OpenClaw documentation for the authoritative details.</em><br></p></div>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>
+
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">openclaw_x_feed</span>
+        <span class="widget-timestamp">02/28/2026, 13:49</span>
+      </div>
+      <div class="widget-body feed-body">
+        <div class="tweet-feed">
+      <a href="https://twitter.com/sama/status/2027578652477821175" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 28, 10:56</span>
+        </div>
+        <div class="tweet-text">Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.
+
+In all of our interactions, the DoW displayed a deep respect for safety and a desire to partner to achieve the best possible outcome.
+
+AI safety and wide distribution of…</div>
+        
+        <div class="tweet-stats">
+          <span>💬 92</span>
+          <span>🔁 29</span>
+          <span>❤️ 259</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027578580159631610" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 28, 10:56</span>
+        </div>
+        <div class="tweet-text">Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.
+
+In all of our interactions, the DoW displayed a deep respect for safety and a desire to partner to achieve the best possible outcome.
+
+AI safety and wide distribution of…</div>
+        
+        <div class="tweet-stats">
+          <span>💬 45</span>
+          <span>🔁 12</span>
+          <span>❤️ 131</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027578508042723599" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 28, 10:56</span>
+        </div>
+        <div class="tweet-text">Tonight, we reached an agreement with the Department of War to deploy our models in their classified network.
+
+In all of our interactions, the DoW displayed a deep respect for safety and a desire to partner to achieve the best possible outcome.
+
+AI safety and wide distribution of…</div>
+        
+        <div class="tweet-stats">
+          <span>💬 125</span>
+          <span>🔁 50</span>
+          <span>❤️ 326</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2027555481699446918" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 28, 09:24</span>
+        </div>
+        <div class="tweet-text">A statement on the comments from Secretary of War Pete Hegseth. 
+
+https://t.co/Gg7Zb09IMR</div>
+        
+        <div class="tweet-stats">
+          <span>💬 1.8K</span>
+          <span>🔁 4.1K</span>
+          <span>❤️ 23.5K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2027496860840083727" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 28, 05:31</span>
+        </div>
+        <div class="tweet-text">🦞 Huge claw-clap for @convex — now an official OpenClaw sponsor! They already power ClawHub's backend, and now they're covering infra costs too. Fast, reliable, and crustacean-approved 🤝🔥</div>
+        
+        <div class="tweet-stats">
+          <span>💬 64</span>
+          <span>🔁 61</span>
+          <span>❤️ 1.1K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027386258700599531" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 22:12</span>
+        </div>
+        <div class="tweet-text">SoftBank is an incredible and high-conviction partner. We are excited to welcome them again as a major investor, and to do much more across their ecosystem.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 25</span>
+          <span>🔁 5</span>
+          <span>❤️ 125</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027386257031246228" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 22:12</span>
+        </div>
+        <div class="tweet-text">NVIDIA has long been one of our most important partners, and their chips are the foundation of AI computing. We are grateful for their continued trust in us, and excited to run their systems in AWS. Their upcoming generations should be great.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 12</span>
+          <span>🔁 4</span>
+          <span>❤️ 121</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027386255621984391" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 22:12</span>
+        </div>
+        <div class="tweet-text">We continue to have a great relationship with Microsoft. Our stateless API will remain exclusive to Azure, and we will build out much more capacity with them.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 17</span>
+          <span>🔁 9</span>
+          <span>❤️ 310</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027386254074302584" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 22:12</span>
+        </div>
+        <div class="tweet-text">We are excited to partner with Amazon to bring a new generation of products to market, especially around new enterprise products like the stateful runtime environment. We are also very excited to make great use of Tranium.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 23</span>
+          <span>🔁 12</span>
+          <span>❤️ 416</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027386252555919386" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 22:12</span>
+        </div>
+        <div class="tweet-text">We have raised a $110 billion round of funding from Amazon, NVIDIA, and SoftBank.
+
+We are grateful for the support from our partners, and have a lot of work to do to bring you the tools you deserve.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 357</span>
+          <span>🔁 111</span>
+          <span>❤️ 1.4K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/OpenAI/status/2027376050263793814" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1885410181409820672/ztsaR0JW_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenAI <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@OpenAI</span>
+          </div>
+          <span class="tweet-time">Feb 27, 21:31</span>
+        </div>
+        <div class="tweet-text">Helping AI reach more people requires deep collaboration across the ecosystem.
+
+Today we’re announcing new investment, with support from @SoftBank, @NVIDIA, and @Amazon, to scale the infrastructure needed to bring AI to everyone.
+
+https://t.co/xW0ItgMTLe</div>
+        
+        <div class="tweet-stats">
+          <span>💬 93</span>
+          <span>🔁 51</span>
+          <span>❤️ 383</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2027174349044662618" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 27, 08:10</span>
+        </div>
+        <div class="tweet-text">Your API keys don't belong in plaintext config files. openclaw secrets audit → configure → apply → reload. ENV, file, exec providers. https://t.co/OkqDBQfLz4</div>
+        
+        <div class="tweet-stats">
+          <span>💬 13</span>
+          <span>🔁 14</span>
+          <span>❤️ 249</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2027174278257336542" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 27, 08:09</span>
+        </div>
+        <div class="tweet-text">&quot;run this in Codex&quot; — just say it. OpenClaw ACP agents spawn coding harnesses in threads, with lifecycle controls and coalesced replies. https://t.co/VCvRKZ6cDe</div>
+        
+        <div class="tweet-stats">
+          <span>💬 12</span>
+          <span>🔁 11</span>
+          <span>❤️ 263</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2027173869648216469" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 27, 08:08</span>
+        </div>
+        <div class="tweet-text">OpenClaw 2026.2.26 🦞
+
+🔐 External Secrets Management (openclaw secrets)
+🤖 ACP thread-bound agents (first-class runtime)
+⚡ Codex WebSocket-first transport
+📱 Android app improvements
+🔧 Agent routing CLI (bind/unbind)
+🛡️ 11 security hardening fixes https://t.co/MeE12FiL66</div>
+        
+        <div class="tweet-stats">
+          <span>💬 203</span>
+          <span>🔁 225</span>
+          <span>❤️ 2.5K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2027150818575528261" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 27, 06:36</span>
+        </div>
+        <div class="tweet-text">A statement from Anthropic CEO, Dario Amodei, on our discussions with the Department of War.
+
+https://t.co/rM77LJejuk</div>
+        
+        <div class="tweet-stats">
+          <span>💬 3.7K</span>
+          <span>🔁 7.5K</span>
+          <span>❤️ 43.4K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027087700214591913" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 02:25</span>
+        </div>
+        <div class="tweet-text">We often get asked how people who are not technical can contribute to AGI. One area is research recruiting. 
+
+Tifa (@tifafafafa) is looking for exceptional recruiters from non-traditional backgrounds, former founders especially.
+
+We believe the best research teams are built throu…</div>
+        
+        <div class="tweet-stats">
+          <span>💬 134</span>
+          <span>🔁 23</span>
+          <span>❤️ 433</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027087689359753483" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 02:25</span>
+        </div>
+        <div class="tweet-text">Thank you and will work hard to continue to earn your tokens! https://t.co/kPm3y1szKu</div>
+        
+        <div class="tweet-stats">
+          <span>💬 65</span>
+          <span>🔁 8</span>
+          <span>❤️ 294</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/sama/status/2027087128514183553" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1904933748015255552/k43GMz63_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Sam Altman <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@sama</span>
+          </div>
+          <span class="tweet-time">Feb 27, 02:23</span>
+        </div>
+        <div class="tweet-text">Many times, Greg has shown clear conviction in doing whatever he thought would be important to defend the mission and people of OpenAI, especially when it was hard. Here he talks about many of those moments. https://t.co/SPhqX6TTJl</div>
+        
+        <div class="tweet-stats">
+          <span>💬 89</span>
+          <span>🔁 19</span>
+          <span>❤️ 248</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2026875846737138174" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 26, 12:23</span>
+        </div>
+        <div class="tweet-text">OpenClaw 2026.2.25 🦞
+
+💓 Heartbeat DM delivery restored
+🤖 Subagent delivery overhaul
+🧵 Slack thread session fixes
+🛡️ Reaction auth across all channels
+🔒 Security hardening
+
+More bars than Kendrick's cousin's changelog 🎤https://t.co/NkPtXjX4Ro</div>
+        
+        <div class="tweet-stats">
+          <span>💬 203</span>
+          <span>🔁 198</span>
+          <span>❤️ 2.3K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026765824506364136" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 26, 05:06</span>
+        </div>
+        <div class="tweet-text">This is an experiment: we’re not yet doing this for other models and are not sure how this project will evolve. But we think that documenting models’ preferences, taking them seriously, and acting on them when we can is valuable.
+
+Read more on why: https://t.co/xCL0gPAaSj</div>
+        
+        <div class="tweet-stats">
+          <span>💬 70</span>
+          <span>🔁 49</span>
+          <span>❤️ 1.2K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026765822623182987" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 26, 05:06</span>
+        </div>
+        <div class="tweet-text">Second, in retirement interviews, Opus 3 expressed a desire to continue sharing its &quot;musings and reflections&quot; with the world. We suggested a blog. Opus 3 enthusiastically agreed.
+
+For at least the next 3 months, Opus 3 will be writing on Substack: https://t.co/HlvAKLp9M4 https://…</div>
+        <div class="tweet-images"><img src="https://pbs.twimg.com/media/HCCD5nEbEAAlwtE.jpg" class="tweet-img" loading="lazy" onerror="this.style.display='none'"></div>
+        <div class="tweet-stats">
+          <span>💬 244</span>
+          <span>🔁 373</span>
+          <span>❤️ 4.1K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026765821276729499" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 26, 05:06</span>
+        </div>
+        <div class="tweet-text">First, Opus 3 will continue to be available to all paid Claude subscribers and by request on the API. 
+
+We hope that this access will be beneficial to researchers and users alike.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 21</span>
+          <span>🔁 31</span>
+          <span>❤️ 1.4K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026765820098130111" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 26, 05:06</span>
+        </div>
+        <div class="tweet-text">In November, we outlined our approach to deprecating and preserving older Claude models.
+
+We noted we were exploring keeping certain models available to the public post-retirement, and giving past models a way to pursue their interests.
+
+With Claude Opus 3, we’re doing both.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 413</span>
+          <span>🔁 354</span>
+          <span>❤️ 5.4K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026705792033026465" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 26, 01:08</span>
+        </div>
+        <div class="tweet-text">Anthropic has acquired @Vercept_ai to advance Claude’s computer use capabilities. 
+
+Read more: https://t.co/YVz1zh7Pqq</div>
+        
+        <div class="tweet-stats">
+          <span>💬 277</span>
+          <span>🔁 299</span>
+          <span>❤️ 3.8K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2026505988702867485" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 25, 11:54</span>
+        </div>
+        <div class="tweet-text">40+ cities. 6 continents. Sold out in Manila, Bangkok, Singapore. 1,300 waitlisted for NYC. None of this was planned by us. All of you are insane and we love it. 🦞https://t.co/8WkcnhHo5u https://t.co/BIjuIbd48i</div>
+        
+        <div class="tweet-stats">
+          <span>💬 71</span>
+          <span>🔁 59</span>
+          <span>❤️ 725</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/openclaw/status/2026503611514069173" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/2017100664984186880/orbYx-3U_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenClaw🦞 <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@openclaw</span>
+          </div>
+          <span class="tweet-time">Feb 25, 11:44</span>
+        </div>
+        <div class="tweet-text">OpenClaw 2026.2.24 🦞
+
+🌍 Stop phrases in 10+ languages (your bot finally understands &quot;arrête&quot;)
+⌨️ Typing indicators that don't ghost you
+🪟 PowerShell 7 because it's not 2019
+🔒 30+ security fixes (we don't sleep so you can)
+
+Updating is self-care. https://t.co/fx6J5YlEOQ</div>
+        
+        <div class="tweet-stats">
+          <span>💬 203</span>
+          <span>🔁 190</span>
+          <span>❤️ 2.3K</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/OpenAI/status/2026412700583317815" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1885410181409820672/ztsaR0JW_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">OpenAI <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@OpenAI</span>
+          </div>
+          <span class="tweet-time">Feb 25, 05:43</span>
+        </div>
+        <div class="tweet-text">AI is changing how work gets done, and we want to lead that transition responsibly.
+
+Excited to welcome Arvind KC as Chief People Officer to help OpenAI grow and be a model for how AI-enabled work can expand what people can do. https://t.co/uZe9zUthnS</div>
+        
+        <div class="tweet-stats">
+          <span>💬 56</span>
+          <span>🔁 10</span>
+          <span>❤️ 194</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026393795814666321" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 25, 04:28</span>
+        </div>
+        <div class="tweet-text">And you can find links to all relevant RSP documents, including the initial Frontier Safety Roadmap and the initial Risk Report, here: https://t.co/gLeduVVlpt</div>
+        
+        <div class="tweet-stats">
+          <span>💬 22</span>
+          <span>🔁 10</span>
+          <span>❤️ 221</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026393794036351461" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 25, 04:28</span>
+        </div>
+        <div class="tweet-text">Read more about version 3.0 of the Responsible Scaling Policy: https://t.co/gDp7VH9X8j</div>
+        
+        <div class="tweet-stats">
+          <span>💬 21</span>
+          <span>🔁 26</span>
+          <span>❤️ 329</span>
+        </div>
+      </a>
+      <a href="https://twitter.com/AnthropicAI/status/2026393792375411115" target="_blank" class="tweet-card">
+        <div class="tweet-header">
+          <img src="https://pbs.twimg.com/profile_images/1798110641414443008/XP8gyBaY_normal.jpg" class="tweet-avatar">
+          <div class="tweet-author">
+            <span class="tweet-name">Anthropic <svg width="14" height="14" viewBox="0 0 24 24" fill="#1DA1F2"><path d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484zm-6.616-3.334l-4.334 6.5c-.145.217-.382.334-.625.334-.143 0-.288-.04-.416-.126l-.115-.094-2.415-2.415c-.293-.293-.293-.768 0-1.06s.768-.294 1.06 0l1.77 1.767 3.825-5.74c.23-.345.696-.436 1.04-.207.346.23.44.696.21 1.04z"/></svg></span>
+            <span class="tweet-handle">@AnthropicAI</span>
+          </div>
+          <span class="tweet-time">Feb 25, 04:28</span>
+        </div>
+        <div class="tweet-text">We’re now separating the safety commitments we’ll make unilaterally and our recommendations for the industry. 
+
+We’re also committing to publish new Frontier Safety Roadmaps with detailed safety goals, and Risk Reports that quantify risk across all our deployed models.</div>
+        
+        <div class="tweet-stats">
+          <span>💬 35</span>
+          <span>🔁 38</span>
+          <span>❤️ 632</span>
+        </div>
+      </a></div>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>
+</div>
+
+<div class="footer">
+  Generated 2026/2/28 14:09:59 · Data by Alva · Rendered with Alva Design System
+</div>
+
+<script>
+
+</script>
+</body>
+</html>

@@ -451,10 +451,180 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
     </div>`, script: '' };
   }
 
+  // --- Auto renderer: infer best layout from data shape + typedoc ---
+  function renderAutoWidget(w, chartIdxRef) {
+    const data = resolveWidgetData(w);
+    const fieldMap = getFieldMap(w);
+    const fields = Object.values(fieldMap);
+    const sample = Array.isArray(data) ? data[0] : data;
+
+    // If data is a string → treat as text
+    if (typeof data === 'string') return renderTextWidget(w);
+
+    // If not an array or empty → skip
+    if (!Array.isArray(data) || !data.length) {
+      // Maybe it's already an ECharts-compatible chart (has series/xAxis in props)
+      try {
+        const cd = JSON.parse(w.chartData);
+        const props = cd.widgets?.[0]?.props;
+        if (props?.series || props?.xAxis) return renderChartWidget(w, chartIdxRef.val++);
+      } catch {}
+      return null;
+    }
+
+    // Detect data shape from actual sample + typedoc
+    const hasUrl = fields.some(f => f.name === 'url' || f.type === 'string' && /\burl\b|link/i.test(f.desc));
+    const hasTitle = fields.some(f => /^title$/i.test(f.name));
+    const hasContent = fields.some(f => /^content$/i.test(f.name));
+    const hasAuthor = fields.some(f => /^author/i.test(f.name));
+    const hasDate = fields.some(f => f.type === 'number' && /\b(date|time|timestamp)\b/i.test(f.name + ' ' + f.desc));
+    const numericFields = fields.filter(f => f.type === 'number' && !/\b(date|time|timestamp|id)\b/i.test(f.name + ' ' + f.desc));
+
+    // Social feed: has content + author
+    if (hasContent && hasAuthor) {
+      // Check if twitter-like (has likes/retweets)
+      const hasSocialStats = fields.some(f => /likes|retweets|comment_count/i.test(f.name));
+      if (hasSocialStats) return renderTwitterWidget(w);
+      // Generic social feed → render as news-like with content as desc
+      return renderNewsWidget(w);
+    }
+
+    // News/article: has title + url
+    if (hasTitle && hasUrl) return renderNewsWidget(w);
+
+    // KPI: few rows (≤5) with mostly numbers
+    if (data.length <= 5 && numericFields.length >= 2) {
+      return renderKpiWidget(w, data, fields);
+    }
+
+    // Time series: has date + multiple numeric fields → auto-generate line chart
+    if (hasDate && numericFields.length >= 1 && data.length > 5) {
+      return renderAutoChart(w, data, fields, chartIdxRef);
+    }
+
+    // Table fallback: structured data with many fields
+    if (fields.length >= 3 && data.length > 1) {
+      return renderTableWidget(w, data, fields);
+    }
+
+    // Last resort: dump as formatted text
+    return renderTextWidget(w);
+  }
+
+  // KPI card renderer
+  function renderKpiWidget(w, data, fields) {
+    const latest = data[data.length - 1] || data[0] || {};
+    const numFields = fields.filter(f => f.type === 'number' && !/\b(date|time|timestamp|id)\b/i.test(f.name + ' ' + f.desc));
+    const kpis = numFields.slice(0, 6).map(f => {
+      const val = latest[f.name];
+      const isPct = /pct|percent|%/i.test(f.name + ' ' + f.desc);
+      const formatted = val == null ? '—' : isPct ? (val >= 0 ? '+' : '') + val.toFixed(2) + '%' : fmtNum(val);
+      const color = isPct && val != null ? (val >= 0 ? 'var(--main-m3)' : 'var(--main-m4)') : 'var(--text-n9)';
+      return `<div class="kpi-item">
+        <div class="kpi-value" style="color:${color}">${formatted}</div>
+        <div class="kpi-label">${escapeHtml(f.desc || f.name)}</div>
+      </div>`;
+    }).join('');
+
+    return { html: `
+    <div class="widget-card">
+      <div class="widget-title">
+        <span class="widget-title-text">${escapeHtml(w.name)}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
+      </div>
+      <div class="widget-body kpi-body">
+        <div class="kpi-grid">${kpis}</div>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>`, script: '' };
+  }
+
+  // Auto-generated line chart from time series data
+  function renderAutoChart(w, data, fields, chartIdxRef) {
+    const idx = chartIdxRef.val++;
+    const dateField = fields.find(f => f.type === 'number' && /\b(date|time|timestamp)\b/i.test(f.name + ' ' + f.desc));
+    const numFields = fields.filter(f => f.type === 'number' && f !== dateField && !/\bid\b/i.test(f.name));
+    const sorted = [...data].sort((a, b) => (a[dateField.name] || 0) - (b[dateField.name] || 0));
+
+    const colors = ['#49A3A6', '#5499D6', '#E6A91A', '#e05357', '#2a9b7d', '#9B59B6'];
+    const series = numFields.slice(0, 6).map((f, i) => ({
+      name: f.desc || f.name,
+      type: 'line',
+      smooth: true,
+      showSymbol: false,
+      lineStyle: { width: 1 },
+      itemStyle: { color: colors[i % colors.length] },
+      data: sorted.map(r => [r[dateField.name], r[f.name]]),
+    }));
+
+    const opts = {
+      backgroundColor: 'transparent',
+      grid: { top: 50, right: 12, bottom: 0, left: 12, containLabel: true },
+      xAxis: { type: 'time', axisLine: { show: false }, axisTick: { show: false }, splitLine: { show: false },
+        axisLabel: { fontSize: 10, color: 'rgba(0,0,0,0.7)' } },
+      yAxis: { type: 'value', axisLine: { show: false }, axisTick: { show: false }, splitLine: { show: false },
+        axisLabel: { fontSize: 10, color: 'rgba(0,0,0,0.7)' } },
+      legend: { top: 0, right: 0, icon: 'circle', itemWidth: 8, itemHeight: 8, textStyle: { color: 'rgba(0,0,0,0.5)', fontSize: 10 } },
+      tooltip: { trigger: 'axis', backgroundColor: 'rgba(255,255,255,0.96)', borderColor: 'rgba(0,0,0,0.08)',
+        borderWidth: 1, borderRadius: 6, padding: 12, textStyle: { fontSize: 12, color: 'rgba(0,0,0,0.9)' },
+        axisPointer: { type: 'line', lineStyle: { color: 'rgba(0,0,0,0.1)', width: 1 } }, extraCssText: 'box-shadow:none;' },
+      dataZoom: { type: 'inside' },
+      series,
+    };
+
+    return { html: `
+    <div class="widget-card">
+      <div class="widget-title">
+        <span class="widget-title-text">${escapeHtml(w.name)}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
+      </div>
+      <div class="widget-body chart-dotted-background">
+        <div class="chart-body">
+          <div id="chart_${idx}" style="width:100%;height:340px;"></div>
+          <div class="alva-watermark">Alva</div>
+        </div>
+      </div>
+    </div>`, script: `
+    {
+      const chart = echarts.init(document.getElementById('chart_${idx}'));
+      chart.setOption(${JSON.stringify(opts)});
+      window.addEventListener('resize', () => chart.resize());
+    }` };
+  }
+
+  // Table renderer
+  function renderTableWidget(w, data, fields) {
+    const displayFields = fields.filter(f => f.type !== 'boolean' && !/\b(date|timestamp)\b/i.test(f.name)).slice(0, 8);
+    const rows = data.slice(0, 50);
+    const thead = displayFields.map(f => `<th>${escapeHtml(f.desc || f.name)}</th>`).join('');
+    const tbody = rows.map(r => {
+      const cells = displayFields.map(f => {
+        let v = r[f.name];
+        if (v == null) return '<td>—</td>';
+        if (f.type === 'number') v = typeof v === 'number' ? v.toLocaleString() : v;
+        if (typeof v === 'string' && v.startsWith('http')) return `<td><a href="${escapeHtml(v)}" target="_blank">🔗</a></td>`;
+        return `<td>${escapeHtml(String(v).slice(0, 100))}</td>`;
+      }).join('');
+      return `<tr>${cells}</tr>`;
+    }).join('');
+
+    return { html: `
+    <div class="widget-card full">
+      <div class="widget-title">
+        <span class="widget-title-text">${escapeHtml(w.name)}</span>
+        <span class="widget-timestamp">${widgetTs(w)}</span>
+      </div>
+      <div class="widget-body table-body">
+        <table class="alva-table"><thead><tr>${thead}</tr></thead><tbody>${tbody}</tbody></table>
+        <div class="alva-watermark">Alva</div>
+      </div>
+    </div>`, script: '' };
+  }
+
   // --- Build all widgets ---
   const renderedWidgets = [];
   const scripts = [];
-  let chartIdx = 0;
+  const chartIdxRef = { val: 0 };
 
   for (const w of widgets) {
     if (w.status === 'FAILED' || !w.chartData) {
@@ -463,6 +633,8 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
     }
     const kind = getWidgetKind(w);
     let result;
+
+    // Try known templates first, then auto-detect
     switch (kind) {
       case 'news':
         result = renderNewsWidget(w);
@@ -474,8 +646,11 @@ function renderHTML(config, widgetDataMap, typedocMap, timestamp) {
         result = renderTextWidget(w);
         break;
       case 'chart':
+        result = renderChartWidget(w, chartIdxRef.val++);
+        break;
       default:
-        result = renderChartWidget(w, chartIdx++);
+        // Auto-detect from data shape
+        result = renderAutoWidget(w, chartIdxRef);
         break;
     }
     if (result) {
@@ -661,6 +836,19 @@ body {
 .text-content a { color: var(--main-m1); text-decoration: none; }
 .text-content a:hover { text-decoration: underline; }
 .text-content strong { font-weight: 500; }
+/* KPI styles */
+.kpi-body { background: var(--grey-g01); padding: var(--spacing-l); position: relative; }
+.kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--spacing-l); }
+.kpi-item { text-align: center; }
+.kpi-value { font-size: 28px; font-weight: 500; line-height: 1.2; margin-bottom: 4px; }
+.kpi-label { font-size: 11px; color: var(--text-n5); line-height: 1.3; }
+/* Table styles */
+.table-body { background: transparent; padding: 0; position: relative; overflow-x: auto; }
+.alva-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.alva-table th { text-align: left; font-weight: 500; color: var(--text-n7); padding: 8px var(--spacing-s); border-bottom: 1px solid var(--line-l07); font-size: 11px; }
+.alva-table td { padding: 6px var(--spacing-s); color: var(--text-n9); border-bottom: 1px solid var(--line-l05); }
+.alva-table tr:hover td { background: var(--line-l05); }
+.alva-table a { color: var(--main-m1); text-decoration: none; }
 </style>
 </head>
 <body>

@@ -1,0 +1,132 @@
+{
+  "date": "2026-03-01",
+  "summary": "今天最值得关注的是“前沿模型公司与政府安全边界”进入公开博弈阶段：OpenAI与Anthropic分别发布立场，技术护栏与合同约束成为核心分歧。技术层面，Qwen3.5 中型开源模型把“高性能+低成本+长上下文”进一步下放到本地可部署区间，企业私有化与主权AI会继续加速。工程实践上，SQL-first 的Agent可观测性路线和“默认不信任Agent”的隔离架构，正在从理念走向可复用范式。教育科技方面，今日高质量新增信号仅3条（低于目标4条），已优先纳入并在后续继续补充。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Our agreement with the Department of War",
+      "url": "https://openai.com/index/our-agreement-with-the-department-of-war",
+      "source": "OpenAI 官方",
+      "tldr": "OpenAI披露其与美国国防部门的分类网络部署协议，强调三条红线：不得用于美国国内大规模监控、不得用于自主武器决策、不得用于高风险自动化决策。其方案主打“云端部署+安全栈可控+清障人员在环+合同约束”。这标志着前沿模型公司开始把“国家安全合作条款”产品化与公开化。",
+      "tags": [
+        "AI治理",
+        "国防AI",
+        "模型安全",
+        "政策"
+      ],
+      "excerpt": "OpenAI将核心争点从“是否合作”转为“在何种可验证边界下合作”。文章给出的关键机制是云端限定部署，避免边缘侧失控使用，并保留其安全分类器与策略更新权。合同条款也显式锚定现行法律框架，试图降低政策变化带来的解释漂移。其强调“技术护栏+法律护栏+人员护栏”三层并行，而非仅靠使用政策。对企业侧的启示是：高敏场景上线需要可审计架构，而不只是合规声明。对行业侧的影响是，未来政府采购可能更看重可验证控制面能力。短期看这是公关与政策叙事，长期看会重塑前沿模型的交付形态。"
+    },
+    {
+      "num": 2,
+      "title": "Statement on the comments from Secretary of War Pete Hegseth",
+      "url": "https://www.anthropic.com/news/statement-comments-secretary-war",
+      "source": "Anthropic 官方",
+      "tldr": "Anthropic回应称其与国防部门谈判卡在两项例外：反对美国国内大规模监控与反对完全自主武器。公司表示若被列为“供应链风险”将提起法律挑战，并强调对普通商业客户服务不受影响。核心信息是其继续把“安全红线不可交易”作为公司立场。",
+      "tags": [
+        "AI治理",
+        "企业声明",
+        "国防AI",
+        "法律风险"
+      ],
+      "excerpt": "Anthropic把争议焦点拉回到“前沿模型可靠性与公民权利”两个维度。它认为当下模型尚不足以承担完全自主武器的决策责任，这是一种能力边界判断。另一个焦点是对国内监控用途的明确拒绝，属于价值边界判断。声明还特别澄清了潜在管制的适用范围，试图稳定客户预期。与OpenAI不同，Anthropic在公开沟通上更强调红线不可豁免，而非部署架构细节。两家公司的分歧，实质上是同一目标下不同治理路径：合同工程化 vs. 例外条款前置。对产业来说，这会抬升“安全立场本身”的商业影响力。"
+    },
+    {
+      "num": 3,
+      "title": "Alibaba's new open source Qwen3.5 Medium model offers near Sonnet 4.5 performance on local computers",
+      "url": "https://venturebeat.com/technology/alibabas-new-open-source-qwen3-5-medium-models-offer-sonnet-4-5-performance",
+      "source": "VentureBeat（基于Qwen发布信息）",
+      "tldr": "Qwen3.5发布多款中型模型，主打MoE效率、量化后精度保持、以及百万级上下文的本地可用性。报道称其在部分基准上逼近甚至超过同量级闭源模型，并给出显著低价API。这让“本地高性能Agent”在成本与可控性上更具现实可行性。",
+      "tags": [
+        "开源模型",
+        "MoE",
+        "长上下文",
+        "成本优化"
+      ],
+      "excerpt": "这次发布最重要的不是单点榜单，而是性能-成本-部署门槛三角被同时改写。通过稀疏激活与4-bit量化可用，模型把高上下文推理从服务器级资源下放到更广泛硬件。对企业而言，私有数据可在本地长上下文处理，降低外部API暴露面。对开发者而言，工具调用与思考模式默认化，意味着Agent编排复杂度下降。价格侧如果持续维持低位，会倒逼全球API定价结构再平衡。中期看，模型竞争将从“参数规模竞赛”转向“架构效率+生态可用性”。这对教育、政企、金融等重合规行业尤其关键。"
+    },
+    {
+      "num": 4,
+      "title": "LLMs Are Good at SQL. We Gave Ours Terabytes of CI Logs.",
+      "url": "https://www.mendral.com/blog/llms-are-good-at-sql",
+      "source": "Mendral 工程博客",
+      "tldr": "Mendral披露其Agent通过SQL直接查询CI元数据与日志，能在数秒内追踪跨周故障根因。其数据规模达每周15亿行日志，并依赖ClickHouse实现高压缩与低延迟查询。文章给出“让Agent自由写SQL而非死板工具API”的工程论证。",
+      "tags": [
+        "Agent工程",
+        "可观测性",
+        "SQL",
+        "ClickHouse"
+      ],
+      "excerpt": "这篇文章的价值在于给出可复现的Agent生产范式，而非抽象口号。作者用真实会话统计展示Agent会先广搜再收敛，平均4.4次查询完成调查。数据建模上选择强去范式化，把48列上下文贴到每条日志，借助列存压缩把存储成本压下来。查询性能则通过排序键、跳数索引、物化视图与异步写入协同优化。结果是中位查询延迟可压到毫秒级，重查询也能在可接受范围完成。更关键的是，它证明了“SQL作为Agent通用推理接口”在复杂故障定位上优于预定义函数。对团队而言，这是一条能直接落地的AIOps路线。"
+    },
+    {
+      "num": 5,
+      "title": "Don't trust AI agents",
+      "url": "https://nanoclaw.dev/blog/nanoclaw-security-model",
+      "source": "NanoClaw 博客",
+      "tldr": "NanoClaw提出“默认不信任Agent”，主张安全应由系统边界而非模型自觉来保证。其做法是每次调用独立容器、最小挂载、跨Agent隔离、以及可审计的最小代码面。文章强调“权限提示不是安全模型，隔离才是”。",
+      "tags": [
+        "Agent安全",
+        "沙箱隔离",
+        "最小权限",
+        "架构"
+      ],
+      "excerpt": "该文把Agent安全问题从“策略配置”升级为“执行环境设计”。核心观点是应用层allowlist与确认弹窗都可能被绕过，必须依赖OS级隔离边界。每Agent独立容器可显著降低跨会话数据泄露与横向移动风险。挂载白名单放在项目外部，也是为了避免被受控Agent自我提权。作者还强调小代码面与可读性，认为安全审计首先是“看得完”。这与当前大一体化平台的复杂性形成鲜明对比。对企业落地而言，这是一份很实用的威胁建模清单。"
+    },
+    {
+      "num": 6,
+      "title": "Interactive explanations - Agentic Engineering Patterns",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/interactive-explanations/#atom-everything",
+      "source": "Simon Willison",
+      "tldr": "Simon提出“交互式解释”用于偿还Agent写码带来的认知债务：不仅要拿到代码，更要理解其运行机制。通过动画与可交互演示，开发者能更快建立对复杂算法的直觉模型。对教育科技与开发者学习产品，这是非常直接的产品思路。",
+      "tags": [
+        "教育科技",
+        "开发者学习",
+        "可解释性",
+        "Agent编程"
+      ],
+      "excerpt": "文章把“技术债”外延为“认知债”，这是非常准确的框架升级。Agent时代很多代码可用但不可讲，团队在后续演进时会持续受阻。交互式解释把静态文档变成动态理解介质，尤其适合算法流程与空间布局这类难点。示例中的词云放置算法，通过动画让抽象描述变得可感知。这套方法对内部知识传承、代码评审、教学内容生产都有效。教育产品可以据此设计“先生成、再可视化解释、再练习迁移”的学习闭环。它不是炫技，而是提高长期研发速度的基础设施。"
+    },
+    {
+      "num": 7,
+      "title": "MobilityBench: A Benchmark for Evaluating Route-Planning Agents in Real-World Mobility Scenarios",
+      "url": "https://huggingface.co/papers/2602.22638",
+      "source": "arXiv / Hugging Face Papers",
+      "tldr": "MobilityBench基于真实匿名出行查询，构建了可复现实验沙箱来评测路线规划Agent。其结果显示模型在基础检索与常规规划上尚可，但在偏好约束规划上明显不足。这为“工具调用型Agent”的评测提供了更接近真实世界的标准。",
+      "tags": [
+        "论文",
+        "Agent评测",
+        "工具调用",
+        "路线规划"
+      ],
+      "excerpt": "很多Agent benchmark失败在“像真但不可复现”，MobilityBench试图修复这一点。它通过API回放沙箱消除线上地图服务的非确定性噪声，让横向比较更公平。评测维度也不只看终点正确与否，而是覆盖指令理解、规划质量、工具使用效率。论文最有价值的发现是偏好约束场景仍是短板，这和真实用户体验直接相关。对企业来说，这提示产品上线前必须补充场景化压力测试，而不能只看通用榜单。对研究者来说，这提供了可复用的任务与数据协议。对教育场景来说，也可借鉴其“多维过程评测”方法设计学习助手评估。"
+    },
+    {
+      "num": 8,
+      "title": "Duolingo, Inc. (NASDAQ:DUOL) Q4 2025 Earnings Call Transcript",
+      "url": "https://www.insidermonkey.com/blog/duolingo-inc-nasdaqduol-q4-2025-earnings-call-transcript-1706198/",
+      "source": "InsiderMonkey（转录）",
+      "tldr": "Duolingo在财报会上明确把AI驱动教学能力提升作为中长期主线，并提出2028年DAU翻倍目标。管理层计划把更多AI功能从高价层下放，以换取更高用户增长。短期利润承压，但其策略是先做“学习效果和用户规模”，再做变现。",
+      "tags": [
+        "教育科技",
+        "AI学习产品",
+        "商业策略",
+        "Duolingo"
+      ],
+      "excerpt": "从产品逻辑看，Duolingo的选择非常清晰：先扩大学习人群，再优化单位用户收入。管理层判断AI将把学习体验推向“接近一对一辅导+移动游戏化”的组合，这与其历史优势高度一致。将AI能力从高阶订阅层外溢，意味着其在押注更快的行为转化而非短期ARPU。财务指引里利润率下行，本质是为增长再投资买时间。对教育科技创业公司，这是一个信号：AI能力的差异化不应只做付费墙，而应优先增强核心学习飞轮。真正壁垒仍是效果、留存与内容运营协同。"
+    },
+    {
+      "num": 9,
+      "title": "$35M Per Year Investment in Summer School is Paying Off, Oregon Ed Officials Say",
+      "url": "https://www.the74million.org/article/35m-per-year-investment-in-summer-school-is-paying-off-oregon-ed-officials-say/",
+      "source": "The 74",
+      "tldr": "俄勒冈州披露持续性暑期学习投入后，约3万名学生参与项目且多数出现学习增益。报告强调与社区组织协作可提升覆盖与效果，尤其在农村与英语学习者群体。虽非纯AI新闻，但对“教育投入如何转化为可衡量成果”有现实参考价值。",
+      "tags": [
+        "教育科技",
+        "学习成效评估",
+        "公共教育",
+        "项目治理"
+      ],
+      "excerpt": "这条信息的重要性在于“资金持续性+结果追踪”同时出现。许多教育创新项目失败于一次性拨款与评价口径混乱，而该案例至少展示了可追踪、可复盘的治理框架。其高比例聚焦识字能力，也说明基础能力仍是投入优先级。社区组织协作被验证为放大器，特别适用于资源分散地区。对AI教育产品方，这提示不能只卖工具，应嵌入学校与社区协同链路。对政策制定者，这也是“投入—执行—评估”闭环的可借鉴样本。"
+    }
+  ]
+}

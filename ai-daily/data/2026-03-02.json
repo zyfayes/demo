@@ -8,7 +8,11 @@
       "url": "https://openai.com/index/our-agreement-with-the-department-of-war",
       "source": "OpenAI / HackerNews",
       "tldr": "OpenAI 正式宣布与美国国防部（现更名「战争部」）达成协议，允许将 GPT 系列模型接入军事机密网络。这是 AI 公司首次正式进入军方分类系统，打破了科技公司对军事 AI 应用的隐性红线。HN 讨论炸锅，644 条评论，有人叫好、有人退订、有人感叹「AGI 还没到，AI 先上战场了」。",
-      "tags": ["政策", "军事AI", "OpenAI"]
+      "tags": [
+        "政策",
+        "军事AI",
+        "OpenAI"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,11 @@
       "url": "https://twitter.com/OpenAI/status/2027846016423321831",
       "source": "OpenAI Twitter / HackerNews",
       "tldr": "就在 OpenAI 签约军方同一天，有势力试图将 Anthropic 列为「供应链安全风险」。OpenAI 罕见发帖表态：「我们不认为 Anthropic 应该被列为供应链风险」。竞争者之间的相互背书背后，是更大的政治博弈——谁来定义 AI 安全的标准，谁来决定哪家公司活下去。",
-      "tags": ["Anthropic", "政策", "行业动态"]
+      "tags": [
+        "Anthropic",
+        "政策",
+        "行业动态"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +32,11 @@
       "url": "https://www.latent.space/p/ainews-openai-closes-110b-raise-from",
       "source": "Latent Space / swyx",
       "tldr": "OpenAI 完成 $1100 亿融资，由亚马逊、英伟达、软银领投，创下人类历史上单轮融资最高纪录，post-money 估值达 $8400 亿。swyx 的评论只有一句话：「恭喜你们，拿到了最大的数字。」模型能力够不够是一回事，钱够不够烧是另一回事——现在后者不是问题了。",
-      "tags": ["OpenAI", "融资", "资本"]
+      "tags": [
+        "OpenAI",
+        "融资",
+        "资本"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +44,11 @@
       "url": "https://claude.com/import-memory",
       "source": "Anthropic / HackerNews",
       "tldr": "Anthropic 推出 claude.com/import-memory，用户可直接把在 ChatGPT 积累的记忆、偏好和上下文一键迁移到 Claude。Simon Willison 随即挖出背后的 prompt 技巧——让 AI 自己「导出」它对你的了解。时机选在 OpenAI 与军方签约的风口浪尖，更显对比度。",
-      "tags": ["Claude", "产品", "用户体验"]
+      "tags": [
+        "Claude",
+        "产品",
+        "用户体验"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +56,12 @@
       "url": "https://venturebeat.com/technology/alibabas-new-open-source-qwen3-5-medium-models-offer-sonnet-4-5-performance",
       "source": "VentureBeat / HackerNews",
       "tldr": "阿里发布 Qwen3.5 系列，122B 和 35B 两款模型在多项评测中与 Claude Sonnet 4.5 持平，且完全开源可本地部署。量化版通过 Unsloth Dynamic 2.0 GGUF 技术，普通消费级 GPU 可流畅运行 35B。「只有大厂 API 才能获得顶级性能」的叙事，又被打了一记重拳。",
-      "tags": ["开源", "Qwen", "本地部署", "阿里"]
+      "tags": [
+        "开源",
+        "Qwen",
+        "本地部署",
+        "阿里"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +69,11 @@
       "url": "https://timesofindia.indiatimes.com/technology/tech-news/more-than-one-year-after-deepseeks-r1-wiped-nearly-600-billion-off-nvidia-market-value-in-single-day-chinese-startup-planning-another-launch/articleshow/128913541.cms",
       "source": "Times of India / Financial Times",
       "tldr": "据英国金融时报报道，DeepSeek 正准备最快下周发布下一代旗舰模型 V4。距离 R1 上线让英伟达蒸发近 $6000 亿市值刚过一年，这次发布被视为中国科技产业的高风险时刻。市场已开始提前押注，能不能再打一次「技术平权」的舆论战，答案下周揭晓。",
-      "tags": ["DeepSeek", "中国AI", "开源"]
+      "tags": [
+        "DeepSeek",
+        "中国AI",
+        "开源"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +81,12 @@
       "url": "https://www.sohu.com/a/989734268_121124374",
       "source": "搜狐科技",
       "tldr": "谷歌发布 Gemini 3.1 Pro，在 ARC-AGI-2 通用智能测试中得分达 77.1%，较上代翻倍，并在 12 项评测中超越 Claude 和 GPT 系列夺得第一。演示中模型一次性生成了 Windows 11 WebOS、3D 沙盒游戏和复杂 SVG 动画，API 价格与上代持平。",
-      "tags": ["Gemini", "Google", "benchmark", "多模态"]
+      "tags": [
+        "Gemini",
+        "Google",
+        "benchmark",
+        "多模态"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +94,11 @@
       "url": "https://garymarcus.substack.com/p/is-ai-already-killing-people-by-accident",
       "source": "Gary Marcus Substack",
       "tldr": "近 150 名伊朗学童在一次疑似误判打击中遇难，有人向 Gary Marcus 发问：AI 目标识别系统是否难辞其咎？Marcus 没有定论，但提出更深的问题：当没人能说清「谁批准了这次打击」时，AI 辅助武器系统的责任链条断在哪里——这才是 AI 安全最真实的噩梦场景。",
-      "tags": ["AI安全", "军事AI", "伦理"]
+      "tags": [
+        "AI安全",
+        "军事AI",
+        "伦理"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +106,12 @@
       "url": "https://ejholmes.github.io/2026/02/28/mcp-is-dead-long-live-the-cli.html",
       "source": "ejholmes.github.io / HackerNews",
       "tldr": "一篇引发 153 条讨论的技术博文，核心论点：MCP 过度工程化，而经过几十年打磨的 CLI 接口往往更稳定、更易调试、更易组合。作者给出了具体场景分析——什么时候 MCP 的双向协议真的有价值，什么时候 shell pipe 就够了。对正在设计 AI 工具集成的工程师来说是难得的反思材料。",
-      "tags": ["MCP", "工具链", "工程实践", "Agent"]
+      "tags": [
+        "MCP",
+        "工具链",
+        "工程实践",
+        "Agent"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +119,16 @@
       "url": "https://blog.miguelgrinberg.com/post/llm-use-in-the-python-source-code",
       "source": "miguelgrinberg.com",
       "tldr": "Miguel Grinberg 发现：屏蔽 GitHub 上的 claude 账户后，访问有 Claude Code 提交的仓库会显示警告横幅。当他在 CPython（Python 官方解释器）源码触发了这个横幅，意味着 LLM 已在悄悄修改基础设施级别的代码。这不是好坏之争，而是一个时代的标志。",
-      "tags": ["Claude Code", "开源", "编程", "工程文化"]
+      "tags": [
+        "Claude Code",
+        "开源",
+        "编程",
+        "工程文化"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69a4db388c6ebcaf562e70cd.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69a4db388c6ebcaf562e70cf",
+  "podcastTitle": "2026年3月2日：OpenAI入局战争，AI巨头开启新竞争纪元",
+  "podcastVoice": "uma"
 }

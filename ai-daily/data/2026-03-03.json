@@ -8,7 +8,11 @@
       "url": "https://www.wsj.com/tech/ai/trump-will-end-government-use-of-anthropics-ai-models-ff3550d9",
       "source": "WSJ / Stratechery",
       "tldr": "美军在Operation Epic Fury中持续调用Claude用于情报评估、目标识别和战斗模拟，随后特朗普以Anthropic拒绝开放「所有合法用途」为由，宣布联邦政府全面停用Claude，Fannie Mae、Freddie Mac也跟进。Dario Amodei明确划定红线：大规模国内监控和自主武器不行。Ben Thompson在Stratechery指出，这揭示了AI安全公司面临的根本悖论——一旦能力足够强，国家权力必然介入。",
-      "tags": ["政策", "军事AI", "Anthropic"]
+      "tags": [
+        "政策",
+        "军事AI",
+        "Anthropic"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,11 @@
       "url": "https://x.com/karankendre/status/2028491586838110496",
       "source": "Twitter / RestOfWorld",
       "tldr": "伊朗反击行动中，导弹命中AWS在中东的数据中心，而Anthropic恰恰在同一基础设施上运行Claude，导致服务中断数小时。这条推文获得4.7万赞，折射出一个现实：AI服务的可用性直接暴露在地缘冲突的射程之内。AI基础设施的物理安全和多云冗余，从此不再是技术话题，而是国家安全议题。",
-      "tags": ["基础设施", "地缘政治", "AWS"]
+      "tags": [
+        "基础设施",
+        "地缘政治",
+        "AWS"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +32,11 @@
       "url": "https://technode.com/2026/03/02/deepseek-plans-v4-multimodal-model-release-this-week-sources-say/",
       "source": "TechNode / Substack",
       "tldr": "据知情人士透露，DeepSeek将在本周发布V4，这是其自去年1月以来的首次重大升级，定位为多模态基础模型。Substack分析指出V4在架构层面进一步压缩了推理成本，延续「低成本高效能」路线。若属实，这将是对Gemini 3.1 Pro的直接回应，中美模型竞争本周可能同时有两颗重磅落地。",
-      "tags": ["DeepSeek", "模型发布", "多模态"]
+      "tags": [
+        "DeepSeek",
+        "模型发布",
+        "多模态"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +44,11 @@
       "url": "https://www.sohu.com/a/989734268_121124374",
       "source": "搜狐科技",
       "tldr": "Gemini 3.1 Pro在12项评测中击败Claude Opus 4.6和GPT系列拿下第一，ARC-AGI-2通用智能测试得分从上代的~38%跳升至77.1%，并能一次性生成Windows 11 WebOS、Minecraft式3D沙盒等复杂项目。定价与上代持平，直接冲击Anthropic和OpenAI的高端客户。这标志大模型竞争主轴正在从「参数规模」转向「复杂任务完成率」。",
-      "tags": ["Gemini", "Google", "benchmark"]
+      "tags": [
+        "Gemini",
+        "Google",
+        "benchmark"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +56,11 @@
       "url": "https://github.com/mandel-macaque/memento",
       "source": "Hacker News (460分)",
       "tldr": "HN热帖：一个叫Memento的工具提出将AI编程会话自动嵌入git commit元数据，引发374条讨论。争议核心是：当大量代码由AI生成，「谁写了这段代码、怎么写的」的可追溯性和责任归属变得模糊。支持者认为这是代码溯源的未来，反对者担心仓库膨胀和隐私问题。这个问题没有标准答案，但每个用AI写代码的团队迟早都要面对。",
-      "tags": ["工程实践", "AI编程", "版本控制"]
+      "tags": [
+        "工程实践",
+        "AI编程",
+        "版本控制"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +68,11 @@
       "url": "https://www.latent.space/p/reviews-dead",
       "source": "Latent Space / rss:swyx.io",
       "tldr": "swyx在Latent Space发布深度文章，论证Code Review这一工程流程正在被AI驱动的自动化验证所替代：当代码由agent生成、测试由agent运行、PR由agent审查，人工review的「信任层」已经失去逻辑基础。文章提出替代范式：持续的自动化验证 + 人类只审核「意图」而非「实现」。这是对整个工程师工作流的系统性冲击。",
-      "tags": ["工程文化", "AI编程", "观点"]
+      "tags": [
+        "工程文化",
+        "AI编程",
+        "观点"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +80,11 @@
       "url": "https://maderix.substack.com/p/inside-the-m4-apple-neural-engine",
       "source": "Hacker News (256分) / Substack",
       "tldr": "作者通过逆向工程详细解析了M4 Neural Engine的内部架构，包括指令集、矩阵乘法单元布局和内存访问模式。这是首次对ANE进行如此深度的公开剖析，对本地推理优化、模型量化策略和Metal性能调优具有重要参考价值。Apple从未公开ANE文档，这篇文章相当于补上了苹果硬件AI能力的「说明书」。",
-      "tags": ["硬件", "Apple", "逆向工程"]
+      "tags": [
+        "硬件",
+        "Apple",
+        "逆向工程"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +92,11 @@
       "url": "http://stock.finance.sina.com.cn/stock/go.php/vReport_Show/kind/lastest/rptid/825814000757/index.phtml",
       "source": "新浪财经 / 数字经济双周报",
       "tldr": "2月第三周，中国AI模型周调用量达5.16万亿Token，三周大涨127%，首次超过美国的2.7万亿Token。全球调用量前十中国模型占四席。路径分化清晰：美国走「高性能高定价」，中国走「低成本高频规模」。报告指出，若中国模型能在复杂推理上持续突破，有望在规模优势基础上真正缩小能力代差。",
-      "tags": ["中美竞争", "产业", "规模化"]
+      "tags": [
+        "中美竞争",
+        "产业",
+        "规模化"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +104,11 @@
       "url": "https://arxiv.org/abs/2602.07164",
       "source": "arXiv / Hacker News",
       "tldr": "arxiv新论文发现大型语言模型内部存在对应不同「人格特质」的功能性子网络，可通过激活稀疏性方法定位。这意味着模型的性格倾向不是随机涌现的，而是有结构可循的。对AI安全、对齐研究和模型行为控制有直接价值——你真的可以「手术」修改模型的某种行为倾向，而不影响其他能力。",
-      "tags": ["可解释性", "对齐", "研究"]
+      "tags": [
+        "可解释性",
+        "对齐",
+        "研究"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +116,15 @@
       "url": "https://schipper.ai/posts/parallel-coding-agents/",
       "source": "Hacker News (109分)",
       "tldr": "作者分享了用tmux窗格同时跑多个编码agent、每个agent对应一个Markdown任务规格的实战方法，关键技巧是「隔离上下文、共享git仓库、人工merge冲突」。评论区有80+工程师讨论各自的并行agent工作流，是目前最接地气的AI编程效率方法论之一。对想提升个人产出的独立开发者尤其有参考价值。",
-      "tags": ["工程实践", "AI编程", "效率"]
+      "tags": [
+        "工程实践",
+        "AI编程",
+        "效率"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69a62dbbe8f78b17810a2b3c.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69a62dbbe8f78b17810a2b3e",
+  "podcastTitle": "2026年3月3日：AI首次卷入战火，Claude遭特朗普封杀",
+  "podcastVoice": "uma"
 }

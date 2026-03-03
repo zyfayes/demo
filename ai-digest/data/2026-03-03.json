@@ -1,0 +1,128 @@
+{
+  "date": "2026-03-03",
+  "generated_at": "2026-03-03T01:37:30Z",
+  "overall_summary": "今天的 AI 动态从“技术突破”转向“落地重构”：一边是模型与系统层的效率、可控性和推理能力继续推进，另一边是教育与知识产业开始被 AI 重新定义流程。法律与治理层面也出现关键信号——美国最高法院维持‘人类作者’门槛，短期内将影响 AI 创作商业化路径。工程实践上，低延迟语音代理、AI coding 审计与端侧神经引擎逆向都在加速把研究成果变成可用工具。教育科技方面，已达到可操作阶段：从高校招生决策到课堂评估，再到学习路径设计，都在从‘试点’转向‘基础设施化’。",
+  "edtech_count": 4,
+  "items": [
+    {
+      "title": "微软首席科学官：AI 越来越强，机会从哪里来？",
+      "url": "https://36kr.com/p/3703690947932677",
+      "tldr": "文章核心观点是：AI 真正机会不在‘模型更强’，而在‘把 AI 部署进具体业务流程’。以教育为例，价值不止是自动答题，而是重构学习路径与个性化匹配机制。它也提醒了关键风险：过度依赖 AI 会削弱独立思考，组织需要保留人类判断力。",
+      "deep_summary": "作者转述微软 CSO Eric Horvitz 的判断，把 2020s-2030s 定义为历史级别的快速变革窗口。文章把机会分成两层：第一层是在既有行业流程中做深度部署，强调领域理解、流程重构和人机协作设计，而非单纯追逐新模型。第二层是可行性边界被打开的新领域，如医疗与材料研发，AI 正在缩短发现周期。教育部分指出，个性化辅导只是起点，更关键是课程路径和评估逻辑的再设计。文中还强调“100% humaned”理念，提出人类应保持对写作、判断与创造过程的主导。对于教育科技团队，这意味着产品要同时追求效率提升和认知能力保护。整体基调偏乐观，但不回避工具替代思考的结构性风险。",
+      "tags": [
+        "教育科技",
+        "AI应用落地",
+        "学习科学",
+        "人机协作"
+      ]
+    },
+    {
+      "title": "Committee of Supply 2026: AI 对高校教学与评估的影响",
+      "url": "https://www.channelnewsasia.com/watch/committee-supply-2026-debate-day-3-terence-ho-impact-ai-ihl-teaching-and-assessment-5964066",
+      "tldr": "新加坡议会讨论直指一个现实：当 AI 导师可 24/7 提供知识获取，高校必须重新定义课堂价值与学时分配。焦点不再是‘要不要用 AI’，而是‘哪些能力必须由学校亲自培养’。评估创新被提出为政策层优先事项。",
+      "deep_summary": "视频内容聚焦高教系统在 AI 时代的角色重估。发言指出，当学生可通过 AI 快速获取知识时，IHL 的核心功能应转向高阶能力培养与学习设计。议题覆盖教学时间如何分配、传统评估是否仍有效、以及教育部门如何支持评估创新。该讨论释放的信号是：教育治理层已将 AI 从教学工具议题升级为制度设计议题。对 edtech 产品侧来说，机会点在能力导向评估、过程性评价、以及教师工作流嵌入式工具。对高校管理者来说，关键不是单点试验，而是课程—评估—认证链路的一体化改造。内容虽短，但政策含金量高，值得持续跟进后续执行细则。",
+      "tags": [
+        "教育科技",
+        "高等教育",
+        "学习评估",
+        "教育政策"
+      ]
+    },
+    {
+      "title": "EducationDynamics：AI 已在替学生做高校选择",
+      "url": "https://www.prnewswire.com/news-releases/educationdynamics-to-higher-ed-the-old-growth-formula-is-dead--and-ai-is-already-making-decisions-for-your-students-302700870.html",
+      "tldr": "报告称学生择校流程已被 AI 介入：51% 学生在择校阶段使用 AI，研究生群体达 60%。这意味着传统线性招生漏斗正在失效。机构竞争将从“流量优化”转向“数据与智能层基础设施”。",
+      "deep_summary": "EducationDynamics 在 InsightsEDU 发布 2026 Modern Learner Report，并推出 EDDY Intelligence Platform。核心判断是学生决策从一次性选择转为持续评估，甚至入学后仍会比较替代院校。报告给出的行为数据支持这一变化：AI 工具已成为检索、比较、判断入口。平台能力围绕招生预测建模、AI 互动代理和院校定制智能系统展开，目标是重构增长模型。尽管来源带有商业推广属性，但其“AI 中介化决策”框架与行业观察高度一致。对教育产品团队的启示是：招生、留存和品牌管理将被同一数据闭环整合。对学校而言，不建立可运营的 AI 数据架构，营销预算边际效益会持续下滑。",
+      "tags": [
+        "教育科技",
+        "高教招生",
+        "AI中介决策",
+        "数据基础设施"
+      ]
+    },
+    {
+      "title": "Beyond degrees: Building capability for an AI world",
+      "url": "https://economictimes.indiatimes.com/small-biz/security-tech/technology/beyond-degrees-building-capability-for-an-ai-world/articleshow/128933925.cms",
+      "tldr": "访谈强调“学位没死，盲信学位才死了”：AI 时代教育机构应从内容覆盖转向能力构建。关键能力是学习力、批判思维、迁移与适应。课程加一门 AI 课不是转型，评估与组织文化才是主战场。",
+      "deep_summary": "文章以问答形式讨论 K-12、高教与 edtech 的共同挑战。受访者认为 AI 的核心影响是哲学层面的——知识获取成本下降后，学校价值应转为能力养成和证据化产出。她提出“知识+应用+适应力”的三元框架，并强调微证书、作品集和实习经历的重要性。文中批评机构对“跟上工具更新”的路径依赖，指出这会导致永远追赶但无法形成差异化。更深层建议是重构评估、教学法与机构叙事，把身份锚定在培养何种人才而非采用何种技术。对中国教育科技场景同样适用，尤其是就业导向课程与能力评价产品。整体属于观点型内容，但框架清晰，具备战略参考价值。",
+      "tags": [
+        "教育科技",
+        "能力导向",
+        "学习评价",
+        "人才培养"
+      ]
+    },
+    {
+      "title": "US Supreme Court declines to hear AI-generated copyright case",
+      "url": "https://www.reuters.com/legal/government/us-supreme-court-declines-hear-dispute-over-copyrights-ai-generated-material-2026-03-02/",
+      "tldr": "美国最高法院拒绝受理 AI 生成作品版权争议，维持“必须有人类作者”原则。短期内，纯 AI 自动生成内容在美国版权保护仍受限。对内容平台和创意工具方，这是明确的合规边界信号。",
+      "deep_summary": "案件由 Stephen Thaler 提起，主张其 AI 系统独立生成图像应获版权登记。版权局与下级法院均认为缺乏人类作者，不符美国版权法的基础要求。最高法院不受理意味着现阶段司法路径未改变这一标准。Reuters 同时提及另一些“AI辅助创作”申请案，表明法律正在区分“辅助创作”与“完全自动生成”。这将直接影响 AI 内容商业授权、侵权认定及平台政策设计。企业层面需强化创作过程留痕、人工贡献证明与版权声明策略。该事件虽非技术突破，但对 AI 产业化路径影响深远。",
+      "tags": [
+        "AI治理",
+        "版权",
+        "法律合规",
+        "AIGC"
+      ]
+    },
+    {
+      "title": "Your Language Model Secretly Contains Personality Subnetworks",
+      "url": "https://arxiv.org/abs/2602.07164",
+      "tldr": "ICLR 2026 论文提出：LLM 参数空间内已存在可分离的人格子网络，无需额外微调。作者用训练无关的 masking 与对比剪枝实现 persona 对齐增强。这为可解释可控的个性化代理提供了新路径。",
+      "deep_summary": "论文挑战了“人格控制必须依赖外部提示或微调”的常见范式。方法通过小规模校准数据提取激活签名，再定位与特定 persona 对应的子网络。对于二元对立人格（如内向/外向），引入 contrastive pruning 提升分离度。实验显示该策略在多种设置下优于依赖外部知识的基线，同时具备更高效率。其意义在于把行为控制从提示工程推进到参数可解释层，可能降低部署成本并提升稳定性。对 agent 产品而言，这种“内生人格控制”有望改善长期一致性与品牌语气管理。后续关注点是跨任务泛化和安全边界。",
+      "tags": [
+        "LLM研究",
+        "可解释性",
+        "个性化代理",
+        "ICLR2026"
+      ]
+    },
+    {
+      "title": "Inside the M4 Apple Neural Engine, Part 1: Reverse Engineering",
+      "url": "https://maderix.substack.com/p/inside-the-m4-apple-neural-engine",
+      "tldr": "作者团队逆向了 M4 ANE 的关键软件栈，绕过 CoreML 直接触达编译-加载-执行链路。文章称其测得性能与官方宣传存在差异，并展示在推理芯片上尝试训练流程。这让端侧 AI 的可控优化空间显著扩大。",
+      "deep_summary": "文章系统梳理了从 CoreML 到 IOKit 驱动的路径，并通过类发现、method swizzling、二进制分析和规模化实验反推出硬件行为。作者声称发现私有类与直接调用接口，使开发者不必完全依赖 CoreML 抽象。文中强调 ANE 更接近图执行引擎而非通用 GPU 指令模型，这对算子映射与性能调优很关键。若结论可复现，将提升端侧模型部署的透明度与可预测性。对设备侧 AI 创业团队而言，这意味着“同芯片不同性能”差距会更多取决于工程深度。风险在于私有接口稳定性与平台策略变化。",
+      "tags": [
+        "端侧AI",
+        "芯片系统",
+        "Apple ANE",
+        "性能工程"
+      ]
+    },
+    {
+      "title": "memento: 把 AI 编码会话绑定到 Git commit",
+      "url": "https://github.com/mandel-macaque/memento",
+      "tldr": "memento 通过 git notes 把 AI 编码会话摘要/审计轨迹绑定到 commit，补上“代码从哪来”的可追踪性缺口。支持 commit、amend、审计和 notes 同步。这类工具正在把 AI coding 从“黑箱加速器”变为“可审计流水线”。",
+      "deep_summary": "项目核心是将会话记录结构化落到 refs/notes，避免污染主提交信息。它提供 summary 与 full-audit 双轨存储，并设计了 rewrite/sync/audit 等配套机制，兼容团队协作和历史改写场景。价值不在生成代码，而在治理层：可复盘、可审计、可责任归属。随着 AI coding 在企业内普及，这类“过程可见性”很可能成为合规要求。工具还预留多 provider 扩展，显示生态正从单一模型绑定走向协议化。对工程管理者来说，这比单纯 benchmark 更接近真实生产痛点。",
+      "tags": [
+        "AI Coding",
+        "开发治理",
+        "可审计性",
+        "Git工具"
+      ]
+    },
+    {
+      "title": "Reinforcement-aware Knowledge Distillation for LLM Reasoning",
+      "url": "https://arxiv.org/abs/2602.22495",
+      "tldr": "论文提出 RL-aware distillation（RLAD），解决 RL 推理模型蒸馏中分布错配和目标冲突问题。其 TRRD 目标把教师约束改为 trust-region 风格比率优化。结果在逻辑与数学基准上优于传统 KL 蒸馏。",
+      "deep_summary": "作者指出：把 SFT 时代的 KD 直接搬到 RL 后训练会产生两类问题，一是教师轨迹与学生 rollout 分布不一致，二是 KL 正则与奖励优化相互拉扯。RLAD 的核心思想是“选择性模仿”：仅在有助于当前策略更新时向教师靠拢。TRRD 采用类似 PPO/GRPO 的 likelihood-ratio 形式，并锚定教师-旧策略混合分布，实现 imitation 与 exploration 的自平衡。实验覆盖逻辑推理与数学任务，效果稳定超过离线蒸馏和常规 GRPO。该工作对“高性能教师→小模型部署”链路价值很高。若工程化成熟，将进一步降低推理模型落地成本。",
+      "tags": [
+        "LLM训练",
+        "蒸馏",
+        "强化学习",
+        "推理模型"
+      ]
+    },
+    {
+      "title": "How I built a sub-500ms latency voice agent from scratch",
+      "url": "https://www.ntik.me/posts/voice-agent",
+      "tldr": "作者用约 1 天与 100 美元 API 成本搭建语音代理编排层，实现约 400ms 端到端延迟。关键不在单一模型，而在 turn-taking 状态机与流式管线调度。实战结论是：自建编排可在特定场景显著优于一体化平台默认配置。",
+      "deep_summary": "文章将语音代理问题抽象为“用户说话/聆听”两态系统，重点解决两次状态切换：打断与起讲。作者强调语音体验失败常源于编排时序，而非 STT/LLM/TTS 任一模型本身。通过流式连接与地理/模型选择优化，最终取得低于 500ms 的响应。文中也指出全家桶 SDK 虽快，但参数黑箱会放大定位成本。对产品团队，这篇的启发是先构建可观测的编排内核，再叠加模型能力。随着语音交互重回增长轨道，低延迟工程能力会成为核心护城河之一。",
+      "tags": [
+        "语音代理",
+        "实时系统",
+        "Agent工程",
+        "低延迟"
+      ]
+    }
+  ]
+}

@@ -8,7 +8,12 @@
       "url": "https://www-cs-faculty.stanford.edu/~knuth/papers/claude-cycles.pdf",
       "source": "Stanford (Knuth)",
       "tldr": "计算机科学泰斗 Knuth 亲自写了篇 PDF 论文，研究 Claude 在对话中出现的重复循环模式。这不是寒暄式的好奇——Knuth 以严谨著称，他肯坐下来认真分析 LLM 行为，说明这个现象已经值得严肃对待。HN 758 分，说明圈内人都被这个组合惊到了。",
-      "tags": ["Claude", "LLM行为", "学术研究", "Knuth"]
+      "tags": [
+        "Claude",
+        "LLM行为",
+        "学术研究",
+        "Knuth"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,11 @@
       "url": "https://twitter.com/ns123abc",
       "source": "Twitter @ns123abc",
       "tldr": "有人统计，构建了 o1、o3 和 GPT-5 的 post-training 核心团队，约 70% 的研究员已经离开 OpenAI。这不是小数字——这批人是 OpenAI 竞争力的核心来源。结合最近 GPT 质量下滑的用户反馈，这个数据让「OpenAI 是否还行」的讨论更有依据。",
-      "tags": ["OpenAI", "人才流失", "组织危机"]
+      "tags": [
+        "OpenAI",
+        "人才流失",
+        "组织危机"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +33,11 @@
       "url": "https://openai.com/index/gpt-5-3-instant/",
       "source": "OpenAI",
       "tldr": "OpenAI 发布了 GPT-5.3 Instant，主打速度与成本优化，定位快速响应场景。同时坊间已有 GPT-5.4 传言流出：据报道将有超过当前两倍的上下文窗口，以及「极限推理」能力——如果属实，这会是一次实质性跳跃而非版本小刷新。",
-      "tags": ["OpenAI", "GPT-5", "模型发布"]
+      "tags": [
+        "OpenAI",
+        "GPT-5",
+        "模型发布"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +45,12 @@
       "url": "https://venturebeat.com/technology/did-alibaba-just-kneecap-its-powerful-qwen-ai-team/",
       "source": "VentureBeat",
       "tldr": "VentureBeat 深挖了 Qwen 团队的内部变动，有观点认为阿里正在削弱这支明星团队的自主权。Simon Willison 同天发文称「Qwen 的地盘发生了什么」，两篇文章叠加，暗示 Qwen 接下来的方向可能出现根本性转变。对于依赖 Qwen 开源生态的开发者来说，这是值得关注的信号。",
-      "tags": ["Qwen", "阿里巴巴", "开源", "组织变动"]
+      "tags": [
+        "Qwen",
+        "阿里巴巴",
+        "开源",
+        "组织变动"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +58,11 @@
       "url": "https://simonwillison.net/2026/Mar/4/qwen/",
       "source": "Simon Willison's Weblog",
       "tldr": "Simon Willison 是跟踪 LLM 生态最勤奋的工程师之一，他单独写文章说 Qwen 有异动，就代表信号足够强。文章梳理了团队变动、模型发布节奏变化等蛛丝马迹，值得想在开源模型上押注 Qwen 路线的人仔细读。",
-      "tags": ["Qwen", "开源模型", "行业观察"]
+      "tags": [
+        "Qwen",
+        "开源模型",
+        "行业观察"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +70,12 @@
       "url": "https://techcrunch.com/2026/03/04/anthropic-ceo-dario-amodei-calls-openai-messaging-straight-up-lies/",
       "source": "TechCrunch",
       "tldr": "Dario Amodei 公开点名，称 OpenAI 在军事合同相关表态上「直接在撒谎」。两大 AI 公司之间的竞争已经从产品层面蔓延到公关和道德叙事层面，这种火药味十足的互撕在 AI 圈并不常见。背后是各自争夺政府客户和监管话语权的真实博弈。",
-      "tags": ["Anthropic", "OpenAI", "AI治理", "军事AI"]
+      "tags": [
+        "Anthropic",
+        "OpenAI",
+        "AI治理",
+        "军事AI"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +83,11 @@
       "url": "https://www.latent.space/p/ainews-anthropic-19b-arr-qwen-team",
       "source": "Latent Space (swyx)",
       "tldr": "swyx 的 AI News 汇总披露 Anthropic ARR 已达 190 亿美元，增速惊人。周报同时梳理了 Qwen 团队变动、Gemini 和 GPT 快速更新等一周大事，是噪音过滤后的高密度信息源，每期必读。",
-      "tags": ["Anthropic", "行业数据", "AI News"]
+      "tags": [
+        "Anthropic",
+        "行业数据",
+        "AI News"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +95,12 @@
       "url": "https://www.bbc.com/news/articles/czx44p99457o",
       "source": "BBC",
       "tldr": "BBC 报道一起案例：一位父亲称谷歌 AI 产品助推了儿子的妄想性思维螺旋。AI 心理健康风险不再是假设性讨论，正在变成真实的社会问题和法律事件。这类案例会加速监管压力，尤其在消费级 AI 产品上。",
-      "tags": ["AI安全", "心理健康", "谷歌", "社会影响"]
+      "tags": [
+        "AI安全",
+        "心理健康",
+        "谷歌",
+        "社会影响"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +108,12 @@
       "url": "https://unsloth.ai/docs/models/qwen3.5/fine-tune",
       "source": "Unsloth",
       "tldr": "Unsloth 发布了 Qwen3.5 的微调文档，覆盖从数据准备到 LoRA 训练的完整流程。Unsloth 以极致的显存优化闻名，能让消费级 GPU 跑通原本要 A100 的任务。对于想在本地微调 Qwen 的工程师，这份文档直接可上手。",
-      "tags": ["Qwen3.5", "微调", "开源工具", "Unsloth"]
+      "tags": [
+        "Qwen3.5",
+        "微调",
+        "开源工具",
+        "Unsloth"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +121,15 @@
       "url": "https://twitter.com/LangChain_OSS",
       "source": "Twitter @LangChain_OSS",
       "tldr": "LangChain 宣布 LangChain OSS Skills，为 AI Agent 构建提供更模块化的能力封装。LangChain 是目前生产级 Agent 框架最主流的选择之一，这次更新主打可复用性，把常见 Agent 能力做成「技能包」即插即用。对于正在搭 Agent 基础设施的团队值得看。",
-      "tags": ["LangChain", "Agent", "开源框架"]
+      "tags": [
+        "LangChain",
+        "Agent",
+        "开源框架"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69a8cf891aef307688bd3025.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69a8cf891aef307688bd3027",
+  "podcastTitle": "3月5日AI头条：OpenAI人才流失70%，Qwen团队遭去势？",
+  "podcastVoice": "uma"
 }

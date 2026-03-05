@@ -200,18 +200,11 @@ let currentCronFilter = 'all';
 let selectedTodo = null;
 
 async function loadData() {
-  // Try to load from embedded data first, then fetch
   if (window.__DASHBOARD_DATA__) {
     DATA = window.__DASHBOARD_DATA__;
   } else {
-    try {
-      const r = await fetch('/tmp/dashboard-data.json');
-      DATA = await r.json();
-    } catch {
-      // Data will be embedded by the generate script
-      document.body.innerHTML = '<div class="empty">No data loaded. Run: node dashboard/generate-data.mjs</div>';
-      return;
-    }
+    document.body.innerHTML = '<div class="empty">No data loaded. Run: node dashboard/generate-data.mjs</div>';
+    return;
   }
   render();
 }
@@ -442,8 +435,6 @@ function runJob(jobId) {
 }
 
 // ─── Init ───
-loadData();
-
 window.__DASHBOARD_DATA__ = {
   "generated": "2026-03-05T07:32:41.020Z",
   "cronJobs": [

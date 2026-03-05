@@ -192,7 +192,16 @@ let DATA = null, cronFilter = 'all', todoFilter = 'all', selTodo = null;
 
 async function loadData() {
   if (window.__DASHBOARD_DATA__) { DATA = window.__DASHBOARD_DATA__; }
-  else { document.querySelector('.container').innerHTML = '<p style="color:var(--text3);padding:40px">No data. Run: node dashboard/generate-data.mjs</p>'; return; }
+  else {
+    try {
+      const r = await fetch('/api/data');
+      if (r.ok) DATA = await r.json();
+      else throw new Error('API error');
+    } catch {
+      document.querySelector('.container').innerHTML = '<p style="color:var(--text3);padding:40px">No data. Start server: node dashboard/server.mjs</p>';
+      return;
+    }
+  }
   render();
 }
 
@@ -315,69 +324,65 @@ function openModal(t) {
   document.getElementById('overlay').classList.add('show');
 }
 function closeModal() { document.getElementById('overlay').classList.remove('show'); selTodo = null; }
-function applyChange() {
+async function applyChange() {
   if (!selTodo) return;
   const ns = document.getElementById('mStatus').value;
   const box = document.getElementById('cmdBox');
-  box.textContent = `Tell Moss: change ${selTodo.id} (${selTodo.source}) status → "${ns}"`;
-  box.style.display = 'block';
-  const todo = DATA.todos.find(t => t.id === selTodo.id);
-  if (todo) { todo.status = ns; renderKanban(); render(); }
+  try {
+    const r = await fetch('/api/todo/update', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ id: selTodo.id, source: selTodo.source, newStatus: ns }) });
+    const d = await r.json();
+    if (d.ok) {
+      box.textContent = `✓ Updated ${selTodo.id} → ${ns}`;
+      box.style.display = 'block';
+      box.style.color = 'var(--green)';
+      const todo = DATA.todos.find(t => t.id === selTodo.id);
+      if (todo) { todo.status = ns; renderKanban(); render(); }
+    } else {
+      box.textContent = `✗ ${d.error}`;
+      box.style.display = 'block';
+      box.style.color = 'var(--red)';
+    }
+  } catch {
+    box.textContent = 'Server offline — copy: change ' + selTodo.id + ' → ' + ns;
+    box.style.display = 'block';
+    box.style.color = 'var(--yellow)';
+  }
 }
 
-// ─── Cron Actions ───
-function cronAction(id, action) {
-  const msg = action === 'run'
-    ? `Tell Moss: openclaw cron run ${id}`
-    : `Tell Moss: openclaw cron ${action} ${id}`;
-  const toast = document.createElement('div');
-  toast.textContent = msg;
-  toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);padding:10px 18px;border-radius:8px;font-size:12px;font-family:SF Mono,monospace;color:var(--green);box-shadow:0 4px 16px rgba(0,0,0,0.1);z-index:200;';
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 4000);
+// ─── Toast ───
+function toast(msg, color) {
+  const el = document.createElement('div');
+  el.textContent = msg;
+  el.style.cssText = `position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--border);padding:10px 18px;border-radius:8px;font-size:12px;color:${color||'var(--green)'};box-shadow:0 4px 16px rgba(0,0,0,0.1);z-index:200;`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+
+// ─── Cron Actions (real API) ───
+async function cronAction(id, action) {
+  try {
+    if (action === 'run') {
+      toast('Running job...', 'var(--accent)');
+      const r = await fetch('/api/cron/run', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ jobId: id }) });
+      const d = await r.json();
+      toast(d.ok ? '✓ Job triggered' : '✗ ' + d.error, d.ok ? 'var(--green)' : 'var(--red)');
+    } else {
+      const enabled = action === 'enable';
+      const r = await fetch('/api/cron/toggle', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ jobId: id, enabled }) });
+      const d = await r.json();
+      toast(d.ok ? `✓ Job ${enabled?'enabled':'disabled'}` : '✗ ' + d.error, d.ok ? 'var(--green)' : 'var(--red)');
+    }
+    // Refresh data
+    setTimeout(async () => { try { const r = await fetch('/api/data'); if(r.ok) { DATA = await r.json(); render(); } } catch{} }, 1000);
+  } catch (e) {
+    toast('✗ Server unreachable', 'var(--red)');
+  }
 }
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-05T09:43:10.240Z",
+  "generated": "2026-03-05T11:06:54.778Z",
   "cronJobs": [
-    {
-      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
-      "agentId": "main",
-      "name": "Polymarket Position Monitor",
-      "enabled": true,
-      "createdAtMs": 1771231563664,
-      "updatedAtMs": 1772686841510,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,7,13,19 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1772708400000,
-        "lastRunAtMs": 1772686800020,
-        "lastStatus": "ok",
-        "lastDurationMs": 41490,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": false,
-        "lastDeliveryStatus": "not-delivered"
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
     {
       "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
       "agentId": "main",
@@ -488,6 +493,43 @@ window.__DASHBOARD_DATA__ = {
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
+      "agentId": "main",
+      "name": "Polymarket Position Monitor",
+      "enabled": true,
+      "createdAtMs": 1771231563664,
+      "updatedAtMs": 1772708437127,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,7,13,19 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1772730000000,
+        "lastRunAtMs": 1772708400028,
+        "lastStatus": "ok",
+        "lastDurationMs": 37099,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
       }
     },
     {

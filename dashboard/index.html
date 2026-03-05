@@ -342,37 +342,8 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-05T13:00:08.744Z",
+  "generated": "2026-03-05T16:00:57.709Z",
   "cronJobs": [
-    {
-      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1479010527446569012",
-      "name": "Dashboard Refresh",
-      "enabled": true,
-      "createdAtMs": 1772711342198,
-      "updatedAtMs": 1772711342198,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 9,21 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1772715600000,
-        "runningAtMs": 1772715600017
-      }
-    },
     {
       "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
       "agentId": "main",
@@ -399,7 +370,8 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1772726451018
+        "nextRunAtMs": 1772726451018,
+        "runningAtMs": 1772726451033
       }
     },
     {
@@ -432,43 +404,6 @@ window.__DASHBOARD_DATA__ = {
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-delivered",
         "lastDelivered": false
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
-      "agentId": "main",
-      "name": "Polymarket Scanner",
-      "enabled": true,
-      "createdAtMs": 1771231556226,
-      "updatedAtMs": 1772713998178,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 */4 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n## 输出\n从 scan + radar 结果中挑 top 5 最值得关注的市场，用 message tool 发到 Discord 频道 1475153843707707412：\n\n格式：\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](候选的 url 字段，注意用 event slug 不是 market slug) — YES $0.XX | Xd | $XXK vol\n   💬 [一句话 insight：这个价格合不合理？有没有信息差？为什么值得/不值得深入？]\n\n2. [市场问题](候选的 url 字段，注意用 event slug 不是 market slug) — YES $0.XX | Xd | $XXK vol\n   💬 [一句话 insight]\n...\n\n🔍 radar 异常：[简述 + 你的判断：是真信号还是噪音]\n```\n\n**每条必须带研究支撑的 insight（不是拍脑袋）：**\n\n对 top 5 候选，逐条做快速研究再给判断：\n1. web_search 查最新相关新闻/数据（英文用 Brave，中文用 MiniMax）\n2. X/Twitter 社交情绪：用 6551 Twitter API 搜索相关推文：\n   `bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit 讨论：用 web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\") 查 Reddit 近期讨论\n4. 如有高价值线索，web_fetch 拉原文确认\n5. 综合新闻 + X + Reddit 信号给一句 insight：价格合不合理、有没有信息差、值不值得深入\n\ninsight 必须引用你搜到的具体事实（数据/日期/来源），不要凭空判断。\n如果搜不到有价值信息，诚实说\"公开信息不足以判断\"。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据，帮哥快速筛选。\n哥看到感兴趣的会回复，到时再交互式深度评估。\n\n无候选 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | X候选`",
-        "timeoutSeconds": 720,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1772728200000,
-        "lastRunAtMs": 1772713800019,
-        "lastStatus": "ok",
-        "lastDurationMs": 198159,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
       },
       "delivery": {
         "mode": "announce",
@@ -832,6 +767,78 @@ window.__DASHBOARD_DATA__ = {
         "channel": "discord",
         "to": "channel:1475150686843830505",
         "bestEffort": true
+      }
+    },
+    {
+      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
+      "agentId": "main",
+      "name": "Polymarket Scanner",
+      "enabled": true,
+      "createdAtMs": 1771231556226,
+      "updatedAtMs": 1772721536953,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,13 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个`",
+        "timeoutSeconds": 720,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1772758800000,
+        "lastRunAtMs": 1772713800019,
+        "lastStatus": "ok",
+        "lastDurationMs": 198159,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711342198,
+      "updatedAtMs": 1772715616331,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9,21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1772758800000,
+        "lastRunAtMs": 1772715600017,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 16314,
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0
       }
     },
     {

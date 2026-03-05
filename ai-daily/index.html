@@ -262,16 +262,32 @@
   .article-title a {
     color: var(--text);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: border-color 0.2s;
+    border-bottom: 1.5px solid var(--border);
+    transition: border-color 0.2s, color 0.2s;
   }
   .article-title a:hover {
-    border-bottom-color: var(--text);
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .article-title a::after {
+    content: ' ↗';
+    font-size: 0.75em;
+    color: var(--text-light);
+    opacity: 0.5;
+    transition: opacity 0.2s;
+  }
+  .article-title a:hover::after {
+    opacity: 1;
+    color: var(--accent);
   }
   .article-source {
     font-size: 0.8rem;
     color: var(--text-light);
     margin-bottom: 0.8rem;
+  }
+  .article-source .domain {
+    color: var(--accent);
+    font-weight: 500;
   }
   .article-tldr {
     font-size: 0.95rem;
@@ -445,7 +461,7 @@
         <div class="article">
           <div class="article-num">${String(a.num || i + 1).padStart(2, '0')}</div>
           <div class="article-title"><a href="${escapeHtml(a.url)}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a></div>
-          <div class="article-source">${escapeHtml(a.source || '')}</div>
+          <div class="article-source">${(() => { try { const d = new URL(a.url).hostname.replace(/^www\\./, ''); return '<span class="domain">' + escapeHtml(d) + '</span>' + (a.source ? ' · ' + escapeHtml(a.source) : ''); } catch { return escapeHtml(a.source || ''); }})()}</div>
           <div class="article-tldr">${escapeHtml(a.tldr || '')}</div>
           ${tags ? `<div class="tags">${tags}</div>` : ''}
           ${excerptBlock}

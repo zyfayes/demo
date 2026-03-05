@@ -342,15 +342,73 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-05T11:48:50.358Z",
+  "generated": "2026-03-05T13:00:08.744Z",
   "cronJobs": [
+    {
+      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711342198,
+      "updatedAtMs": 1772711342198,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9,21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1772715600000,
+        "runningAtMs": 1772715600017
+      }
+    },
+    {
+      "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711341137,
+      "updatedAtMs": 1772711341137,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "tz": "Asia/Shanghai",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行 dashboard 数据刷新并推送到 GitHub Pages：\n\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n\n成功后 NO_REPLY。失败则报告错误。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1772726451018
+      }
+    },
     {
       "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
       "agentId": "main",
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1772697732720,
+      "updatedAtMs": 1772712130775,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -366,10 +424,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1772712104426,
-        "lastRunAtMs": 1772697704444,
+        "nextRunAtMs": 1772726504426,
+        "lastRunAtMs": 1772712104441,
         "lastStatus": "ok",
-        "lastDurationMs": 28276,
+        "lastDurationMs": 26334,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-delivered",
@@ -388,7 +446,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Scanner",
       "enabled": true,
       "createdAtMs": 1771231556226,
-      "updatedAtMs": 1772699542874,
+      "updatedAtMs": 1772713998178,
       "schedule": {
         "kind": "cron",
         "expr": "30 */4 * * *",
@@ -403,10 +461,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1772713800000,
-        "lastRunAtMs": 1772699400020,
+        "nextRunAtMs": 1772728200000,
+        "lastRunAtMs": 1772713800019,
         "lastStatus": "ok",
-        "lastDurationMs": 142854,
+        "lastDurationMs": 198159,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDelivered": true,
@@ -599,10 +657,10 @@ window.__DASHBOARD_DATA__ = {
       "id": "898b7e78-39cf-4353-969c-e360b92847b1",
       "agentId": "white",
       "sessionKey": "agent:white:discord:channel:1475227621746016306",
-      "name": "白洁同人小说日更",
+      "name": "BJ Daily Fiction",
       "enabled": true,
       "createdAtMs": 1771793957328,
-      "updatedAtMs": 1772694764127,
+      "updatedAtMs": 1772711517269,
       "schedule": {
         "kind": "cron",
         "expr": "0 20 * * *",
@@ -1495,7 +1553,7 @@ window.__DASHBOARD_DATA__ = {
     }
   ],
   "stats": {
-    "totalJobs": 18,
+    "totalJobs": 20,
     "totalTodos": 30,
     "openTodos": 8,
     "inProgressTodos": 2,

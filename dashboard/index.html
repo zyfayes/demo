@@ -1,518 +1,325 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agent Operations Dashboard</title>
+<title>Agent Operations</title>
 <style>
   :root {
-    --bg: #0d1117; --surface: #161b22; --surface2: #21262d;
-    --border: #30363d; --text: #e6edf3; --text2: #8b949e;
-    --green: #3fb950; --red: #f85149; --yellow: #d29922; --blue: #58a6ff;
-    --purple: #bc8cff; --cyan: #39d2c0; --orange: #f0883e;
+    --bg: #faf9f6;
+    --surface: #ffffff;
+    --border: #e8e5e0;
+    --text: #1a1a1a;
+    --text2: #6b6560;
+    --text3: #9b9590;
+    --accent: #c96442;
+    --accent-light: #fdf4f0;
+    --green: #2d8a5e;
+    --green-bg: #edf7f0;
+    --red: #c0392b;
+    --red-bg: #fdf0ee;
+    --yellow: #b8860b;
+    --yellow-bg: #fdf8ed;
+    --tag-bg: #f0ede8;
+    --tag-text: #5a5550;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #1a1a1e; --surface: #232328; --border: #3a3a40;
+      --text: #e8e5e0; --text2: #9b9590; --text3: #6b6560;
+      --accent: #e0825a; --accent-light: #2a2220;
+      --green: #4ade80; --green-bg: #1a2e1a;
+      --red: #f87171; --red-bg: #2e1a1a;
+      --yellow: #fbbf24; --yellow-bg: #2e2a1a;
+      --tag-bg: #2a2a30; --tag-text: #9b9590;
+    }
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro', system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Helvetica Neue', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
   
-  .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-  .header h1 { font-size: 20px; font-weight: 600; }
-  .header .time { color: var(--text2); font-size: 13px; }
+  .container { max-width: 780px; margin: 0 auto; padding: 48px 24px 80px; }
   
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 24px; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
-  .stat-card .label { font-size: 11px; color: var(--text2); text-transform: uppercase; letter-spacing: 0.5px; }
-  .stat-card .value { font-size: 28px; font-weight: 700; margin-top: 4px; }
-  .stat-card .value.green { color: var(--green); }
-  .stat-card .value.red { color: var(--red); }
-  .stat-card .value.yellow { color: var(--yellow); }
-  .stat-card .value.blue { color: var(--blue); }
+  /* Header */
+  .header { margin-bottom: 32px; padding-bottom: 20px; border-bottom: 1px solid var(--border); }
+  .header .label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text3); font-weight: 500; margin-bottom: 6px; }
+  .header h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.3; }
+  .header .meta { font-size: 13px; color: var(--text3); margin-top: 4px; }
   
-  .section { margin-bottom: 28px; }
-  .section-title { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-  .section-title .badge { font-size: 11px; background: var(--surface2); border-radius: 10px; padding: 2px 8px; color: var(--text2); }
+  /* Stats row */
+  .stats { display: flex; gap: 24px; margin-bottom: 28px; flex-wrap: wrap; }
+  .stat { text-align: center; }
+  .stat .num { font-size: 24px; font-weight: 700; }
+  .stat .lbl { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; }
+  .num-green { color: var(--green); }
+  .num-red { color: var(--red); }
+  .num-yellow { color: var(--yellow); }
+  .num-accent { color: var(--accent); }
   
-  /* Tab nav */
-  .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: var(--surface); border-radius: 8px; padding: 3px; width: fit-content; }
-  .tab { padding: 6px 14px; border-radius: 6px; font-size: 13px; cursor: pointer; color: var(--text2); transition: all 0.15s; border: none; background: none; }
-  .tab.active { background: var(--surface2); color: var(--text); }
+  /* Tabs */
+  .tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+  .tab { padding: 10px 20px; font-size: 14px; font-weight: 500; color: var(--text3); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; transition: all 0.15s; }
   .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
   
-  /* Cron table */
-  .cron-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .cron-table th { text-align: left; padding: 8px 12px; color: var(--text2); font-weight: 500; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); }
-  .cron-table td { padding: 8px 12px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-  .cron-table tr:hover { background: var(--surface); }
-  .cron-table tr.error { background: rgba(248, 81, 73, 0.08); }
+  /* Sub-filters */
+  .filters { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+  .filter { padding: 4px 12px; font-size: 12px; border-radius: 100px; border: 1px solid var(--border); background: var(--surface); color: var(--text2); cursor: pointer; transition: all 0.15s; }
+  .filter:hover { border-color: var(--text3); }
+  .filter.active { background: var(--accent); color: #fff; border-color: var(--accent); }
   
-  .agent-badge { display: inline-block; font-size: 10px; font-weight: 600; padding: 2px 6px; border-radius: 4px; text-transform: uppercase; }
-  .agent-moss { background: rgba(88,166,255,0.15); color: var(--blue); }
-  .agent-max { background: rgba(188,140,255,0.15); color: var(--purple); }
-  .agent-mini { background: rgba(57,210,192,0.15); color: var(--cyan); }
-  .agent-white { background: rgba(240,136,62,0.15); color: var(--orange); }
+  .panel { display: none; }
+  .panel.active { display: block; }
   
-  .status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
-  .status-ok { background: var(--green); }
-  .status-error { background: var(--red); animation: pulse 2s infinite; }
-  .status-disabled { background: var(--text2); opacity: 0.4; }
-  .status-unknown { background: var(--yellow); }
-  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  /* ─── Cron Table ─── */
+  .job-list { display: flex; flex-direction: column; gap: 1px; }
+  .job-row { display: grid; grid-template-columns: 8px 64px 1fr 120px 80px 60px; gap: 12px; align-items: center; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; font-size: 13px; transition: all 0.1s; }
+  .job-row:hover { border-color: var(--text3); }
+  .job-row.has-error { background: var(--red-bg); border-color: var(--red); }
+  .job-row.is-disabled { opacity: 0.45; }
   
-  .schedule { font-family: 'SF Mono', monospace; font-size: 11px; color: var(--text2); }
-  .next-run { font-size: 11px; color: var(--text2); }
-  .duration { font-size: 11px; color: var(--text2); }
-  .error-msg { font-size: 11px; color: var(--red); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .dot-ok { background: var(--green); }
+  .dot-error { background: var(--red); }
+  .dot-off { background: var(--text3); opacity: 0.3; }
   
-  /* Kanban */
-  .kanban { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
-  @media (max-width: 900px) { .kanban { grid-template-columns: repeat(2, 1fr); } }
-  .kanban-col { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px; min-height: 200px; }
-  .kanban-col-header { font-size: 12px; font-weight: 600; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
-  .kanban-col-header .count { font-size: 11px; color: var(--text2); background: var(--surface2); border-radius: 8px; padding: 1px 6px; }
+  .agent-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.03em; }
+  .agent-moss { color: #4a90d9; }
+  .agent-max { color: #9b59b6; }
+  .agent-mini { color: #27ae60; }
+  .agent-white { color: var(--accent); }
   
-  .todo-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer; transition: all 0.15s; }
-  .todo-card:hover { border-color: var(--blue); transform: translateY(-1px); }
-  .todo-card .todo-title { font-size: 12px; font-weight: 500; line-height: 1.4; margin-bottom: 6px; }
-  .todo-card .todo-meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-  .todo-card .todo-tag { font-size: 9px; padding: 1px 5px; border-radius: 3px; background: rgba(88,166,255,0.1); color: var(--blue); }
-  .todo-card .todo-source { font-size: 9px; padding: 1px 5px; border-radius: 3px; }
-  .source-ideas { background: rgba(57,210,192,0.1); color: var(--cyan); }
-  .source-alva-tasks { background: rgba(188,140,255,0.1); color: var(--purple); }
-  .source-goal-agent { background: rgba(240,136,62,0.1); color: var(--orange); }
-  .source-memory { background: rgba(210,153,34,0.1); color: var(--yellow); }
-  .priority-high { border-left: 3px solid var(--red); }
-  .priority-normal { border-left: 3px solid var(--border); }
+  .job-name { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .job-schedule { font-size: 11px; color: var(--text3); font-family: 'SF Mono', 'Menlo', monospace; }
+  .job-time { font-size: 11px; color: var(--text3); }
+  .job-duration { font-size: 11px; color: var(--text3); }
   
-  .owner-tag { font-size: 9px; padding: 1px 5px; border-radius: 3px; background: rgba(255,255,255,0.05); color: var(--text2); }
+  .job-error { grid-column: 3 / -1; font-size: 11px; color: var(--red); margin-top: -4px; }
   
-  /* Modal */
-  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; }
-  .modal-overlay.active { display: flex; }
-  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 24px; max-width: 480px; width: 90%; max-height: 80vh; overflow-y: auto; }
-  .modal h3 { font-size: 16px; margin-bottom: 12px; }
-  .modal .field { margin-bottom: 12px; }
-  .modal .field label { display: block; font-size: 11px; color: var(--text2); margin-bottom: 4px; text-transform: uppercase; }
-  .modal .field-value { font-size: 13px; color: var(--text); }
-  .modal select, .modal input { background: var(--surface2); border: 1px solid var(--border); color: var(--text); padding: 6px 10px; border-radius: 6px; font-size: 13px; width: 100%; }
-  .modal .actions { display: flex; gap: 8px; margin-top: 16px; }
-  .modal .btn { padding: 8px 16px; border-radius: 6px; font-size: 13px; cursor: pointer; border: none; font-weight: 500; }
-  .btn-primary { background: var(--blue); color: #fff; }
-  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
-  .btn-danger { background: rgba(248,81,73,0.15); color: var(--red); }
+  /* ─── Kanban ─── */
+  .kanban { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 700px) { .kanban { grid-template-columns: 1fr; } }
+  .col-header { font-size: 12px; font-weight: 600; color: var(--text2); margin-bottom: 10px; display: flex; justify-content: space-between; }
+  .col-header .cnt { color: var(--text3); font-weight: 400; }
   
-  /* Delivery status */
-  .delivery { font-size: 10px; padding: 1px 5px; border-radius: 3px; }
-  .delivery-ok { background: rgba(63,185,80,0.15); color: var(--green); }
-  .delivery-fail { background: rgba(248,81,73,0.15); color: var(--red); }
-  .delivery-none { background: rgba(139,148,158,0.1); color: var(--text2); }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; margin-bottom: 8px; cursor: pointer; transition: all 0.12s; }
+  .card:hover { border-color: var(--accent); transform: translateY(-1px); box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .card.high { border-left: 3px solid var(--red); }
+  .card-title { font-size: 13px; font-weight: 500; line-height: 1.4; margin-bottom: 6px; }
+  .card-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 10px; padding: 1px 7px; border-radius: 100px; background: var(--tag-bg); color: var(--tag-text); }
+  .badge-source { font-weight: 500; }
+  .badge-owner { background: none; color: var(--text3); }
   
-  .toggle-btn { background: none; border: 1px solid var(--border); color: var(--text2); padding: 3px 8px; border-radius: 4px; font-size: 10px; cursor: pointer; }
-  .toggle-btn:hover { border-color: var(--blue); color: var(--blue); }
+  .empty-col { font-size: 12px; color: var(--text3); font-style: italic; padding: 16px 0; }
   
-  .empty { color: var(--text2); font-size: 12px; font-style: italic; padding: 20px; text-align: center; }
-  
-  /* Command output */
-  .cmd-output { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 10px; font-family: 'SF Mono', monospace; font-size: 11px; color: var(--green); margin-top: 12px; display: none; white-space: pre-wrap; max-height: 150px; overflow-y: auto; }
+  /* ─── Modal ─── */
+  .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 100; align-items: center; justify-content: center; backdrop-filter: blur(2px); }
+  .overlay.show { display: flex; }
+  .modal { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 28px; max-width: 440px; width: 90%; box-shadow: 0 16px 48px rgba(0,0,0,0.12); }
+  .modal h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; line-height: 1.4; }
+  .modal-field { margin-bottom: 14px; }
+  .modal-field .lbl { font-size: 11px; color: var(--text3); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
+  .modal-field .val { font-size: 13px; color: var(--text2); line-height: 1.5; }
+  .modal select { width: 100%; padding: 8px 12px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 13px; }
+  .modal-actions { display: flex; gap: 8px; margin-top: 20px; }
+  .btn { padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 500; cursor: pointer; border: 1px solid var(--border); background: var(--surface); color: var(--text); transition: all 0.12s; }
+  .btn:hover { border-color: var(--text3); }
+  .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .btn-primary:hover { opacity: 0.9; }
+  .cmd-box { margin-top: 14px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-family: 'SF Mono', monospace; font-size: 11px; color: var(--green); display: none; white-space: pre-wrap; }
 </style>
 </head>
 <body>
 
-<div class="header">
-  <h1>⚡ Agent Operations</h1>
-  <div class="time" id="genTime"></div>
-</div>
-
-<div class="stats" id="statsGrid"></div>
-
-<!-- Cron Jobs Section -->
-<div class="section">
-  <div class="section-title">🕐 Cron Jobs <span class="badge" id="cronCount"></span></div>
+<div class="container">
+  <div class="header">
+    <div class="label">Agent Operations</div>
+    <h1>Dashboard</h1>
+    <div class="meta" id="genTime"></div>
+  </div>
+  
+  <div class="stats" id="statsRow"></div>
+  
   <div class="tabs">
-    <button class="tab active" onclick="filterCron('all')">All</button>
-    <button class="tab" onclick="filterCron('active')">Active</button>
-    <button class="tab" onclick="filterCron('errors')">Errors</button>
-    <button class="tab" onclick="filterCron('moss')">Moss</button>
-    <button class="tab" onclick="filterCron('max')">Max</button>
-    <button class="tab" onclick="filterCron('mini')">Mini</button>
-    <button class="tab" onclick="filterCron('white')">White</button>
+    <button class="tab active" onclick="switchTab('cron')">Cron Jobs</button>
+    <button class="tab" onclick="switchTab('todo')">Todos</button>
   </div>
-  <div style="overflow-x: auto;">
-    <table class="cron-table" id="cronTable">
-      <thead>
-        <tr>
-          <th>Status</th>
-          <th>Agent</th>
-          <th>Name</th>
-          <th>Schedule</th>
-          <th>Last Run</th>
-          <th>Duration</th>
-          <th>Delivery</th>
-          <th>Next Run</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody id="cronBody"></tbody>
-    </table>
+  
+  <!-- Cron Panel -->
+  <div class="panel active" id="panelCron">
+    <div class="filters" id="cronFilters"></div>
+    <div class="job-list" id="jobList"></div>
+  </div>
+  
+  <!-- Todo Panel -->
+  <div class="panel" id="panelTodo">
+    <div class="filters" id="todoFilters"></div>
+    <div class="kanban" id="kanban"></div>
   </div>
 </div>
 
-<!-- Todo Kanban Section -->
-<div class="section">
-  <div class="section-title">📋 Todos <span class="badge" id="todoCount"></span></div>
-  <div class="tabs">
-    <button class="tab active" onclick="filterTodo('all')">All</button>
-    <button class="tab" onclick="filterTodo('ideas')">Ideas</button>
-    <button class="tab" onclick="filterTodo('alva-tasks')">Alva</button>
-    <button class="tab" onclick="filterTodo('goal-agent')">Goal</button>
-    <button class="tab" onclick="filterTodo('memory')">Memory</button>
-  </div>
-  <div class="kanban" id="kanban"></div>
-</div>
-
-<!-- Todo Detail Modal -->
-<div class="modal-overlay" id="todoModal" onclick="if(event.target===this)closeModal()">
+<!-- Modal -->
+<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <h3 id="modalTitle"></h3>
-    <div class="field"><label>Source / Owner</label><div class="field-value" id="modalMeta"></div></div>
-    <div class="field"><label>Context</label><div class="field-value" id="modalContext"></div></div>
-    <div class="field"><label>Tags</label><div class="field-value" id="modalTags"></div></div>
-    <div class="field">
-      <label>Change Status</label>
-      <select id="modalStatus">
+    <h3 id="mTitle"></h3>
+    <div class="modal-field"><div class="lbl">Source / Owner</div><div class="val" id="mMeta"></div></div>
+    <div class="modal-field"><div class="lbl">Context</div><div class="val" id="mCtx"></div></div>
+    <div class="modal-field"><div class="lbl">Tags</div><div class="val" id="mTags"></div></div>
+    <div class="modal-field">
+      <div class="lbl">Status</div>
+      <select id="mStatus">
         <option value="open">Open</option>
         <option value="in-progress">In Progress</option>
         <option value="done">Done</option>
         <option value="dropped">Dropped</option>
       </select>
     </div>
-    <div class="actions">
-      <button class="btn btn-primary" onclick="applyStatusChange()">Apply</button>
-      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="applyChange()">Apply</button>
+      <button class="btn" onclick="closeModal()">Cancel</button>
     </div>
-    <div class="cmd-output" id="cmdOutput"></div>
+    <div class="cmd-box" id="cmdBox"></div>
   </div>
 </div>
 
 <script>
-// ─── Data (injected by generate script or fetched) ───
-let DATA = null;
-let currentTodoFilter = 'all';
-let currentCronFilter = 'all';
-let selectedTodo = null;
+let DATA = null, cronFilter = 'all', todoFilter = 'all', selTodo = null;
 
 async function loadData() {
-  if (window.__DASHBOARD_DATA__) {
-    DATA = window.__DASHBOARD_DATA__;
-  } else {
-    document.body.innerHTML = '<div class="empty">No data loaded. Run: node dashboard/generate-data.mjs</div>';
-    return;
-  }
+  if (window.__DASHBOARD_DATA__) { DATA = window.__DASHBOARD_DATA__; }
+  else { document.querySelector('.container').innerHTML = '<p style="color:var(--text3);padding:40px">No data. Run: node dashboard/generate-data.mjs</p>'; return; }
   render();
 }
 
 function render() {
-  document.getElementById('genTime').textContent = `Generated: ${new Date(DATA.generated).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' })}`;
-  renderStats();
-  renderCron();
-  renderKanban();
+  document.getElementById('genTime').textContent = new Date(DATA.generated).toLocaleString('zh-CN', { timeZone: 'Asia/Shanghai' });
+  const jobs = DATA.cronJobs, s = DATA.stats;
+  const active = jobs.filter(j => j.enabled !== false);
+  const errors = active.filter(j => j.state?.lastStatus === 'error');
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat"><div class="num">${active.length}</div><div class="lbl">Active Jobs</div></div>
+    <div class="stat"><div class="num ${errors.length?'num-red':'num-green'}">${errors.length}</div><div class="lbl">Errors</div></div>
+    <div class="stat"><div class="num num-yellow">${s.openTodos}</div><div class="lbl">Open</div></div>
+    <div class="stat"><div class="num num-accent">${s.inProgressTodos}</div><div class="lbl">In Progress</div></div>
+    <div class="stat"><div class="num num-green">${s.doneTodos}</div><div class="lbl">Done</div></div>
+  `;
+  renderCronFilters(); renderCron(); renderTodoFilters(); renderKanban();
 }
 
-function renderStats() {
-  const jobs = DATA.cronJobs;
-  const activeJobs = jobs.filter(j => j.enabled !== false);
-  const errorJobs = activeJobs.filter(j => j.state?.lastStatus === 'error');
-  const s = DATA.stats;
-  
-  document.getElementById('statsGrid').innerHTML = `
-    <div class="stat-card"><div class="label">Active Jobs</div><div class="value blue">${activeJobs.length}</div></div>
-    <div class="stat-card"><div class="label">Errors</div><div class="value ${errorJobs.length ? 'red' : 'green'}">${errorJobs.length}</div></div>
-    <div class="stat-card"><div class="label">Open Todos</div><div class="value yellow">${s.openTodos}</div></div>
-    <div class="stat-card"><div class="label">In Progress</div><div class="value blue">${s.inProgressTodos}</div></div>
-    <div class="stat-card"><div class="label">Done</div><div class="value green">${s.doneTodos}</div></div>
-    <div class="stat-card"><div class="label">Total Items</div><div class="value">${s.totalTodos}</div></div>
+// ─── Tab ───
+function switchTab(t) {
+  document.querySelectorAll('.tab').forEach(e => e.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(e => e.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById(t === 'cron' ? 'panelCron' : 'panelTodo').classList.add('active');
+}
+
+// ─── Cron ───
+function agentOf(j) { const id = j.agentId || 'main'; return id === 'main' ? 'moss' : id; }
+function fmtSch(s) { if (!s) return '-'; if (s.kind==='cron') return s.expr; if (s.kind==='every') return `every ${Math.round(s.everyMs/60000)}m`; return '-'; }
+function ago(ms) { if (!ms) return '-'; const d=Date.now()-ms; if(d<60000) return 'now'; if(d<3600000) return Math.floor(d/60000)+'m'; if(d<86400000) return Math.floor(d/3600000)+'h'; return Math.floor(d/86400000)+'d'; }
+function until(ms) { if (!ms) return '-'; const d=ms-Date.now(); if(d<0) return 'overdue'; if(d<3600000) return Math.floor(d/60000)+'m'; if(d<86400000) return Math.floor(d/3600000)+'h'; return Math.floor(d/86400000)+'d'; }
+function dur(ms) { if (!ms) return '-'; if(ms<60000) return (ms/1000|0)+'s'; return (ms/60000|0)+'m'+(ms%60000/1000|0)+'s'; }
+
+function renderCronFilters() {
+  const agents = [...new Set(DATA.cronJobs.map(agentOf))].sort();
+  document.getElementById('cronFilters').innerHTML = `
+    <button class="filter ${cronFilter==='all'?'active':''}" onclick="setCronFilter('all')">All</button>
+    <button class="filter ${cronFilter==='errors'?'active':''}" onclick="setCronFilter('errors')">Errors</button>
+    ${agents.map(a => `<button class="filter ${cronFilter===a?'active':''}" onclick="setCronFilter('${a}')">${a}</button>`).join('')}
   `;
 }
-
-function agentName(job) {
-  const id = job.agentId || 'main';
-  if (id === 'main') return 'moss';
-  return id;
-}
-
-function agentClass(name) {
-  return `agent-${name}`;
-}
-
-function formatSchedule(s) {
-  if (!s) return '-';
-  if (s.kind === 'cron') return s.expr + (s.tz ? ` (${s.tz})` : '');
-  if (s.kind === 'every') return `every ${Math.round(s.everyMs/60000)}m`;
-  if (s.kind === 'at') return `at ${s.at}`;
-  return JSON.stringify(s);
-}
-
-function timeAgo(ms) {
-  if (!ms) return '-';
-  const diff = Date.now() - ms;
-  if (diff < 60000) return 'just now';
-  if (diff < 3600000) return Math.floor(diff/60000) + 'm ago';
-  if (diff < 86400000) return Math.floor(diff/3600000) + 'h ago';
-  return Math.floor(diff/86400000) + 'd ago';
-}
-
-function timeUntil(ms) {
-  if (!ms) return '-';
-  const diff = ms - Date.now();
-  if (diff < 0) return 'overdue';
-  if (diff < 60000) return 'soon';
-  if (diff < 3600000) return 'in ' + Math.floor(diff/60000) + 'm';
-  if (diff < 86400000) return 'in ' + Math.floor(diff/3600000) + 'h';
-  return 'in ' + Math.floor(diff/86400000) + 'd';
-}
-
-function formatDuration(ms) {
-  if (!ms) return '-';
-  if (ms < 1000) return ms + 'ms';
-  if (ms < 60000) return (ms/1000).toFixed(1) + 's';
-  return Math.floor(ms/60000) + 'm ' + Math.round((ms%60000)/1000) + 's';
-}
+function setCronFilter(f) { cronFilter = f; renderCronFilters(); renderCron(); }
 
 function renderCron() {
-  const jobs = DATA.cronJobs;
-  let filtered = jobs;
-  
-  if (currentCronFilter === 'active') filtered = jobs.filter(j => j.enabled !== false);
-  else if (currentCronFilter === 'errors') filtered = jobs.filter(j => j.state?.lastStatus === 'error');
-  else if (['moss','max','mini','white'].includes(currentCronFilter)) {
-    filtered = jobs.filter(j => agentName(j) === currentCronFilter);
-  }
-  
-  // Sort: errors first, then by next run
-  filtered.sort((a, b) => {
-    if (a.state?.lastStatus === 'error' && b.state?.lastStatus !== 'error') return -1;
-    if (b.state?.lastStatus === 'error' && a.state?.lastStatus !== 'error') return 1;
+  let jobs = DATA.cronJobs;
+  if (cronFilter === 'errors') jobs = jobs.filter(j => j.state?.lastStatus === 'error');
+  else if (cronFilter !== 'all') jobs = jobs.filter(j => agentOf(j) === cronFilter);
+  jobs.sort((a,b) => {
+    if (a.state?.lastStatus==='error' && b.state?.lastStatus!=='error') return -1;
+    if (b.state?.lastStatus==='error' && a.state?.lastStatus!=='error') return 1;
     if (!a.enabled && b.enabled) return 1;
-    if (a.enabled && !b.enabled) return -1;
-    return (a.state?.nextRunAtMs || 0) - (b.state?.nextRunAtMs || 0);
+    return (a.state?.nextRunAtMs||0)-(b.state?.nextRunAtMs||0);
   });
-  
-  document.getElementById('cronCount').textContent = filtered.length;
-  
-  const tbody = document.getElementById('cronBody');
-  tbody.innerHTML = filtered.map(job => {
-    const s = job.state || {};
-    const isError = s.lastStatus === 'error';
-    const isDisabled = job.enabled === false;
-    const statusClass = isDisabled ? 'status-disabled' : isError ? 'status-error' : s.lastStatus === 'ok' ? 'status-ok' : 'status-unknown';
-    const agent = agentName(job);
-    const deliveryStatus = s.lastDeliveryStatus || 'none';
-    const deliveryClass = deliveryStatus === 'delivered' ? 'delivery-ok' : deliveryStatus === 'not-delivered' ? 'delivery-fail' : 'delivery-none';
-    
-    return `<tr class="${isError ? 'error' : ''}" style="${isDisabled ? 'opacity:0.5' : ''}">
-      <td><span class="status-dot ${statusClass}"></span>${isDisabled ? 'disabled' : s.lastStatus || '—'}</td>
-      <td><span class="agent-badge ${agentClass(agent)}">${agent}</span></td>
-      <td style="font-weight:500;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${job.name}">${job.name}</td>
-      <td class="schedule">${formatSchedule(job.schedule)}</td>
-      <td>${timeAgo(s.lastRunAtMs)}${isError ? '<br><span class="error-msg" title="'+(s.lastError||'')+'">⚠️ '+(s.lastError||'').slice(0,50)+'</span>' : ''}</td>
-      <td class="duration">${formatDuration(s.lastDurationMs)}</td>
-      <td><span class="delivery ${deliveryClass}">${deliveryStatus === 'delivered' ? '✓' : deliveryStatus === 'not-delivered' ? '✗' : '—'}</span></td>
-      <td class="next-run">${timeUntil(s.nextRunAtMs)}</td>
-      <td>
-        <button class="toggle-btn" onclick="toggleJob('${job.id}', ${!job.enabled})">${isDisabled ? 'Enable' : 'Disable'}</button>
-        <button class="toggle-btn" onclick="runJob('${job.id}')" style="margin-left:4px">▶ Run</button>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-function renderKanban() {
-  let todos = DATA.todos;
-  if (currentTodoFilter !== 'all') {
-    todos = todos.filter(t => t.source === currentTodoFilter);
-  }
-  
-  const columns = ['open', 'in-progress', 'done', 'dropped'];
-  const labels = { 'open': '📥 Open', 'in-progress': '🔄 In Progress', 'done': '✅ Done', 'dropped': '🗑 Dropped' };
-  
-  document.getElementById('todoCount').textContent = todos.length;
-  
-  document.getElementById('kanban').innerHTML = columns.map(col => {
-    const items = todos.filter(t => t.status === col);
-    return `<div class="kanban-col">
-      <div class="kanban-col-header">${labels[col]} <span class="count">${items.length}</span></div>
-      ${items.length ? items.map(t => `
-        <div class="todo-card priority-${t.priority}" onclick='openTodoModal(${JSON.stringify(t).replace(/'/g,"\\'")})'> 
-          <div class="todo-title">${escHtml(t.title.slice(0, 80))}</div>
-          <div class="todo-meta">
-            <span class="todo-source source-${t.source}">${t.source}</span>
-            <span class="owner-tag">@${t.owner}</span>
-            ${t.tags?.slice(0,2).map(tag => `<span class="todo-tag">${tag}</span>`).join('') || ''}
-          </div>
-        </div>
-      `).join('') : '<div class="empty">No items</div>'}
+  document.getElementById('jobList').innerHTML = jobs.map(j => {
+    const s = j.state||{}, err = s.lastStatus==='error', off = j.enabled===false;
+    const a = agentOf(j);
+    return `<div class="job-row ${err?'has-error':''} ${off?'is-disabled':''}">
+      <div class="dot ${off?'dot-off':err?'dot-error':'dot-ok'}"></div>
+      <div class="agent-label agent-${a}">${a}</div>
+      <div>
+        <div class="job-name" title="${j.name}">${j.name}</div>
+        <div class="job-schedule">${fmtSch(j.schedule)}</div>
+      </div>
+      <div class="job-time">${ago(s.lastRunAtMs)} ago → ${until(s.nextRunAtMs)}</div>
+      <div class="job-duration">${dur(s.lastDurationMs)}</div>
+      <div style="font-size:11px;color:var(--text3)">${s.lastDeliveryStatus==='delivered'?'✓':s.lastDeliveryStatus==='not-delivered'?'✗':'—'}</div>
+      ${err?`<div class="job-error">⚠ ${(s.lastError||'').slice(0,80)}</div>`:''}
     </div>`;
   }).join('');
 }
 
-function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// ─── Kanban ───
+function renderTodoFilters() {
+  const sources = [...new Set(DATA.todos.map(t => t.source))].sort();
+  document.getElementById('todoFilters').innerHTML = `
+    <button class="filter ${todoFilter==='all'?'active':''}" onclick="setTodoFilter('all')">All</button>
+    ${sources.map(s => `<button class="filter ${todoFilter===s?'active':''}" onclick="setTodoFilter('${s}')">${s}</button>`).join('')}
+  `;
+}
+function setTodoFilter(f) { todoFilter = f; renderTodoFilters(); renderKanban(); }
 
-// ─── Filters ───
-function filterCron(f) {
-  currentCronFilter = f;
-  document.querySelectorAll('.section:first-of-type .tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  renderCron();
+function renderKanban() {
+  let todos = DATA.todos;
+  if (todoFilter !== 'all') todos = todos.filter(t => t.source === todoFilter);
+  const cols = ['open','in-progress','done'];
+  const labels = { open: 'Open', 'in-progress': 'In Progress', done: 'Done' };
+  document.getElementById('kanban').innerHTML = cols.map(col => {
+    const items = todos.filter(t => t.status === col);
+    return `<div>
+      <div class="col-header">${labels[col]} <span class="cnt">${items.length}</span></div>
+      ${items.length ? items.map(t => `
+        <div class="card ${t.priority==='high'?'high':''}" onclick='openModal(${JSON.stringify(t).replace(/'/g,"\\'")})'>
+          <div class="card-title">${esc(t.title.slice(0,80))}</div>
+          <div class="card-meta">
+            <span class="badge badge-source">${t.source}</span>
+            <span class="badge badge-owner">@${t.owner}</span>
+            ${(t.tags||[]).slice(0,2).map(tag => `<span class="badge">${tag}</span>`).join('')}
+          </div>
+        </div>
+      `).join('') : '<div class="empty-col">—</div>'}
+    </div>`;
+  }).join('');
 }
 
-function filterTodo(f) {
-  currentTodoFilter = f;
-  document.querySelectorAll('.section:last-of-type .tab').forEach(t => t.classList.remove('active'));
-  event.target.classList.add('active');
-  renderKanban();
-}
+function esc(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
 // ─── Modal ───
-function openTodoModal(todo) {
-  selectedTodo = todo;
-  document.getElementById('modalTitle').textContent = todo.title;
-  document.getElementById('modalMeta').textContent = `${todo.source} → @${todo.owner} | ${todo.type} | created: ${todo.created || '?'}`;
-  document.getElementById('modalContext').textContent = todo.context || '(no context)';
-  document.getElementById('modalTags').innerHTML = (todo.tags||[]).map(t => `<span class="todo-tag" style="font-size:12px;padding:2px 8px">${t}</span>`).join(' ');
-  document.getElementById('modalStatus').value = todo.status;
-  document.getElementById('cmdOutput').style.display = 'none';
-  document.getElementById('todoModal').classList.add('active');
+function openModal(t) {
+  selTodo = t;
+  document.getElementById('mTitle').textContent = t.title;
+  document.getElementById('mMeta').textContent = `${t.source} · @${t.owner} · ${t.type} · ${t.created||'?'}`;
+  document.getElementById('mCtx').textContent = t.context || '—';
+  document.getElementById('mTags').innerHTML = (t.tags||[]).map(g => `<span class="badge">${g}</span>`).join(' ');
+  document.getElementById('mStatus').value = t.status;
+  document.getElementById('cmdBox').style.display = 'none';
+  document.getElementById('overlay').classList.add('show');
 }
-
-function closeModal() {
-  document.getElementById('todoModal').classList.remove('active');
-  selectedTodo = null;
-}
-
-function applyStatusChange() {
-  if (!selectedTodo) return;
-  const newStatus = document.getElementById('modalStatus').value;
-  const cmd = generateUpdateCommand(selectedTodo, newStatus);
-  const output = document.getElementById('cmdOutput');
-  output.textContent = `Command to run:\n${cmd}\n\n(Copy and tell Moss to execute, or run manually)`;
-  output.style.display = 'block';
-  
-  // Update local state for immediate visual feedback
-  const todo = DATA.todos.find(t => t.id === selectedTodo.id);
-  if (todo) {
-    todo.status = newStatus;
-    renderKanban();
-    renderStats();
-  }
-}
-
-function generateUpdateCommand(todo, newStatus) {
-  // Map back to raw status for each source
-  const statusMap = {
-    'ideas': { 'open': 'pending', 'in-progress': 'researching', 'done': 'done', 'dropped': 'dropped' },
-    'alva-tasks': { 'open': 'open', 'in-progress': 'in-progress', 'done': 'done', 'dropped': 'dropped' },
-    'goal-agent': { 'open': 'pending', 'in-progress': 'in-progress', 'done': 'completed', 'dropped': 'dropped' },
-  };
-  
-  const rawStatus = statusMap[todo.source]?.[newStatus] || newStatus;
-  
-  if (todo.source === 'ideas') {
-    return `# Update idea ${todo.id} status to "${rawStatus}"\n# File: ideas/*.jsonl — find line with id "${todo.id}" and update status`;
-  } else if (todo.source === 'alva-tasks') {
-    return `# Update alva task ${todo.id} status to "${rawStatus}"\n# File: alva-tasks/tasks.jsonl`;
-  } else if (todo.source === 'goal-agent') {
-    return `# Update goal task ${todo.id} status to "${rawStatus}"\n# File: skills/goal-agent/tasks.json`;
-  }
-  return `# Update ${todo.id} in ${todo.source} to "${newStatus}"`;
-}
-
-// ─── Cron Actions (generate commands) ───
-function toggleJob(jobId, enable) {
-  const cmd = enable ? `openclaw cron enable ${jobId}` : `openclaw cron disable ${jobId}`;
-  alert(`Tell Moss to run:\n\n${cmd}\n\n(Direct API call not available in static mode)`);
-}
-
-function runJob(jobId) {
-  alert(`Tell Moss to run:\n\nopenclaw cron run ${jobId}\n\n(Direct API call not available in static mode)`);
+function closeModal() { document.getElementById('overlay').classList.remove('show'); selTodo = null; }
+function applyChange() {
+  if (!selTodo) return;
+  const ns = document.getElementById('mStatus').value;
+  const box = document.getElementById('cmdBox');
+  box.textContent = `Tell Moss: change ${selTodo.id} (${selTodo.source}) status → "${ns}"`;
+  box.style.display = 'block';
+  const todo = DATA.todos.find(t => t.id === selTodo.id);
+  if (todo) { todo.status = ns; renderKanban(); render(); }
 }
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-05T07:32:41.020Z",
+  "generated": "2026-03-05T09:28:47.247Z",
   "cronJobs": [
-    {
-      "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
-      "agentId": "main",
-      "name": "Alva Signal Bridge",
-      "enabled": true,
-      "createdAtMs": 1771231548569,
-      "updatedAtMs": 1772683321934,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */4 * * *",
-        "tz": "UTC",
-        "staggerMs": 300000
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1772697704426,
-        "lastRunAtMs": 1772683304446,
-        "lastStatus": "ok",
-        "lastDurationMs": 17488,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
-      "agentId": "main",
-      "name": "Polymarket Scanner",
-      "enabled": true,
-      "createdAtMs": 1771231556226,
-      "updatedAtMs": 1772685169492,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 */4 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n## 输出\n从 scan + radar 结果中挑 top 5 最值得关注的市场，用 message tool 发到 Discord 频道 1475153843707707412：\n\n格式：\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](候选的 url 字段，注意用 event slug 不是 market slug) — YES $0.XX | Xd | $XXK vol\n   💬 [一句话 insight：这个价格合不合理？有没有信息差？为什么值得/不值得深入？]\n\n2. [市场问题](候选的 url 字段，注意用 event slug 不是 market slug) — YES $0.XX | Xd | $XXK vol\n   💬 [一句话 insight]\n...\n\n🔍 radar 异常：[简述 + 你的判断：是真信号还是噪音]\n```\n\n**每条必须带研究支撑的 insight（不是拍脑袋）：**\n\n对 top 5 候选，逐条做快速研究再给判断：\n1. web_search 查最新相关新闻/数据（英文用 Brave，中文用 MiniMax）\n2. X/Twitter 社交情绪：用 6551 Twitter API 搜索相关推文：\n   `bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit 讨论：用 web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\") 查 Reddit 近期讨论\n4. 如有高价值线索，web_fetch 拉原文确认\n5. 综合新闻 + X + Reddit 信号给一句 insight：价格合不合理、有没有信息差、值不值得深入\n\ninsight 必须引用你搜到的具体事实（数据/日期/来源），不要凭空判断。\n如果搜不到有价值信息，诚实说\"公开信息不足以判断\"。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据，帮哥快速筛选。\n哥看到感兴趣的会回复，到时再交互式深度评估。\n\n无候选 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | X候选`",
-        "timeoutSeconds": 720,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1772699400000,
-        "lastRunAtMs": 1772685000023,
-        "lastStatus": "ok",
-        "lastDurationMs": 169469,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
     {
       "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
       "agentId": "main",
@@ -542,6 +349,81 @@ window.__DASHBOARD_DATA__ = {
         "lastRunStatus": "ok",
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
+      "agentId": "main",
+      "name": "Alva Signal Bridge",
+      "enabled": true,
+      "createdAtMs": 1771231548569,
+      "updatedAtMs": 1772697732720,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */4 * * *",
+        "tz": "UTC",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1772712104426,
+        "lastRunAtMs": 1772697704444,
+        "lastStatus": "ok",
+        "lastDurationMs": 28276,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "not-delivered",
+        "lastDelivered": false
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
+      "agentId": "main",
+      "name": "Polymarket Scanner",
+      "enabled": true,
+      "createdAtMs": 1771231556226,
+      "updatedAtMs": 1772699542874,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 */4 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n## 输出\n从 scan + radar 结果中挑 top 5 最值得关注的市场，用 message tool 发到 Discord 频道 1475153843707707412：\n\n格式：\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](候选的 url 字段，注意用 event slug 不是 market slug) — YES $0.XX | Xd | $XXK vol\n   💬 [一句话 insight：这个价格合不合理？有没有信息差？为什么值得/不值得深入？]\n\n2. [市场问题](候选的 url 字段，注意用 event slug 不是 market slug) — YES $0.XX | Xd | $XXK vol\n   💬 [一句话 insight]\n...\n\n🔍 radar 异常：[简述 + 你的判断：是真信号还是噪音]\n```\n\n**每条必须带研究支撑的 insight（不是拍脑袋）：**\n\n对 top 5 候选，逐条做快速研究再给判断：\n1. web_search 查最新相关新闻/数据（英文用 Brave，中文用 MiniMax）\n2. X/Twitter 社交情绪：用 6551 Twitter API 搜索相关推文：\n   `bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit 讨论：用 web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\") 查 Reddit 近期讨论\n4. 如有高价值线索，web_fetch 拉原文确认\n5. 综合新闻 + X + Reddit 信号给一句 insight：价格合不合理、有没有信息差、值不值得深入\n\ninsight 必须引用你搜到的具体事实（数据/日期/来源），不要凭空判断。\n如果搜不到有价值信息，诚实说\"公开信息不足以判断\"。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据，帮哥快速筛选。\n哥看到感兴趣的会回复，到时再交互式深度评估。\n\n无候选 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | X候选`",
+        "timeoutSeconds": 720,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1772713800000,
+        "lastRunAtMs": 1772699400020,
+        "lastStatus": "ok",
+        "lastDurationMs": 142854,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered"
       },
       "delivery": {
         "mode": "announce",

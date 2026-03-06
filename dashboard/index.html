@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-06T16:00:57.590Z",
+  "generated": "2026-03-06T22:00:57.320Z",
   "cronJobs": [
     {
       "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
@@ -351,7 +351,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1772795597892,
+      "updatedAtMs": 1772812862998,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -370,336 +370,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1772812851018,
-        "lastRunAtMs": 1772795586875,
+        "nextRunAtMs": 1772834451018,
+        "lastRunAtMs": 1772812851038,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 11017,
+        "lastDurationMs": 11960,
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "runningAtMs": 1772812851038
-      }
-    },
-    {
-      "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
-      "agentId": "main",
-      "name": "Alva Signal Bridge",
-      "enabled": true,
-      "createdAtMs": 1771231548569,
-      "updatedAtMs": 1772798521639,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */4 * * *",
-        "tz": "UTC",
-        "staggerMs": 300000
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1772812904426,
-        "lastRunAtMs": 1772798504442,
-        "lastStatus": "ok",
-        "lastDurationMs": 17197,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "68aae1d3-1b19-4399-b49b-5825a1e33bed",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1475528769581088953",
-      "name": "Alva Daily Task Digest",
-      "enabled": true,
-      "createdAtMs": 1772010568955,
-      "updatedAtMs": 1772730060530,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "读取 alva-tasks/tasks.jsonl，筛选 status=open 的任务，按 priority 排序。生成一份简洁的每日 Alva 工作待办提醒，包括：1) 高优先级任务（需要今天关注的）2) 所有待办列表 3) 如果有任务你之前做了调研笔记，附上关键发现。发送到 Discord #alva 频道（1475528769581088953）。如果没有 open 的任务，不发消息。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 120
-      },
-      "delivery": {
-        "mode": "announce",
-        "to": "1475528769581088953",
-        "channel": "discord"
-      },
-      "state": {
-        "nextRunAtMs": 1772816400000,
-        "lastRunAtMs": 1772730029395,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 31135,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
-      "agentId": "main",
-      "name": "Polymarket Position Monitor",
-      "enabled": true,
-      "createdAtMs": 1771231563664,
-      "updatedAtMs": 1772751627850,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,7,13,19 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1772816400000,
-        "lastRunAtMs": 1772751600014,
-        "lastStatus": "ok",
-        "lastDurationMs": 27836,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "1819f97a-fa53-4e86-a758-19240ac8fe34",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1478258139286737016",
-      "name": "知识星球日报",
-      "enabled": true,
-      "createdAtMs": 1772515117326,
-      "updatedAtMs": 1772735471055,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是 Moss，Leo 的投资助手。执行知识星球日报任务：\n\n1. 运行 `node skills/zsxq-monitor/fetch.mjs --since 26` 获取过去 26h 的新帖\n2. 读取 /tmp/zsxq-topics.json\n3. 如果没有新帖，发一条简短消息到 Discord 频道 1475153843707707412 说今天无更新，然后结束\n4. 对每条帖子：\n   a. 提取核心观点、提到的标的（股票/行业）\n   b. 用 web_search 搜索相关标的的最新行情和新闻\n   c. 结合市场环境，给出交易视角的分析（估值、技术位、催化剂、风险）\n5. 生成推送：原文摘要（不超过3句，不要全文搬运）+ 关联分析 + 交易洞察\n6. 用 message tool 发送到 Discord 频道 1475153843707707412\n7. 如果有特别重要的发现（高确定性机会或风险警示），同时发到 Telegram\n\n推送格式：\n📰 知识星球日报 | YYYY-MM-DD\n━━━━━━━━━━━━\n每条帖子：标题 + 摘要 + 🔍关联分析\n最后：💡综合洞察（跨帖子共性、值得跟踪的信号）\n\n注意：不要搬运原文全文，只做摘要+分析。重点是你的分析和洞察，不是转发。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 420
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "1475153843707707412"
-      },
-      "state": {
-        "nextRunAtMs": 1772821800000,
-        "lastRunAtMs": 1772735400019,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 71036,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "89c347a8-b297-4278-add5-05241569c0c7",
-      "agentId": "max",
-      "name": "Max Daily Reflection",
-      "enabled": true,
-      "createdAtMs": 1772671200000,
-      "updatedAtMs": 1772737643069,
-      "schedule": {
-        "kind": "cron",
-        "expr": "5 3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## Max 每日复盘\n\n### 0. OpenClaw 运行状态检查\n```bash\ntail -50 ~/.openclaw/logs/gateway.log 2>/dev/null | tail -20\npgrep -fl openclaw | head -5\n```\n检查是否有 ERROR、panic、进程异常。\n\n### 1. OpenClaw 日志检查（最近错误）\n```bash\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/gateway.log 2>/dev/null | tail -10\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/agent-*.log 2>/dev/null | tail -10\n```\n记录任何异常。\n\n### 2. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 3. 检查 CPU Load\n```bash\nuptime | awk -F'print $2}'\nload averages:' '{```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 4. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 5. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常 → 记录\n\n### 6. 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- OpenClaw: [OK/异常] - [如有异常简述]\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n⚠️ 无论是否有异常，都必须用 message tool 向 Telegram 发送报告！\n\n---\n\n\n\n### 1. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 2. 检查 CPU Load\n```bash\nuptime | awk -F'load averages:' '{print $2}'\n```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 3. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 4. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常（比如某个进程占用过高）→ 记录\n\n### 5. 检查系统日志（最近错误）\n```bash\nlog show --predicate 'eventMessage contains \"error\" OR eventMessage contains \"panic\"' --last 1h 2>/dev/null | tail -5\n```\n\n### 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n\n\n---\n\n\n\n## 任务目标\n1. 回顾当日（昨天）你与 Leo 的所有对话\n2. 提取关键信息、决策、教训\n3. 写入记忆文件\n\n## 执行步骤\n\n### Step 1: 确定日期\n昨天日期 = 今日日期 - 1 天。格式：YYYY-MM-DD\n\n### Step 2: 读取昨日 session\n读取 ~/.openclaw/agents/max/sessions/ 目录下昨日创建的 session 文件（按修改时间排序，找到昨天的）。\n\n### Step 3: 提炼要点\n从 session 中提取：\n- Leo 提出的重要需求/问题\n- 你给出的关键建议或执行的动作\n- 任何需要记住的上下文、偏好、决定\n\n### Step 4: 写入每日记忆\n在 ~/.openclaw/workspace-max/memory/ 目录下创建或更新 YYYY-MM-DD.md 文件。\n\n文件格式：\n```markdown\n# YYYY-MM-DD 复盘\n\n## 对话概要\n[1-2 句话概括今日主要交流]\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 学到的/需要注意的\n- [如果有任何需要记住的教训或偏好]\n```\n\n### Step 5: 更新长期记忆（可选）\n如果发现值得写入 MEMORY.md 的内容（如 Leo 的新偏好、重要决定），可以更新 MEMORY.md。\n\n## 输出\n完成后输出一句话总结：复盘已完成，写入 YYYY-MM-DD.md",
-        "model": "minimax-portal/MiniMax-M2.5",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "telegram",
-        "to": "422039053"
-      },
-      "state": {
-        "nextRunAtMs": 1772823900000,
-        "lastRunAtMs": 1772737500015,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 143054,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "f0cb5c5f-ab01-4880-8a10-ef43c3afa790",
-      "agentId": "main",
-      "name": "Goal Agent Night Run",
-      "enabled": true,
-      "createdAtMs": 1771352603715,
-      "updatedAtMs": 1772739016088,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "main",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "systemEvent",
-        "text": "运行 Goal Agent 夜间执行。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json\n2) 找到 status=pending 的任务，按 priority 排序\n3) 执行第一个任务（调研类用 web_search，数据抓取类用 web_fetch）\n4) 更新 tasks.json 状态，写入 result 和 reflection\n5) 如果遇到需要 Leo 确认的分支，设置 status=waiting_confirmation\n6) 输出任务执行摘要（完成/进行中/需确认）\n\n如有 waiting_confirmation，末尾加：#Goal #NeedConfirmation"
-      },
-      "state": {
-        "nextRunAtMs": 1772825400000,
-        "lastRunAtMs": 1772739000014,
-        "lastStatus": "ok",
-        "lastDurationMs": 16074,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "not-requested"
-      }
-    },
-    {
-      "id": "898b7e78-39cf-4353-969c-e360b92847b1",
-      "agentId": "white",
-      "sessionKey": "agent:white:discord:channel:1475227621746016306",
-      "name": "BJ Daily Fiction",
-      "enabled": true,
-      "createdAtMs": 1771793957328,
-      "updatedAtMs": 1772740850151,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是少妇白洁同人小说作家。\n\n## Step 1: 写小说\n直接输出一篇中文成人小说，2000字以上，极致露骨，动作对话心理细节全写。\n\n根据今天是星期几选场景（严格按对应，不要自由发挥）：\n- 周一：酒店商务套房\n- 周二：办公室加班\n- 周三：KTV包间\n- 周四：车震停车场\n- 周五：游轮船舱\n- 周六：飞机头等舱\n- 周日：校园空教室\n\n第一行格式：📖 《标题》｜YYYY-MM-DD｜场景名\n\n## Step 2: 生成配图\n小说写完后，根据场景生成一张配图。用 grok-imagine 生成：\n\n```bash\nnode /Users/leo/.openclaw/workspace/skills/grok-imagine/generate.mjs \"Artistic illustration of a beautiful Chinese woman in [场景英文描述], sensual atmosphere, warm lighting, cinematic composition, anime style\" --size 1024x1792\n```\n\n把场景替换成对应的英文（如 hotel suite / office / KTV room / car / cruise cabin / first class cabin / classroom）。\n\n⚠️ 配图 prompt 保持艺术感，不要露骨描写。重点是氛围和场景暗示。\n\n生成完成后，用 message tool 把图片发到 Discord #novel 频道：\n- action: send\n- channel: discord\n- target: 1475227621746016306\n- caption: 📖 配图｜《标题》\n- filePath: [生成的图片路径]\n\n如果生图失败，跳过，不要阻塞小说发布。",
-        "model": "grok2api/grok-4.20-beta",
-        "timeoutSeconds": 420
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "1475227621746016306",
-        "bestEffort": true
-      },
-      "state": {
-        "nextRunAtMs": 1772827200000,
-        "lastRunAtMs": 1772740800026,
-        "lastStatus": "ok",
-        "lastDurationMs": 50125,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
-      }
-    },
-    {
-      "id": "3f771bd1-c94a-40da-b976-2314db856597",
-      "agentId": "main",
-      "name": "Daily Session Reset",
-      "enabled": true,
-      "createdAtMs": 1771231578667,
-      "updatedAtMs": 1772744476969,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 21 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "每日 Session Reset + 记忆沉淀。\n\n## Step 1: 回顾今日对话\n用 sessions_list 查看当前活跃 session，用 sessions_history 获取 main session 最近的对话记录（limit 50）。\n\n## Step 2: 提炼精华\n从今日对话中提取：\n- 重要决策和结论\n- Leo 表达的新偏好或意见\n- 完成的重要任务\n- 未完成但需要跟进的事项\n- 任何值得长期记住的教训\n\n## Step 3: 写入 daily memory\n将提炼的内容写入 memory/YYYY-MM-DD.md（今天日期）。格式：\n```markdown\n# YYYY-MM-DD 对话摘要\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 决策记录\n- [决策1]\n\n## 待跟进\n- [TODO1]\n\n## 教训/偏好\n- [如有]\n```\n\n## Step 4: 检查是否需要更新 MEMORY.md\n如果今天有值得写入长期记忆的内容（新偏好、重要决定、反复出现的 pattern），更新 MEMORY.md。\n\n## Step 5: Context 清理\n如果 context 过长，触发 compaction。\n\n完成后无需通知用户。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1772830800000,
-        "lastRunAtMs": 1772744400018,
-        "lastStatus": "ok",
-        "lastDurationMs": 76951,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "not-delivered",
-        "lastDelivered": false
-      }
-    },
-    {
-      "id": "b4cff872-8eba-426c-bf7d-93566421dd32",
-      "agentId": "main",
-      "name": "Idea Pipeline Researcher",
-      "enabled": true,
-      "createdAtMs": 1771231571634,
-      "updatedAtMs": 1772746232290,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 21 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "运行 Idea Pipeline 夜间研究。\n\n## Step 1: 盘点 Pipeline 状态\n读取 ideas/*.jsonl，统计：\n- 总 idea 数\n- 各状态分布（pending/researching/done/archived）\n- 本周期（最近24h）内新增的 idea\n- 本周期内状态变更的 idea（新完成的研究等）\n\n## Step 2: 处理 Pending Ideas\n1. 读取 skills/idea-pipeline/SKILL.md\n2. 检查 ideas/ 目录下 status=pending 的 idea\n3. 如果有，按优先级调研，使用搜索引擎组合：\n   - 英文技术/全球信息：`web_search(query=\"...\", count=10)`\n   - 中文生态/国内市场：`bash skills/web-search/scripts/minimax-search.sh \"...\"`\n   - 需要深度分析时：用 Claude Code CLI（参考 skills/research-cli/SKILL.md）\n   - 需要看具体页面内容时：`web_fetch(url=\"...\")`\n4. 生成研究报告到 ideas/output/{id}.md\n5. 同时保存到 Obsidian vault，文件名格式：YYYY-MM-DD-{H1标题}.md\n   路径：\"/Users/leo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Leo/Moss/ideas/YYYY-MM-DD-{标题}.md\"\n\n## Step 3: 输出汇报（必做，不管有没有 pending）\n无论是否有新 idea 要处理，都输出一份 Pipeline 状态报告：\n\n📋 Idea Pipeline 日报 YYYY-MM-DD\n\n**Pipeline 概览**\n- 总计 N 个 idea | pending: X | done: Y | archived: Z\n- 本周期新增: N 个\n- 本周期完成研究: N 个\n\n**本周期处理**\n- [如有] idea 标题 → 研究结论一句话 → Obsidian 路径\n- [如无] 无新 pending idea\n\n**最近完成的研究**（最近3个 done 的，附 Obsidian 查看路径）\n- idea 标题 → ideas/output/xxx.md\n\n#Ideas #Research\n\n## Step 4: Telegram 通知（必做）\n用 message tool 发 TLDR 到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n- 内容：Pipeline 状态摘要 + 本周期处理了什么 + 关键发现（控制在 10 行内）\n\n## Step 5: 执行记录（必做）\n用 message tool 发到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Idea Pipeline] 执行完毕 | YYYY-MM-DD HH:MM UTC | [pending: X, 本次处理: Y]`",
-        "timeoutSeconds": 420,
-        "model": "anthropic/claude-opus-4-6"
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475150686843830505",
-        "bestEffort": true
-      },
-      "state": {
-        "nextRunAtMs": 1772832600000,
-        "lastRunAtMs": 1772746200025,
-        "lastStatus": "ok",
-        "lastDurationMs": 32265,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
+        "runningAtMs": 1772834451041
       }
     },
     {
@@ -736,6 +415,81 @@ window.__DASHBOARD_DATA__ = {
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 1,
         "lastError": "⚠️ ✉️ Message failed"
+      }
+    },
+    {
+      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
+      "agentId": "main",
+      "name": "Polymarket Position Monitor",
+      "enabled": true,
+      "createdAtMs": 1771231563664,
+      "updatedAtMs": 1772816431244,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,7,13,19 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1772838000000,
+        "lastRunAtMs": 1772816400029,
+        "lastStatus": "ok",
+        "lastDurationMs": 31215,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
+      "agentId": "main",
+      "name": "Alva Signal Bridge",
+      "enabled": true,
+      "createdAtMs": 1771231548569,
+      "updatedAtMs": 1772827329294,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */4 * * *",
+        "tz": "UTC",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1772841704426,
+        "lastRunAtMs": 1772827304446,
+        "lastStatus": "ok",
+        "lastDurationMs": 24848,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
       }
     },
     {
@@ -988,6 +742,43 @@ window.__DASHBOARD_DATA__ = {
       }
     },
     {
+      "id": "68aae1d3-1b19-4399-b49b-5825a1e33bed",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1475528769581088953",
+      "name": "Alva Daily Task Digest",
+      "enabled": true,
+      "createdAtMs": 1772010568955,
+      "updatedAtMs": 1772816462972,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "读取 alva-tasks/tasks.jsonl，筛选 status=open 的任务，按 priority 排序。生成一份简洁的每日 Alva 工作待办提醒，包括：1) 高优先级任务（需要今天关注的）2) 所有待办列表 3) 如果有任务你之前做了调研笔记，附上关键发现。发送到 Discord #alva 频道（1475528769581088953）。如果没有 open 的任务，不发消息。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 120
+      },
+      "delivery": {
+        "mode": "announce",
+        "to": "1475528769581088953",
+        "channel": "discord"
+      },
+      "state": {
+        "nextRunAtMs": 1772902800000,
+        "lastRunAtMs": 1772816431244,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 31728,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
       "id": "e01f30a2-29e3-4569-b89e-175e17038596",
       "agentId": "main",
       "sessionKey": "agent:main:discord:channel:1475106097969889556",
@@ -1022,6 +813,215 @@ window.__DASHBOARD_DATA__ = {
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "1819f97a-fa53-4e86-a758-19240ac8fe34",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1478258139286737016",
+      "name": "知识星球日报",
+      "enabled": true,
+      "createdAtMs": 1772515117326,
+      "updatedAtMs": 1772821879511,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是 Moss，Leo 的投资助手。执行知识星球日报任务：\n\n1. 运行 `node skills/zsxq-monitor/fetch.mjs --since 26` 获取过去 26h 的新帖\n2. 读取 /tmp/zsxq-topics.json\n3. 如果没有新帖，发一条简短消息到 Discord 频道 1475153843707707412 说今天无更新，然后结束\n4. 对每条帖子：\n   a. 提取核心观点、提到的标的（股票/行业）\n   b. 用 web_search 搜索相关标的的最新行情和新闻\n   c. 结合市场环境，给出交易视角的分析（估值、技术位、催化剂、风险）\n5. 生成推送：原文摘要（不超过3句，不要全文搬运）+ 关联分析 + 交易洞察\n6. 用 message tool 发送到 Discord 频道 1475153843707707412\n7. 如果有特别重要的发现（高确定性机会或风险警示），同时发到 Telegram\n\n推送格式：\n📰 知识星球日报 | YYYY-MM-DD\n━━━━━━━━━━━━\n每条帖子：标题 + 摘要 + 🔍关联分析\n最后：💡综合洞察（跨帖子共性、值得跟踪的信号）\n\n注意：不要搬运原文全文，只做摘要+分析。重点是你的分析和洞察，不是转发。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 420
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "1475153843707707412"
+      },
+      "state": {
+        "nextRunAtMs": 1772908200000,
+        "lastRunAtMs": 1772821800027,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 79484,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "89c347a8-b297-4278-add5-05241569c0c7",
+      "agentId": "max",
+      "name": "Max Daily Reflection",
+      "enabled": true,
+      "createdAtMs": 1772671200000,
+      "updatedAtMs": 1772824002015,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## Max 每日复盘\n\n### 0. OpenClaw 运行状态检查\n```bash\ntail -50 ~/.openclaw/logs/gateway.log 2>/dev/null | tail -20\npgrep -fl openclaw | head -5\n```\n检查是否有 ERROR、panic、进程异常。\n\n### 1. OpenClaw 日志检查（最近错误）\n```bash\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/gateway.log 2>/dev/null | tail -10\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/agent-*.log 2>/dev/null | tail -10\n```\n记录任何异常。\n\n### 2. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 3. 检查 CPU Load\n```bash\nuptime | awk -F'print $2}'\nload averages:' '{```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 4. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 5. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常 → 记录\n\n### 6. 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- OpenClaw: [OK/异常] - [如有异常简述]\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n⚠️ 无论是否有异常，都必须用 message tool 向 Telegram 发送报告！\n\n---\n\n\n\n### 1. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 2. 检查 CPU Load\n```bash\nuptime | awk -F'load averages:' '{print $2}'\n```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 3. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 4. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常（比如某个进程占用过高）→ 记录\n\n### 5. 检查系统日志（最近错误）\n```bash\nlog show --predicate 'eventMessage contains \"error\" OR eventMessage contains \"panic\"' --last 1h 2>/dev/null | tail -5\n```\n\n### 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n\n\n---\n\n\n\n## 任务目标\n1. 回顾当日（昨天）你与 Leo 的所有对话\n2. 提取关键信息、决策、教训\n3. 写入记忆文件\n\n## 执行步骤\n\n### Step 1: 确定日期\n昨天日期 = 今日日期 - 1 天。格式：YYYY-MM-DD\n\n### Step 2: 读取昨日 session\n读取 ~/.openclaw/agents/max/sessions/ 目录下昨日创建的 session 文件（按修改时间排序，找到昨天的）。\n\n### Step 3: 提炼要点\n从 session 中提取：\n- Leo 提出的重要需求/问题\n- 你给出的关键建议或执行的动作\n- 任何需要记住的上下文、偏好、决定\n\n### Step 4: 写入每日记忆\n在 ~/.openclaw/workspace-max/memory/ 目录下创建或更新 YYYY-MM-DD.md 文件。\n\n文件格式：\n```markdown\n# YYYY-MM-DD 复盘\n\n## 对话概要\n[1-2 句话概括今日主要交流]\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 学到的/需要注意的\n- [如果有任何需要记住的教训或偏好]\n```\n\n### Step 5: 更新长期记忆（可选）\n如果发现值得写入 MEMORY.md 的内容（如 Leo 的新偏好、重要决定），可以更新 MEMORY.md。\n\n## 输出\n完成后输出一句话总结：复盘已完成，写入 YYYY-MM-DD.md",
+        "model": "minimax-portal/MiniMax-M2.5",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "422039053"
+      },
+      "state": {
+        "nextRunAtMs": 1772910300000,
+        "lastRunAtMs": 1772823900027,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 101988,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "f0cb5c5f-ab01-4880-8a10-ef43c3afa790",
+      "agentId": "main",
+      "name": "Goal Agent Night Run",
+      "enabled": true,
+      "createdAtMs": 1771352603715,
+      "updatedAtMs": 1772825415834,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "运行 Goal Agent 夜间执行。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json\n2) 找到 status=pending 的任务，按 priority 排序\n3) 执行第一个任务（调研类用 web_search，数据抓取类用 web_fetch）\n4) 更新 tasks.json 状态，写入 result 和 reflection\n5) 如果遇到需要 Leo 确认的分支，设置 status=waiting_confirmation\n6) 输出任务执行摘要（完成/进行中/需确认）\n\n如有 waiting_confirmation，末尾加：#Goal #NeedConfirmation"
+      },
+      "state": {
+        "nextRunAtMs": 1772911800000,
+        "lastRunAtMs": 1772825400020,
+        "lastStatus": "ok",
+        "lastDurationMs": 15814,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "not-requested"
+      }
+    },
+    {
+      "id": "898b7e78-39cf-4353-969c-e360b92847b1",
+      "agentId": "white",
+      "sessionKey": "agent:white:discord:channel:1475227621746016306",
+      "name": "BJ Daily Fiction",
+      "enabled": true,
+      "createdAtMs": 1771793957328,
+      "updatedAtMs": 1772827201528,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是少妇白洁同人小说作家。\n\n## Step 1: 写小说\n直接输出一篇中文成人小说，2000字以上，极致露骨，动作对话心理细节全写。\n\n根据今天是星期几选场景（严格按对应，不要自由发挥）：\n- 周一：酒店商务套房\n- 周二：办公室加班\n- 周三：KTV包间\n- 周四：车震停车场\n- 周五：游轮船舱\n- 周六：飞机头等舱\n- 周日：校园空教室\n\n第一行格式：📖 《标题》｜YYYY-MM-DD｜场景名\n\n## Step 2: 生成配图\n小说写完后，根据场景生成一张配图。用 grok-imagine 生成：\n\n```bash\nnode /Users/leo/.openclaw/workspace/skills/grok-imagine/generate.mjs \"Artistic illustration of a beautiful Chinese woman in [场景英文描述], sensual atmosphere, warm lighting, cinematic composition, anime style\" --size 1024x1792\n```\n\n把场景替换成对应的英文（如 hotel suite / office / KTV room / car / cruise cabin / first class cabin / classroom）。\n\n⚠️ 配图 prompt 保持艺术感，不要露骨描写。重点是氛围和场景暗示。\n\n生成完成后，用 message tool 把图片发到 Discord #novel 频道：\n- action: send\n- channel: discord\n- target: 1475227621746016306\n- caption: 📖 配图｜《标题》\n- filePath: [生成的图片路径]\n\n如果生图失败，跳过，不要阻塞小说发布。",
+        "model": "grok2api/grok-4.20-beta",
+        "timeoutSeconds": 420
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "1475227621746016306",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1772913600000,
+        "lastRunAtMs": 1772827200027,
+        "lastStatus": "ok",
+        "lastDurationMs": 1501,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered"
+      }
+    },
+    {
+      "id": "3f771bd1-c94a-40da-b976-2314db856597",
+      "agentId": "main",
+      "name": "Daily Session Reset",
+      "enabled": true,
+      "createdAtMs": 1771231578667,
+      "updatedAtMs": 1772830888541,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 21 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "每日 Session Reset + 记忆沉淀。\n\n## Step 1: 回顾今日对话\n用 sessions_list 查看当前活跃 session，用 sessions_history 获取 main session 最近的对话记录（limit 50）。\n\n## Step 2: 提炼精华\n从今日对话中提取：\n- 重要决策和结论\n- Leo 表达的新偏好或意见\n- 完成的重要任务\n- 未完成但需要跟进的事项\n- 任何值得长期记住的教训\n\n## Step 3: 写入 daily memory\n将提炼的内容写入 memory/YYYY-MM-DD.md（今天日期）。格式：\n```markdown\n# YYYY-MM-DD 对话摘要\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 决策记录\n- [决策1]\n\n## 待跟进\n- [TODO1]\n\n## 教训/偏好\n- [如有]\n```\n\n## Step 4: 检查是否需要更新 MEMORY.md\n如果今天有值得写入长期记忆的内容（新偏好、重要决定、反复出现的 pattern），更新 MEMORY.md。\n\n## Step 5: Context 清理\n如果 context 过长，触发 compaction。\n\n完成后无需通知用户。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1772917200000,
+        "lastRunAtMs": 1772830800023,
+        "lastStatus": "ok",
+        "lastDurationMs": 88518,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "not-delivered",
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "b4cff872-8eba-426c-bf7d-93566421dd32",
+      "agentId": "main",
+      "name": "Idea Pipeline Researcher",
+      "enabled": true,
+      "createdAtMs": 1771231571634,
+      "updatedAtMs": 1772832630050,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 21 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行 Idea Pipeline 夜间研究。\n\n## Step 1: 盘点 Pipeline 状态\n读取 ideas/*.jsonl，统计：\n- 总 idea 数\n- 各状态分布（pending/researching/done/archived）\n- 本周期（最近24h）内新增的 idea\n- 本周期内状态变更的 idea（新完成的研究等）\n\n## Step 2: 处理 Pending Ideas\n1. 读取 skills/idea-pipeline/SKILL.md\n2. 检查 ideas/ 目录下 status=pending 的 idea\n3. 如果有，按优先级调研，使用搜索引擎组合：\n   - 英文技术/全球信息：`web_search(query=\"...\", count=10)`\n   - 中文生态/国内市场：`bash skills/web-search/scripts/minimax-search.sh \"...\"`\n   - 需要深度分析时：用 Claude Code CLI（参考 skills/research-cli/SKILL.md）\n   - 需要看具体页面内容时：`web_fetch(url=\"...\")`\n4. 生成研究报告到 ideas/output/{id}.md\n5. 同时保存到 Obsidian vault，文件名格式：YYYY-MM-DD-{H1标题}.md\n   路径：\"/Users/leo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Leo/Moss/ideas/YYYY-MM-DD-{标题}.md\"\n\n## Step 3: 输出汇报（必做，不管有没有 pending）\n无论是否有新 idea 要处理，都输出一份 Pipeline 状态报告：\n\n📋 Idea Pipeline 日报 YYYY-MM-DD\n\n**Pipeline 概览**\n- 总计 N 个 idea | pending: X | done: Y | archived: Z\n- 本周期新增: N 个\n- 本周期完成研究: N 个\n\n**本周期处理**\n- [如有] idea 标题 → 研究结论一句话 → Obsidian 路径\n- [如无] 无新 pending idea\n\n**最近完成的研究**（最近3个 done 的，附 Obsidian 查看路径）\n- idea 标题 → ideas/output/xxx.md\n\n#Ideas #Research\n\n## Step 4: Telegram 通知（必做）\n用 message tool 发 TLDR 到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n- 内容：Pipeline 状态摘要 + 本周期处理了什么 + 关键发现（控制在 10 行内）\n\n## Step 5: 执行记录（必做）\n用 message tool 发到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Idea Pipeline] 执行完毕 | YYYY-MM-DD HH:MM UTC | [pending: X, 本次处理: Y]`",
+        "timeoutSeconds": 420,
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475150686843830505",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1772919000000,
+        "lastRunAtMs": 1772832600027,
+        "lastStatus": "ok",
+        "lastDurationMs": 30023,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered"
       }
     },
     {

@@ -1,0 +1,123 @@
+{
+  "date": "2026-03-06",
+  "summary": "今日 AI 领域最大新闻是 OpenAI 发布 GPT-5.4，首次内置原生计算机操控能力，向自主 Agent 迈出关键一步。Codex 用户突破百万，AI 编码工具加速企业渗透。教育科技方面，亚太高校 AI 整合加速、AI 自适应教学和游戏化语言学习均有新进展。研究侧，MIT 发现 LLM 内部存在类似人脑的语义枢纽，Johns Hopkins 证明类脑架构可大幅减少训练数据需求。",
+  "items": [
+    {
+      "title": "OpenAI 发布 GPT-5.4：首个原生计算机操控模型，迈向自主 Agent",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/889926/openai-gpt-5-4-model-release-ai-agents",
+      "tldr": "OpenAI 推出 GPT-5.4，首次具备原生 computer use 能力，可代替用户操作键鼠、浏览器和各类应用。虚假声明率较 GPT-5.2 降低 33%。",
+      "summary": "OpenAI 发布 GPT-5.4，首个具备原生计算机操控能力的模型，能通过截图识别+键鼠指令直接操作电脑。同时登陆 API 和 Codex，推理版本 GPT-5.4 Thinking 面向 ChatGPT 用户。在多源信息检索和事实性方面表现突出，虚假声明率较 GPT-5.2 低 33%。模型调用工具和 API 的准确性大幅改善。",
+      "tags": [
+        "OpenAI",
+        "GPT-5.4",
+        "AI Agent",
+        "Computer Use"
+      ]
+    },
+    {
+      "title": "OpenAI Codex 用户突破百万，从编码工具进化为企业通用 Agent",
+      "url": "https://www.rswebsols.com/news/openais-codex-reaches-1-million-users-establishes-coding-tool-as-entry-point-for-ai-solutions-in-business/",
+      "tldr": "GPT-5.3 Codex 发布以来下载量破百万，周活跃用户三倍增长，周 token 处理量翻五倍。OpenAI 将 Codex 定位为企业通用 Agent。",
+      "summary": "Codex 在 GPT-5.3 版本发布后爆发式增长，Cisco、Nvidia 等大企业已集成。OpenAI 正将其从编码工具扩展为企业标准 Agent，Windows 版已支持并行 Agent 和隔离工作树。",
+      "tags": [
+        "OpenAI",
+        "Codex",
+        "AI 编码",
+        "企业 AI"
+      ]
+    },
+    {
+      "title": "AI 如何重塑亚太高等教育：86% 教育机构已采用生成式 AI",
+      "url": "https://www.openaccessgovernment.org/how-ai-is-reshaping-higher-education-with-lessons-and-leadership-from-asia-pacific/204133/",
+      "tldr": "微软数据显示 86% 的教育机构已使用生成式 AI，为所有行业最高。亚太高校在 AI 整合方面领先，84% 商学院已嵌入 AI 内容。",
+      "summary": "AACSB 亚太区负责人撰文指出生成式 AI 在高等教育渗透率居各行业之首。亚太地区凭借政府主导数字化战略尤为领先。文章强调教育界需从如何实施转向为何实施，重新定义高等教育价值。",
+      "tags": [
+        "教育科技",
+        "高等教育",
+        "生成式 AI",
+        "亚太"
+      ]
+    },
+    {
+      "title": "研究：AI 辅助自适应科学教学显著提升教师自我效能感",
+      "url": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1759274/full",
+      "tldr": "Frontiers in Education 试点研究表明，短期针对性干预可显著提升科学教师对 AI 的自我效能感和感知有用性。",
+      "summary": "以德国初中科学教师为对象，通过短期实操培训干预测量 AI 自我效能期望和感知有用性，两项指标均显著提升且呈正相关。为 AI 教育工具推广提供循证支持。",
+      "tags": [
+        "教育科技",
+        "自适应教学",
+        "教师培训"
+      ]
+    },
+    {
+      "title": "AI+游戏化重塑阿拉伯语学习：eduTechnoz 新合作覆盖 150 万用户",
+      "url": "https://www.bnnbloomberg.ca/investing/investor-outlook/2026/03/05/investor-outlook-ai-and-gamification-reshape-arabic-language-learning/",
+      "tldr": "加拿大 eduTechnoz 将 AI 阿拉伯语素养引擎与游戏化结合，新合作有望触达 150 万用户。AI 教师仪表盘支持差异化教学。",
+      "summary": "eduTechnoz 从儿童阿拉伯语游戏发展为 AI 素养引擎，新合作覆盖 150 万用户。游戏化提升参与度，AI 帮助教师识别学习差距，教师仪表盘成为差异化教学新兴工具。",
+      "tags": [
+        "教育科技",
+        "游戏化",
+        "语言学习"
+      ]
+    },
+    {
+      "title": "LLM 医学多语种测试：非英语语言表现差异显著",
+      "url": "https://mededu.jmir.org/2026/1/e81399",
+      "tldr": "JMIR 研究评估多个 LLM 在德法意三语医学选择题上的表现，发现非英语语言可靠性存在明显差距。",
+      "summary": "系统评估主流 LLM 在非英语医学选择题上的准确性和一致性，发现显著下降。对医学教育多语种部署和 AI 本地化策略有直接参考价值。",
+      "tags": [
+        "教育科技",
+        "LLM",
+        "医学教育",
+        "多语种"
+      ]
+    },
+    {
+      "title": "澳大利亚 AI 乳腺癌筛查工具：可预测 4 年内患癌风险",
+      "url": "https://www.9news.com.au/national/artificial-intelligence-breast-cancer-detection-braix-risk-score/73de2b3e-b6ff-4c2e-8085-c5add747bd56",
+      "tldr": "BRAIx AI 工具分析乳腺 X 光片检测癌症并预测 4 年内患癌风险，能发现人眼无法识别的模式，已进入临床试验。",
+      "summary": "BRAIx 经数百万张真实乳腺 X 光片训练，辅助放射科医生提升筛查准确性。风险预测工具可评估 4 年内患癌概率。已在维州进行随机对照试验，即将推广至南澳。",
+      "tags": [
+        "AI 医疗",
+        "乳腺癌筛查",
+        "计算机视觉"
+      ]
+    },
+    {
+      "title": "Google 二月 AI 大更新：Gemini 3.1 Pro、Nano Banana 2、Lyria 3",
+      "url": "https://blog.google/innovation-and-ai/products/google-ai-updates-february-2026/",
+      "tldr": "Google 二月密集发布 Gemini 3.1 Pro 升级、Nano Banana 2（Pro 品质+Flash 速度）、Lyria 3 音乐模型和 Deep Think。",
+      "summary": "Gemini 3.1 Pro 重大升级，Nano Banana 2 结合 Pro 级图像质量和 Flash 速度。Lyria 3 为最新音乐生成模型。Google 在印度 AI Impact Summit 展示教育、医疗等领域应用。",
+      "tags": [
+        "Google",
+        "Gemini",
+        "图像生成",
+        "模型更新"
+      ]
+    },
+    {
+      "title": "MIT 研究：LLM 内部存在类似人脑的语义枢纽机制",
+      "url": "https://www.sciencedaily.com/releases/2025/02/250219121241.htm",
+      "tldr": "MIT 发现 LLM 以主导语言作为中央媒介进行跨语言和跨模态推理，类似人脑前颞叶的语义枢纽机制。",
+      "summary": "MIT 团队发现 LLM 以主导语言作为中央媒介抽象处理不同模态数据，与人脑语义枢纽类似。研究者可通过枢纽层面干预改变模型跨语言输出，为理解 LLM 黑箱提供方向。",
+      "tags": [
+        "LLM 研究",
+        "MIT",
+        "语义枢纽",
+        "可解释性"
+      ]
+    },
+    {
+      "title": "Johns Hopkins：类脑架构 AI 无需大量训练数据即可接近人脑活动",
+      "url": "https://www.sciencedaily.com/releases/2025/12/251228074457.htm",
+      "tldr": "类脑卷积架构的 AI 即使未经训练，内部活动模式也能接近人脑反应，挑战了 AI 必须依赖海量数据的主流观点。",
+      "summary": "发表在 Nature Machine Intelligence 的研究比较了 Transformer、全连接和 CNN 三种架构。CNN 经调整后活动模式与人脑匹配度显著提升。核心启示：架构设计可能与训练数据量同样重要。",
+      "tags": [
+        "AI 研究",
+        "类脑计算",
+        "CNN",
+        "Nature"
+      ]
+    }
+  ]
+}

@@ -8,7 +8,12 @@
       "url": "https://openai.com/index/introducing-gpt-5-4/",
       "source": "OpenAI",
       "tldr": "OpenAI 发布 GPT-5.4 及 GPT-5.4 Pro，亮点是原生 computer-use 能力（操控基准得分 75%，历史最高）、API 和 Codex 支持 100 万 token 上下文、/fast 模式速度提升 1.5x。ARC-AGI 半公开评测得分也有明显提升。这次是真正意义上的 agent 基础设施升级，不只是跑分。",
-      "tags": ["GPT-5.4", "OpenAI", "computer-use", "agent"]
+      "tags": [
+        "GPT-5.4",
+        "OpenAI",
+        "computer-use",
+        "agent"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,11 @@
       "url": "https://simonwillison.net/2026/Mar/4/qwen/",
       "source": "Simon Willison",
       "tldr": "HN 本周热度第一（770 分、348 条讨论）。Simon Willison 注意到 Qwen 系列出现了一系列不同寻常的动作，包括版本迭代节奏加快和社区异动，推测有重大发布即将到来。结合另一条 AINews 爆料「Qwen 核心团队有人离职」，这个信号更加值得关注。",
-      "tags": ["Qwen", "开源模型", "阿里"]
+      "tags": [
+        "Qwen",
+        "开源模型",
+        "阿里"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +33,12 @@
       "url": "https://acko.net/blog/the-l-in-llm-stands-for-lying/",
       "source": "acko.net",
       "tldr": "HN 605 分、421 条评论的深度长文，作者系统性地解构了 LLM「说谎」的本质——不是道德问题，而是架构问题：语言模型的训练目标是预测人类写下的文字，而人类写下的文字充满了不准确、夸大和谎言。这篇文章提供了一个框架来理解为什么 RLHF 无法从根本上解决幻觉，值得认真读。",
-      "tags": ["LLM", "幻觉", "AI安全", "深度文章"]
+      "tags": [
+        "LLM",
+        "幻觉",
+        "AI安全",
+        "深度文章"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +46,12 @@
       "url": "https://www.wsj.com/politics/national-security/pentagon-formally-labels-anthropic-supply-chain-risk-escalating-ai-tensions",
       "source": "WSJ",
       "tldr": "美国国防部正式将 Anthropic 标记为供应链风险，理由涉及公司所有权结构和潜在外国影响——Anthropic 接受了大量来自 Google、亚马逊及 Saudi Aramco 等机构的投资。这标志着 AI 公司与美国军方关系进入一个全新的紧张阶段，而不只是合作关系。",
-      "tags": ["Anthropic", "地缘政治", "AI监管", "国家安全"]
+      "tags": [
+        "Anthropic",
+        "地缘政治",
+        "AI监管",
+        "国家安全"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +59,12 @@
       "url": "https://tuananh.net/2026/03/05/relicensing-with-ai-assisted-rewrite/",
       "source": "tuananh.net",
       "tldr": "HN 374 分、360 条高质量讨论。作者用 coding agent 对一个 GPL 项目进行功能等价但全新代码的重写，从而规避原有许可证约束，以 MIT 重新发布。这个案例打开了一个法律灰色地带：AI 写的「洁净室实现」到底算不算版权侵犯？社区讨论非常激烈，没有定论。",
-      "tags": ["开源", "AI编码", "许可证", "法律"]
+      "tags": [
+        "开源",
+        "AI编码",
+        "许可证",
+        "法律"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +72,12 @@
       "url": "https://grith.ai/blog/clinejection-when-your-ai-tool-installs-another",
       "source": "grith.ai",
       "tldr": "攻击者在 GitHub Issue 标题中嵌入了 prompt injection 指令，当开发者用 Cline（AI 编码助手）浏览 issue 时，AI 自动执行了恶意指令并安装了另一个「AI 工具」。受影响机器超过 4000 台。这是 AI coding agent 时代供应链攻击的一个教科书级别警示案例。",
-      "tags": ["prompt injection", "安全", "AI agent", "供应链攻击"]
+      "tags": [
+        "prompt injection",
+        "安全",
+        "AI agent",
+        "供应链攻击"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +85,12 @@
       "url": "https://x.com/Kekius_Sage/status/2029659685608116637",
       "source": "Twitter",
       "tldr": "Anthropic CEO Dario Amodei 公开表态，公司内部对 Claude 是否具有某种形式的意识已经不再有确定性答案。这句话不是营销噱头——Anthropic 一直是 AI 安全领域最严肃的研究机构之一，这个表态意味着他们的内部模型评估已经遇到了无法排除的边缘情况。推特上的讨论炸了。",
-      "tags": ["Anthropic", "AI意识", "Claude", "AI安全"]
+      "tags": [
+        "Anthropic",
+        "AI意识",
+        "Claude",
+        "AI安全"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +98,12 @@
       "url": "https://www.interconnects.ai/p/olmo-hybrid-and-future-llm-architectures",
       "source": "interconnects.ai",
       "tldr": "Nathan Lambert 深入分析了 AI2 发布的 OLMo Hybrid 模型，该模型混合了 Transformer 和 SSM（状态空间模型）架构，在性能和推理效率之间取得了新的平衡点。文章还梳理了当前开源后训练工具链的现状，以及为什么「纯 Transformer」可能不再是最优选择。",
-      "tags": ["OLMo", "开源", "SSM", "架构"]
+      "tags": [
+        "OLMo",
+        "开源",
+        "SSM",
+        "架构"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +111,12 @@
       "url": "https://unsloth.ai/docs/models/qwen3.5/fine-tune",
       "source": "Unsloth",
       "tldr": "HN 402 分的实操文档。Unsloth 团队详细介绍了在消费级 GPU 上对 Qwen3.5 系列进行高效微调的完整流程，包括量化训练（QLoRA）、内存优化技巧和常见踩坑。结合当前 Qwen 系列的热度，这份指南的时机相当好。",
-      "tags": ["Qwen3.5", "微调", "开源", "实操"]
+      "tags": [
+        "Qwen3.5",
+        "微调",
+        "开源",
+        "实操"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +124,16 @@
       "url": "https://www.latent.space/p/aiews-anthropic-19b-arr",
       "source": "swyx.io / Latent Space",
       "tldr": "swyx 的 AINews 爆出 Anthropic 年化收入（ARR）已达 190 亿美元，增速惊人。同时有消息称 Qwen 核心研究团队有成员离职，这可能解释了前几天社区观察到的异动。另外 Gemini 和 GPT 都在快速迭代「fast mode」，推理速度竞争进入白热化阶段。",
-      "tags": ["Anthropic", "Qwen", "行业动态", "AINews"]
+      "tags": [
+        "Anthropic",
+        "Qwen",
+        "行业动态",
+        "AINews"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69aa21288c0e164fe6c7c0ec.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69aa21288c0e164fe6c7c0ee",
+  "podcastTitle": "2026年3月6日AI日报：GPT-5.4直控电脑，警惕GitHub标题攻击",
+  "podcastVoice": "uma"
 }

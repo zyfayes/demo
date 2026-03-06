@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVDA Research Report | Alva</title>
+<style>
+  @font-face { font-family: 'Delight'; src: local('Delight'); font-weight: 400; }
+  @font-face { font-family: 'Delight'; src: local('Delight-Medium'); font-weight: 500; }
+
+  :root {
+    --text-n9: rgba(0,0,0,0.9);
+    --text-n7: rgba(0,0,0,0.7);
+    --text-n5: rgba(0,0,0,0.5);
+    --text-n3: rgba(0,0,0,0.3);
+    --text-n2: rgba(0,0,0,0.2);
+    --main-m1: #49A3A6;
+    --main-m1-10: rgba(73,163,166,0.1);
+    --main-m2: #2196F3;
+    --main-m3: #2a9b7d;
+    --main-m3-10: rgba(42,155,125,0.1);
+    --main-m4: #e05357;
+    --main-m4-10: rgba(224,83,87,0.1);
+    --main-m5: #E6A91A;
+    --main-m5-10: rgba(230,169,26,0.1);
+    --main-m6: #ff9800;
+    --b0-page: #ffffff;
+    --grey-g01: #fafafa;
+    --b-r02: rgba(0,0,0,.02);
+    --b-r03: rgba(0,0,0,.03);
+    --line-l07: rgba(0,0,0,0.07);
+    --line-l12: rgba(0,0,0,0.12);
+    --shadow-xs: 0 4px 15px 0 rgba(0,0,0,0.05);
+    --shadow-s: 0 6px 20px 0 rgba(0,0,0,0.04);
+    --shadow-l: 0 10px 20px 0 rgba(0,0,0,0.08);
+    --chart-blue1-main: #3D8BD1;
+    --chart-cyan1-1: #117A7D;
+    --chart-purple1-main: #5F75C9;
+    --chart-orange1-main: #FF9800;
+    --chart-green1-main: #40A544;
+    --chart-violet1-main: #A878DC;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Delight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--b0-page);
+    color: var(--text-n9);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    line-height: 1.6;
+  }
+
+  /* ========== Layout ========== */
+  .report-container {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+  }
+
+  /* ========== Header ========== */
+  .report-header {
+    margin-bottom: 40px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--line-l07);
+  }
+  .report-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .report-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    background: var(--main-m1-10);
+    color: var(--main-m1);
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .report-date {
+    font-size: 13px;
+    color: var(--text-n5);
+  }
+  .report-title {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--text-n9);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+  .report-subtitle {
+    font-size: 15px;
+    color: var(--text-n5);
+    font-weight: 400;
+  }
+  .ticker-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .ticker-symbol {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--main-m1);
+    padding: 4px 10px;
+    background: var(--main-m1-10);
+    border-radius: 4px;
+  }
+  .ticker-info {
+    font-size: 13px;
+    color: var(--text-n5);
+  }
+
+  /* ========== Score Banner ========== */
+  .score-banner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--line-l07);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: var(--shadow-xs);
+  }
+  .score-item {
+    background: var(--grey-g01);
+    padding: 24px;
+    text-align: center;
+  }
+  .score-label {
+    font-size: 12px;
+    color: var(--text-n5);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  .score-value {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--text-n9);
+  }
+  .score-value.bullish { color: var(--main-m3); }
+  .score-value.bearish { color: var(--main-m4); }
+  .score-change {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .score-change.up { color: var(--main-m3); }
+  .score-change.down { color: var(--main-m4); }
+
+  /* ========== Section ========== */
+  .section {
+    margin-bottom: 40px;
+  }
+  .section-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-n9);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line-l07);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    display: inline-block;
+    width: 3px;
+    height: 18px;
+    background: var(--main-m1);
+    border-radius: 2px;
+  }
+
+  /* ========== Summary Card ========== */
+  .summary-card {
+    background: var(--grey-g01);
+    border: 1px solid var(--line-l07);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .summary-card p {
+    font-size: 14px;
+    color: var(--text-n7);
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .summary-card p:last-child { margin-bottom: 0; }
+
+  .highlight {
+    color: var(--main-m1);
+    font-weight: 500;
+  }
+  .highlight-green {
+    color: var(--main-m3);
+    font-weight: 500;
+  }
+  .highlight-red {
+    color: var(--main-m4);
+    font-weight: 500;
+  }
+
+  /* ========== KPI Grid ========== */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .kpi-card {
+    background: var(--grey-g01);
+    border: 1px solid var(--line-l07);
+    border-radius: 6px;
+    padding: 20px 16px;
+  }
+  .kpi-label {
+    font-size: 12px;
+    color: var(--text-n5);
+    margin-bottom: 8px;
+  }
+  .kpi-value {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-n9);
+  }
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-n5);
+    margin-top: 4px;
+  }
+  .kpi-sub.up { color: var(--main-m3); }
+
+  /* ========== Revenue Bar Chart ========== */
+  .chart-container {
+    background: var(--grey-g01);
+    border: 1px solid var(--line-l07);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-n7);
+    margin-bottom: 20px;
+  }
+  .bar-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    height: 200px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--line-l07);
+  }
+  .bar-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+  }
+  .bar {
+    width: 100%;
+    max-width: 48px;
+    border-radius: 4px 4px 0 0;
+    position: relative;
+    transition: opacity 0.2s;
+    cursor: default;
+  }
+  .bar:hover { opacity: 0.85; }
+  .bar-label {
+    font-size: 11px;
+    color: var(--text-n5);
+    margin-top: 8px;
+    text-align: center;
+  }
+  .bar-value {
+    font-size: 11px;
+    color: var(--text-n7);
+    font-weight: 500;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+
+  /* ========== Segment Table ========== */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .data-table th {
+    text-align: left;
+    padding: 10px 16px;
+    font-weight: 500;
+    color: var(--text-n5);
+    font-size: 12px;
+    background: var(--b-r02);
+    border-bottom: 1px solid var(--line-l07);
+  }
+  .data-table td {
+    padding: 12px 16px;
+    color: var(--text-n7);
+    border-bottom: 1px solid var(--line-l07);
+  }
+  .data-table tr:last-child td { border-bottom: none; }
+  .data-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .data-table .strong { color: var(--text-n9); font-weight: 500; }
+
+  /* ========== Donut Chart ========== */
+  .donut-container {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 24px;
+    background: var(--grey-g01);
+    border: 1px solid var(--line-l07);
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  .donut-svg { flex-shrink: 0; }
+  .donut-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--text-n7);
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .legend-pct {
+    font-weight: 500;
+    color: var(--text-n9);
+    margin-left: auto;
+    min-width: 40px;
+    text-align: right;
+  }
+
+  /* ========== Valuation Table ========== */
+  .val-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .val-card {
+    background: var(--grey-g01);
+    border: 1px solid var(--line-l07);
+    border-radius: 6px;
+    padding: 20px;
+  }
+  .val-card-title {
+    font-size: 12px;
+    color: var(--text-n5);
+    margin-bottom: 16px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+  }
+  .val-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px 0;
+    font-size: 13px;
+  }
+  .val-row-label { color: var(--text-n5); }
+  .val-row-value { color: var(--text-n9); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  /* ========== Callout ========== */
+  .callout {
+    border-left: 3px solid var(--main-m1);
+    background: var(--main-m1-10);
+    padding: 16px 20px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 24px;
+  }
+  .callout p {
+    font-size: 14px;
+    color: var(--text-n7);
+    line-height: 1.7;
+    font-style: italic;
+  }
+  .callout .source {
+    font-size: 12px;
+    color: var(--text-n5);
+    font-style: normal;
+    margin-top: 8px;
+  }
+
+  /* ========== Risk Tags ========== */
+  .risk-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .risk-item {
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: var(--grey-g01);
+    border: 1px solid var(--line-l07);
+    border-radius: 6px;
+  }
+  .risk-level {
+    padding: 2px 8px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+    height: fit-content;
+    margin-top: 2px;
+  }
+  .risk-level.high { background: var(--main-m4-10); color: var(--main-m4); }
+  .risk-level.medium { background: var(--main-m5-10); color: var(--main-m5); }
+  .risk-level.low { background: var(--main-m3-10); color: var(--main-m3); }
+  .risk-text {
+    font-size: 13px;
+    color: var(--text-n7);
+    line-height: 1.6;
+  }
+  .risk-text strong {
+    color: var(--text-n9);
+    font-weight: 500;
+  }
+
+  /* ========== Rating ========== */
+  .rating-box {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px;
+    background: var(--main-m3-10);
+    border: 1px solid rgba(42,155,125,0.2);
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  .rating-label {
+    font-size: 13px;
+    color: var(--text-n5);
+    margin-bottom: 4px;
+  }
+  .rating-value {
+    font-size: 28px;
+    font-weight: 400;
+    color: var(--main-m3);
+  }
+  .rating-desc {
+    font-size: 14px;
+    color: var(--text-n7);
+    line-height: 1.7;
+  }
+
+  /* ========== Footer ========== */
+  .report-footer {
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--line-l07);
+    font-size: 12px;
+    color: var(--text-n3);
+    line-height: 1.8;
+  }
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    color: var(--text-n5);
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .footer-logo svg { flex-shrink: 0; }
+
+  /* ========== Responsive ========== */
+  @media (max-width: 768px) {
+    .report-container { padding: 32px 20px 60px; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+    .score-banner { grid-template-columns: 1fr; }
+    .val-grid { grid-template-columns: 1fr; }
+    .donut-container { flex-direction: column; }
+    .report-title { font-size: 24px; }
+  }
+  /* ========== Theme Toggle ========== */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--line-l07);
+    background: var(--grey-g01);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 20px;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+  }
+</style>
+</head>
+<body>
+<a class="theme-toggle" href="nvda-report-dark.html" title="Switch to Dark Mode">🌙</a>
+
+<div class="report-container">
+
+  <!-- Header -->
+  <header class="report-header">
+    <div class="report-meta">
+      <span class="report-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+        Earnings Analysis
+      </span>
+      <span class="report-date">2025.02.26 | Q4 FY2025</span>
+    </div>
+    <h1 class="report-title">NVIDIA Q4 FY2025 Earnings Deep Dive</h1>
+    <p class="report-subtitle">AI 基础设施核心标的，数据中心业务持续超预期，Agentic AI 拐点已至</p>
+    <div class="ticker-row">
+      <span class="ticker-symbol">NVDA</span>
+      <span class="ticker-info">NASDAQ | Semiconductors | Market Cap $4.45T</span>
+    </div>
+  </header>
+
+  <!-- Score Banner -->
+  <div class="score-banner">
+    <div class="score-item">
+      <div class="score-label">QUARTERLY REVENUE</div>
+      <div class="score-value">$68.1B</div>
+      <div class="score-change up">+73% YoY</div>
+    </div>
+    <div class="score-item">
+      <div class="score-label">NET INCOME</div>
+      <div class="score-value bullish">$42.9B</div>
+      <div class="score-change up">+94% YoY</div>
+    </div>
+    <div class="score-item">
+      <div class="score-label">ADJ. EPS</div>
+      <div class="score-value">$1.62</div>
+      <div class="score-change up">Beat est. $1.53</div>
+    </div>
+  </div>
+
+  <!-- Executive Summary -->
+  <div class="section">
+    <h2 class="section-title">Executive Summary</h2>
+    <div class="summary-card">
+      <p>NVIDIA 发布 Q4 FY2025（截至 2025 年 1 月）财报，<span class="highlight-green">全面超越市场预期</span>。季度营收达 <span class="highlight">$68.1B</span>，同比增长 73%（市场预期 $65.9B）；调整后每股收益 $1.62，超出一致预期 $1.53。</p>
+      <p>数据中心业务是绝对增长引擎，单季营收 <span class="highlight">$62.3B</span>（同比 +75%），占总营收 91.5%。毛利率维持在 <span class="highlight-green">75.2%</span> 的高位，体现出极强的定价权。</p>
+      <p>前瞻指引更为亮眼：Q1 FY2026 营收指引 <span class="highlight">$76.4B - $79.5B</span>（中值 $78B），远超市场预期的 $72.8B，暗示 Blackwell 架构产品需求强劲。</p>
+    </div>
+  </div>
+
+  <!-- Quarterly Revenue Trend -->
+  <div class="section">
+    <h2 class="section-title">Revenue Trajectory</h2>
+    <div class="chart-container">
+      <div class="chart-title">Quarterly Revenue ($B) | FY2024 Q1 - FY2025 Q4</div>
+      <div class="bar-chart">
+        <div class="bar-group">
+          <div class="bar-value">$7.2</div>
+          <div class="bar" style="height:36px; background:var(--chart-cyan2-2);"></div>
+          <div class="bar-label">Q1'24</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$13.5</div>
+          <div class="bar" style="height:68px; background:var(--chart-cyan2-2);"></div>
+          <div class="bar-label">Q2'24</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$18.1</div>
+          <div class="bar" style="height:91px; background:var(--chart-cyan2-2);"></div>
+          <div class="bar-label">Q3'24</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$22.1</div>
+          <div class="bar" style="height:111px; background:var(--chart-cyan2-2);"></div>
+          <div class="bar-label">Q4'24</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$26.0</div>
+          <div class="bar" style="height:130px; background:var(--main-m1);"></div>
+          <div class="bar-label">Q1'25</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$30.0</div>
+          <div class="bar" style="height:150px; background:var(--main-m1);"></div>
+          <div class="bar-label">Q2'25</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$35.1</div>
+          <div class="bar" style="height:176px; background:var(--main-m1);"></div>
+          <div class="bar-label">Q3'25</div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-value">$68.1</div>
+          <div class="bar" style="height:200px; background:var(--chart-cyan1-1);"></div>
+          <div class="bar-label">Q4'25</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Key Metrics -->
+  <div class="section">
+    <h2 class="section-title">Key Financial Metrics</h2>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">TTM Revenue</div>
+        <div class="kpi-value">$215.9B</div>
+        <div class="kpi-sub up">YoY +114%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">TTM Net Income</div>
+        <div class="kpi-value">$120.1B</div>
+        <div class="kpi-sub up">Margin 55.6%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Gross Margin</div>
+        <div class="kpi-value">75.2%</div>
+        <div class="kpi-sub">Q4 FY2025</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">EPS (TTM)</div>
+        <div class="kpi-value">$4.93</div>
+        <div class="kpi-sub">Diluted</div>
+      </div>
+    </div>
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">P/E Ratio</div>
+        <div class="kpi-value">37.1x</div>
+        <div class="kpi-sub">TTM</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">P/S Ratio</div>
+        <div class="kpi-value">20.6x</div>
+        <div class="kpi-sub">TTM</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">ROE</div>
+        <div class="kpi-value" style="color:var(--main-m3)">76.3%</div>
+        <div class="kpi-sub">Exceptional</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">EV/EBITDA</div>
+        <div class="kpi-value">30.4x</div>
+        <div class="kpi-sub">Enterprise Value $4.4T</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Revenue Breakdown -->
+  <div class="section">
+    <h2 class="section-title">Revenue Breakdown by Segment</h2>
+
+    <div class="donut-container">
+      <svg class="donut-svg" width="180" height="180" viewBox="0 0 180 180">
+        <circle cx="90" cy="90" r="70" fill="none" stroke="var(--line-l07)" stroke-width="24"/>
+        <!-- Data Center 91.5% -->
+        <circle cx="90" cy="90" r="70" fill="none" stroke="var(--chart-cyan1-1)" stroke-width="24"
+          stroke-dasharray="406.3 33.6" stroke-dashoffset="110" transform="rotate(-90 90 90)"/>
+        <!-- Gaming 5.0% -->
+        <circle cx="90" cy="90" r="70" fill="none" stroke="var(--chart-blue1-main)" stroke-width="24"
+          stroke-dasharray="22 417.9" stroke-dashoffset="-296.3" transform="rotate(-90 90 90)"/>
+        <!-- Auto 2.1% -->
+        <circle cx="90" cy="90" r="70" fill="none" stroke="var(--chart-orange1-main)" stroke-width="24"
+          stroke-dasharray="9.2 430.7" stroke-dashoffset="-318.3" transform="rotate(-90 90 90)"/>
+        <!-- Pro Viz 1.4% -->
+        <circle cx="90" cy="90" r="70" fill="none" stroke="var(--chart-purple1-main)" stroke-width="24"
+          stroke-dasharray="6.2 433.7" stroke-dashoffset="-327.5" transform="rotate(-90 90 90)"/>
+        <text x="90" y="85" text-anchor="middle" fill="var(--text-n9)" font-size="22" font-weight="400">$68.1B</text>
+        <text x="90" y="105" text-anchor="middle" fill="var(--text-n5)" font-size="11">Q4 FY2025</text>
+      </svg>
+      <div class="donut-legend">
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--chart-cyan1-1)"></span>
+          Data Center<span class="legend-pct">91.5%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--chart-blue1-main)"></span>
+          Gaming<span class="legend-pct">5.0%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--chart-orange1-main)"></span>
+          Automotive<span class="legend-pct">2.1%</span>
+        </div>
+        <div class="legend-item">
+          <span class="legend-dot" style="background:var(--chart-purple1-main)"></span>
+          Professional Visualization<span class="legend-pct">1.4%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-container" style="overflow-x:auto;">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th class="num">Q4 FY2025</th>
+            <th class="num">YoY Growth</th>
+            <th class="num">Share</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="strong">Data Center</td>
+            <td class="num strong">$62.3B</td>
+            <td class="num" style="color:var(--main-m3);">+75%</td>
+            <td class="num">91.5%</td>
+          </tr>
+          <tr>
+            <td>Gaming</td>
+            <td class="num">~$3.4B</td>
+            <td class="num" style="color:var(--main-m3);">+est.</td>
+            <td class="num">5.0%</td>
+          </tr>
+          <tr>
+            <td>Automotive</td>
+            <td class="num">~$1.4B</td>
+            <td class="num" style="color:var(--main-m3);">+est.</td>
+            <td class="num">2.1%</td>
+          </tr>
+          <tr>
+            <td>Professional Visualization</td>
+            <td class="num">~$1.0B</td>
+            <td class="num">-</td>
+            <td class="num">1.4%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Jensen Huang Quote -->
+  <div class="section">
+    <h2 class="section-title">Management Commentary</h2>
+    <div class="callout">
+      <p>"Computing demand is growing exponentially -- the agentic AI inflection point has arrived."</p>
+      <div class="source">-- Jensen Huang, CEO, NVIDIA Earnings Call, Feb 26, 2025</div>
+    </div>
+    <div class="summary-card">
+      <p>黄仁勋在财报电话会上强调三个核心主题：</p>
+      <p><span class="highlight">1. Blackwell 架构全面量产</span> -- Blackwell GPU 开始大规模出货，满足来自超大规模云厂商（Microsoft、Google、Amazon、Meta）的巨量需求。供应链产能正在持续扩张。</p>
+      <p><span class="highlight">2. Agentic AI 是下一个范式</span> -- 从 ChatGPT 时刻至今，NVIDIA 数据中心营收增长约 13 倍。AI Agent 将推动新一轮算力需求爆发。</p>
+      <p><span class="highlight">3. 推理需求超越训练</span> -- 随着大模型部署进入生产环境，推理工作负载正在快速增长，这为 GPU 需求提供了更持久的结构性驱动力。</p>
+    </div>
+  </div>
+
+  <!-- Valuation -->
+  <div class="section">
+    <h2 class="section-title">Valuation Snapshot</h2>
+    <div class="val-grid">
+      <div class="val-card">
+        <div class="val-card-title">MARKET METRICS</div>
+        <div class="val-row"><span class="val-row-label">Market Cap</span><span class="val-row-value">$4.45T</span></div>
+        <div class="val-row"><span class="val-row-label">Enterprise Value</span><span class="val-row-value">$4.40T</span></div>
+        <div class="val-row"><span class="val-row-label">P/E (TTM)</span><span class="val-row-value">37.1x</span></div>
+        <div class="val-row"><span class="val-row-label">P/S (TTM)</span><span class="val-row-value">20.6x</span></div>
+        <div class="val-row"><span class="val-row-label">P/B</span><span class="val-row-value">28.3x</span></div>
+        <div class="val-row"><span class="val-row-label">EV/EBITDA</span><span class="val-row-value">30.4x</span></div>
+      </div>
+      <div class="val-card">
+        <div class="val-card-title">PROFITABILITY</div>
+        <div class="val-row"><span class="val-row-label">Gross Margin</span><span class="val-row-value">75.2%</span></div>
+        <div class="val-row"><span class="val-row-label">Net Margin (TTM)</span><span class="val-row-value">55.6%</span></div>
+        <div class="val-row"><span class="val-row-label">ROE</span><span class="val-row-value" style="color:var(--main-m3)">76.3%</span></div>
+        <div class="val-row"><span class="val-row-label">Debt / Assets</span><span class="val-row-value">5.5%</span></div>
+        <div class="val-row"><span class="val-row-label">Employees</span><span class="val-row-value">36,000</span></div>
+        <div class="val-row"><span class="val-row-label">IPO Date</span><span class="val-row-value">1999-01-22</span></div>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <p>从估值角度看，NVIDIA 当前 <span class="highlight">PE 37x</span> 相较其 >70% 的营收增速并不算贵——PEG 仅约 0.5x。考虑到 Q1 指引中值 $78B 意味着年化营收超 $300B，forward PE 可能进一步压缩至 ~30x。</p>
+      <p>关键问题在于增长的持续性：如果 AI Capex 周期延续 2-3 年（多数分析师的基准假设），当前估值具有合理性。但若需求出现周期性放缓，高 P/S 倍数将面临压力。</p>
+    </div>
+  </div>
+
+  <!-- Forward Guidance -->
+  <div class="section">
+    <h2 class="section-title">Forward Guidance: Q1 FY2026</h2>
+    <div class="kpi-grid" style="grid-template-columns: repeat(3, 1fr);">
+      <div class="kpi-card" style="border-color:rgba(42,155,125,0.2); background:var(--main-m3-10);">
+        <div class="kpi-label">Revenue Guide (Mid)</div>
+        <div class="kpi-value" style="color:var(--main-m3)">$78.0B</div>
+        <div class="kpi-sub up">vs est. $72.8B (+7.1%)</div>
+      </div>
+      <div class="kpi-card" style="border-color:rgba(42,155,125,0.2); background:var(--main-m3-10);">
+        <div class="kpi-label">Guide Range</div>
+        <div class="kpi-value" style="color:var(--main-m3)">$76.4 - $79.6B</div>
+        <div class="kpi-sub">+/- 2%</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">QoQ Growth Implied</div>
+        <div class="kpi-value">+14.5%</div>
+        <div class="kpi-sub">Accelerating</div>
+      </div>
+    </div>
+    <div class="summary-card">
+      <p>Q1 指引中值 $78B 较市场一致预期 $72.8B 高出 <span class="highlight-green">7.1%</span>，这是连续多个季度的显著超预期指引。隐含 QoQ 增长 14.5%，说明 Blackwell 出货正在加速。</p>
+      <p>按此轨迹，FY2026 全年营收有望突破 <span class="highlight">$320B+</span>，较 FY2025 的 $215.9B 增长约 50%。</p>
+    </div>
+  </div>
+
+  <!-- Data Center Deep Dive -->
+  <div class="section">
+    <h2 class="section-title">Data Center: The $62B Engine</h2>
+    <div class="summary-card">
+      <p>数据中心单季 $62.3B 的营收是人类科技史上单一业务线的最高季度表现之一。关键驱动因素：</p>
+      <p><span class="highlight">Cloud Hyperscalers</span> -- Microsoft、Google、Amazon、Meta 合计 AI Capex 在 2025 年预计超过 $200B，其中 GPU 采购占比约 40-50%。NVIDIA 在高端 AI 训练芯片市场份额超过 90%。</p>
+      <p><span class="highlight">Sovereign AI</span> -- 各国政府加大 AI 基础设施投入，中东、东南亚、欧洲的国家级 AI 项目为增量需求来源。</p>
+      <p><span class="highlight">Enterprise AI</span> -- 企业级 AI 部署进入早期规模化阶段，推理需求正在从实验转向生产。</p>
+    </div>
+  </div>
+
+  <!-- Risk Analysis -->
+  <div class="section">
+    <h2 class="section-title">Risk Factors</h2>
+    <div class="risk-list">
+      <div class="risk-item">
+        <span class="risk-level high">HIGH</span>
+        <div class="risk-text">
+          <strong>Customer Concentration</strong> -- 前四大客户（Microsoft, Google, Amazon, Meta）可能贡献超过 50% 营收。任何一家大幅削减 Capex 都将产生显著影响。
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level high">HIGH</span>
+        <div class="risk-text">
+          <strong>Export Controls</strong> -- 美国对华 AI 芯片出口限制持续收紧，中国市场营收面临长期压力。合规产品（H20）能否填补缺口存在不确定性。
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level medium">MED</span>
+        <div class="risk-text">
+          <strong>AI Capex Cyclicality</strong> -- 当前 AI 投资热潮具有周期性特征。若 AI 应用商业化回报低于预期，云厂商可能收缩资本开支。
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level medium">MED</span>
+        <div class="risk-text">
+          <strong>Competition Intensifying</strong> -- AMD MI300X/MI400、Google TPU v6、Amazon Trainium2、自研 ASIC 持续推进。中长期市场份额可能被蚕食。
+        </div>
+      </div>
+      <div class="risk-item">
+        <span class="risk-level low">LOW</span>
+        <div class="risk-text">
+          <strong>Efficient AI Models (DeepSeek)</strong> -- DeepSeek 等高效模型可能降低单位推理成本，但 Jevons Paradox 效应下总算力需求反而可能增加。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rating -->
+  <div class="section">
+    <h2 class="section-title">Investment Rating</h2>
+    <div class="rating-box">
+      <div>
+        <div class="rating-label">ALVA RATING</div>
+        <div class="rating-value">BUY</div>
+      </div>
+      <div class="rating-desc">
+        基于 AI 基础设施长期增长确定性、Blackwell 产品周期强劲需求、以及相对合理的 PEG 估值，维持买入评级。Q1 指引显著超预期进一步强化短期催化剂。关注 $130 支撑和 $160 阻力位。
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Source -->
+  <div class="section">
+    <h2 class="section-title">Data Sources</h2>
+    <div class="summary-card">
+      <p style="font-size:12px; color:var(--text-n5);">
+        Financial data: Alva SDK (@arrays/data/stock/company/detail) |
+        Earnings data: Alva Search SDK (@alva/data/search - searchX) |
+        Market sentiment: X/Twitter via Alva Search |
+        Report generated: 2025-03-05
+      </p>
+      <p style="font-size:12px; color:var(--text-n5);">
+        Source tweets: @JuLio_UtXO, @EGARAU_TPRI, @MALLICK_Stocks, @amitisinvesting, @JensKlattFX
+      </p>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="report-footer">
+    <div class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+        <rect width="24" height="24" rx="6" fill="#49A3A6"/>
+        <text x="12" y="17" text-anchor="middle" fill="white" font-size="14" font-weight="500">A</text>
+      </svg>
+      Alva Research
+    </div>
+    <p>This report is generated by Alva AI and is for informational purposes only. It does not constitute investment advice. Past performance is not indicative of future results. Always conduct your own due diligence before making investment decisions.</p>
+    <p style="margin-top:8px;">Powered by Open Alva Platform | Data as of 2025-02-26</p>
+  </footer>
+
+</div>
+
+</body>
+</html>

@@ -553,9 +553,36 @@
     .guide-grid { grid-template-columns: 1fr; }
     .donut-row { flex-direction: column; gap: 24px; }
   }
+
+  /* ========== Theme Toggle ========== */
+  .theme-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 1px solid var(--border-medium);
+    background: var(--bg-elevated);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-size: 20px;
+    line-height: 1;
+    text-decoration: none;
+  }
+  .theme-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  }
 </style>
 </head>
 <body>
+<a class="theme-toggle" href="nvda-report.html" title="Switch to Light Mode">☀️</a>
 
 <div class="report">
 

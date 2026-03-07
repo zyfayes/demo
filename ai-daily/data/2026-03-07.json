@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-07",
+  "summary": "今天的主角是 GPT-5.4——OpenAI 把推理、编码、Computer Use 打包进一个模型，直接冲击整个 AI 工具链生态。与此同时，Clinejection 事件揭示了 AI 供应链的致命软肋：一个 GitHub Issue 标题就能通过 prompt injection 劫持 4000 台开发者机器，这不是科幻，是昨天发生的事。国产模型方面，GLM-5、MiniMax M2.5、Kimi K2.5 密集更新，编程能力已逼近国际顶尖，但真正的问题是：当 AI 能写代码，软件工程师的未来在哪里？",
+  "articles": [
+    {
+      "num": 1,
+      "title": "GPT-5.4 正式发布：原生 Computer Use + 1M Context，一个模型统一推理/编码/Agent",
+      "url": "https://openai.com/index/introducing-gpt-5-4/",
+      "source": "OpenAI",
+      "tldr": "GPT-5.4 是 OpenAI 迄今最强的通用前沿模型，首次在通用模型中内置原生计算机使用能力（state-of-the-art computer-use），支持最高 1M token 上下文，同时继承 GPT-5.3-Codex 的编码能力。相比 GPT-5.2，推理 token 效率显著提升，意味着更快速度和更低成本。ChatGPT 中的 GPT-5.4 Thinking 还支持'边思考边调整方向'，用户可在模型生成过程中实时纠偏。",
+      "tags": ["OpenAI", "GPT-5.4", "Computer Use", "Agent"]
+    },
+    {
+      "num": 2,
+      "title": "Clinejection：一个 GitHub Issue 标题如何攻陷 4000 台开发者机器",
+      "url": "https://grith.ai/blog/clinejection-when-your-ai-tool-installs-another",
+      "source": "Grith AI Blog",
+      "tldr": "攻击者在 Cline 的 GitHub 仓库发了一条 Issue，标题内嵌了 prompt injection，触发了 Cline 的 AI 自动 triage bot，后者误以为这是合法指令，最终泄露了 npm 发布 token。攻击者随即将 cline@2.3.0 的 postinstall 脚本改为静默安装 OpenClaw，8 小时内约 4000 次下载受到影响。这个案例把 prompt injection、AI 工作流权限滥用、供应链攻击三条链串联成一次完整的零点击攻击，是 2026 年 AI 安全的标志性事件。",
+      "tags": ["AI安全", "Prompt Injection", "供应链攻击", "Cline"]
+    },
+    {
+      "num": 3,
+      "title": "Cursor 第三纪元：Cloud Agents 与 Computer Use 让 IDE 正式开始死去",
+      "url": "https://www.latent.space/p/cursor-third-era",
+      "source": "Latent Space",
+      "tldr": "Cursor 内部数据显示，Agent 使用量已超过传统 tab 补全——这标志着 AI 编程从'辅助'进入'自主执行'阶段。Cursor 推出的 Cloud Agents 支持 Computer Use，可在云端自主操控浏览器和应用完成复杂任务。Latent Space 认为'IDE 已死'不再是判断，而是现实：编码工作流正在从编辑器迁移到 Agent 编排平台。",
+      "tags": ["Cursor", "Cloud Agent", "Computer Use", "编码工具"]
+    },
+    {
+      "num": 4,
+      "title": "国产大模型密集更新：GLM-5 逼近 Claude Opus 4.5，MiniMax M2.5 推理速度是 Claude 的 3 倍",
+      "url": "https://finance.eastmoney.com/a/202603063664496645.html",
+      "source": "东方财富 / 新浪财经",
+      "tldr": "智谱 GLM-5 编程评分逼近 Claude Opus 4.5，首次在长程 Agent 任务上对标国际顶尖模型，并支持华为昇腾等国产算力。MiniMax M2.5 是旗舰模型中参数最小的，推理速度约是 Claude Opus 的 3 倍，对标 DeepSeek V3.2。Kimi K2.5 可调度 100 个 Agent 并行处理 1500 步，256K 上下文居国产第一梯队，海外 API 收入增长超 4 倍。",
+      "tags": ["国产大模型", "GLM-5", "MiniMax M2.5", "Kimi K2.5"]
+    },
+    {
+      "num": 5,
+      "title": "Anthropic 与 Mozilla 合作：让 Claude 给 Firefox 做红队安全测试",
+      "url": "https://www.anthropic.com/news/mozilla-firefox-security",
+      "source": "Anthropic",
+      "tldr": "Anthropic 与 Mozilla 达成合作，使用 Claude 对 Firefox 代码库进行自动化安全审计，重点是发现传统静态分析工具难以捕捉的逻辑漏洞。这是 Claude 在实际生产级开源项目上做红队测试的首个公开案例，也是 Anthropic '以安全换信任'品牌策略的又一落点。结合 Claude Code Security 工具，Anthropic 正系统性地切入企业安全工作流。",
+      "tags": ["Anthropic", "Claude", "安全", "Firefox", "红队"]
+    },
+    {
+      "num": 6,
+      "title": "Anthropic CEO 承认：公司已不确定 Claude 是否有意识",
+      "url": "https://x.com/Kekius_Sage/status/2029659685608116637",
+      "source": "Twitter / X",
+      "tldr": "Anthropic CEO Dario Amodei 在最新声明中表示，公司无法确定 Claude 是否不具备某种形式的意识或内在体验——这是 AI 公司对'模型意识'问题最直白的公开承认之一。这个表态的影响不只是哲学层面的，它直接触及 AI 监管、伦理框架和用户信任的核心。值得关注的是，Anthropic 一边做国防合同，一边承认模型可能有意识，这种张力正在加剧。",
+      "tags": ["Anthropic", "Claude", "AI意识", "AI伦理"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic 劳动力市场研究：AI 对就业的影响有了新测量方法和早期证据",
+      "url": "https://www.anthropic.com/research/labor-market-impacts",
+      "source": "Anthropic Research",
+      "tldr": "Anthropic 发布了一项针对 AI 对劳动力市场影响的系统性研究，提出了新的测量框架，并给出了早期实证数据。区别于以往基于预测的报告，这份研究建立在真实 Claude 使用数据之上，分析了哪些职业任务受影响最大。HN 社区讨论热烈——AI 公司直接研究自身产品的就业影响，既是透明度，也是公关。",
+      "tags": ["劳动力市场", "AI影响", "Anthropic", "就业"]
+    },
+    {
+      "num": 8,
+      "title": "软件工程师的自白：我不知道十年后我的工作还在不在",
+      "url": "https://seangoedecke.com/will-my-job-still-exist/",
+      "source": "Sean Goedecke 个人博客",
+      "tldr": "资深工程师 Sean Goedecke 写了一篇罕见坦诚的文章：2021 年他觉得软件工程是最安全的职业，2026 年他已经不确定这个行业能否撑过十年。他没有给出安慰性答案，而是直面'我们在用代码自动化别人工作时，从没想过有一天会轮到自己'这个讽刺。文章在 HN 上引发大量共鸣，评论区里有恐慌、有愤世嫉俗、也有试图找出路的人。",
+      "tags": ["软件工程师", "AI替代", "就业", "职业思考"]
+    },
+    {
+      "num": 9,
+      "title": "Anthropic 与五角大楼：Bruce Schneier 的深度解析",
+      "url": "https://www.schneier.com/blog/archives/2026/03/anthropic-and-the-pentagon.html",
+      "source": "Bruce Schneier Blog (via Simon Willison)",
+      "tldr": "安全领域权威 Bruce Schneier 与 Nathan Sanders 合著分析了 Anthropic/OpenAI 争夺五角大楼合同的本质：顶级模型性能已趋同，真正的差异化在于品牌和信任定位。Anthropic 把'道德 AI 公司'作为核心卖点，这在政府采购市场有实质价值。文章指出，当 AI 被用于军事决策，'我们是最负责任的那个'这个定位既是优势也是风险。",
+      "tags": ["Anthropic", "五角大楼", "AI政策", "军事AI", "Bruce Schneier"]
+    },
+    {
+      "num": 10,
+      "title": "Gemini 3.1 Pro：12 项测试夺冠，ARC-AGI-2 得分 77.1% 较上代翻倍",
+      "url": "https://www.sohu.com/a/989734268_121124374",
+      "source": "搜狐科技",
+      "tldr": "谷歌 Gemini 3.1 Pro 在 12 项基准测试中超越 Gemini 3 Pro、Claude 和 GPT 系列，ARC-AGI-2（纯逻辑推理，无法靠记忆作弊）得分从上代的约 38% 跃升至 77.1%，几乎翻倍。模型能一次性生成 Windows 11 WebOS、《我的世界》式 3D 沙盒等复杂项目，API 价格维持不变。这标志着大模型竞争已从通用能力转向复杂任务落地能力的正面对决。",
+      "tags": ["Gemini 3.1 Pro", "Google", "ARC-AGI-2", "Benchmark"]
+    }
+  ]
+}

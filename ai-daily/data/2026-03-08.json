@@ -8,7 +8,12 @@
       "url": "https://www.anthropic.com/news/mozilla-firefox-security",
       "source": "Anthropic Blog / HN",
       "tldr": "Anthropic 与 Mozilla 合作，用 Claude Opus 4.6 对 Firefox 代码库进行自动漏洞挖掘，两周内发现 22 个真实安全漏洞。这不是 demo 项目，是 Mozilla 已接入生产流程的安全工程实践。AI 做红队不只是宣传——数据说话。",
-      "tags": ["安全", "Anthropic", "Firefox", "应用落地"]
+      "tags": [
+        "安全",
+        "Anthropic",
+        "Firefox",
+        "应用落地"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://x.com/OpenAIDevs/status/2029983809652035758",
       "source": "OpenAI / Twitter",
       "tldr": "OpenAI 发布 Codex Security，是一个能自动扫描代码库漏洞、验证漏洞真实性并生成修复方案的 agent。和同天 Anthropic 的 Firefox 合作放在一起看，'AI 取代传统代码安全工具'这个叙事正在从 PPT 变成真实压力——CrowdStrike 们的估值逻辑开始动摇。",
-      "tags": ["安全", "OpenAI", "Codex", "Agent"]
+      "tags": [
+        "安全",
+        "OpenAI",
+        "Codex",
+        "Agent"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,12 @@
       "url": "https://www.sarvam.ai/blogs/sarvam-30b-105b",
       "source": "Sarvam AI / HN",
       "tldr": "印度 AI 公司 Sarvam 发布 105B 参数开源模型，号称是首个在通用 benchmark 上与 GPT/Claude 主流版本竞争的印度自研 LLM，同时对印度语言有原生优化。开源 LLM 的地理分布越来越广——不再只是中美两极的游戏。",
-      "tags": ["开源", "LLM", "印度", "多语言"]
+      "tags": [
+        "开源",
+        "LLM",
+        "印度",
+        "多语言"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +47,13 @@
       "url": "https://x.com/_avichawla/status/2030170079229530499",
       "source": "Twitter / @_avichawla",
       "tldr": "Kimi K2.5 和 MiniMax M2.5 都是开源 MoE 架构，能力被指对标 Claude Opus 4.6，但推理成本仅约 1/20。这个价格差距对 API 驱动的产品来说几乎是决策题，不是技术题。Cursor 用 Claude 的隐性补贴成本已经在泄露（见下条），替代品的出现时机很微妙。",
-      "tags": ["开源", "MoE", "Kimi", "MiniMax", "性价比"]
+      "tags": [
+        "开源",
+        "MoE",
+        "Kimi",
+        "MiniMax",
+        "性价比"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +61,12 @@
       "url": "https://x.com/bearlyai/status/2030051147264970893",
       "source": "Twitter / @bearlyai",
       "tldr": "流出的 Cursor 内部分析显示，$200/月订阅曾对应高达 $2000 的实际算力消耗——Anthropic 在补贴用户获取和市场渗透。这个模式不可能永久持续，要么提价、要么砍能力、要么找到大幅降低推理成本的路。对所有押注 Claude API 的开发者来说，这是个风险信号。",
-      "tags": ["Anthropic", "Claude", "商业模式", "定价"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "商业模式",
+        "定价"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +74,12 @@
       "url": "https://fazy.medium.com/agentic-coding-ais-adolescence-b0d13",
       "source": "Medium / HN",
       "tldr": "作者提出'Verification Debt'概念：AI 写代码快，但人类验证 AI 输出的时间和认知成本被严重低估。代码生成速度提升 10 倍，但 review 和验证成本可能只下降了 2 倍，差值变成了隐性技术债。这个框架解释了为什么用 AI 的开发者反而更忙（见下条）。",
-      "tags": ["AI编程", "技术债", "生产力", "工程实践"]
+      "tags": [
+        "AI编程",
+        "技术债",
+        "生产力",
+        "工程实践"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +87,12 @@
       "url": "https://www.scientificamerican.com/article/why-developers-using-ai-are-working-longer-hours",
       "source": "Scientific American / HN",
       "tldr": "《科学美国人》引用最新研究：使用 AI 编程工具的开发者，平均工作时长比不用的多约 12%。原因包括：AI 打低了'开始一个新任务'的阻力，导致工作范围扩大；以及对 AI 输出的 review 耗时不可忽视。'AI 让你更轻松'这个叙事在数据面前开始裂缝。",
-      "tags": ["生产力", "AI编程", "研究", "开发者体验"]
+      "tags": [
+        "生产力",
+        "AI编程",
+        "研究",
+        "开发者体验"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +100,12 @@
       "url": "https://blog.katanaquant.com/p/your-llm-doesnt-write-correct",
       "source": "Katana Quant Blog / HN",
       "tldr": "作者认为 LLM 效果差的根本原因不是模型能力，而是没有明确的验收标准。当用户先定义'什么输出算正确'，模型的实际可用率大幅提升。这篇文章的洞察很实用：本质上是把软件工程的测试思维引入 prompt 工程。",
-      "tags": ["Prompt工程", "LLM实践", "软件工程", "经验分享"]
+      "tags": [
+        "Prompt工程",
+        "LLM实践",
+        "软件工程",
+        "经验分享"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +113,12 @@
       "url": "https://twitter.com/kalinowski007/status/2030320074121478618",
       "source": "Twitter / HN",
       "tldr": "OpenAI 机器人团队负责人 Caitlin Kalinowski 在推特宣布辞职，未透露详细原因。她此前从 Meta VR 跳槽加入 OpenAI，主导硬件和机器人方向。核心人员流出对 OpenAI 机器人赛道布局的影响还有待观察，但这是近期 OpenAI 内部震荡的又一个信号。",
-      "tags": ["OpenAI", "人事变动", "机器人", "组织动态"]
+      "tags": [
+        "OpenAI",
+        "人事变动",
+        "机器人",
+        "组织动态"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +126,16 @@
       "url": "https://simonwillison.net/2026/Mar/6/anthropic-and-the-pentagon/#atom-entries",
       "source": "Simon Willison / Twitter",
       "tldr": "Anthropic CEO Dario Amodei 公开表示，公司内部已无法确定 Claude 是否有某种主观体验，估计有约 20% 的概率存在某种'意识前体'。这不是营销话术——Anthropic 在模型福祉(model welfare)上投入了真实研究资源。这个问题的哲学和法律含义会在未来几年越来越重要。",
-      "tags": ["AI意识", "Anthropic", "哲学", "模型安全"]
+      "tags": [
+        "AI意识",
+        "Anthropic",
+        "哲学",
+        "模型安全"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69acc41ff95d6fc034fb8ea0.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69acc41ff95d6fc034fb8ea2",
+  "podcastTitle": "2026年3月8日AI：安全取代人，开发者反加班，开源激战",
+  "podcastVoice": "uma"
 }

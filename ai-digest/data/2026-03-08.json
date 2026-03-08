@@ -1,0 +1,137 @@
+{
+  "date": "2026-03-08",
+  "title": "AI 日报 2026-03-08",
+  "summary": "本周 AI 领域最大新闻是 Anthropic 与五角大楼的正面对决——被列为供应链安全风险，OpenAI 趁势签下军方协议但随即引发内部人才出走。技术面上，Claude 红队与 Mozilla 合作发现 Firefox 22 个零日漏洞，GPT-5.4 原生电脑操控引发实测热潮。教育科技方向，AI 检测工具的反效果和 Duolingo 用 AI 替代人工后的体验退化值得产品经理深思——但今日直接教育科技新闻仅 2 条，低于 4 条目标。",
+  "items": [
+    {
+      "title": "Anthropic 被五角大楼列为「供应链安全风险」，AI 军事伦理之争白热化",
+      "url": "https://www.theguardian.com/technology/2026/mar/07/anthropic-claude-ai-pentagon-us-military",
+      "tldr": "美国国防部正式将 Anthropic 列为「国家安全供应链风险」，禁止所有军事承包商使用其产品。起因是 Anthropic 拒绝取消对大规模监控和自主武器的安全限制。Anthropic 将通过法律途径挑战。",
+      "summary": "Anthropic 与五角大楼的对峙成为本周科技圈最大新闻。国防部长 Pete Hegseth 签署命令将 Anthropic 定性为供应链风险，即时生效。争议核心：Anthropic 坚持不允许 Claude 用于国内大规模监控或自主致命武器系统。康奈尔大学技术政策教授 Sarah Kreps 指出军方急需先进 AI 工具但无法等待军事级定制版本，双方文化冲突不可避免。NYT 报道这一连锁反应直接促成 OpenAI 与五角大楼签约。事件凸显 AI 公司在商业利益与伦理底线之间的艰难抉择，也测试了政府强制企业配合的权力边界。",
+      "tags": [
+        "AI伦理",
+        "国家安全",
+        "Anthropic",
+        "五角大楼",
+        "政策监管"
+      ]
+    },
+    {
+      "title": "OpenAI 机器人负责人 Kalinowski 因五角大楼协议辞职",
+      "url": "https://techcrunch.com/2026/03/07/openai-robotics-lead-caitlin-kalinowski-quits-in-response-to-pentagon-deal/",
+      "tldr": "前 Meta AR 硬件负责人 Caitlin Kalinowski 辞去 OpenAI 机器人团队领导职务。她强调问题在于协议「仓促推出，防护栏未定义」，核心是治理流程而非否定 AI 在国安中的角色。",
+      "summary": "Kalinowski 在 LinkedIn 表示：「对美国人的无司法监督监控和无人类授权的致命自主武器，需要比实际获得的更多审议。」她于 2024 年 11 月从 Meta 加入 OpenAI 领导机器人团队。在 X 上她澄清核心问题是治理——公告在未定义好防护栏时被仓促推出。OpenAI 声明其协议设定了「不搞国内监控、不搞自主武器」的红线。HN 上同步出现另一位员工离职帖，暗示内部分歧可能更广泛。事件进一步凸显 AI 公司在政府合同和员工价值观之间的张力。",
+      "tags": [
+        "OpenAI",
+        "AI伦理",
+        "人才流动",
+        "军事AI",
+        "治理"
+      ]
+    },
+    {
+      "title": "Anthropic 红队与 Mozilla 合作，Claude 两周发现 Firefox 22 个零日漏洞",
+      "url": "https://www.anthropic.com/news/mozilla-firefox-security",
+      "tldr": "Claude Opus 4.6 两周内发现 Firefox 22 个零日漏洞，14 个高危——接近 2025 全年高危修复量的 1/5。修复已随 Firefox 148.0 推送数亿用户。",
+      "summary": "Anthropic 此前记录 Claude 在开源软件中发现超 500 个零日漏洞。此次与 Mozilla 合作是具体案例：团队构建 Firefox 历史 CVE 数据集测试 Claude，发现 Opus 4.5 已接近解决 CyberGym 所有任务。升级 Opus 4.6 后模型能独立发现新零日漏洞。选择 Firefox 因其代码库复杂且安全测试充分。Mozilla 积极配合筛选有效报告并快速推出修复。这一 AI 安全研究者 + 维护者协同模式可能成为软件安全新范式。HN 热度 609 分。",
+      "tags": [
+        "AI安全",
+        "网络安全",
+        "Anthropic",
+        "Mozilla",
+        "零日漏洞"
+      ]
+    },
+    {
+      "title": "AI 检测逼学生写更差文章，反而推动更多人用 AI",
+      "url": "https://www.techdirt.com/2026/03/06/were-training-students-to-write-worse-to-prove-theyre-not-robots-and-its-pushing-them-to-use-more-ai/",
+      "tldr": "学校 AI 检测工具产生严重反效果：学生被迫降低写作质量避免误判，原本不用 AI 的学生开始用 AI 工具「预检」自己的文章。系统正在制造它试图防止的问题。",
+      "summary": "作者 2024 年记录了孩子写冯内古特《哈里森·伯杰龙》文章时因使用 devoid 一词被标记为「18% AI 生成」，换成 without 后降为 0%。一年半后，大学写作教师 Dadland Maye 在 Chronicle of Higher Education 发表系统调查：学生得知破折号等标点可能触发检测器后，开始主动用 AI 工具预检原创文章。一个从未用 AI 的学生为自保反而开始依赖 AI。经典「眼镜蛇效应」——解决方案加剧了它要解决的问题。对教育科技产品设计有重要警示意义。HN 137 分，150 条评论。",
+      "tags": [
+        "教育科技",
+        "AI检测",
+        "写作教育",
+        "反效果",
+        "学术诚信"
+      ]
+    },
+    {
+      "title": "Duolingo 用 AI 替代人工后用户体验显著下降",
+      "url": "https://www.theglobeandmail.com/opinion/article-ai-doesnt-make-it-better/",
+      "tldr": "Globe and Mail 专栏深度回顾 Duolingo 从人工策划到 AI 驱动的转变。2023 年裁掉承包商声称 AI 能「教得像最好的人类导师」，但课程质量和社区功能持续下降——AI 替代人类「更便宜≠更好」的典型案例。",
+      "summary": "作者 Anna Fitzpatrick 从 2014 年开始使用 Duolingo，完成十几门语言课程。她记录了 Duolingo 的蜕变：从激发真正语言学习兴趣的工具（她因此去图书馆借教材、找导师、办法语影评俱乐部），到 2023 年后关闭社区功能、裁减人工策划团队。官方声称 AI 可以教得像最好的人类导师，但课程深度、趣味性和文化敏感性都在下降。文章触及更广泛主题：AI 以效率之名渗透到你热爱的产品后，牺牲了让产品有灵魂的东西。对教育科技从业者是重要反面案例。",
+      "tags": [
+        "教育科技",
+        "Duolingo",
+        "AI替代",
+        "用户体验",
+        "语言学习"
+      ]
+    },
+    {
+      "title": "LLM 写的是「看起来对」的代码，不是「真正对」的代码",
+      "url": "https://blog.katanaquant.com/p/your-llm-doesnt-write-correct-code",
+      "tldr": "一个 LLM 生成的 SQLite Rust 重写：编译通过、测试通过、文件格式兼容——但主键查找慢 20,171 倍。核心建议：先定义验收标准，再让 LLM 写第一行代码。",
+      "summary": "10 年经验开发者花 6 个月集成 LLM 到工作流后，以公开 SQLite 重写项目为例：0.09ms 的主键查找被做到 1815ms，慢两万倍。代码能编译、通过测试、读写正确格式，README 还声称支持 MVCC。问题本质：LLM 优化 plausibility 而非 correctness。核心建议是在让 LLM 写代码前先定义清晰验收标准和性能基准。HN 422 分 377 条讨论，引发 AI 编码可靠性广泛辩论。",
+      "tags": [
+        "AI编程",
+        "代码质量",
+        "LLM",
+        "软件工程",
+        "最佳实践"
+      ]
+    },
+    {
+      "title": "Scientific American：使用 AI 的开发者反而工作时间更长",
+      "url": "https://www.scientificamerican.com/article/why-developers-using-ai-are-working-longer-hours/",
+      "tldr": "Google DORA 调查近 5000 名技术从业者：90% 在用 AI，80%+ 认为提升生产力——但 AI 使用越多，代码回滚频率越高。AI 省下的写码时间被花在验证和修复上。",
+      "summary": "DORA 团队负责人 Nathen Harvey 介绍，个人编码效率确实提升，但团队层面「交付不稳定性」随 AI 使用量增加而上升——代码推送到生产后需要回滚或补丁的频率更高。vibe coding 让经验不足的开发者也能快速生成原型，但写代码只是一部分，验证和修复才是大头。这与 KatanaQuant 文章互相印证：AI 降低了代码生产门槛，但转移而非消除了复杂性。",
+      "tags": [
+        "AI编程",
+        "开发者效率",
+        "DORA报告",
+        "工作时长",
+        "软件质量"
+      ]
+    },
+    {
+      "title": "Netflix 收购 Ben Affleck 的 AI 电影制作公司 InterPositive",
+      "url": "https://www.techtimes.com/articles/315010/20260306/netflix-acquires-interpositive-ben-afflecks-ai-production-startupwill-it-replace-filmmakers.htm",
+      "tldr": "Netflix 收购奥斯卡得主 Ben Affleck 2022 年创立的 AI 影视公司 InterPositive，将其 AI 后期工具（色彩、灯光、背景、连续性修正）整合到制作流水线。技术基于真实素材而非纯生成。",
+      "summary": "InterPositive 成立约四年，专注用 AI 改进电影后期制作——色彩校正、灯光调整、背景替换和连续性检查，技术基于真实拍摄素材。Netflix 将其技术和团队纳入内容制作体系。这标志着 AI 在影视制作中从「争议话题」转向「实际整合」，后期制作效率提升可能改变内容成本结构。",
+      "tags": [
+        "AI创意",
+        "Netflix",
+        "影视制作",
+        "收购",
+        "后期制作"
+      ]
+    },
+    {
+      "title": "Qwen 团队核心成员集体出走，中国大模型格局生变",
+      "url": "https://36kr.com/p/3713110189110024",
+      "tldr": "阿里 Qwen 负责人林俊旸正式离职，同日后训练负责人郁博文也离开。此前 Code 负责人已加入 Meta、多位核心贡献者相继告别。32 岁的林俊旸将 Qwen 做到全球下载量超 10 亿次。",
+      "summary": "36氪深度报道阿里通义千问团队集体出走。林俊旸 last day 发了三次朋友圈，从《敬自己一杯》到《未完成的结局》。这不是一个人的转身而是集体出走：后训练负责人郁博文同日离职，Code 负责人惠彬原 1 月去 Meta，多位核心成员相继告别。Qwen 在林俊旸主导下全球下载量超 10 亿次、衍生模型超 20 万款。同时阶跃星辰 Step3.5 Flash 连续三天 OpenRouter 调用量全球第一，Kimi K2.5、MiniMax M2.5 分列二三。中国大模型格局因人才流动快速重塑。",
+      "tags": [
+        "大模型",
+        "人才流动",
+        "阿里巴巴",
+        "Qwen",
+        "中国AI"
+      ]
+    },
+    {
+      "title": "GPT-5.4 原生电脑操控实测：质变一步但远未到宣传水平",
+      "url": "https://36kr.com/p/3711400535192328",
+      "tldr": "36氪长文实测 GPT-5.4 Native Computer Use：简单任务（打开应用、填表、发消息）表现惊艳，但多步骤复杂任务仍不稳定。比内嵌 OpenClaw 更深层，也更不可预测。",
+      "summary": "GPT-5.4 是 OpenAI 第一个内置电脑操控的主线模型。作者花大半天测试，发现简单任务上令人震撼但涉及多步骤判断和上下文切换时仍不稳定。文章同时提到英伟达面临挑战：Anthropic 210 亿美元购买谷歌 TPU 算力，Meta 签下数十亿 TPU 订单，OpenAI 首次将 Codex-Spark 部署在 Cerebras 非 GPU 芯片上。GPU 垄断正被打破。",
+      "tags": [
+        "GPT-5.4",
+        "Agent",
+        "电脑操控",
+        "OpenAI",
+        "产品评测"
+      ]
+    }
+  ]
+}

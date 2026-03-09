@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-09",
+  "summary": "这周 AI 圈最炸裂的是 Anthropic 起诉美国政府——五角大楼要把它列为「国家安全风险」，理由是拒绝让 Claude 参与军事 AI，这场对抗正在重写行业规则。同时 Gemini 3.1 Pro 横扫 benchmark，Donald Knuth 老爷子被 Claude Opus 解决了他研究多年的未解难题，AI 的能力边界和治理边界同时在撑破。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic 起诉美国政府：拒绝军事 AI 被列为国家安全风险",
+      "url": "https://x.com/pubity/status/2030116235657011522",
+      "source": "Twitter / @pubity",
+      "tldr": "五角大楼将 Anthropic 指定为「供应链国家安全风险」，原因是 Anthropic 拒绝允许 Claude 被用于军事目的，Anthropic 随即起诉美国政府。这是 AI 公司与国家安全机器之间最正面的一次碰撞，直接把「AI 伦理」从公司 PR 变成了法庭议题。结果无论如何，都会为所有 AI 公司设定一个重要先例。",
+      "tags": ["政策", "Anthropic", "军事AI", "法律"]
+    },
+    {
+      "num": 2,
+      "title": "AGI 定义一直在偷偷移动：OpenAI 宪章的变迁史",
+      "url": "https://mlumiste.com/general/openai-charter/",
+      "source": "Hacker News / mlumiste.com",
+      "tldr": "作者系统梳理了 OpenAI 历年宪章中对 AGI 的定义变化，发现每当模型能力接近某个指标，「AGI 门槛」就会悄然上移。这不是阴谋论，而是有据可查的文档演变——值得所有关注 AI 进展的人看清这场时间线游戏的本质。HN 333pts，讨论相当激烈。",
+      "tags": ["AGI", "OpenAI", "治理", "时间线"]
+    },
+    {
+      "num": 3,
+      "title": "Gemini 3.1 Pro 发布：12 项测试第一，ARC-AGI-2 得分 77.1%",
+      "url": "https://mp.weixin.qq.com/s/Wve8LCQOr8tNjXknAecJ8w",
+      "source": "MiniMax 搜索 / 公众号",
+      "tldr": "谷歌发布 Gemini 3.1 Pro，在 12 项测试中超越 Claude、GPT 系列夺得第一，ARC-AGI-2 通用智能测试得分 77.1%，较上代翻倍。能一次生成 Windows 11 WebOS、Minecraft 式 3D 沙盒等复杂项目，API 价格与上代持平。大模型竞争正从「参数谁大」转向「复杂任务谁能落地」。",
+      "tags": ["Google", "Gemini", "benchmark", "多模态"]
+    },
+    {
+      "num": 4,
+      "title": "Knuth 震惊了：Claude Opus 解决了他研究多年的未解计算机科学难题",
+      "url": "https://www-cs-faculty.stanford.edu/~knuth/papers/claude-cycles.pdf",
+      "source": "Stanford / Daring Fireball",
+      "tldr": "Donald Knuth（算法圣经《计算机程序设计艺术》作者）发表了一篇 PDF，记录他被 Claude Opus 解决了一个他本人研究多年的开放性问题时的震惊反应——原文写道「Shock! Shock!」。这不是炒作，是算法领域最权威的人亲自认证了 AI 的推理深度。历史性时刻。",
+      "tags": ["Claude", "Anthropic", "算法", "benchmark", "学术"]
+    },
+    {
+      "num": 5,
+      "title": "AI 重写开源项目：antirez 从 GNU/Stallman 找到历史先例",
+      "url": "http://antirez.com/news/162",
+      "source": "antirez.com（Redis 作者）",
+      "tldr": "Redis 作者 antirez 写了一篇犀利的历史类比：当年 Stallman 领导 GNU 项目「洁净室」重写 Unix 用户空间，在版权上是合法的，因为只复制了行为而非代码——今天 AI 重写开源项目的争议本质上是同一个问题。他的结论：愤怒可以理解，但历史告诉我们这条路走得通。法律和伦理的角度都值得细读。",
+      "tags": ["开源", "版权", "AI代码", "历史"]
+    },
+    {
+      "num": 6,
+      "title": "LLM 写作陷阱词典：用 .md 文件让 AI 停止用「delve」",
+      "url": "https://tropes.fyi/tropes-md",
+      "source": "Hacker News / tropes.fyi",
+      "tldr": "一个众包维护的 Markdown 文件，把常见的 AI 写作套路全部列出来——「quietly」「delve」「tapestry」「robust」「leverage」等，可以直接塞进 system prompt 让模型自我纠正。315pts on HN，评论区有人指出这本身也是在做猫鼠游戏。实用工具，值得收藏。",
+      "tags": ["提示工程", "写作", "工具", "实操"]
+    },
+    {
+      "num": 7,
+      "title": "Krebs 预警：AI Agent 正在重写企业安全的游戏规则",
+      "url": "https://krebsonsecurity.com/2026/03/how-ai-assistants-are-moving-the-security-goalposts/",
+      "source": "Krebs on Security",
+      "tldr": "安全记者 Brian Krebs 深度分析以 OpenClaw 为代表的自主 AI Agent 带来的安全挑战：当一个程序能访问你的全部文件、邮件、日历、聊天记录并自主执行，传统的「数据 vs 代码」边界彻底消失。文章指出这类工具正在模糊「内部威胁」的定义，企业安全团队的整个威胁模型需要重建。",
+      "tags": ["安全", "Agent", "OpenClaw", "企业"]
+    },
+    {
+      "num": 8,
+      "title": "SWE-CI：用 CI 流水线评估 AI Agent 维护代码库的能力",
+      "url": "https://arxiv.org/abs/2603.03823",
+      "source": "arxiv / Hacker News",
+      "tldr": "新的 benchmark SWE-CI 专门评估 AI Agent 在真实 CI/CD 环境中维护代码库的能力，包括修复测试、处理依赖冲突、保持代码质量等实际工程任务。与 SWE-bench 不同，它更关注「持续维护」而非「一次性修复」。如果 AI 能跑 CI 了，软件工程的工作流会怎么变？值得关注。",
+      "tags": ["benchmark", "Agent", "软件工程", "CI/CD", "论文"]
+    },
+    {
+      "num": 9,
+      "title": "AI 治理宣言：数百名专家签署《亲人类宣言》，五项红线直指超级智能",
+      "url": "https://techcrunch.com/2026/03/07/a-roadmap-for-ai-if-anyone-will-listen/",
+      "source": "TechCrunch",
+      "tldr": "MIT 物理学家 Max Tegmark 等人发起的《亲人类宣言》获数百名专家、前官员和公众人物签署，五大支柱：保持人类控制、避免权力集中、保护人类体验、捍卫个人自由、AI 公司需承担法律责任。其中最强硬的一条：在科学共识证明安全之前，禁止开发超级智能。宣言发布时间和 Anthropic-五角大楼对峙高度重合，时机颇具意味。",
+      "tags": ["治理", "AI安全", "政策", "超级智能"]
+    },
+    {
+      "num": 10,
+      "title": "macOS 原生 Agent 沙盒：Agent Safehouse 给本地 AI 加笼子",
+      "url": "https://agent-safehouse.dev/",
+      "source": "Hacker News",
+      "tldr": "Agent Safehouse 是一个 macOS 原生的沙盒工具，专为本地运行的 AI Agent 设计——限制文件访问范围、网络权限、进程隔离，防止 Agent 越权操作。HN 256pts，评论里开发者们在认真讨论如何在给 Agent 足够权限的同时保持可控。随着本地 Agent 普及，这类基础设施工具越来越重要。",
+      "tags": ["工具", "安全", "macOS", "Agent", "开源"]
+    }
+  ]
+}

@@ -1,0 +1,118 @@
+{
+  "date": "2026-03-09",
+  "summary": "本周AI界最大的新闻无疑是OpenAI接手Anthropic被踢出的五角大楼合同，引发安全与伦理的广泛争议；与此同时，一份跨党派《Pro-Human Declaration》提出了AI治理框架，要求禁止超级智能开发直到有科学共识。技术层面，Qwen 3.5全系列模型发布，SkillNet提出Agent技能积累新范式，Agent Safehouse为本地Agent提供macOS原生沙盒。教育科技方面，Duolingo的AI-first转型遭到用户反思批评，而一项研究表明针对性培训可显著提升教师对AI辅助自适应教学的信心。",
+  "items": [
+    {
+      "title": "OpenAI 接手五角大楼合同：监控与自主武器红线靠「信任」兜底",
+      "url": "https://theintercept.com/2026/03/08/openai-anthropic-military-contract-ethics-surveillance/",
+      "tldr": "Anthropic因拒绝在合同中妥协大规模监控和自主武器条款而被五角大楼踢出，OpenAI随即接手。但OpenAI声称已谈妥更严格保护——却拒绝公开合同文本，引发广泛质疑。",
+      "summary": "The Intercept深入报道了OpenAI与五角大楼AI合同的争议核心。Anthropic此前是首家将前沿AI模型部署到五角大楼机密网络的公司，支持情报分析、规划和网络作战。但当Anthropic坚持在合同中写入禁止大规模国内监控和自主武器的条款时，谈判破裂，特朗普政府随即下令六个月内停用Anthropic产品。OpenAI CEO Altman在X上宣布拿下合同，声称已与国防部达成安全原则共识。然而合同本身未公开，The Intercept的多次问询均未获实质回应。OpenAI机器人团队负责人Caitlin Kalinowski已因此辞职，称这是原则问题。Elon Musk的xAI也被纳入机密环境，Google AI正在审批中。这一事件凸显了AI军事化进程中透明度和问责机制的严重缺失。",
+      "tags": [
+        "AI政策",
+        "军事AI",
+        "OpenAI",
+        "Anthropic",
+        "AI伦理"
+      ]
+    },
+    {
+      "title": "《Pro-Human Declaration》：一份没人听的AI治理路线图",
+      "url": "https://techcrunch.com/2026/03/07/a-roadmap-for-ai-if-anyone-will-listen/",
+      "tldr": "MIT物理学家Max Tegmark等人发起的跨党派联盟发布《Pro-Human Declaration》，提出五大支柱框架，包括禁止超级智能开发直至有科学共识和民主授权。民调显示95%美国人反对不受监管的超级智能竞赛。",
+      "summary": "在Anthropic-五角大楼决裂暴露美国AI治理真空之际，数百名专家、前官员和公众人物联署的《Pro-Human Declaration》适时发布。文件直言人类正站在岔路口：一条路通向人类被AI取代为工人和决策者，权力集中于不受问责的机构；另一条通向AI大规模扩展人类潜能。框架五大支柱包括：保持人类掌控、避免权力集中、保护人类体验、维护个人自由、追究AI公司法律责任。其中最硬核的条款是：在没有科学共识和真正的民主授权之前，直接禁止超级智能开发；强制为强大系统设置关闭开关；禁止具备自我复制、自主自我改进或抵抗关闭能力的架构。文件在Anthropic被踢出之前就已定稿，但两件事的碰撞让其紧迫性更加凸显。",
+      "tags": [
+        "AI治理",
+        "AI安全",
+        "超级智能",
+        "政策框架"
+      ]
+    },
+    {
+      "title": "Qwen 3.5 全系列发布：256K上下文、201种语言、本地可跑",
+      "url": "https://unsloth.ai/docs/models/qwen3.5",
+      "tldr": "阿里Qwen 3.5模型家族发布，包含35B-A3B、27B、122B-A10B、397B-A17B及Small系列(0.8B-9B)。支持256K上下文和201种语言，35B和27B可在22GB Mac上本地运行。Unsloth提供优化量化GGUF。",
+      "summary": "Qwen 3.5是阿里巴巴最新的多模态混合推理大模型家族，覆盖从0.8B到397B的完整规格。模型支持思考/非思考双模式切换，在Agent编码、视觉、对话和长上下文任务上表现突出。Unsloth团队提供了Day-0的GGUF量化版本，采用Dynamic 2.0技术（关键层从4bit上调至8/16bit），并于3月5日更新了改进的量化算法和imatrix数据，在对话、编码、长上下文和工具调用场景上都有提升。修复了通用的聊天模板问题，改善了tool-calling表现。35B-A3B（MoE架构，仅激活3B参数）和27B密集模型是消费级硬件的最佳选择。这标志着开源模型在效率和可用性上的又一次飞跃。",
+      "tags": [
+        "开源模型",
+        "Qwen",
+        "量化",
+        "本地部署",
+        "MoE"
+      ]
+    },
+    {
+      "title": "按OpenAI自己的章程，它应该退出竞赛",
+      "url": "https://mlumiste.com/general/openai-charter/",
+      "tldr": "博文梳理了OpenAI 2018年章程中的「自我牺牲条款」与Sam Altman历年AGI时间表预测的矛盾。从2023年的「10年内」到2024年的「明年」，AGI门柱不断前移，而章程仍挂在官网。",
+      "summary": "作者系统对比了OpenAI章程中的核心承诺与实际行为。2018年章程明确写道：如果另一个价值观对齐、注重安全的项目更接近AGI，OpenAI承诺停止竞争并转为协助——典型触发条件是「未来两年内有超过50%的成功概率」。然而Sam Altman的AGI时间线预测从2023年的「大约10年」，逐步压缩到2024年11月的「2025年」，再到2025年10月的「2028年全自动AI研究员」。如果按Altman自己的时间表，AGI已近在眼前，那么章程中的自我牺牲条款理应被触发——但OpenAI显然没有任何减速的迹象。文章在HN引发345分、275条评论的热烈讨论，指向AI行业承诺与行动之间日益扩大的鸿沟。",
+      "tags": [
+        "OpenAI",
+        "AGI",
+        "AI安全",
+        "行业观察"
+      ]
+    },
+    {
+      "title": "Agent Safehouse：给本地AI Agent套上macOS原生沙盒",
+      "url": "https://agent-safehouse.dev/",
+      "tldr": "一个单文件Bash脚本，利用macOS原生沙盒机制隔离本地Agent（Claude Code、Codex等）。默认拒绝所有访问，仅显式授权工作目录读写。SSH密钥、其他仓库等被内核级封锁。",
+      "summary": "Agent Safehouse解决了一个越来越现实的安全问题：当你给Claude Code等Agent开启--yolo模式时，一个概率性的rm -rf ~只是时间问题。这个项目用macOS sandbox-exec机制实现deny-first访问模型——Agent默认无法访问任何东西，只有被显式授权的工作目录（默认git root）可读写，已安装的工具链只读。尝试读取~/.ssh/id_ed25519会被内核直接拒绝。安装极简：下载单个shell脚本，chmod +x，然后safehouse claude --dangerously-skip-permissions即可。还支持添加shell函数让所有Agent自动在沙盒中运行。项目在HN获得301分、67条评论。对于日常使用编码Agent的开发者来说，这是一个实用且轻量的安全层。",
+      "tags": [
+        "Agent安全",
+        "沙盒",
+        "macOS",
+        "开发工具"
+      ]
+    },
+    {
+      "title": "SkillNet：让AI Agent不再重复造轮子的技能基础设施",
+      "url": "https://arxiv.org/abs/2603.04448",
+      "tldr": "论文提出SkillNet，一个用于创建、评估和组织AI技能的开放基础设施。解决Agent反复「重新发明轮子」的问题，实现技能的系统性积累和跨场景迁移。HuggingFace获64个upvotes。",
+      "summary": "当前AI Agent可以灵活调用工具、执行复杂任务，但长期进步被一个核心瓶颈限制：缺乏系统性的技能积累和迁移机制。Agent在孤立场景中反复重新发现解决方案，无法利用先前策略。SkillNet提出了一个开放基础设施来解决这一问题，覆盖技能的创建、评估和大规模组织。这与当前Agent框架生态的发展方向高度一致——从单次任务执行走向持续学习和能力复用。论文在HuggingFace papers获得64个upvotes，是近期最受关注的Agent研究之一。对于正在构建Agent产品的团队（包括教育领域的智能助教、自适应学习系统等），技能积累和复用的思路具有直接的参考价值。",
+      "tags": [
+        "Agent",
+        "技能积累",
+        "论文",
+        "AI基础设施"
+      ]
+    },
+    {
+      "title": "Duolingo的AI-first转型反思：当AI嵌入你热爱的产品",
+      "url": "https://www.theglobeandmail.com/opinion/article-ai-doesnt-make-it-better/",
+      "tldr": "Globe and Mail专栏作者、十年Duolingo忠实用户撰文反思：Duolingo裁掉人工翻译转向AI后，产品失去了社区感和学习激发力。这不只是Duolingo的问题，而是AI嵌入所有我们热爱之物的缩影。",
+      "summary": "作者从2013年开始使用Duolingo，完成了十几种语言课程，用平台的在线活动功能组织了法语电影俱乐部。但从2023年开始，Duolingo关闭了社区活动功能，裁掉10%人工翻译，宣布成为「AI-first」公司，CEO甚至表示宁可「偶尔接受质量下降也不要错过时机」。作者认为Duolingo原本的价值不在于替代严肃语言学习，而在于激发好奇心、连接社区、让人走向更深入的学习——这些恰恰是AI无法复制的。文章的核心观点超越Duolingo本身：AI正在嵌入我们热爱的每一个产品，但「能用AI做」不等于「应该用AI做」。对教育科技从业者来说，这是一个值得深思的用户视角——技术替代的不只是成本，还有社区、温度和激发学习的能力。",
+      "tags": [
+        "教育科技",
+        "Duolingo",
+        "AI产品",
+        "用户体验",
+        "AI替代"
+      ]
+    },
+    {
+      "title": "研究：短期培训可显著提升教师对AI辅助自适应教学的信心",
+      "url": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1759274/full",
+      "tldr": "Frontiers in Education发表的研究显示，针对德国中学科学教师的短期干预培训，能显著提升其AI自我效能感和对AI辅助自适应教学的感知有用性。两者在培训后呈现正相关。",
+      "summary": "这项研究聚焦AI在日常教学中落地的关键瓶颈：教师的意愿和能力。研究对象是德国中学科学教师中的「乘数角色」教师。研究设计了一个短期、针对性的干预培训，让教师实际动手体验AI工具在评估、反馈和自适应教学三个维度的应用。结果显示，培训后教师的AI自我效能感(AISEE)和感知有用性(PU)均显著提升，且两者呈正相关——这意味着教师越觉得自己能用好AI，就越认为AI有用，形成正向循环。研究还通过让教师描述「评估」「反馈」「自适应」的关键词，深入分析了教师对这些概念的理解结构。对教育科技产品设计者的启示：产品落地不只是功能问题，配套的教师培训和体验设计同等重要。",
+      "tags": [
+        "教育科技",
+        "AI教学",
+        "自适应学习",
+        "教师培训",
+        "研究"
+      ]
+    },
+    {
+      "title": "LLM Writing Tropes：一份AI写作套路的完整清单",
+      "url": "https://tropes.fyi/tropes-md",
+      "tldr": "一个社区驱动的项目，系统梳理了AI生成文本中的常见套路：从「delve」「tapestry」「landscape」等词汇滥用，到「serves as」句式逃避、魔法副词等模式。可直接添加到系统提示词中使用。",
+      "summary": "tropes.fyi收录了AI写作中反复出现的模式，将其分为词汇选择、句式结构、段落组织等类别。「Delve」曾是最臭名昭著的AI标记词，从一个罕见英语词汇变成AI生成文本中出现频率惊人的高频词。「Quietly」等副词被滥用来给平凡描述增添虚假的重要感。「Serves as」「stands as」等结构被用来回避简单的「is」，因为AI的重复惩罚机制会推动它走向更花哨的表达。项目提供了一个单独的.md文件，可直接放入AI的系统提示词中作为负面约束。在HN获得319分、150条评论。对于使用AI辅助写作（包括教育内容创作）的人来说，这是一份实用的质量检查清单。",
+      "tags": [
+        "LLM",
+        "AI写作",
+        "提示工程",
+        "实用工具"
+      ]
+    }
+  ]
+}

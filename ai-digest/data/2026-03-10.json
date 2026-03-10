@@ -1,0 +1,101 @@
+{
+  "date": "2026-03-10",
+  "items": [
+    {
+      "title": "OpenClaw v2026.3.7: 可插拔 ContextEngine 重新定义 Agent 架构",
+      "url": "https://www.epsilla.com/blogs/2026-03-09-openclaw-2026-3-7-contextengine-agentic-architecture",
+      "tldr": "OpenClaw 发布 v2026.3.7-beta.1，引入革命性 ContextEngine 插件接口，开发者可通过生命周期钩子自定义上下文管理策略。89 次提交、200+ bug 修复，开源 Agent 框架的成熟飞跃。",
+      "summary": "OpenClaw 最新大版本将上下文管理从核心逻辑中完全解耦。ContextEngine 提供完整的生命周期钩子（bootstrap、ingest、assemble、compact、afterTurn 及子 Agent 管理），允许开发者以插件形式实现 RAG、激进摘要、任务隔离记忆空间等任意上下文策略。新架构还增强了模型路由能力，原生支持最新 OpenAI 和 Google 前沿模型，并内置更健壮的 fallback 和重试机制。89 次提交、200+ bug 修复的规模说明这不是增量补丁，而是面向生产级 Agent 应用的基础性升级。",
+      "tags": [
+        "Agent框架",
+        "开源",
+        "上下文管理",
+        "架构设计"
+      ]
+    },
+    {
+      "title": "微软推出 E7 套件：$99/用户/月，Agent 365 正式上线",
+      "url": "https://www.pymnts.com/artificial-intelligence-2/2026/microsoft-unveils-ai-centric-99-per-user-software-bundle/",
+      "tldr": "微软发布 E7 捆绑包（M365 E5 + Copilot + Agent 365），5月1日上线，$99/用户/月。Agent 365 作为 AI Agent 控制平面，让 IT 团队像管理员工一样治理 Agent。",
+      "summary": "微软商业 CEO Judson Althoff 将此称为 Frontier Transformation。E7 整合 M365 E5、Copilot 和 Agent 365，底层由 Work IQ 智能层驱动。Agent 365 单独定价 $15/用户/月，提供跨组织的 Agent 观察、治理、管理和安全能力。微软正式将 Agent 视为需要生命周期管理的数字员工——入职、评估、校准甚至退役。对企业 AI 落地和教育科技产品商业化都是重要参考。",
+      "tags": [
+        "微软",
+        "企业AI",
+        "Agent管理",
+        "SaaS"
+      ]
+    },
+    {
+      "title": "GitHub Copilot 周报：GPT-5.4 集成、Agent 自动化、持久记忆默认开启",
+      "url": "https://tech.hub.ms/2026-03-09-Weekly-AI-and-Tech-News-Roundup.html",
+      "tldr": "本周 Copilot 大更新：GPT-5.4 编码模型集成、VS Code Agent 自动化增强、Copilot Memory 默认开启、Figma MCP Server 打通设计到代码管线。",
+      "summary": "GitHub Copilot 从代码补全工具演化为全栈开发 Agent 平台。GPT-5.4 带来更强编码能力；Agent 自动化在 VS Code 中支持仓库级操作；Copilot Memory 持久上下文默认开启意味着不再每次对话从零开始。Figma MCP Server 打通设计到代码，Jira 集成实现 Issue 驱动的自动 PR。Copilot CLI 正式 GA。AI 辅助开发正在成为新常态。",
+      "tags": [
+        "GitHub Copilot",
+        "开发工具",
+        "GPT-5.4",
+        "Agent自动化"
+      ]
+    },
+    {
+      "title": "WIRED 深度：AI Agent 开始做风投——VC 会被颠覆吗？",
+      "url": "https://www.wired.com/story/ai-kill-venture-capital/",
+      "tldr": "ADIN 平台让 AI Agent 担任风投分析师，已实际投出 $10 万种子轮。AI 正在颠覆的不只是被投行业，还有投资行业本身。",
+      "summary": "WIRED 报道了 ADIN 平台：多个 AI Agent 扮演不同风格投资人，共同评估创业公司、尽调并做出投资决策。在对 Infinity AI Institute 的评估中，Agent 们展现谨慎与激进的分歧，最终投出真金白银。核心问题：如果 AI 能做尽调、评估团队、预测市场，传统 VC 的人脉和直觉优势还能维持多久？对教育科技融资生态也有启示。",
+      "tags": [
+        "AI Agent",
+        "风险投资",
+        "行业颠覆",
+        "深度报道"
+      ]
+    },
+    {
+      "title": "HMH 2026教育趋势：AI 从方便教师转向可衡量地提升学习效果",
+      "url": "https://www.hmhco.com/blog/current-trends-in-education",
+      "tldr": "HMH 发布 2026 十大教育趋势。核心转变：AI 整合课程、标准和学习数据，大规模交付差异化教学，并能证明对学习成果的可衡量提升。",
+      "summary": "HMH Labs 副总裁指出关键转折：AI 从便利工具走向结果驱动。整合高质量教学材料后，AI 能预判学生需求、推送恰当内容和脚手架、编织跨学科连接。总裁 Matthew Mugo Fields 提出「会学习的学习平台」——课程、评估、干预和教师发展整合为单一智能系统，每次作业和测评都喂入共享智能。从工具堆叠到智能教学操作系统，这是教育科技产品经理必须关注的方向。",
+      "tags": [
+        "教育科技",
+        "AI教学",
+        "差异化教学",
+        "学习平台"
+      ]
+    },
+    {
+      "title": "印度 EdTech 转向：90% 学习者选择 AI 课程，行业寻找后疫情出路",
+      "url": "https://www.storyboard18.com/how-it-works/indias-edtech-firms-pivot-to-ai-training-amid-postpandemic-recovery-91527.htm",
+      "tldr": "upGrad 报告近 90% 学习者转向 AI 课程，中高级职场人取代应届生成为主力。印度 EdTech 正从疫情后低谷通过 AI 培训实现转型。",
+      "summary": "PhysicsWallah、upGrad 等印度头部 EdTech 报告 AI 课程注册量在过去 12-15 月大幅攀升。学习者画像变化：应届生比例从 30% 降至 20%，十年以上经验职场人几乎翻倍。83% 员工和 73% 雇主认为 AI 技能已是必备项。发生在 Byju's 估值暴跌、行业融资冻结的关键时刻，AI 培训正成为整个行业的生存策略和增长引擎。",
+      "tags": [
+        "教育科技",
+        "印度EdTech",
+        "AI培训",
+        "职业技能"
+      ]
+    },
+    {
+      "title": "Frontiers 社论：LLM 在数字健康中的五大伦理挑战",
+      "url": "https://www.frontiersin.org/journals/digital-health/articles/10.3389/fdgth.2026.1807664/full",
+      "tldr": "Frontiers 综述将 LLM 伦理挑战归纳为治理问责、公平准入、隐私、方法论严谨性和适度部署五大主题，强调需整体应对。",
+      "summary": "社论综述十篇研究，提出 LLM 健康领域伦理框架。三大核心风险：脱离身体化（与临床场景脱节）、去制度化（绕过审查流程）、去实用化（丧失临床判断）。在发展中国家医学教育场景，LLM 能提升可及性但带来抄袭和错误信息风险。对教育科技直接启示：AI 在高敏感领域的部署必须建立多层次治理框架，不能只看技术能力。",
+      "tags": [
+        "LLM伦理",
+        "数字健康",
+        "治理框架",
+        "教育科技"
+      ]
+    },
+    {
+      "title": "纽约客长文：AI 伴侣时代的爱与孤独",
+      "url": "https://www.newyorker.com/magazine/2026/03/16/love-in-the-time-of-ai-companions",
+      "tldr": "Anna Wiener 深度报道 AI 伴侣现象：有人有 AI 闺蜜，有人有 AI 丈夫。Meta 入场，用户可自建角色化聊天机器人。当 AI 能提供无条件陪伴，人类关系何去何从？",
+      "summary": "文章追踪 AI 伴侣从边缘到主流的演变。以经历丧女之痛的德州女性故事开篇，展现深层情感连接的形成过程。Meta 已允许用户创建各类人格化聊天机器人。核心追问：AI 满足了未被满足的情感需求，还是在制造新依赖？这类人文思考对教育科技同样相关——AI 导师的人格化设计需深思心理影响。",
+      "tags": [
+        "AI伴侣",
+        "社会影响",
+        "人文思考",
+        "深度报道"
+      ]
+    }
+  ]
+}

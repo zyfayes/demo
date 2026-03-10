@@ -8,7 +8,12 @@
       "url": "https://www-cs-faculty.stanford.edu/~knuth/papers/claude-cycles.pdf",
       "source": "Stanford / Daring Fireball",
       "tldr": "Donald Knuth 用 TeX 手写记录称 Claude Opus 4.6 解决了他研究数周的开放计算机科学问题。这不是 AI 公司的自我宣传，而是计算机科学教父的亲身经历。他写道'我得重新审视自己对生成式 AI 的判断了'——这句话的份量，懂的都懂。",
-      "tags": ["Claude", "AI推理", "数学CS", "里程碑"]
+      "tags": [
+        "Claude",
+        "AI推理",
+        "数学CS",
+        "里程碑"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://x.com/Hesamation/status/2030733379558347239",
       "source": "Twitter @Hesamation",
       "tldr": "Anthropic 对 52 名专业开发者的研究显示，使用 AI 辅助编码的组感到'懒惰'并意识到理解缺口，未使用 AI 的组反而觉得任务'有趣'。最关键的数据：AI 显著伤害了学习新库时的技能形成，下降幅度达 17%。用 AI 会让你短期更快，但可能在悄悄侵蚀深度理解。",
-      "tags": ["AI编码", "认知影响", "研究", "Anthropic"]
+      "tags": [
+        "AI编码",
+        "认知影响",
+        "研究",
+        "Anthropic"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,12 @@
       "url": "https://agent-safehouse.dev/",
       "source": "Hacker News",
       "tldr": "HN 本周最热项目（781分，174评论）：Agent Safehouse 为 macOS 本地运行的 AI 智能体提供原生沙箱隔离，防止代理越权访问文件系统和网络。随着本地 agent 工具激增，安全隔离成了必须解决的基础设施问题，这个项目踩在了正确的时间点上。",
-      "tags": ["Agent安全", "macOS", "开源", "沙箱"]
+      "tags": [
+        "Agent安全",
+        "macOS",
+        "开源",
+        "沙箱"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +47,12 @@
       "url": "https://silly.business/blog/we-should-revisit-literate-programming-in-the-agent-era/",
       "source": "Hacker News",
       "tldr": "284分热帖提出：当 AI agent 接手大量编码工作后，代码的'可读性'不再只面向人类，而是面向模型——这让 Knuth 五十年前提出的'文学编程'（代码与文档合一）焕发新价值。不是怀旧，而是当代理读代码时，结构化的文档就是给它的 API。",
-      "tags": ["文学编程", "Agent开发", "软件工程", "思想"]
+      "tags": [
+        "文学编程",
+        "Agent开发",
+        "软件工程",
+        "思想"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +60,12 @@
       "url": "https://mlumiste.com/general/openai-charter/",
       "source": "Hacker News",
       "tldr": "399分、365评论的深度讨论：OpenAI 宪章里'AGI'的定义随着进展一直在悄悄移动，作者追溯这些变化并质疑其动机。这不是阴谋论，而是一个严肃问题：当我们用 AGI 作为免责挡箭牌时，这个词本身还有意义吗？",
-      "tags": ["AGI", "OpenAI", "政策", "长文讨论"]
+      "tags": [
+        "AGI",
+        "OpenAI",
+        "政策",
+        "长文讨论"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +73,12 @@
       "url": "http://antirez.com/news/162",
       "source": "antirez.com（Redis 作者）",
       "tldr": "Redis 作者 Salvatore Sanfilippo 用 80 年代 GNU 运动作为类比，回应 AI 重写开源项目引发的版权争议。他的论点：GNU 当年也是'重实现'现有软件，道德争议同样激烈，但它改变了世界。历史不简单重复，但对理解当下很有用。",
-      "tags": ["开源", "版权", "AI伦理", "历史类比"]
+      "tags": [
+        "开源",
+        "版权",
+        "AI伦理",
+        "历史类比"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +86,12 @@
       "url": "https://x.com/krishdotdev/status/2030466452680229078",
       "source": "Twitter @krishdotdev",
       "tldr": "Andrej Karpathy 开源了一个工具，让 AI 智能体自动进行 5 分钟实验、优化架构和超参数，实现 LLM 训练的自我改进闭环。只需一块 GPU，全自动化。这是'AI 训练 AI'从 paper 走向工具的标志性一步，意义远超表面。",
-      "tags": ["Karpathy", "开源", "LLM训练", "AutoML"]
+      "tags": [
+        "Karpathy",
+        "开源",
+        "LLM训练",
+        "AutoML"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +99,12 @@
       "url": "https://arxiv.org/abs/2603.03823",
       "source": "arXiv / Hacker News",
       "tldr": "新 benchmark SWE-CI 提出用持续集成（CI）流水线评估 AI 智能体维护真实代码库的能力，而非传统孤立任务测试。这是更贴近实际工程场景的评估方式——真正的代码维护要在持续演化的 repo 里工作，而不是解题。",
-      "tags": ["Benchmark", "Agent评估", "软件工程", "研究"]
+      "tags": [
+        "Benchmark",
+        "Agent评估",
+        "软件工程",
+        "研究"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +112,12 @@
       "url": "https://x.com/Saccc_c/status/2030945915452916218",
       "source": "Twitter @Saccc_c",
       "tldr": "国内大四学生用 10 天 Vibe Coding 做出 MiroFish——'预测万物'的 AI 开源项目，连续 3 天占据 GitHub Trending 前列，Star 达 8.3k。盛大创始人陈天桥看完 Demo 后 24 小时内注资 3000 万。这个故事本身就在说明 Vibe Coding 时代的机会窗口有多短暂和真实。",
-      "tags": ["Vibe Coding", "开源", "中国AI", "GitHub Trending"]
+      "tags": [
+        "Vibe Coding",
+        "开源",
+        "中国AI",
+        "GitHub Trending"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +125,16 @@
       "url": "https://www.svd.se/a/K8nrV4/metas-ai-smart-glasses-and-data-privacy-concerns-workers-say-we-see-everything",
       "source": "Svenska Dagbladet / Daring Fireball",
       "tldr": "调查报道：Meta AI 智能眼镜的数据标注外包给肯尼亚低薪合同工，这些工人能看到用户拍摄的所有画面——包括家庭成员、私密空间、日常生活细节。这不只是劳工议题，更是'AI 产品的隐私模型根本上就是数据外包给人工审核'的清醒揭露。",
-      "tags": ["Meta", "AI眼镜", "隐私", "数据标注"]
+      "tags": [
+        "Meta",
+        "AI眼镜",
+        "隐私",
+        "数据标注"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69af673df95d6fc03415fdf8.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69af673df95d6fc03415fdfb",
+  "podcastTitle": "2026年3月10日AI：Knuth被Claude震撼，重审AI判断",
+  "podcastVoice": "uma"
 }

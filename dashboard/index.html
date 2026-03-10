@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-10T04:01:33.968Z",
+  "generated": "2026-03-10T10:00:58.578Z",
   "cronJobs": [
     {
       "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
@@ -351,7 +351,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1773093697752,
+      "updatedAtMs": 1773115311068,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -370,15 +370,51 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773115251018,
-        "lastRunAtMs": 1773093651035,
-        "lastRunStatus": "ok",
+        "nextRunAtMs": 1773136851018,
+        "lastRunAtMs": 1773115251038,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 60030,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 1,
+        "runningAtMs": 1773136851040
+      }
+    },
+    {
+      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
+      "agentId": "main",
+      "name": "Polymarket Position Monitor",
+      "enabled": true,
+      "createdAtMs": 1771231563664,
+      "updatedAtMs": 1773118878718,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,7,13,19 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
+        "timeoutSeconds": 120,
+        "model": "minimax-portal/MiniMax-M2.5"
+      },
+      "state": {
+        "nextRunAtMs": 1773140400000,
+        "lastRunAtMs": 1773118800015,
         "lastStatus": "ok",
-        "lastDurationMs": 46717,
-        "lastDeliveryStatus": "not-delivered",
+        "lastDurationMs": 78703,
         "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1773115251038
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
       }
     },
     {
@@ -387,7 +423,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1773100987596,
+      "updatedAtMs": 1773129759117,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -403,47 +439,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1773115304426,
-        "lastRunAtMs": 1773100904451,
+        "nextRunAtMs": 1773144104426,
+        "lastRunAtMs": 1773129704446,
         "lastStatus": "ok",
-        "lastDurationMs": 83145,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
-      "agentId": "main",
-      "name": "Polymarket Position Monitor",
-      "enabled": true,
-      "createdAtMs": 1771231563664,
-      "updatedAtMs": 1773097273056,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,7,13,19 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
-        "timeoutSeconds": 120,
-        "model": "minimax-portal/MiniMax-M2.5"
-      },
-      "state": {
-        "nextRunAtMs": 1773118800000,
-        "lastRunAtMs": 1773097200028,
-        "lastStatus": "ok",
-        "lastDurationMs": 73028,
+        "lastDurationMs": 54671,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",

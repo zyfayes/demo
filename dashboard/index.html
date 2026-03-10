@@ -342,119 +342,8 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-10T10:00:58.578Z",
+  "generated": "2026-03-10T13:04:59.741Z",
   "cronJobs": [
-    {
-      "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1479010527446569012",
-      "name": "Dashboard Refresh",
-      "enabled": true,
-      "createdAtMs": 1772711341137,
-      "updatedAtMs": 1773115311068,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */6 * * *",
-        "tz": "Asia/Shanghai",
-        "staggerMs": 300000
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "运行 dashboard 数据刷新并推送到 GitHub Pages：\n\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n\n成功后 NO_REPLY。失败则报告错误。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1773136851018,
-        "lastRunAtMs": 1773115251038,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 60030,
-        "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 1,
-        "runningAtMs": 1773136851040
-      }
-    },
-    {
-      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
-      "agentId": "main",
-      "name": "Polymarket Position Monitor",
-      "enabled": true,
-      "createdAtMs": 1771231563664,
-      "updatedAtMs": 1773118878718,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,7,13,19 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
-        "timeoutSeconds": 120,
-        "model": "minimax-portal/MiniMax-M2.5"
-      },
-      "state": {
-        "nextRunAtMs": 1773140400000,
-        "lastRunAtMs": 1773118800015,
-        "lastStatus": "ok",
-        "lastDurationMs": 78703,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
-      "agentId": "main",
-      "name": "Alva Signal Bridge",
-      "enabled": true,
-      "createdAtMs": 1771231548569,
-      "updatedAtMs": 1773129759117,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 */4 * * *",
-        "tz": "UTC",
-        "staggerMs": 300000
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1773144104426,
-        "lastRunAtMs": 1773129704446,
-        "lastStatus": "ok",
-        "lastDurationMs": 54671,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
     {
       "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
       "agentId": "main",
@@ -484,7 +373,7 @@ window.__DASHBOARD_DATA__ = {
         "lastRunStatus": "error",
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
-        "lastError": "⚠️ ✉️ Message failed"
+        "runningAtMs": 1773147600016
       },
       "delivery": {
         "mode": "announce",
@@ -525,7 +414,82 @@ window.__DASHBOARD_DATA__ = {
         "lastDurationMs": 28184,
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0
+        "consecutiveErrors": 0,
+        "runningAtMs": 1773147893046
+      }
+    },
+    {
+      "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711341137,
+      "updatedAtMs": 1773136865934,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */6 * * *",
+        "tz": "Asia/Shanghai",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行 dashboard 数据刷新并推送到 GitHub Pages：\n\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n\n成功后 NO_REPLY。失败则报告错误。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1773158451018,
+        "lastRunAtMs": 1773136851040,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 14894,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "de0dd534-4e2f-4d88-89f1-76b3b8c3a034",
+      "agentId": "main",
+      "name": "Alva Signal Bridge",
+      "enabled": true,
+      "createdAtMs": 1771231548569,
+      "updatedAtMs": 1773144165843,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 */4 * * *",
+        "tz": "UTC",
+        "staggerMs": 300000
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1773158504426,
+        "lastRunAtMs": 1773144104449,
+        "lastStatus": "ok",
+        "lastDurationMs": 61394,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
       }
     },
     {
@@ -563,6 +527,43 @@ window.__DASHBOARD_DATA__ = {
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
+      }
+    },
+    {
+      "id": "eaac05f1-d24d-47b2-9b3c-f3ee1d80413c",
+      "agentId": "main",
+      "name": "Polymarket Position Monitor",
+      "enabled": true,
+      "createdAtMs": 1771231563664,
+      "updatedAtMs": 1773140520046,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,7,13,19 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Polymarket Position Monitor] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Polymarket 持仓监控。执行命令（必须完整复制，不要修改路径）：\n\nHTTPS_PROXY=http://127.0.0.1:7897 node /Users/leo/.openclaw/workspace/skills/polymarket-arb/monitor.mjs\n\n完整输出持仓详情（Discord announce 自动投递）。\n\n## Telegram 通知\n用 message tool 发送摘要到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：总持仓数 + 总市值 + 总盈亏 + 显著变化的仓位（涨跌超10%的标注出来）。3-5 行。\n\n❗ 输出末尾加一行：#Polymarket #Portfolio\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
+        "timeoutSeconds": 120,
+        "model": "minimax-portal/MiniMax-M2.5"
+      },
+      "state": {
+        "nextRunAtMs": 1773162000000,
+        "lastRunAtMs": 1773140400014,
+        "lastStatus": "error",
+        "lastDurationMs": 120032,
+        "consecutiveErrors": 1,
+        "lastRunStatus": "error",
+        "lastDeliveryStatus": "unknown",
+        "lastError": "cron: job execution timed out"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
       }
     },
     {

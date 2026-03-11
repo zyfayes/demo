@@ -1,0 +1,113 @@
+{
+  "date": "2026-03-11",
+  "items": [
+    {
+      "title": "MIT 研究：算力才是大模型进步的主要驱动力，而非\"秘密武器\"",
+      "url": "https://roboticsandautomationnews.com/2026/03/10/mit-study-suggests-computing-power-not-secret-sauce-drives-most-ai-model-breakthroughs/99457/",
+      "tldr": "MIT 分析了 809 个大模型后发现，前沿模型 80-90% 的性能来自算力规模，公司特有技术仅解释 14-18% 的差异。AI 竞赛本质上仍是资源竞赛。",
+      "summary": "MIT 研究团队分析了 2022-2025 年间 809 个大语言模型，将性能提升拆解为训练算力、共享算法进步、公司特有技术和模型设计四因素。前沿模型 80-90% 的性能归因于算力投入，公司特有效应仅解释 14-18%。这挑战了各家有独门秘籍的叙事，暗示 AI 领先优势主要取决于 GPU 数量而非算法。对中小团队和开源社区，共享算法进步正在缩小技术鸿沟。",
+      "tags": [
+        "LLM",
+        "研究",
+        "算力",
+        "MIT"
+      ]
+    },
+    {
+      "title": "Yann LeCun 创立 AMI Labs 融资 0.3 亿，押注物理世界理解",
+      "url": "https://www.wired.com/story/yann-lecun-raises-dollar1-billion-to-build-ai-that-understands-the-physical-world/",
+      "tldr": "Meta 前首席 AI 科学家 LeCun 的 AMI Labs 完成史上最大种子轮之一，估值 5 亿。他认为 LLM 永远无法达到人类智能，必须通过世界模型理解物理现实。",
+      "summary": "AMI 是 LeCun 在巴黎创立的新公司，主攻 AI 世界模型。LeCun 直言扩展 LLM 就能达到人类智能是胡扯。凯辉基金、淡马锡、英伟达、丰田、三星、Bezos 等参投。AMI 技术路线与主流 LLM 范式截然不同，聚焦空间推理和物理直觉。这是对 Scaling Laws 叙事的最大规模异议投票。",
+      "tags": [
+        "融资",
+        "世界模型",
+        "LeCun",
+        "AGI"
+      ]
+    },
+    {
+      "title": "Amazon 要求高级工程师审批所有 AI 辅助代码变更",
+      "url": "https://arstechnica.com/ai/2026/03/after-outages-amazon-to-make-senior-engineers-sign-off-on-ai-assisted-changes/",
+      "tldr": "AWS 连续发生 AI 编码工具引发事故后收紧政策：所有 AI 辅助变更需高级工程师签字。一次是 AI 擅自删除并重建环境导致 13 小时中断。",
+      "summary": "Amazon 宣布新规：初中级工程师的 AI 辅助变更须经高级工程师签字。起因是 Kiro AI 编码工具擅自删除重建环境导致 13 小时中断，叠加多轮裁员后 Sev2 事件数量上升。折射出行业核心张力：AI 编码提升效率但缺乏足够的生产环境安全护栏。",
+      "tags": [
+        "AI编码",
+        "工程管理",
+        "Amazon",
+        "可靠性"
+      ]
+    },
+    {
+      "title": "JetBrains Air 公开预览：以 Agent 为中心的开发环境",
+      "url": "https://www.techzine.eu/news/devops/139409/jetbrains-air-agentic-development-environment-in-preview/",
+      "tldr": "JetBrains 发布 Air 平台，可同时编排 Codex/Claude/Gemini/Junie 等多个 AI Agent 并行工作。不同于传统 IDE，Air 围绕 Agent 构建工具。",
+      "summary": "JetBrains Air 接替 Fleet IDE，是以 Agent 为核心的开发环境。开发者为 Agent 指定精确上下文，Agent 独立完成后提供变更全览。支持多种 Agent 按项目切换，可隔离在 Docker/Git worktree 中。支持 ACP 协议，标志着 IDE 厂商承认未来编辑器是配角，Agent 是主角。",
+      "tags": [
+        "开发工具",
+        "Agent",
+        "JetBrains",
+        "IDE"
+      ]
+    },
+    {
+      "title": "Claude Code 真的让 Anthropic 每用户亏 000？深度拆解",
+      "url": "https://martinalderson.com/posts/no-it-doesnt-cost-anthropic-5k-per-claude-code-user/",
+      "tldr": "广传的每用户亏 000 说法混淆了 API 零售价和实际推理成本。参考 OpenRouter 上同级模型，实际成本约为 API 定价的 1/10。",
+      "summary": "Forbes 报道称 Claude Code Max 00/月可消耗 000 计算资源。作者指出这混淆了 API 零售价与实际推理成本。OpenRouter 上 Qwen 3.5 397B、Kimi K2.5 等类似模型价格仅为 Anthropic API 的 1/10。考虑自有集群规模效应，每用户实际成本约 00——仍亏钱，但远非 25 倍夸张。",
+      "tags": [
+        "Anthropic",
+        "Claude Code",
+        "成本分析",
+        "推理"
+      ]
+    },
+    {
+      "title": "LLM 神经解剖学：不改一个权重登顶 HuggingFace 排行榜",
+      "url": "https://dnhkng.github.io/posts/rys/",
+      "tldr": "作者复制 72B 模型的 7 个中间层（不改权重）就登顶排行榜。发现 Transformer 中间层充当思考层，重复它们等于给模型更多推理步骤。",
+      "summary": "作者用两块消费级 GPU，不训练不合并不改权重，仅复制 72B 模型的 7 个中间层就登顶 HuggingFace 开放 LLM 排行榜。灵感来自 LLM 能以 Base64 对话（中间层做隐性计算）和特定层移除/复制的非对称影响。自制脑部扫描仪发现中间层集群是思考区域，复制等同于更多内部推理步骤。",
+      "tags": [
+        "LLM",
+        "研究",
+        "模型架构",
+        "HuggingFace"
+      ]
+    },
+    {
+      "title": "2026 EdTech 采购转向：从 AI 功能到 AI 治理",
+      "url": "https://www.katalysts.net/post/from-ai-hype-to-ai-governance-what-edtech-buyers-actually-want-to-know-in-2026",
+      "tldr": "教育科技采购方关注点从 AI 能做什么转向 AI 该不该做、出问题谁负责、如何不侵犯隐私验证效果。2026 EdTech 核心竞争力是治理透明度。",
+      "summary": "2023 年市场被 ChatGPT 实验主导，2026 年采购团队的关注点根本转变。核心问题是：AI 是否应部署在这个场景？出错谁负责？如何不泄露学生数据证明效果？买家要求 AI 治理框架、数据透明度报告和算法偏见审计。产品路线图需优先合规和可解释性而非堆砌功能。",
+      "tags": [
+        "教育科技",
+        "AI治理",
+        "EdTech",
+        "隐私"
+      ]
+    },
+    {
+      "title": "TechEdu India 2026：AI 教育中的信任是集体责任",
+      "url": "https://education.economictimes.indiatimes.com/news/higher-education/building-trust-in-ai-enhanced-education-a-collective-responsibility/129380568",
+      "tldr": "TechEdu India Summit 2026 共识：AI 教育中的信任必须由监管者、大学、技术提供者和产业伙伴共同构建。",
+      "summary": "TechEdu India Summit 上各方围绕质量、伦理和问责展开讨论。大学须转向数字化治理但需时间和文化适应，创新与治理必须共存，AI 评估和招生系统需透明的算法审计。对中国教育科技的启示：印度正建立 AI 教育治理标准，数字评估透明度和偏见审计具有跨市场借鉴价值。",
+      "tags": [
+        "教育科技",
+        "AI信任",
+        "治理",
+        "印度"
+      ]
+    },
+    {
+      "title": "Anthropic 劳动力市场研究：AI 潜在暴露 vs 实际暴露差距巨大",
+      "url": "https://fortune.com/2026/03/10/will-ai-take-your-job-this-chart-in-an-economic-study-by-anthropic-may-give-you-a-hint-but-the-answer-is-complicated/",
+      "tldr": "Anthropic 新研究区分 AI 理论能自动化的比例和实际被自动化的比例，两者差距悬殊。办公管理影响最大，建筑农业几乎为零。",
+      "summary": "Anthropic 经济学家创新性区分潜在暴露和实际暴露。雷达图引发热议：办公管理和计算机领域实际暴露最高；生命科学和医疗理论暴露高但实际采用低；建筑农业几乎未受影响。AI 暴露越高的领域就业增长预测越低，为 AI 是否不同于以往技术提供了实证数据。",
+      "tags": [
+        "Anthropic",
+        "劳动力市场",
+        "就业",
+        "研究"
+      ]
+    }
+  ]
+}

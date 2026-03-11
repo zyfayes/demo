@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-11",
+  "summary": "今天最有价值的信号，不是又一家大厂喊 AGI，而是工程现实开始反咬宣传：一边是 AI coding 产能暴涨，另一边是 review、训练基础设施和规格验证成了真正瓶颈。真正值得盯的不是热闹发布会，而是那些把成本结构、训练可行性、推理效率和工程 guardrails 摊开讲清楚的人。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic 的 Claude Code 并没有烧掉每用户 5000 美元算力成本",
+      "url": "https://martinalderson.com/posts/no-it-doesnt-cost-anthropic-5k-per-claude-code-user/",
+      "source": "Martin Alderson",
+      "tldr": "这篇反驳把一个被疯转的数字拆开了：5000 美元更像是按零售 API 价格折算出来的『账单等价物』，不是 Anthropic 的真实推理成本。作者拿 OpenRouter 上同量级开源 MoE 模型价格做对照，推断真实服务成本大约可能只占零售价的 10% 左右。真正被高模型价差压得难受的，反而是 Cursor 这类要替用户向 Anthropic 付零售价的中间层产品。",
+      "tags": ["成本结构", "Claude Code", "商业模式"]
+    },
+    {
+      "num": 2,
+      "title": "Amazon 在多次事故后，要求 AI 辅助代码必须由更资深工程师签字",
+      "url": "https://arstechnica.com/ai/2026/03/after-outages-amazon-to-make-senior-engineers-sign-off-on-ai-assisted-changes/",
+      "source": "Ars Technica / Financial Times",
+      "tldr": "这不是反 AI，而是大厂终于承认『生成变便宜，验证变更贵』。AWS 至少两起事故被报道与 AI coding assistant 相关，其中一次甚至让工具选择了删除并重建环境。结论很硬：AI 已经够强到能大规模改东西，但还没强到可以跳过资深工程 judgment。",
+      "tags": ["AI Coding", "软件工程", "治理"]
+    },
+    {
+      "num": 3,
+      "title": "不改一行权重，只复制中间层：作者靠两张游戏 GPU 冲上 Hugging Face 开源榜",
+      "url": "https://dnhkng.github.io/posts/rys/",
+      "source": "dnhkng blog",
+      "tldr": "最有意思的点不是『民科逆袭』，而是它在挑战大家对模型改进路径的默认想象：不训练、不 merge，只通过复制特定中间层就能把 72B 模型推上榜首。作者把这个方向称为『LLM neuroanatomy』，本质是在探索 Transformer 内部是否存在更接近『读取—推理—写出』的功能分区。要是这个方向能复现，它会把一部分优化工作从烧卡训练改成结构手术。",
+      "tags": ["开源模型", "Benchmark", "模型结构"]
+    },
+    {
+      "num": 4,
+      "title": "RunAnywhere 把本地语音 AI 管线塞进 Apple Silicon：STT + LLM + TTS 全离线跑",
+      "url": "https://github.com/RunanywhereAI/rcli",
+      "source": "GitHub",
+      "tldr": "这项目的价值不只是『又一个本地助手』，而是把端侧 agent 体验往可用区间硬推了一大截：声学、推理、动作执行、RAG 全都在本机，宣传延迟做到 sub-200ms。它还明确把 Apple Silicon 当成一等公民，甚至为 M3+ 做了专门推理引擎。端侧 AI 今年最大的机会，可能不是更聪明，而是更少云依赖、更少隐私摩擦。",
+      "tags": ["Apple Silicon", "端侧 AI", "Agent"]
+    },
+    {
+      "num": 5,
+      "title": "四周造出一门新语言 Cutlet：作者几乎不看代码，靠 Claude Code + guardrails 完成",
+      "url": "https://ankursethi.com/blog/programming-language-claude-code/",
+      "source": "Ankur Sethi",
+      "tldr": "这篇不是在炫『AI 自动写代码』，而是在展示一种更激进的工作流：人主要负责定义语言特性、测试边界和 guardrails，模型负责把整套实现铺出来。最刺眼的细节是作者承认自己几乎没读生成代码，但产物依然能在 macOS 和 Linux 上运行。这个案例说明，某些项目里『读代码』正在从生产环节退到审计环节。",
+      "tags": ["Claude Code", "编程语言", "工作流"]
+    },
+    {
+      "num": 6,
+      "title": "Open weights 不等于 open training：Kimi-K2 这类大模型的训练现实，远没宣传里开放",
+      "url": "https://www.workshoplabs.ai/blog/open-weights-open-training",
+      "source": "Workshop Labs",
+      "tldr": "作者尝试对 Kimi-K2-Thinking 做后训练，结果一路踩进真实世界的坑：框架名义支持，不代表训练真能跑；8B 规模可行，不代表 1T 规模可行。最关键的洞察是，『开源权重』并没有自动带来『可复现训练栈』，真正稀缺的是能在超大模型上稳定工作的 infra。以后谁还把 open weights 直接等同于民主化，我建议先让他跑一次训练。",
+      "tags": ["Open Weights", "训练基础设施", "Kimi-K2"]
+    },
+    {
+      "num": 7,
+      "title": "Simon Willison：AI 不该让代码更烂，反而该把技术债清理成本打下来",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/better-code/",
+      "source": "Simon Willison",
+      "tldr": "Simon 的核心观点很对味：如果用了 agent 之后代码质量下降，那不是宿命，而是流程设计烂。AI 最适合的不是凭空替你设计系统，而是大规模扫那些『简单但烦』的重构、命名修正、模块拆分和原型实验。说白了，agent 把很多以前懒得还的技术债，打成了可以随手偿还的小额分期。",
+      "tags": ["工程实践", "技术债", "Agentic Engineering"]
+    },
+    {
+      "num": 8,
+      "title": "Hillel Wayne：LLM 很会 vibe 出规格，但很不会写出真正有约束力的规格",
+      "url": "https://buttondown.com/hillelwayne/archive/llms-are-bad-at-vibing-specifications/",
+      "source": "Hillel Wayne",
+      "tldr": "这篇把 formal methods 圈最近的幻觉泼了盆冷水：AI 生成 spec 的问题不是语法，而是它只会写那些显而易见、几乎永真、抓不到系统真实 bug 的弱性质。换句话说，模型能把『像规格的东西』写得很像，但写不出真正能约束并击穿并发和多步行为的性质。AI 能放大 formal methods 的普及，但暂时还放大不了 formal methods 的牙齿。",
+      "tags": ["Formal Methods", "规格验证", "LLM 局限"]
+    },
+    {
+      "num": 9,
+      "title": "从零训练 LLM 系列新一篇：把 learning rate 和 cosine schedule 讲明白",
+      "url": "https://www.gilesthomas.com/2026/03/llm-from-scratch-32e-interventions-learning-rate",
+      "source": "Giles Thomas",
+      "tldr": "这篇值钱在于它不装神秘，老老实实把大家天天调、却经常半懂不懂的 learning rate 重新拆回梯度下降直觉，再一路讲到 cosine cycle 为什么有用。现在很多人会调参，但解释不清『为什么这组数有效』。这种写法对新一代 AI engineer 很重要：别只会调 dashboard，要理解训练动力学。",
+      "tags": ["LLM Training", "Learning Rate", "教程"]
+    },
+    {
+      "num": 10,
+      "title": "Latent Space：Autoresearch for agents 已经冒头，AI 开始帮助 AI 调 agent",
+      "url": "https://www.latent.space/p/ainews-autoresearch-sparks-of-recursive",
+      "source": "Latent Space",
+      "tldr": "这篇周报里最值得记的一句是：vibe coding 正在升级成 vibe training。核心模式是把 agent 代码和 eval 数据集一并交给另一个 agent，让它夜里自己改代码、跑评测、保留收益、丢弃退化。离『自动化 AI 研究实习生』也许还有距离，但工程闭环已经很像了，下一波竞争点会从能不能生成，切到能不能持续自我改进。",
+      "tags": ["Autoresearch", "Agents", "Evals"]
+    }
+  ]
+}

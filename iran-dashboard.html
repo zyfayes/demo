@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iran Conflict — Investment Intelligence | Alva</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<style>
+@font-face { font-family:'Delight'; src:url('https://alva-ai-static.b-cdn.net/fonts/Delight-Regular.ttf') format('truetype'); font-weight:400; }
+@font-face { font-family:'Delight'; src:url('https://alva-ai-static.b-cdn.net/fonts/Delight-Medium.ttf') format('truetype'); font-weight:500; }
+
+:root {
+  --m1:#49a3a6; --m3:#2a9b7d; --m4:#e05357; --m5:#e6a91a;
+  --n9:rgba(0,0,0,.9); --n7:rgba(0,0,0,.7); --n5:rgba(0,0,0,.5); --n3:rgba(0,0,0,.3);
+  --g01:#fafafa; --g02:#f5f5f5; --l05:rgba(0,0,0,.05); --l07:rgba(0,0,0,.07);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Delight',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:var(--n9);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-weight:400}
+.container{max-width:1400px;margin:0 auto;padding:28px}
+@media(max-width:768px){.container{padding:16px}}
+
+/* Header */
+.hdr{margin-bottom:32px;border-bottom:1px solid var(--l05);padding-bottom:24px}
+.hdr h1{font-size:22px;font-weight:400;letter-spacing:.22px;line-height:32px}
+.hdr p{font-size:13px;color:var(--n5);margin-top:6px}
+.live-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(224,83,87,.08);color:var(--m4);
+  padding:4px 10px;border-radius:2px;font-size:12px;font-weight:500;margin-top:10px}
+.live-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--m4);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:20px;align-items:stretch}
+@media(max-width:768px){.grid{grid-template-columns:repeat(4,1fr)}}
+.s8{grid-column:span 8} .s5{grid-column:span 5} .s4{grid-column:span 4} .s3{grid-column:span 3} .s2{grid-column:span 2}
+@media(max-width:768px){.s8,.s5,.s4,.s3,.s2{grid-column:span 4}}
+
+/* Group title */
+.gt{grid-column:span 8;font-size:15px;font-weight:500;color:var(--n9);padding:20px 0 4px;letter-spacing:.15px}
+@media(max-width:768px){.gt{grid-column:span 4}}
+
+/* Widget */
+.wc{display:flex;flex-direction:column;position:relative;overflow:hidden}
+.wt{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.wt-text{font-size:14px;font-weight:400;color:var(--n9);letter-spacing:.14px}
+.wt-ts{font-size:11px;color:var(--n3)}
+.wb{display:flex;flex-direction:column;border-radius:4px;flex:1;position:relative}
+.wm{position:absolute;bottom:8px;right:8px;opacity:.12;pointer-events:none}
+.wm img{height:16px}
+
+/* Chart dotted bg */
+.chart-bg{background-image:radial-gradient(circle,rgba(0,0,0,.06) 1px,transparent 1px);background-size:12px 12px;padding:16px}
+
+/* KPI */
+.kpi-row{background:var(--g01);padding:16px;display:flex;flex-wrap:wrap;gap:16px}
+.kpi{min-width:100px;flex:1}
+.kpi-label{font-size:11px;color:var(--n5);margin-bottom:2px}
+.kpi-price{font-size:20px;font-weight:400;color:var(--n9)}
+.kpi-chg{font-size:12px;margin-top:2px}
+.up{color:var(--m3)} .dn{color:var(--m4)}
+
+/* Feed */
+.feed-bg{background:var(--g01);padding:0;overflow-y:auto;max-height:520px}
+.fi{padding:14px 16px;display:flex;gap:10px;border-bottom:1px solid var(--l05)}
+.fi:last-child{border-bottom:none}
+.fi-av{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:var(--g02);object-fit:cover}
+.fi-body{flex:1;min-width:0}
+.fi-name{font-size:12px;font-weight:500;color:var(--n9);display:flex;align-items:center;gap:4px}
+.fi-handle{font-size:11px;color:var(--n5);font-weight:400}
+.fi-txt{font-size:12px;color:var(--n7);margin-top:3px;line-height:18px}
+.fi-meta{font-size:10px;color:var(--n3);margin-top:4px;display:flex;gap:10px}
+.fi-meta a{color:var(--m1);text-decoration:none}
+.v-badge{color:#3d8bd1;font-size:10px}
+
+/* News */
+.ni{padding:12px 16px;border-bottom:1px solid var(--l05)}
+.ni:last-child{border-bottom:none}
+.ni a{font-size:12px;font-weight:500;color:var(--n9);text-decoration:none;line-height:18px}
+.ni a:hover{color:var(--m1)}
+.ni .src{font-size:10px;color:var(--n5);margin-top:3px}
+
+/* Briefing */
+.brief-bg{background:var(--g01);padding:20px}
+.brief-text{font-size:13px;color:var(--n7);line-height:22px}
+
+/* Scenario */
+.scenario-grid{display:flex;flex-wrap:wrap;gap:12px}
+.scenario-card{flex:1;min-width:200px;background:var(--g01);border-radius:4px;padding:16px}
+.scenario-label{font-size:11px;font-weight:500;color:var(--n5);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
+.scenario-items{font-size:12px;color:var(--n7);line-height:20px}
+.scenario-items li{margin-bottom:4px;list-style:none;padding-left:14px;position:relative}
+.scenario-items li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%}
+.bull li::before{background:var(--m3)} .bear li::before{background:var(--m4)} .hedge li::before{background:var(--m5)}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="hdr">
+  <h1>🇮🇷 Iran Conflict — Investment Intelligence</h1>
+  <p>Defense, energy, safe-haven, and regional asset tracking with social sentiment analysis</p>
+  <div class="live-tag"><span class="dot"></span>ACTIVE CONFLICT — Week 2</div>
+</div>
+
+<div class="grid">
+
+  <div class="gt">Market Snapshot (2-Week Change)</div>
+
+<div class="wc s8"><div class="wb kpi-row">
+<div class="kpi"><div class="kpi-label">Lockheed Martin</div><div class="kpi-price">$473.25</div><div class="kpi-chg dn">▼ 3.8%</div></div>
+<div class="kpi"><div class="kpi-label">Raytheon</div><div class="kpi-price">$158.37</div><div class="kpi-chg dn">▼ 3.2%</div></div>
+<div class="kpi"><div class="kpi-label">Northrop Grumman</div><div class="kpi-price">$574.54</div><div class="kpi-chg dn">▼ 3.3%</div></div>
+<div class="kpi"><div class="kpi-label">General Dynamics</div><div class="kpi-price">$326.98</div><div class="kpi-chg dn">▼ 1.6%</div></div>
+<div class="kpi"><div class="kpi-label">US Oil Fund</div><div class="kpi-price">$74.23</div><div class="kpi-chg dn">▼ 0.5%</div></div>
+<div class="kpi"><div class="kpi-label">SPDR Gold</div><div class="kpi-price">$338.91</div><div class="kpi-chg dn">▼ 3.8%</div></div>
+<div class="kpi"><div class="kpi-label">Energy Select</div><div class="kpi-price">$44.15</div><div class="kpi-chg dn">▼ 2.2%</div></div>
+<div class="kpi"><div class="kpi-label">iShares Israel</div><div class="kpi-price">$95.50</div><div class="kpi-chg dn">▼ 2.6%</div></div>
+<div class="kpi"><div class="kpi-label">3x Defense</div><div class="kpi-price">$61.40</div><div class="kpi-chg dn">▼ 5.6%</div></div>
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div></div></div>
+<div class="gt">Price Performance (60 Trading Days, Indexed to 100)</div>
+<div class="wc s5">
+<div class="wt"><span class="wt-text">Defense Sector</span></div>
+<div class="wb chart-bg" style="min-height:280px">
+<div id="c1" style="width:100%;height:260px"></div>
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+</div></div>
+<div class="wc s3">
+<div class="wt"><span class="wt-text">Energy & Safe Haven</span></div>
+<div class="wb chart-bg" style="min-height:280px">
+<div id="c2" style="width:100%;height:260px"></div>
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+</div></div>
+<div class="gt">Situation Intelligence</div>
+<div class="wc s5">
+<div class="wt"><span class="wt-text">Conflict Overview</span><span class="wt-ts">Mar 12, 2026</span></div>
+<div class="wb brief-bg"><div class="brief-text">### Current Status of the 2026 Iran Conflict
+As of March 12, 2026, the US-Israel war with Iran, which began with surprise airstrikes on February 28 targeting Iranian missiles, air defenses, and leadership (including Supreme Leader Ali Khamenei), has entered its second week of intense escalation.[[1]](https://www.britannica.com/event/2026-Iran-Conflict)[[2]](https://en.wikipedia.org/wiki/2026_Iran_war) Key developments include US strikes on Iranian naval vessels and minelayers in the Strait of Hormuz, Iranian missile barrages on Israel, attacks on shipping, and strikes on Tehran's oil depots.[[3]](https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-10-2026)[[4]](https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-n...</div>
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+</div></div>
+<div class="wc s3">
+<div class="wt"><span class="wt-text">Key Sources</span></div>
+<div class="wb feed-bg">
+<div class="ni"><a href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank">1</a><div class="src">britannica.com</div></div>
+<div class="ni"><a href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank">2</a><div class="src">en.wikipedia.org</div></div>
+<div class="ni"><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-10-2026" target="_blank">3</a><div class="src">understandingwar.org</div></div>
+<div class="ni"><a href="https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-nearly-10000-civilian-sites" target="_blank">4</a><div class="src">aljazeera.com</div></div>
+<div class="ni"><a href="https://www.wsj.com/livecoverage/iran-war-news-updates-2026?gaa_at=eafs&gaa_n=AWEtsqfUX3AIhCsIHPfXhO6TkXfgoCksGUDLGiGNASXzdYr20RQBADUpuvq_&gaa_sig=S-ur-FEqGqKMuzrzm-tX3U2zqv6_Upqhu3sbAppbHiGw5TQMqQqiOuSen3lHYb4QVrjjsQu_m97UEkVQdABNXA%3D%3D&gaa_ts=69b2c48d" target="_blank">5</a><div class="src">wsj.com</div></div>
+<div class="ni"><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-9-2026" target="_blank">6</a><div class="src">understandingwar.org</div></div>
+<div class="ni"><a href="https://www.aljazeera.com/news/2026/3/8/iran-war-threatens-prolonged-impact-on-energy-markets-as-oil-prices-rise" target="_blank">7</a><div class="src">aljazeera.com</div></div>
+<div class="ni"><a href="https://www.reuters.com/business/energy/us-oil-prices-jump-supply-fears-amid-expanding-us-israeli-war-with-iran-2026-03-08" target="_blank">8</a><div class="src">reuters.com</div></div>
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div></div></div>
+<div class="gt">Social Intelligence</div>
+<div class="wc s5">
+<div class="wt"><span class="wt-text">𝕏 Market Commentary</span><span class="wt-ts">Live</span></div>
+<div class="wb feed-bg">
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">Bloomberg <span class="v-badge">✓</span> <span class="fi-handle">@business · 9.8M</span></div>
+<div class="fi-txt">The EU told member states this week that there is currently no justification to release strategic oil stocks, even as the Iran War continues to hamper key shipping lanes https://t.co/kNT7YJm1BN</div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/business/status/2029864107633987730" target="_blank">View →</a></div>
+</div></div>
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">unusual_whales <span class="v-badge">✓</span> <span class="fi-handle">@unusual_whales · 3.4M</span></div>
+<div class="fi-txt">BREAKING: Jim Cramer says the oil market is signaling the Iran war won't spiral, and that's bullish for stocks, per CNBC</div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/unusual_whales/status/2029605934058868737" target="_blank">View →</a></div>
+</div></div>
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">Hunter Allen <span class="v-badge">✓</span> <span class="fi-handle">@HunterAllen4 · 4K</span></div>
+<div class="fi-txt">🛡️ Iran conflict escalates with EU responses — defense stocks on watch:
+•Lockheed Martin (LMT) – F‑35 &amp; missile systems 🚀
+•RTX (Raytheon) (RTX) – Missiles &amp; air defense 💥
+•Kratos (KTOS) – Drones &amp; </div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/HunterAllen4/status/2029593299686924778" target="_blank">View →</a></div>
+</div></div>
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">Sir Kory <span class="v-badge">✓</span> <span class="fi-handle">@Sir_Kory · 966</span></div>
+<div class="fi-txt">Geopolitical Winners: 
+Stocks Benefiting from the US-Iran Conflict.
+
+Defense Primes:
+
+$LMT (Lockheed Martin)
+$NOC (Northrop Grumman)
+$RTX (RTX)
+$LHX (L3Harris)
+
+Cybersecurity:
+
+$PANW (Palo Alto Networ</div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/Sir_Kory/status/2030208086774850029" target="_blank">View →</a></div>
+</div></div>
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">Red Teabag Apparatus  <span class="fi-handle">@DeesInYouTees · 356</span></div>
+<div class="fi-txt">@JonahBearsMom @ryangrim Now's probably the best time to invest in defense contractors though. I used to do work for many of them. Check out the stocks for Infinera, BAE, Raytheon, Lockheed Martin, No</div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/DeesInYouTees/status/2030146385975124056" target="_blank">View →</a></div>
+</div></div>
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">Mr Nonsene நான்சென்ஸ் <span class="v-badge">✓</span> <span class="fi-handle">@RoshanBunny88 · 269</span></div>
+<div class="fi-txt">These companies will be happy
+
+Here are the main companies (and sectors) that would likely be thrilled about reports of prolonged U.S.-Iran conflict through September—based on recent market reactions </div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/RoshanBunny88/status/2029885099869937937" target="_blank">View →</a></div>
+</div></div>
+<div class="fi">
+<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
+<div class="fi-body">
+<div class="fi-name">Bushels 🌾 Barrels 🛢 &amp; Bullion 💰  <span class="fi-handle">@BuBarrelBull · 0</span></div>
+<div class="fi-txt">The market is badly misreading the Iran war.
+
+Yields rising. Dollar up. Gold selling off. The market is pricing tighter Fed policy and it’s absolutely wrong.
+
+This is not 2022. When Russia invaded Ukr</div>
+<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/BuBarrelBull/status/2029889703986495603" target="_blank">View →</a></div>
+</div></div>
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div></div></div>
+<div class="wc s3">
+<div class="wt"><span class="wt-text">Investment Thesis & Risk Map</span></div>
+<div class="wb" style="gap:12px;display:flex;flex-direction:column">
+<div class="scenario-card">
+<div class="scenario-label">📈 Escalation Scenario</div>
+<div class="brief-text" style="font-size:12px">There's an escalating US-Israeli conflict with Iran as of early March 2026, driving oil prices above $100/barrel for the first time since 2022, hammering airlines and export-heavy markets like UAE and India, while boosting energy and defense sectors.[[1]](https://x.com/i/status/2031033518743069174)[[2]](https://x.com/i/status/2030962060285083845)[[3]](https://x.com/i/status/2031007249724805488)[[4</div>
+</div>
+<div class="scenario-card">
+<div class="scenario-label">🛡️ Safe Haven Analysis</div>
+<div class="brief-text" style="font-size:12px">Amid escalating US-Israel tensions with Iran—including airstrikes on Tehran, potential ground troop alerts, and Strait of Hormuz risks—markets are flashing classic risk-off signals.[[1]](https://x.com/i/status/2029889703986495603)[[2]](https://x.com/i/status/2031766300272607551)
+
+**VIX (Volatility Index):** Surging sharply, breaking above 25 and hitting levels near 29-30 as fear gauges spike on en</div>
+</div>
+
+<div class="scenario-card">
+<div class="scenario-label">🎯 Key Watchpoints</div>
+<ul class="scenario-items hedge" style="font-size:12px">
+<li>Strait of Hormuz shipping traffic &amp; insurance rates</li>
+<li>US Strategic Petroleum Reserve release signals</li>
+<li>Iran nuclear facility status (Fordow, Natanz)</li>
+<li>Saudi Arabia &amp; UAE diplomatic posture</li>
+<li>Oil term-structure (backwardation → near-term fear)</li>
+<li>VIX / equity put-call ratio levels</li>
+<li>EU strategic oil reserve release decisions</li>
+</ul>
+</div>
+
+<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+</div></div>
+</div>
+
+<script>
+var dates = ["12/08", "12/05", "12/04", "12/03", "12/02", "12/01", "11/28", "11/26", "11/25", "11/24", "11/21", "11/20", "11/19", "11/18", "11/17", "11/14", "11/13", "11/12", "11/11", "11/10", "11/07", "11/06", "11/05", "11/04", "11/03", "10/31", "10/30", "10/29", "10/28", "10/27", "10/24", "10/23", "10/22", "10/21", "10/20", "10/17", "10/16", "10/15", "10/14", "10/13", "10/10", "10/09", "10/08", "10/07", "10/06", "10/03", "10/02", "10/01", "09/30", "09/29", "09/26", "09/25", "09/24", "09/23", "09/22", "09/19", "09/18", "09/17", "09/16", "09/15"];
+var axStyle = {lineStyle:{type:'dashed',color:'rgba(0,0,0,.12)'}};
+var noTick = {show:false};
+var labelS = {fontSize:11,color:'rgba(0,0,0,.5)'};
+var tt = {trigger:'axis',backgroundColor:'#fff',borderColor:'rgba(0,0,0,.07)',textStyle:{fontSize:12,color:'rgba(0,0,0,.7)'}};
+
+var c1 = echarts.init(document.getElementById('c1'));
+c1.setOption({
+  grid:{top:30,right:16,bottom:28,left:40,containLabel:false},
+  legend:{top:0,textStyle:{fontSize:11,color:'rgba(0,0,0,.5)'}},
+  tooltip:tt,
+  xAxis:{type:'category',data:dates,axisLine:axStyle,axisTick:noTick,axisLabel:labelS},
+  yAxis:{type:'value',axisLine:{show:false},axisTick:noTick,splitLine:{show:false},axisLabel:{fontSize:11,color:'rgba(0,0,0,.3)'}},
+  series:[
+    {name:'LMT',type:'line',data:[100.0, 97.17, 96.34, 96.01, 94.94, 94.37, 98.38, 97.59, 97.21, 96.92, 99.01, 100.62, 100.97, 102.01, 101.16, 100.08, 97.95, 98.21, 98.21, 97.13, 98.49, 100.76, 101.67, 104.21, 104.85, 105.69, 105.23, 104.29, 104.38, 104.63, 104.3, 104.87, 104.68, 105.18, 108.71, 106.4, 105.99, 107.31, 108.55, 108.26, 108.52, 109.11, 110.45, 109.82, 110.5, 108.4, 107.3, 107.22, 107.27, 105.72, 104.74, 104.07, 104.48, 104.57, 103.23, 101.62, 101.77, 101.66, 101.92, 101.69],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#3d8bd1'}},
+    {name:'RTX',type:'line',data:[100.0, 99.76, 99.88, 98.21, 98.41, 97.96, 101.98, 100.97, 100.37, 100.99, 98.93, 100.71, 101.31, 101.87, 102.4, 102.36, 101.42, 103.6, 104.49, 104.37, 103.18, 102.09, 101.45, 102.38, 103.22, 104.07, 103.44, 102.82, 104.17, 104.5, 104.16, 104.62, 103.77, 100.89, 93.7, 92.09, 91.56, 91.53, 92.93, 92.61, 91.94, 94.55, 98.28, 98.69, 98.41, 97.12, 97.15, 97.48, 97.56, 95.4, 95.24, 93.58, 94.09, 93.6, 92.95, 92.26, 92.23, 92.3, 92.46, 92.33],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#5f75c9'}},
+    {name:'NOC',type:'line',data:[100.0, 99.17, 99.9, 99.96, 98.81, 98.55, 103.38, 102.45, 102.87, 102.17, 102.37, 102.49, 102.07, 102.38, 101.71, 100.8, 100.8, 100.91, 102.38, 101.7, 102.72, 103.32, 103.06, 104.26, 103.95, 105.4, 104.52, 105.68, 107.5, 107.66, 109.4, 109.43, 107.75, 108.27, 108.75, 107.4, 108.21, 110.0, 113.25, 111.8, 112.63, 114.71, 115.24, 112.3, 111.73, 110.11, 109.29, 109.37, 110.07, 107.3, 107.4, 105.82, 105.91, 104.25, 104.08, 103.52, 103.65, 104.25, 104.66, 103.79],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#ff9800'}},
+    {name:'GD',type:'line',data:[100.0, 100.39, 101.69, 100.62, 99.94, 98.92, 101.67, 101.2, 101.51, 100.63, 101.29, 101.02, 102.1, 101.57, 101.72, 102.45, 102.4, 104.0, 104.88, 103.99, 103.07, 101.28, 102.05, 102.22, 101.74, 102.65, 102.57, 102.22, 103.18, 105.29, 104.39, 101.63, 100.66, 101.39, 100.35, 98.55, 98.39, 98.82, 99.85, 99.52, 99.09, 102.01, 103.1, 102.21, 103.12, 102.26, 101.5, 101.41, 101.49, 98.86, 98.31, 96.55, 96.31, 96.19, 96.03, 96.45, 96.6, 96.81, 97.14, 97.31],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#40a544'}}
+  ]
+});
+
+var c2 = echarts.init(document.getElementById('c2'));
+c2.setOption({
+  grid:{top:30,right:16,bottom:28,left:40,containLabel:false},
+  legend:{top:0,textStyle:{fontSize:11,color:'rgba(0,0,0,.5)'}},
+  tooltip:tt,
+  xAxis:{type:'category',data:dates,axisLine:axStyle,axisTick:noTick,axisLabel:labelS},
+  yAxis:{type:'value',axisLine:{show:false},axisTick:noTick,splitLine:{show:false},axisLabel:{fontSize:11,color:'rgba(0,0,0,.3)'}},
+  series:[
+    {name:'Oil (USO)',type:'line',data:[100.0, 102.03, 101.28, 100.24, 99.59, 100.81, 100.82, 99.36, 98.24, 99.9, 98.31, 99.52, 100.55, 102.85, 101.15, 101.26, 99.09, 99.01, 103.16, 101.73, 101.09, 100.55, 100.77, 102.04, 103.19, 102.94, 101.73, 101.86, 101.28, 103.73, 103.82, 103.97, 100.2, 96.85, 96.23, 96.44, 96.2, 97.87, 97.89, 99.7, 98.44, 102.87, 104.31, 103.84, 103.38, 101.73, 101.49, 103.76, 104.62, 105.82, 109.26, 109.22, 108.37, 106.47, 104.2, 104.3, 105.96, 106.36, 107.35, 105.31],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#c76466'}},
+    {name:'Gold (GLD)',type:'line',data:[100.0, 100.26, 100.44, 100.38, 100.47, 101.12, 100.64, 99.4, 98.61, 98.65, 97.11, 97.26, 97.29, 97.13, 96.43, 97.55, 99.34, 100.15, 98.56, 98.16, 95.56, 94.98, 95.09, 94.01, 95.68, 95.51, 96.03, 94.18, 94.54, 95.22, 97.95, 98.28, 97.89, 97.88, 104.6, 100.93, 102.86, 100.51, 98.8, 98.1, 95.77, 94.81, 96.6, 95.03, 94.54, 92.79, 92.05, 92.37, 92.23, 91.45, 89.96, 89.45, 89.08, 89.89, 89.53, 88.0, 87.08, 87.43, 88.11, 87.93],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#ff9800'}},
+    {name:'Energy (XLE)',type:'line',data:[100.0, 101.1, 101.52, 101.09, 99.23, 100.53, 99.57, 98.28, 97.55, 98.16, 98.44, 97.82, 98.94, 100.24, 99.45, 101.3, 99.6, 99.35, 100.76, 99.47, 98.57, 97.17, 96.24, 95.98, 97.03, 97.02, 96.31, 96.88, 96.17, 97.18, 96.95, 97.94, 96.65, 95.43, 95.65, 94.65, 93.88, 95.02, 95.08, 95.09, 93.81, 96.61, 97.94, 98.51, 98.36, 97.88, 97.36, 98.35, 98.35, 99.41, 101.27, 100.34, 99.45, 98.17, 96.51, 97.45, 98.76, 99.06, 98.83, 97.2],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#117a7d'}}
+  ]
+});
+
+window.addEventListener('resize',function(){c1.resize();c2.resize()});
+</script>
+
+</div>
+</body></html>

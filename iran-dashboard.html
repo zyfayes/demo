@@ -3,296 +3,536 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Iran Conflict — Investment Intelligence | Alva</title>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+<title>Iran Conflict Investment Dashboard — Alva</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
 <style>
-@font-face { font-family:'Delight'; src:url('https://alva-ai-static.b-cdn.net/fonts/Delight-Regular.ttf') format('truetype'); font-weight:400; }
-@font-face { font-family:'Delight'; src:url('https://alva-ai-static.b-cdn.net/fonts/Delight-Medium.ttf') format('truetype'); font-weight:500; }
+@font-face { font-family: 'Delight'; src: url('https://alva-ai-static.b-cdn.net/fonts/Delight-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Delight'; src: url('https://alva-ai-static.b-cdn.net/fonts/Delight-Medium.ttf') format('truetype'); font-weight: 500; }
 
 :root {
-  --m1:#49a3a6; --m3:#2a9b7d; --m4:#e05357; --m5:#e6a91a;
-  --n9:rgba(0,0,0,.9); --n7:rgba(0,0,0,.7); --n5:rgba(0,0,0,.5); --n3:rgba(0,0,0,.3);
-  --g01:#fafafa; --g02:#f5f5f5; --l05:rgba(0,0,0,.05); --l07:rgba(0,0,0,.07);
+  --main-m1: #49a3a6; --main-m3: #2a9b7d; --main-m3-10: rgba(42,155,125,0.1);
+  --main-m4: #e05357; --main-m4-10: rgba(224,83,87,0.1);
+  --main-m5: #e6a91a; --main-m5-10: rgba(230,169,26,0.1);
+  --main-m6: #ff9800; --main-m2: #2196f3; --main-m2-10: rgba(33,150,243,0.1);
+  --text-n9: rgba(0,0,0,0.9); --text-n7: rgba(0,0,0,0.7); --text-n5: rgba(0,0,0,0.5); --text-n3: rgba(0,0,0,0.3); --text-n2: rgba(0,0,0,0.2);
+  --b0-page: #ffffff; --grey-g01: #fafafa; --grey-g02: #f5f5f5; --grey-g03: #f0f0f0;
+  --line-l05: rgba(0,0,0,0.05); --line-l07: rgba(0,0,0,0.07); --line-l12: rgba(0,0,0,0.12);
+  --b-r02: rgba(0,0,0,0.02); --b-r03: rgba(0,0,0,0.03);
+  --shadow-xs: 0 4px 15px 0 rgba(0,0,0,0.05); --shadow-s: 0 6px 20px 0 rgba(0,0,0,0.04);
+  --radius-ct-xs: 2px; --radius-ct-s: 4px; --radius-ct-m: 6px; --radius-ct-l: 8px;
+  --spacing-xxs: 4px; --spacing-xs: 8px; --spacing-s: 12px; --spacing-m: 16px; --spacing-l: 20px; --spacing-xl: 24px; --spacing-xxl: 28px;
+  --chart-blue1-main: #3d8bd1; --chart-purple1-main: #5f75c9; --chart-orange1-main: #ff9800;
+  --chart-green1-main: #40a544; --chart-red1-main: #c76466; --chart-cyan1-1: #117a7d;
+  --chart-violet1-main: #a878dc; --chart-pink1-main: #dc7aa5; --chart-blue2-main: #0d7498;
 }
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Delight',-apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:var(--n9);
-  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;font-weight:400}
-.container{max-width:1400px;margin:0 auto;padding:28px}
-@media(max-width:768px){.container{padding:16px}}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Delight', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--b0-page); color: var(--text-n9);
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility;
+}
+
+/* Playbook Container */
+.playbook-container { width: 100%; max-width: 2048px; margin: 0 auto; padding: var(--spacing-xxl); }
+@media (max-width: 768px) { .playbook-container { padding: var(--spacing-m); } }
 
 /* Header */
-.hdr{margin-bottom:32px;border-bottom:1px solid var(--l05);padding-bottom:24px}
-.hdr h1{font-size:22px;font-weight:400;letter-spacing:.22px;line-height:32px}
-.hdr p{font-size:13px;color:var(--n5);margin-top:6px}
-.live-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(224,83,87,.08);color:var(--m4);
-  padding:4px 10px;border-radius:2px;font-size:12px;font-weight:500;margin-top:10px}
-.live-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--m4);animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.dashboard-header { margin-bottom: 32px; }
+.dashboard-header h1 { font-size: 22px; font-weight: 400; color: var(--text-n9); letter-spacing: 0.3px; }
+.dashboard-subtitle { font-size: 13px; color: var(--text-n5); margin-top: 6px; line-height: 1.6; }
+.dashboard-update { font-size: 11px; color: var(--text-n3); margin-top: 4px; }
 
-/* Grid */
-.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:20px;align-items:stretch}
-@media(max-width:768px){.grid{grid-template-columns:repeat(4,1fr)}}
-.s8{grid-column:span 8} .s5{grid-column:span 5} .s4{grid-column:span 4} .s3{grid-column:span 3} .s2{grid-column:span 2}
-@media(max-width:768px){.s8,.s5,.s4,.s3,.s2{grid-column:span 4}}
+/* Widget Grid - 8 column */
+.widget-grid { display: grid; grid-template-columns: repeat(8, 1fr); gap: var(--spacing-xl); align-items: stretch; }
+@media (max-width: 768px) {
+  .widget-grid { grid-template-columns: repeat(4, 1fr); gap: var(--spacing-l); }
+  .col-2 { grid-column: span 2; }
+  .col-3,.col-4,.col-5,.col-6,.col-8 { grid-column: span 4; }
+}
+.col-2 { grid-column: span 2; } .col-3 { grid-column: span 3; } .col-4 { grid-column: span 4; }
+.col-5 { grid-column: span 5; } .col-6 { grid-column: span 6; } .col-8 { grid-column: span 8; }
 
-/* Group title */
-.gt{grid-column:span 8;font-size:15px;font-weight:500;color:var(--n9);padding:20px 0 4px;letter-spacing:.15px}
-@media(max-width:768px){.gt{grid-column:span 4}}
+/* Section Title */
+.section-title { display: inline-flex; align-items: center; gap: 12px; margin-top: 8px; grid-column: span 8; }
+.section-title-icon { font-size: 22px; line-height: 1; }
+.section-title-text { font-size: 22px; font-weight: 400; color: var(--text-n9); letter-spacing: 0.3px; }
+.section-title-sub { font-size: 11px; color: var(--text-n5); padding-left: 8px; border-left: 1px solid var(--line-l07); }
 
-/* Widget */
-.wc{display:flex;flex-direction:column;position:relative;overflow:hidden}
-.wt{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.wt-text{font-size:14px;font-weight:400;color:var(--n9);letter-spacing:.14px}
-.wt-ts{font-size:11px;color:var(--n3)}
-.wb{display:flex;flex-direction:column;border-radius:4px;flex:1;position:relative}
-.wm{position:absolute;bottom:8px;right:8px;opacity:.12;pointer-events:none}
-.wm img{height:16px}
+/* Widget Card */
+.widget-card { display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.widget-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--spacing-m); }
+.widget-title-text { font-size: 14px; font-weight: 400; color: var(--text-n9); letter-spacing: 0.14px; line-height: 22px; }
+.widget-timestamp { font-size: 11px; color: var(--text-n5); line-height: 20px; }
 
-/* Chart dotted bg */
-.chart-bg{background-image:radial-gradient(circle,rgba(0,0,0,.06) 1px,transparent 1px);background-size:12px 12px;padding:16px}
+.widget-body { border-radius: var(--radius-ct-s); position: relative; flex: 1; display: flex; flex-direction: column; }
+
+/* Chart Card dotted background */
+.chart-dotted-background {
+  background-image: radial-gradient(circle, rgba(0,0,0,0.18) 0.6px, transparent 0.6px);
+  background-size: 3px 3px;
+}
+.chart-body { flex: 1; padding: var(--spacing-m); position: relative; }
+.chart-container { width: 100%; height: 100%; min-height: 280px; }
+
+/* Card background */
+.card-bg { background: var(--grey-g01); padding: var(--spacing-l); }
+
+/* Watermark */
+.alva-watermark { position: absolute; bottom: var(--spacing-m); left: var(--spacing-m); opacity: 0.2; line-height: 0; }
+.alva-watermark img { height: 16px; }
 
 /* KPI */
-.kpi-row{background:var(--g01);padding:16px;display:flex;flex-wrap:wrap;gap:16px}
-.kpi{min-width:100px;flex:1}
-.kpi-label{font-size:11px;color:var(--n5);margin-bottom:2px}
-.kpi-price{font-size:20px;font-weight:400;color:var(--n9)}
-.kpi-chg{font-size:12px;margin-top:2px}
-.up{color:var(--m3)} .dn{color:var(--m4)}
+.kpi-row { display: flex; flex-wrap: wrap; gap: 16px; }
+.kpi-item { min-width: 140px; flex: 1; padding: 12px 0; }
+.kpi-label { font-size: 12px; color: var(--text-n5); margin-bottom: 6px; letter-spacing: 0.12px; }
+.kpi-value { font-size: 20px; font-weight: 400; color: var(--text-n9); letter-spacing: 0.2px; }
+.kpi-change { font-size: 12px; margin-top: 4px; letter-spacing: 0.12px; }
+.kpi-change.bullish { color: var(--main-m3); }
+.kpi-change.bearish { color: var(--main-m4); }
 
-/* Feed */
-.feed-bg{background:var(--g01);padding:0;overflow-y:auto;max-height:520px}
-.fi{padding:14px 16px;display:flex;gap:10px;border-bottom:1px solid var(--l05)}
-.fi:last-child{border-bottom:none}
-.fi-av{width:32px;height:32px;border-radius:50%;flex-shrink:0;background:var(--g02);object-fit:cover}
-.fi-body{flex:1;min-width:0}
-.fi-name{font-size:12px;font-weight:500;color:var(--n9);display:flex;align-items:center;gap:4px}
-.fi-handle{font-size:11px;color:var(--n5);font-weight:400}
-.fi-txt{font-size:12px;color:var(--n7);margin-top:3px;line-height:18px}
-.fi-meta{font-size:10px;color:var(--n3);margin-top:4px;display:flex;gap:10px}
-.fi-meta a{color:var(--m1);text-decoration:none}
-.v-badge{color:#3d8bd1;font-size:10px}
+/* Tags */
+.tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: var(--radius-ct-xs); letter-spacing: 0.11px; }
+.tag-bullish { background: var(--main-m3-10); color: var(--main-m3); }
+.tag-bearish { background: var(--main-m4-10); color: var(--main-m4); }
+.tag-alert { background: var(--main-m5-10); color: var(--main-m5); }
 
-/* News */
-.ni{padding:12px 16px;border-bottom:1px solid var(--l05)}
-.ni:last-child{border-bottom:none}
-.ni a{font-size:12px;font-weight:500;color:var(--n9);text-decoration:none;line-height:18px}
-.ni a:hover{color:var(--m1)}
-.ni .src{font-size:10px;color:var(--n5);margin-top:3px}
+/* Feed Card */
+.feed-body { padding: var(--spacing-xxs) 0; max-height: 600px; overflow-y: auto; }
+.feed-body::-webkit-scrollbar { width: 4px; }
+.feed-body::-webkit-scrollbar-thumb { background: var(--line-l12); border-radius: 2px; }
 
-/* Briefing */
-.brief-bg{background:var(--g01);padding:20px}
-.brief-text{font-size:13px;color:var(--n7);line-height:22px}
+.feed-item { display: flex; align-items: flex-start; gap: var(--spacing-xs); padding: var(--spacing-m); position: relative; }
+.feed-item::after { content: ""; position: absolute; bottom: 0; left: var(--spacing-m); right: var(--spacing-m); height: 1px; background: var(--line-l05); }
+.feed-item:last-child::after { display: none; }
 
-/* Scenario */
-.scenario-grid{display:flex;flex-wrap:wrap;gap:12px}
-.scenario-card{flex:1;min-width:200px;background:var(--g01);border-radius:4px;padding:16px}
-.scenario-label{font-size:11px;font-weight:500;color:var(--n5);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}
-.scenario-items{font-size:12px;color:var(--n7);line-height:20px}
-.scenario-items li{margin-bottom:4px;list-style:none;padding-left:14px;position:relative}
-.scenario-items li::before{content:"";position:absolute;left:0;top:8px;width:4px;height:4px;border-radius:50%}
-.bull li::before{background:var(--m3)} .bear li::before{background:var(--m4)} .hedge li::before{background:var(--m5)}
+.feed-avatar { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex-shrink: 0; background: var(--grey-g02); }
+.feed-item-content { flex: 1; min-width: 0; }
+.feed-author { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; flex-wrap: wrap; }
+.feed-author-name { font-size: 13px; font-weight: 500; color: var(--text-n9); }
+.feed-author-badge { font-size: 10px; color: var(--main-m2); }
+.feed-author-handle { font-size: 12px; color: var(--text-n5); }
+.feed-text { font-size: 13px; color: var(--text-n7); line-height: 1.6; letter-spacing: 0.13px; }
+.feed-meta { display: flex; gap: 16px; margin-top: 8px; font-size: 11px; color: var(--text-n3); }
+.feed-meta a { color: var(--text-n3); text-decoration: none; }
+.feed-meta a:hover { color: var(--main-m2); }
+
+/* Free Text / Summary with Markdown */
+.free-text-body { padding: var(--spacing-l); }
+
+/* Markdown Container */
+.markdown-container { width: 100%; display: flex; flex-direction: column; gap: 16px; }
+.markdown-container * { box-sizing: border-box; }
+.markdown-container h1,.markdown-container h2,.markdown-container h3,.markdown-container h4,.markdown-container h5,.markdown-container h6 {
+  font-family: 'Delight', -apple-system, sans-serif; font-weight: 500; font-style: normal; color: var(--text-n9); margin: 0; width: 100%;
+}
+.markdown-container h1,.markdown-container h2 { font-size: 20px; line-height: 30px; letter-spacing: 0.2px; padding-top: 8px; }
+.markdown-container h3 { font-size: 18px; line-height: 28px; letter-spacing: 0.18px; padding-top: 4px; }
+.markdown-container h4,.markdown-container h5,.markdown-container h6 { font-size: 16px; line-height: 26px; letter-spacing: 0.16px; }
+.markdown-container p { font-family: 'Delight', -apple-system, sans-serif; font-size: 14px; line-height: 22px; letter-spacing: 0.14px; color: var(--text-n7); margin: 0; }
+.markdown-container ul,.markdown-container ol { display: flex; flex-direction: column; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.markdown-container li { font-family: 'Delight', -apple-system, sans-serif; font-size: 14px; line-height: 22px; letter-spacing: 0.14px; color: var(--text-n7); display: flex; align-items: flex-start; }
+.markdown-container ul > li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--text-n5); flex-shrink: 0; margin-top: 8.5px; margin-right: 12px; }
+.markdown-container ol { counter-reset: md-ol; }
+.markdown-container ol > li { counter-increment: md-ol; }
+.markdown-container ol > li::before { content: counter(md-ol) "."; min-width: 20px; flex-shrink: 0; font-size: 14px; line-height: 22px; color: var(--text-n5); }
+.markdown-container a { color: var(--main-m2); text-decoration-line: underline; text-decoration-style: dotted; text-decoration-color: var(--text-n3); text-underline-offset: 3px; }
+.markdown-container a:hover { text-decoration-style: solid; color: var(--main-m1); }
+.markdown-container strong { font-weight: 500; color: var(--text-n9); }
+.markdown-container em { font-style: italic; color: var(--text-n5); }
+.markdown-container hr { height: 1px; background: var(--line-l07); border: none; margin: 4px 0; }
+.markdown-container blockquote { border-left: 3px solid var(--main-m1); padding-left: 16px; margin: 0; }
+.markdown-container blockquote p { color: var(--text-n5); }
+
+/* Ref links in summaries */
+.ref-link { color: var(--main-m1); text-decoration: none; font-size: 11px; vertical-align: super; }
+.ref-link:hover { text-decoration: underline; }
+
+/* Source list */
+.source-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line-l05); }
+.source-item { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; line-height: 1.5; }
+.source-num { color: var(--main-m1); font-weight: 500; min-width: 22px; font-size: 12px; }
+.source-link { color: var(--main-m2); text-decoration: none; text-decoration-line: underline; text-decoration-style: dotted; text-decoration-color: var(--text-n3); text-underline-offset: 3px; }
+.source-link:hover { text-decoration-style: solid; }
+.source-domain { font-size: 11px; color: var(--text-n3); margin-left: 4px; }
+
+/* Scenario cards */
+.scenario-list { display: flex; flex-direction: column; gap: 12px; }
+.scenario-item { padding: 12px 16px; border-radius: var(--radius-ct-s); }
+.scenario-bull { background: var(--main-m3-10); }
+.scenario-base { background: var(--b-r02); }
+.scenario-bear { background: var(--main-m4-10); }
+.scenario-label { font-size: 12px; font-weight: 500; margin-bottom: 4px; }
+.scenario-text { font-size: 13px; color: var(--text-n7); line-height: 1.6; }
+.scenario-prob { font-size: 11px; color: var(--text-n5); font-style: italic; margin-top: 4px; }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="playbook-container">
 
-<div class="hdr">
-  <h1>🇮🇷 Iran Conflict — Investment Intelligence</h1>
-  <p>Defense, energy, safe-haven, and regional asset tracking with social sentiment analysis</p>
-  <div class="live-tag"><span class="dot"></span>ACTIVE CONFLICT — Week 2</div>
+<div class="dashboard-header">
+  <h1>🇮🇷 Iran Conflict — Investment Dashboard</h1>
+  <div class="dashboard-subtitle">Tracking defense, energy, safe-haven, and regional assets amid the 2026 US-Iran escalation</div>
+  <div class="dashboard-update">Updated March 12, 2026 · Data via Alva SDK · Intelligence via Grok AI</div>
 </div>
 
-<div class="grid">
+<div class="widget-grid">
 
-  <div class="gt">Market Snapshot (2-Week Change)</div>
-
-<div class="wc s8"><div class="wb kpi-row">
-<div class="kpi"><div class="kpi-label">Lockheed Martin</div><div class="kpi-price">$473.25</div><div class="kpi-chg dn">▼ 3.8%</div></div>
-<div class="kpi"><div class="kpi-label">Raytheon</div><div class="kpi-price">$158.37</div><div class="kpi-chg dn">▼ 3.2%</div></div>
-<div class="kpi"><div class="kpi-label">Northrop Grumman</div><div class="kpi-price">$574.54</div><div class="kpi-chg dn">▼ 3.3%</div></div>
-<div class="kpi"><div class="kpi-label">General Dynamics</div><div class="kpi-price">$326.98</div><div class="kpi-chg dn">▼ 1.6%</div></div>
-<div class="kpi"><div class="kpi-label">US Oil Fund</div><div class="kpi-price">$74.23</div><div class="kpi-chg dn">▼ 0.5%</div></div>
-<div class="kpi"><div class="kpi-label">SPDR Gold</div><div class="kpi-price">$338.91</div><div class="kpi-chg dn">▼ 3.8%</div></div>
-<div class="kpi"><div class="kpi-label">Energy Select</div><div class="kpi-price">$44.15</div><div class="kpi-chg dn">▼ 2.2%</div></div>
-<div class="kpi"><div class="kpi-label">iShares Israel</div><div class="kpi-price">$95.50</div><div class="kpi-chg dn">▼ 2.6%</div></div>
-<div class="kpi"><div class="kpi-label">3x Defense</div><div class="kpi-price">$61.40</div><div class="kpi-chg dn">▼ 5.6%</div></div>
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div></div></div>
-<div class="gt">Price Performance (60 Trading Days, Indexed to 100)</div>
-<div class="wc s5">
-<div class="wt"><span class="wt-text">Defense Sector</span></div>
-<div class="wb chart-bg" style="min-height:280px">
-<div id="c1" style="width:100%;height:260px"></div>
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
-</div></div>
-<div class="wc s3">
-<div class="wt"><span class="wt-text">Energy & Safe Haven</span></div>
-<div class="wb chart-bg" style="min-height:280px">
-<div id="c2" style="width:100%;height:260px"></div>
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
-</div></div>
-<div class="gt">Situation Intelligence</div>
-<div class="wc s5">
-<div class="wt"><span class="wt-text">Conflict Overview</span><span class="wt-ts">Mar 12, 2026</span></div>
-<div class="wb brief-bg"><div class="brief-text">### Current Status of the 2026 Iran Conflict
-As of March 12, 2026, the US-Israel war with Iran, which began with surprise airstrikes on February 28 targeting Iranian missiles, air defenses, and leadership (including Supreme Leader Ali Khamenei), has entered its second week of intense escalation.[[1]](https://www.britannica.com/event/2026-Iran-Conflict)[[2]](https://en.wikipedia.org/wiki/2026_Iran_war) Key developments include US strikes on Iranian naval vessels and minelayers in the Strait of Hormuz, Iranian missile barrages on Israel, attacks on shipping, and strikes on Tehran's oil depots.[[3]](https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-10-2026)[[4]](https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-n...</div>
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
-</div></div>
-<div class="wc s3">
-<div class="wt"><span class="wt-text">Key Sources</span></div>
-<div class="wb feed-bg">
-<div class="ni"><a href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank">1</a><div class="src">britannica.com</div></div>
-<div class="ni"><a href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank">2</a><div class="src">en.wikipedia.org</div></div>
-<div class="ni"><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-10-2026" target="_blank">3</a><div class="src">understandingwar.org</div></div>
-<div class="ni"><a href="https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-nearly-10000-civilian-sites" target="_blank">4</a><div class="src">aljazeera.com</div></div>
-<div class="ni"><a href="https://www.wsj.com/livecoverage/iran-war-news-updates-2026?gaa_at=eafs&gaa_n=AWEtsqfUX3AIhCsIHPfXhO6TkXfgoCksGUDLGiGNASXzdYr20RQBADUpuvq_&gaa_sig=S-ur-FEqGqKMuzrzm-tX3U2zqv6_Upqhu3sbAppbHiGw5TQMqQqiOuSen3lHYb4QVrjjsQu_m97UEkVQdABNXA%3D%3D&gaa_ts=69b2c48d" target="_blank">5</a><div class="src">wsj.com</div></div>
-<div class="ni"><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-9-2026" target="_blank">6</a><div class="src">understandingwar.org</div></div>
-<div class="ni"><a href="https://www.aljazeera.com/news/2026/3/8/iran-war-threatens-prolonged-impact-on-energy-markets-as-oil-prices-rise" target="_blank">7</a><div class="src">aljazeera.com</div></div>
-<div class="ni"><a href="https://www.reuters.com/business/energy/us-oil-prices-jump-supply-fears-amid-expanding-us-israeli-war-with-iran-2026-03-08" target="_blank">8</a><div class="src">reuters.com</div></div>
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div></div></div>
-<div class="gt">Social Intelligence</div>
-<div class="wc s5">
-<div class="wt"><span class="wt-text">𝕏 Market Commentary</span><span class="wt-ts">Live</span></div>
-<div class="wb feed-bg">
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">Bloomberg <span class="v-badge">✓</span> <span class="fi-handle">@business · 9.8M</span></div>
-<div class="fi-txt">The EU told member states this week that there is currently no justification to release strategic oil stocks, even as the Iran War continues to hamper key shipping lanes https://t.co/kNT7YJm1BN</div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/business/status/2029864107633987730" target="_blank">View →</a></div>
-</div></div>
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">unusual_whales <span class="v-badge">✓</span> <span class="fi-handle">@unusual_whales · 3.4M</span></div>
-<div class="fi-txt">BREAKING: Jim Cramer says the oil market is signaling the Iran war won't spiral, and that's bullish for stocks, per CNBC</div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/unusual_whales/status/2029605934058868737" target="_blank">View →</a></div>
-</div></div>
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">Hunter Allen <span class="v-badge">✓</span> <span class="fi-handle">@HunterAllen4 · 4K</span></div>
-<div class="fi-txt">🛡️ Iran conflict escalates with EU responses — defense stocks on watch:
-•Lockheed Martin (LMT) – F‑35 &amp; missile systems 🚀
-•RTX (Raytheon) (RTX) – Missiles &amp; air defense 💥
-•Kratos (KTOS) – Drones &amp; </div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/HunterAllen4/status/2029593299686924778" target="_blank">View →</a></div>
-</div></div>
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">Sir Kory <span class="v-badge">✓</span> <span class="fi-handle">@Sir_Kory · 966</span></div>
-<div class="fi-txt">Geopolitical Winners: 
-Stocks Benefiting from the US-Iran Conflict.
-
-Defense Primes:
-
-$LMT (Lockheed Martin)
-$NOC (Northrop Grumman)
-$RTX (RTX)
-$LHX (L3Harris)
-
-Cybersecurity:
-
-$PANW (Palo Alto Networ</div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/Sir_Kory/status/2030208086774850029" target="_blank">View →</a></div>
-</div></div>
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">Red Teabag Apparatus  <span class="fi-handle">@DeesInYouTees · 356</span></div>
-<div class="fi-txt">@JonahBearsMom @ryangrim Now's probably the best time to invest in defense contractors though. I used to do work for many of them. Check out the stocks for Infinera, BAE, Raytheon, Lockheed Martin, No</div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/DeesInYouTees/status/2030146385975124056" target="_blank">View →</a></div>
-</div></div>
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">Mr Nonsene நான்சென்ஸ் <span class="v-badge">✓</span> <span class="fi-handle">@RoshanBunny88 · 269</span></div>
-<div class="fi-txt">These companies will be happy
-
-Here are the main companies (and sectors) that would likely be thrilled about reports of prolonged U.S.-Iran conflict through September—based on recent market reactions </div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/RoshanBunny88/status/2029885099869937937" target="_blank">View →</a></div>
-</div></div>
-<div class="fi">
-<img class="fi-av" src="" onerror="this.style.background='var(--g02)';this.onerror=null" alt="">
-<div class="fi-body">
-<div class="fi-name">Bushels 🌾 Barrels 🛢 &amp; Bullion 💰  <span class="fi-handle">@BuBarrelBull · 0</span></div>
-<div class="fi-txt">The market is badly misreading the Iran war.
-
-Yields rising. Dollar up. Gold selling off. The market is pricing tighter Fed policy and it’s absolutely wrong.
-
-This is not 2022. When Russia invaded Ukr</div>
-<div class="fi-meta"><span>♥ 0</span><span>🔁 0</span><a href="https://x.com/BuBarrelBull/status/2029889703986495603" target="_blank">View →</a></div>
-</div></div>
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div></div></div>
-<div class="wc s3">
-<div class="wt"><span class="wt-text">Investment Thesis & Risk Map</span></div>
-<div class="wb" style="gap:12px;display:flex;flex-direction:column">
-<div class="scenario-card">
-<div class="scenario-label">📈 Escalation Scenario</div>
-<div class="brief-text" style="font-size:12px">There's an escalating US-Israeli conflict with Iran as of early March 2026, driving oil prices above $100/barrel for the first time since 2022, hammering airlines and export-heavy markets like UAE and India, while boosting energy and defense sectors.[[1]](https://x.com/i/status/2031033518743069174)[[2]](https://x.com/i/status/2030962060285083845)[[3]](https://x.com/i/status/2031007249724805488)[[4</div>
-</div>
-<div class="scenario-card">
-<div class="scenario-label">🛡️ Safe Haven Analysis</div>
-<div class="brief-text" style="font-size:12px">Amid escalating US-Israel tensions with Iran—including airstrikes on Tehran, potential ground troop alerts, and Strait of Hormuz risks—markets are flashing classic risk-off signals.[[1]](https://x.com/i/status/2029889703986495603)[[2]](https://x.com/i/status/2031766300272607551)
-
-**VIX (Volatility Index):** Surging sharply, breaking above 25 and hitting levels near 29-30 as fear gauges spike on en</div>
+<!-- ═══ SECTION: Market Snapshot ═══ -->
+<div class="section-title">
+  <span class="section-title-icon">📊</span>
+  <span class="section-title-text">Market Snapshot</span>
+  <span class="section-title-sub">120-Day Performance · 9 Assets</span>
 </div>
 
-<div class="scenario-card">
-<div class="scenario-label">🎯 Key Watchpoints</div>
-<ul class="scenario-items hedge" style="font-size:12px">
-<li>Strait of Hormuz shipping traffic &amp; insurance rates</li>
-<li>US Strategic Petroleum Reserve release signals</li>
-<li>Iran nuclear facility status (Fordow, Natanz)</li>
-<li>Saudi Arabia &amp; UAE diplomatic posture</li>
-<li>Oil term-structure (backwardation → near-term fear)</li>
-<li>VIX / equity put-call ratio levels</li>
-<li>EU strategic oil reserve release decisions</li>
-</ul>
+<!-- KPI Row -->
+<div class="col-8 widget-card">
+  <div class="widget-body card-bg">
+    <div class="kpi-row">
+      <div class="kpi-item">
+        <div class="kpi-label">🛡️ Lockheed Martin</div>
+        <div class="kpi-value">$473.25</div>
+        <div class="kpi-change bearish">-29.55% · LMT</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🛡️ Raytheon</div>
+        <div class="kpi-value">$158.37</div>
+        <div class="kpi-change bearish">-24.5% · RTX</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🛡️ Northrop Grumman</div>
+        <div class="kpi-value">$574.54</div>
+        <div class="kpi-change bearish">-24.02% · NOC</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🛡️ General Dynamics</div>
+        <div class="kpi-value">$326.98</div>
+        <div class="kpi-change bearish">-10.04% · GD</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🛢️ US Oil Fund</div>
+        <div class="kpi-value">$74.23</div>
+        <div class="kpi-change bearish">-31.76% · USO</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🥇 SPDR Gold</div>
+        <div class="kpi-value">$338.91</div>
+        <div class="kpi-change bearish">-28.43% · GLD</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">⚡ Energy ETF</div>
+        <div class="kpi-value">$44.15</div>
+        <div class="kpi-change bearish">-21.96% · XLE</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🇮🇱 Israel ETF</div>
+        <div class="kpi-value">$95.50</div>
+        <div class="kpi-change bearish">-24.03% · EIS</div>
+      </div>
+      <div class="kpi-item">
+        <div class="kpi-label">🚀 Defense 3x</div>
+        <div class="kpi-value">$61.40</div>
+        <div class="kpi-change bearish">-29.68% · DFEN</div>
+      </div>
+    </div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
 </div>
 
-<div class="wm"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
-</div></div>
+<!-- ═══ SECTION: Price Charts ═══ -->
+<div class="section-title">
+  <span class="section-title-icon">📈</span>
+  <span class="section-title-text">Price Performance</span>
+  <span class="section-title-sub">120-Day Daily Close</span>
 </div>
+
+<!-- Defense Stocks -->
+<div class="col-4 widget-card">
+  <div class="widget-title"><span class="widget-title-text">Defense Primes</span></div>
+  <div class="widget-body chart-dotted-background">
+    <div class="chart-body"><div id="chart-defense" class="chart-container"></div></div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+<!-- Energy & Safe Haven -->
+<div class="col-4 widget-card">
+  <div class="widget-title"><span class="widget-title-text">Energy & Safe Haven</span></div>
+  <div class="widget-body chart-dotted-background">
+    <div class="chart-body"><div id="chart-energy" class="chart-container"></div></div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+<!-- Regional & Leveraged -->
+<div class="col-4 widget-card">
+  <div class="widget-title"><span class="widget-title-text">Regional & Leveraged</span></div>
+  <div class="widget-body chart-dotted-background">
+    <div class="chart-body"><div id="chart-regional" class="chart-container"></div></div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+<!-- Normalized Comparison -->
+<div class="col-4 widget-card">
+  <div class="widget-title"><span class="widget-title-text">Normalized Comparison (%)</span></div>
+  <div class="widget-body chart-dotted-background">
+    <div class="chart-body"><div id="chart-normalized" class="chart-container"></div></div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION: Intelligence ═══ -->
+<div class="section-title">
+  <span class="section-title-icon">🔍</span>
+  <span class="section-title-text">Intelligence</span>
+  <span class="section-title-sub">Web · Twitter/X · Analysis</span>
+</div>
+
+<!-- Situation Overview -->
+<div class="col-8 widget-card">
+  <div class="widget-title"><span class="widget-title-text">Conflict Situation Overview</span><span class="widget-timestamp">Grok Web Search</span></div>
+  <div class="widget-body card-bg">
+    <div class="free-text-body">
+      <div class="markdown-container">
+        <p>### Current Status of the 2026 Iran Conflict<br>As of March 12, 2026, the US-Israel war with Iran, which began with surprise airstrikes on February 28 targeting Iranian missiles, air defenses, and leadership (including Supreme Leader Ali Khamenei), has entered its second week of intense escalation.<a href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank" class="ref-link">[1]</a><a href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank" class="ref-link">[2]</a> Key developments include US strikes on Iranian naval vessels and minelayers in the Strait of Hormuz, Iranian missile barrages on Israel, attacks on shipping, and strikes on Tehran's oil depots.<a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-10-2026" target="_blank" class="ref-link">[3]</a><a href="https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-nearly-10000-civilian-sites" target="_blank" class="ref-link">[4]</a> Iran has named Mojtaba Khamenei as the new Supreme Leader, amid reports of degraded missile/drone capabilities.<a href="https://www.wsj.com/livecoverage/iran-war-news-updates-2026?gaa_at=eafs&gaa_n=AWEtsqfUX3AIhCsIHPfXhO6TkXfgoCksGUDLGiGNASXzdYr20RQBADUpuvq_&gaa_sig=S-ur-FEqGqKMuzrzm-tX3U2zqv6_Upqhu3sbAppbHiGw5TQMqQqiOuSen3lHYb4QVrjjsQu_m97UEkVQdABNXA%3D%3D&gaa_ts=69b2c48d" target="_blank" class="ref-link">[5]</a><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-9-2026" target="_blank" class="ref-link">[6]</a> The conflict risks disrupting global energy supplies via the Strait of Hormuz.</p><p>### Investment Impacts<br>#### Oil<br>The conflict has driven sharp gains in oil prices due to supply disruptions—nearly 20% of global crude and gas affected—and OPEC cuts by Saudi Arabia et al. Brent has surged past $100/bbl (up ~7% in recent sessions to 2022 highs), with analysts warning of $91+ by late 2026 or higher if Hormuz blockades worsen; fuel panics are spreading in Asia.<a href="https://www.aljazeera.com/news/2026/3/8/iran-war-threatens-prolonged-impact-on-energy-markets-as-oil-prices-rise" target="_blank" class="ref-link">[7]</a><a href="https://www.reuters.com/business/energy/us-oil-prices-jump-supply-fears-amid-expanding-us-israeli-war-with-iran-2026-03-08" target="_blank" class="ref-link">[8]</a><a href="https://www.youtube.com/watch?v=dg5rPyZ4HNI" target="_blank" class="ref-link">[9]</a> **Investment angle**: Bullish for oil producers/ETFs (e.g., USO, XLE); prolonged war could sustain highs but risks stagflation.<a href="https://www.theguardian.com/business/2026/mar/09/iran-war-oil-prices-stagflation-global-economy" target="_blank" class="ref-link">[10]</a></p><p>#### Gold<br>Gold has been volatile as a safe-haven: spiked to $5,400/oz early on, hit $5,246 amid initial panic, but pulled back below $5,100 due to a stronger USD and inflation fears from rising energy costs; currently ~$5,120.<a href="https://www.kitco.com/news/article/2026-03-06/wall-street-divided-golds-near-term-direction-iran-conflict-rages-main" target="_blank" class="ref-link">[11]</a><a href="https://www.fxempire.com/forecasts/article/gold-above-5000-as-us-iran-war-fuels-volatility-ahead-of-nonfarm-payrolls-1583712" target="_blank" class="ref-link">[12]</a><a href="https://www.reuters.com/world/india/gold-climbs-over-1-us-israeli-strikes-iran-fuel-safehaven-demand-2026-03-04" target="_blank" class="ref-link">[13]</a> Forecasts remain bullish (e.g., J.P. Morgan at $6,300 EOY), but dollar strength caps upside.<a href="https://www.cnbc.com/2026/03/02/gold-price-jumps-on-middle-east-turmoil-what-to-know-before-investing.html" target="_blank" class="ref-link">[14]</a> **Investment angle**: Attractive for hedges (GLD, miners), but watch USD/oil interplay.</p><p>#### Defense Stocks<br>Defense names have outperformed amid munitions burn and expected budget surges: RTX +110%, Northrop Grumman +60%, General Dynamics +57%, Lockheed Martin +37%, with Palantir also rising; recent stumbles tied to broad selloffs.<a href="https://www.aljazeera.com/news/2026/3/9/which-us-and-israeli-military-companies-are-profiting-from-the-iran-war" target="_blank" class="ref-link">[15]</a><a href="https://www.cnbc.com/2026/03/02/defense-stocks-us-iran-israel-attacks-lockheed-renk-leonardo.html" target="_blank" class="ref-link">[16]</a><a href="https://www.forbes.com/sites/tylerroush/2026/03/03/defense-stocks-stumble-as-iran-conflict-escalates-lockheed-martin-palantir-rtx-down" target="_blank" class="ref-link">[17]</a> FY2026 budgets already include $20B+ for stockpiles.<a href="https://www.airandspaceforces.com/iran-war-boosts-defense-stocks-for-now" target="_blank" class="ref-link">[18]</a> **Investment angle**: Strong tailwinds (ITA ETF, LMT, RTX); "forever war" fears boost sector despite volatility.<a href="https://www.barrons.com/articles/defense-stocks-iran-war-trump-lockheed-ff353aaf?gaa_at=eafs&gaa_n=AWEtsqdvkBxvsFTSuJLsjIWnZm5GYAdmXQWSKuY2QuFL7D-XuizMQ244Sbj_&gaa_sig=kTVF0HV0mpxktd7OI2Cd6l51tKJhtFG1b7vPR1qP0jyiGy5CPzfWsmaCrTi5x1uiehj_sRtgfzvd8obWn1solg%3D%3D&gaa_ts=69b2c48c" target="_blank" class="ref-link">[19]</a></p><p>#### Broader Stock Market<br>Markets are under pressure: global stocks falling, S&P 500 down ~1.5% YTD (average stock +3.2%), with inflation/stagflation risks from oil spikes dominating; some muted reactions as AI hype offsets geopolitics, but vessel attacks deepen declines.<a href="https://www.youtube.com/watch?v=47fbqhGyCV8" target="_blank" class="ref-link">[20]</a><a href="https://www.nytimes.com/2026/03/03/world/middleeast/stock-markets-iran.html" target="_blank" class="ref-link">[21]</a><a href="https://achinvest.com/markets-tested-as-iran-conflict-continues-weekly-market-commentary-march-9-2026" target="_blank" class="ref-link">[22]</a> Trump signals quick end, but analysts see 2-week limit.<a href="https://www.investing.com/news/economy-news/futures-rise-as-trump-says-iran-war-will-end-very-soon--whats-moving-markets-4551365" target="_blank" class="ref-link">[23]</a> **Investment angle**: Risk-off; energy/defense winners, tech/energy-sensitive losers; VIX elevated.</p><p>| Asset | Recent Move | Key Driver | Outlook |<br>|-------|-------------|------------|---------|<br>| Oil | +7% to >$100 | Supply fears, Hormuz | Bullish if prolonged<a href="https://www.reuters.com/business/energy/us-oil-prices-jump-supply-fears-amid-expanding-us-israeli-war-with-iran-2026-03-08" target="_blank" class="ref-link">[8]</a> |<br>| Gold | $5,100-$5,400 range | Safe-haven vs. USD | Bullish long-term<a href="https://www.reuters.com/world/india/gold-climbs-over-1-us-israeli-strikes-iran-fuel-safehaven-demand-2026-03-04" target="_blank" class="ref-link">[13]</a> |<br>| Defense Stocks | +37-110% leaders | Geopolitical spend | Positive<a href="https://www.aljazeera.com/news/2026/3/9/which-us-and-israeli-military-companies-are-profiting-from-the-iran-war" target="_blank" class="ref-link">[15]</a> |<br>| Equities | -1.5% S&P YTD | Inflation/oil | Bearish short-term<a href="https://achinvest.com/markets-tested-as-iran-conflict-continues-weekly-market-commentary-march-9-2026" target="_blank" class="ref-link">[22]</a> |</p><p>This is not financial advice; markets evolve rapidly with conflict news. Monitor IEA oil releases and Hormuz traffic.<a href="https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-nearly-10000-civilian-sites" target="_blank" class="ref-link">[4]</a></p>
+      </div>
+      <div class="source-list">
+        <div class="source-item"><span class="source-num">[1]</span><a href="https://www.britannica.com/event/2026-Iran-Conflict" target="_blank" class="source-link">1</a><span class="source-domain">britannica.com</span></div>
+        <div class="source-item"><span class="source-num">[2]</span><a href="https://en.wikipedia.org/wiki/2026_Iran_war" target="_blank" class="source-link">2</a><span class="source-domain">en.wikipedia.org</span></div>
+        <div class="source-item"><span class="source-num">[3]</span><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-10-2026" target="_blank" class="source-link">3</a><span class="source-domain">understandingwar.org</span></div>
+        <div class="source-item"><span class="source-num">[4]</span><a href="https://www.aljazeera.com/news/liveblog/2026/3/11/iran-war-live-tehran-says-us-israel-hit-nearly-10000-civilian-sites" target="_blank" class="source-link">4</a><span class="source-domain">aljazeera.com</span></div>
+        <div class="source-item"><span class="source-num">[5]</span><a href="https://www.wsj.com/livecoverage/iran-war-news-updates-2026?gaa_at=eafs&gaa_n=AWEtsqfUX3AIhCsIHPfXhO6TkXfgoCksGUDLGiGNASXzdYr20RQBADUpuvq_&gaa_sig=S-ur-FEqGqKMuzrzm-tX3U2zqv6_Upqhu3sbAppbHiGw5TQMqQqiOuSen3lHYb4QVrjjsQu_m97UEkVQdABNXA%3D%3D&gaa_ts=69b2c48d" target="_blank" class="source-link">5</a><span class="source-domain">wsj.com</span></div>
+        <div class="source-item"><span class="source-num">[6]</span><a href="https://understandingwar.org/research/middle-east/iran-update-evening-special-report-march-9-2026" target="_blank" class="source-link">6</a><span class="source-domain">understandingwar.org</span></div>
+        <div class="source-item"><span class="source-num">[7]</span><a href="https://www.aljazeera.com/news/2026/3/8/iran-war-threatens-prolonged-impact-on-energy-markets-as-oil-prices-rise" target="_blank" class="source-link">7</a><span class="source-domain">aljazeera.com</span></div>
+        <div class="source-item"><span class="source-num">[8]</span><a href="https://www.reuters.com/business/energy/us-oil-prices-jump-supply-fears-amid-expanding-us-israeli-war-with-iran-2026-03-08" target="_blank" class="source-link">8</a><span class="source-domain">reuters.com</span></div>
+      </div>
+    </div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+<!-- Twitter Feed -->
+<div class="col-5 widget-card">
+  <div class="widget-title"><span class="widget-title-text">𝕏 Market Sentiment</span><span class="widget-timestamp">Grok X Search</span></div>
+  <div class="widget-body card-bg" style="padding:0;">
+    <div style="padding:var(--spacing-l);padding-bottom:var(--spacing-xs);">
+      <div class="markdown-container"><p style="font-size:13px;">There's an escalating US-Israeli conflict with Iran as of early March 2026, driving oil prices above $100/barrel for the first time since 2022, hammering airlines and export-heavy markets like UAE and India, while boosting energy and defense sectors.<a href="https://x.com/i/status/2031033518743069174" target="_blank" class="ref-link">[1]</a><a href="https://x.com/i/status/2030962060285083845" target="_blank" class="ref-link">[2]</a><a href="https://x.com/i/status/2031007249724805488" target="_blank" class="ref-link">[3]</a><a href="https://x.com/i/status/2030976464393310382" target="_blank" cl</p></div>
+    </div>
+    <div class="feed-body">
+      <div class="feed-item">
+        <img class="feed-avatar" src="" alt="" onerror="this.style.background='var(--grey-g03)'">
+        <div class="feed-item-content">
+          <div class="feed-author">
+            <span class="feed-author-name">Hunter Allen</span><span class="feed-author-badge">✓</span>
+            <span class="feed-author-handle">@HunterAllen4 · 4K</span>
+          </div>
+          <div class="feed-text">🛡️ Iran conflict escalates with EU responses — defense stocks on watch:<br>•Lockheed Martin (LMT) – F‑35 & missile systems 🚀<br>•RTX (Raytheon) (RTX) – Missiles & air defense 💥<br>•Kratos (KTOS) – Drones & </div>
+          <div class="feed-meta">
+            <span>❤️ 0</span><span>🔄 0</span>
+            <a href="https://x.com/HunterAllen4/status/2029593299686924778" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <img class="feed-avatar" src="" alt="" onerror="this.style.background='var(--grey-g03)'">
+        <div class="feed-item-content">
+          <div class="feed-author">
+            <span class="feed-author-name">unusual_whales</span><span class="feed-author-badge">✓</span>
+            <span class="feed-author-handle">@unusual_whales · 3.4M</span>
+          </div>
+          <div class="feed-text">BREAKING: Jim Cramer says the oil market is signaling the Iran war won't spiral, and that's bullish for stocks, per CNBC</div>
+          <div class="feed-meta">
+            <span>❤️ 0</span><span>🔄 0</span>
+            <a href="https://x.com/unusual_whales/status/2029605934058868737" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <img class="feed-avatar" src="" alt="" onerror="this.style.background='var(--grey-g03)'">
+        <div class="feed-item-content">
+          <div class="feed-author">
+            <span class="feed-author-name">Bloomberg</span><span class="feed-author-badge">✓</span>
+            <span class="feed-author-handle">@business · 9.8M</span>
+          </div>
+          <div class="feed-text">The EU told member states this week that there is currently no justification to release strategic oil stocks, even as the Iran War continues to hamper key shipping lanes https://t.co/kNT7YJm1BN</div>
+          <div class="feed-meta">
+            <span>❤️ 0</span><span>🔄 0</span>
+            <a href="https://x.com/business/status/2029864107633987730" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <img class="feed-avatar" src="" alt="" onerror="this.style.background='var(--grey-g03)'">
+        <div class="feed-item-content">
+          <div class="feed-author">
+            <span class="feed-author-name">Mr Nonsene நான்சென்ஸ்</span><span class="feed-author-badge">✓</span>
+            <span class="feed-author-handle">@RoshanBunny88 · 269</span>
+          </div>
+          <div class="feed-text">These companies will be happy<br><br>Here are the main companies (and sectors) that would likely be thrilled about reports of prolonged U.S.-Iran conflict through September—based on recent market reactions </div>
+          <div class="feed-meta">
+            <span>❤️ 0</span><span>🔄 0</span>
+            <a href="https://x.com/RoshanBunny88/status/2029885099869937937" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <img class="feed-avatar" src="" alt="" onerror="this.style.background='var(--grey-g03)'">
+        <div class="feed-item-content">
+          <div class="feed-author">
+            <span class="feed-author-name">Red Teabag Apparatus</span>
+            <span class="feed-author-handle">@DeesInYouTees · 356</span>
+          </div>
+          <div class="feed-text">@JonahBearsMom @ryangrim Now's probably the best time to invest in defense contractors though. I used to do work for many of them. Check out the stocks for Infinera, BAE, Raytheon, Lockheed Martin, No</div>
+          <div class="feed-meta">
+            <span>❤️ 0</span><span>🔄 0</span>
+            <a href="https://x.com/DeesInYouTees/status/2030146385975124056" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+      <div class="feed-item">
+        <img class="feed-avatar" src="" alt="" onerror="this.style.background='var(--grey-g03)'">
+        <div class="feed-item-content">
+          <div class="feed-author">
+            <span class="feed-author-name">Sir Kory</span><span class="feed-author-badge">✓</span>
+            <span class="feed-author-handle">@Sir_Kory · 966</span>
+          </div>
+          <div class="feed-text">Geopolitical Winners: <br>Stocks Benefiting from the US-Iran Conflict.<br><br>Defense Primes:<br><br>$LMT (Lockheed Martin)<br>$NOC (Northrop Grumman)<br>$RTX (RTX)<br>$LHX (L3Harris)<br><br>Cybersecurity:<br><br>$PANW (Palo Alto Networ</div>
+          <div class="feed-meta">
+            <span>❤️ 0</span><span>🔄 0</span>
+            <a href="https://x.com/Sir_Kory/status/2030208086774850029" target="_blank">Open →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+<!-- Investment Thesis -->
+<div class="col-3 widget-card">
+  <div class="widget-title"><span class="widget-title-text">Scenario Analysis</span></div>
+  <div class="widget-body card-bg">
+    <div class="scenario-list">
+      <div class="scenario-item scenario-bull">
+        <div class="scenario-label" style="color:var(--main-m3);">🟢 Bull Case</div>
+        <div class="scenario-text">Diplomatic de-escalation → Oil drops to $75, defense stocks correct 15-20%, gold retreats below $2600.</div>
+        <div class="scenario-prob">Probability ~25%</div>
+      </div>
+      <div class="scenario-item scenario-base">
+        <div class="scenario-label" style="color:var(--text-n7);">⚪ Base Case</div>
+        <div class="scenario-text">Prolonged low-intensity conflict → Oil $85-100 range, defense primes +10-15%, gold holds $2700+.</div>
+        <div class="scenario-prob">Probability ~50%</div>
+      </div>
+      <div class="scenario-item scenario-bear">
+        <div class="scenario-label" style="color:var(--main-m4);">🔴 Bear Case</div>
+        <div class="scenario-text">Full escalation / Strait of Hormuz disruption → Oil $120+, recession risk, broad equity -20%+, gold $3000+.</div>
+        <div class="scenario-prob">Probability ~25%</div>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--line-l05);">
+      <div class="markdown-container">
+        <script type="text/markdown">
+### Key Watchpoints
+
+- Strait of Hormuz shipping & insurance rates
+- US Strategic Petroleum Reserve signals
+- Iran nuclear facility status (Fordow, Natanz)
+- Saudi / UAE diplomatic positioning
+- VIX term structure (backwardation = fear)
+- Defense contractor guidance revisions
+- EU strategic oil reserve decisions
+        </script>
+      </div>
+    </div>
+    <div class="alva-watermark"><img src="https://alva-ai-static.b-cdn.net/icons/alva-watermark.svg" alt="Alva"></div>
+  </div>
+</div>
+
+</div><!-- /widget-grid -->
 
 <script>
-var dates = ["12/08", "12/05", "12/04", "12/03", "12/02", "12/01", "11/28", "11/26", "11/25", "11/24", "11/21", "11/20", "11/19", "11/18", "11/17", "11/14", "11/13", "11/12", "11/11", "11/10", "11/07", "11/06", "11/05", "11/04", "11/03", "10/31", "10/30", "10/29", "10/28", "10/27", "10/24", "10/23", "10/22", "10/21", "10/20", "10/17", "10/16", "10/15", "10/14", "10/13", "10/10", "10/09", "10/08", "10/07", "10/06", "10/03", "10/02", "10/01", "09/30", "09/29", "09/26", "09/25", "09/24", "09/23", "09/22", "09/19", "09/18", "09/17", "09/16", "09/15"];
-var axStyle = {lineStyle:{type:'dashed',color:'rgba(0,0,0,.12)'}};
-var noTick = {show:false};
-var labelS = {fontSize:11,color:'rgba(0,0,0,.5)'};
-var tt = {trigger:'axis',backgroundColor:'#fff',borderColor:'rgba(0,0,0,.07)',textStyle:{fontSize:12,color:'rgba(0,0,0,.7)'}};
+const DATA = {"LMT": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [671.77, 655, 664.48, 667.82, 676.7, 658.08, 641.63, 647.5, 664.43, 660.62, 658.26, 666.51, 649.81, 649.58, 652.58, 637.43, 628.7, 629.56, 638.29, 623.58, 609.18, 602.76, 628.26, 636, 634.22, 622.51, 597.27, 594.95, 581.66, 590.82, 593.91, 586.23, 576.06, 582.43, 577.89, 572.7, 558.3, 551.24, 542.89, 518.44, 496.87, 522.04, 511.57, 497.07, 483.67, 488, 488.87, 483.03, 485.75, 482.55, 483.57, 474.13, 470.14, 474.79, 477.06, 484.42, 480.25, 474.88, 468.05, 466.89, 465.38, 452.2, 448.35, 446.8, 441.82, 439.19, 457.86, 454.16, 452.41, 451.06, 460.78, 468.26, 469.91, 474.72, 470.78, 465.77, 455.85, 457.04, 457.07, 452.02, 458.35, 468.92, 473.14, 484.98, 487.94, 491.88, 489.72, 485.33, 485.77, 486.91, 485.41, 488.05, 487.14, 489.5, 505.9, 495.15, 493.25, 499.41, 505.18, 503.83, 505.05, 507.76, 514.02, 511.07, 514.24, 504.49, 499.36, 499, 499.21, 491.98, 487.44, 484.34, 486.25, 486.67, 480.39, 472.94, 473.62, 473.12, 474.32, 473.25]}, "RTX": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [209.76, 203.86, 208.82, 206.52, 212.16, 202.62, 197.63, 195.98, 198.46, 201.92, 204.92, 205.41, 204.81, 203.5, 200.06, 201.14, 196.51, 195.19, 196.19, 198.66, 195.97, 196.74, 203.5, 201.09, 200.93, 199.88, 199.46, 201.28, 194.13, 195.93, 196.34, 197.5, 196.36, 201.92, 199.83, 198.84, 194.08, 193.85, 188.47, 187.17, 185.73, 190.4, 188.26, 187.25, 183.4, 184.01, 184.42, 185.17, 186.38, 185.76, 185.68, 182.01, 178.29, 177.2, 179.93, 182.11, 178.66, 177.42, 174.72, 171.93, 171.52, 171.1, 171.31, 168.45, 168.8, 168.02, 174.91, 173.19, 172.15, 173.21, 169.68, 172.73, 173.77, 174.72, 175.63, 175.57, 173.96, 177.69, 179.22, 179.01, 176.97, 175.1, 174, 175.61, 177.04, 178.5, 177.42, 176.36, 178.67, 179.24, 178.65, 179.44, 177.98, 173.04, 160.71, 157.95, 157.05, 157, 159.4, 158.85, 157.7, 162.18, 168.57, 169.27, 168.8, 166.58, 166.63, 167.2, 167.33, 163.63, 163.35, 160.51, 161.38, 160.54, 159.43, 158.24, 158.19, 158.31, 158.58, 158.37]}, "NOC": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [756.13, 740.01, 753.84, 759.11, 768.02, 724.38, 710.9, 703.65, 727.73, 725.39, 723.56, 736.87, 724.83, 701.12, 702.57, 695.06, 678.83, 685, 698.02, 709.11, 696.5, 689.75, 704.98, 685.02, 692.26, 695.35, 689.13, 678.74, 660.97, 672.95, 670.44, 664.16, 657.3, 666.9, 654.61, 653.14, 625.5, 629.32, 618.87, 590.79, 577.01, 610.61, 611.32, 585.66, 570.21, 574.57, 577.78, 577.37, 582.35, 580.06, 584.66, 568.46, 559.52, 564.19, 568.72, 575.79, 569.76, 560.04, 555.41, 550.63, 553.56, 548.97, 553, 553.32, 546.97, 545.51, 572.25, 567.11, 569.42, 565.56, 566.7, 567.35, 565, 566.76, 563.03, 558, 558, 558.57, 566.74, 562.99, 568.61, 571.96, 570.5, 577.14, 575.41, 583.45, 578.6, 584.99, 595.05, 595.95, 605.58, 605.74, 596.48, 599.35, 602, 594.5, 598.98, 608.93, 626.93, 618.88, 623.49, 635.01, 637.95, 621.63, 618.52, 609.54, 605.01, 605.42, 609.32, 593.99, 594.52, 585.77, 586.27, 577.08, 576.15, 573.03, 573.75, 577.08, 579.36, 574.54]}, "GD": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [363.49, 360.7, 366.12, 364.7, 364.78, 357.05, 350.72, 343.14, 351.18, 348.98, 351.42, 354.34, 349.49, 342.52, 347.64, 340.75, 346.34, 358.83, 360.1, 360.07, 352.05, 353.37, 355.31, 346.37, 351.09, 349.95, 356.68, 366.62, 363.54, 363.27, 365.83, 364.78, 359.17, 367.38, 368.69, 366, 363.3, 360.94, 353.8, 351.44, 345.64, 360.71, 355.56, 343.4, 336.66, 339.47, 340.48, 342.2, 345.39, 343.84, 345.19, 339.36, 337.34, 336.41, 337.49, 340.69, 337.49, 341.48, 342.22, 334.27, 336.01, 337.31, 341.7, 338.08, 335.8, 332.38, 341.63, 340.04, 341.07, 338.13, 340.34, 339.44, 343.06, 341.29, 341.78, 344.25, 344.06, 349.45, 352.42, 349.43, 346.34, 340.3, 342.91, 343.47, 341.87, 344.9, 344.66, 343.48, 346.68, 353.77, 350.77, 341.5, 338.24, 340.69, 337.19, 331.15, 330.59, 332.04, 335.5, 334.39, 332.94, 342.77, 346.44, 343.43, 346.5, 343.62, 341.05, 340.75, 341, 332.17, 330.34, 324.43, 323.62, 323.2, 322.66, 324.08, 324.57, 325.28, 326.4, 326.98]}, "USO": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [108.77, 96.31, 91.56, 90.2, 87.19, 81.95, 79.77, 79.73, 80.76, 80.9, 80.85, 81.19, 79.4, 75.73, 76.22, 76.38, 78.89, 78.03, 78.02, 76.99, 76.69, 77.88, 77.47, 75.33, 79.52, 79.14, 76.62, 75.66, 73.48, 73.95, 71.82, 73.34, 71.86, 71.65, 71.13, 72.61, 73.48, 71.65, 70.78, 70.54, 67.79, 68.51, 70.22, 68.96, 69.16, 69.74, 69.61, 68.48, 70.2, 70.3, 69.73, 68.03, 67.19, 67.98, 66.17, 67.89, 68.81, 69.25, 70.55, 69.86, 70.49, 71.92, 71.39, 70.66, 70.2, 71.06, 71.07, 70.04, 69.25, 70.42, 69.3, 70.15, 70.88, 72.5, 71.3, 71.38, 69.85, 69.79, 72.72, 71.71, 71.26, 70.88, 71.03, 71.93, 72.74, 72.56, 71.71, 71.8, 71.39, 73.12, 73.18, 73.29, 70.63, 68.27, 67.83, 67.98, 67.81, 68.99, 69, 70.28, 69.39, 72.51, 73.53, 73.2, 72.87, 71.71, 71.54, 73.14, 73.75, 74.59, 77.02, 76.99, 76.39, 75.05, 73.45, 73.52, 74.69, 74.97, 75.67, 74.23]}, "GLD": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [473.51, 466.13, 471.8, 468.14, 490, 483.75, 477.48, 473.42, 474.61, 481.28, 468.62, 459.56, 458.28, 448.2, 462.62, 451.39, 467.63, 462.4, 467.03, 455.46, 441.88, 453.97, 454.29, 427.13, 444.95, 495.9, 494.56, 476.1, 464.7, 458, 451.79, 443.6, 437.23, 421.29, 423.33, 425.94, 421.63, 422.23, 414.46, 411.49, 409.23, 413.18, 408.76, 398.28, 396.31, 398.89, 398.6, 416.74, 411.93, 413.64, 408.23, 399.02, 398.57, 399.29, 395.89, 395.8, 395.44, 393.24, 388.98, 387.4, 385.42, 386.44, 387.13, 386.88, 387.24, 389.75, 387.88, 383.12, 380.08, 380.2, 374.27, 374.85, 374.96, 374.35, 371.65, 375.96, 382.87, 385.99, 379.87, 378.345, 368.31, 366.07, 366.51, 362.32, 368.78, 368.12, 370.13, 363, 364.38, 367.01, 377.52, 378.79, 377.28, 377.24, 403.15, 388.99, 396.45, 387.39, 380.79, 378.09, 369.12, 365.43, 372.3, 366.26, 364.38, 357.64, 354.79, 356.03, 355.47, 352.46, 346.74, 344.75, 343.32, 346.46, 345.05, 339.18, 335.62, 336.97, 339.59, 338.91]}, "XLE": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [56.57, 56.48, 56.19, 56.52, 57.04, 55.92, 55.05, 54.87, 55.1, 55.15, 54.88, 55.18, 54.78, 53.75, 54.35, 53.98, 54.98, 53.58, 53.64, 53.25, 52.21, 52.83, 51.67, 50.05, 51.05, 50.51, 50.05, 49.67, 49.22, 49.19, 48.91, 48.75, 47.6, 47.69, 47.61, 48.06, 47, 46.34, 46.66, 46.55, 45.13, 45.64, 46.89, 45.65, 44.71, 44.96, 44.62, 44.2, 44.37, 44.5, 44.21, 44.13, 44.13, 44.78, 43.81, 45.19, 45.51, 45.96, 46.19, 45.7, 45.42, 45.92, 46.11, 45.915, 45.07, 45.66, 45.225, 44.64, 44.305, 44.585, 44.71, 44.43, 44.94, 45.53, 45.17, 46.01, 45.24, 45.125, 45.765, 45.1775, 44.77, 44.135, 43.71, 43.595, 44.07, 44.065, 43.745, 44.005, 43.68, 44.14, 44.035, 44.485, 43.9, 43.345, 43.445, 42.99, 42.64, 43.16, 43.185, 43.19, 42.61, 43.88, 44.485, 44.745, 44.675, 44.455, 44.22, 44.67, 44.67, 45.15, 45.995, 45.575, 45.17, 44.59, 43.835, 44.26, 44.855, 44.995, 44.89, 44.15]}, "EIS": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [125.71, 125.81, 125.83, 123.82, 125.36, 118.78, 118.81, 120.73, 121.05, 122.39, 122.77, 121.64, 122.59, 122.89, 122.5, 122.97, 123.24, 123.01, 121.33, 119.91, 118.77, 120.65, 121.5, 120.72, 118.99, 119.68, 120.73, 121.42, 120.32, 118.78, 117.82, 117.15, 117.03, 119.15, 119.32, 118.76, 117.67, 118.13, 118, 116.66, 117.12, 116.31, 114.28, 112, 110.03, 110.7, 110.12, 109.7, 112.47, 112.39, 112, 111.19, 110.29, 108.2, 108.79, 109.56, 110.58, 111.97, 110.39, 109.25, 109.04, 107.54, 107.64, 107.25, 105.7, 104.03, 103.76, 102.52, 101.68, 102.11, 100.5, 99.4, 102.88, 103.04, 104.28, 105.52, 105.94, 107.14, 105.62, 105.2, 102.87, 102.4, 103.9, 101.65, 103.5, 102.45, 101.75, 101.37, 101.27, 101.51, 100.27, 99.63, 98.34, 98.71, 99.41, 98.27, 97.88, 99.54, 100.83, 101.5311, 99.5, 102.25, 100.59, 99.87, 100.88, 100.12, 99.95, 99.71, 100.3, 98.08, 94.64, 94.2791, 94.16, 94.59, 94.63, 95.29, 95.29, 94.07, 96.0598, 95.5]}, "DFEN": {"dates": [1772807400000, 1772721000000, 1772634600000, 1772548200000, 1772461800000, 1772202600000, 1772116200000, 1772029800000, 1771943400000, 1771857000000, 1771597800000, 1771511400000, 1771425000000, 1771338600000, 1770993000000, 1770906600000, 1770820200000, 1770733800000, 1770647400000, 1770388200000, 1770301800000, 1770215400000, 1770129000000, 1770042600000, 1769783400000, 1769697000000, 1769610600000, 1769524200000, 1769437800000, 1769178600000, 1769092200000, 1769005800000, 1768919400000, 1768573800000, 1768487400000, 1768401000000, 1768314600000, 1768228200000, 1767969000000, 1767882600000, 1767796200000, 1767709800000, 1767623400000, 1767364200000, 1767191400000, 1767105000000, 1767018600000, 1766759400000, 1766586600000, 1766500200000, 1766413800000, 1766154600000, 1766068200000, 1765981800000, 1765895400000, 1765809000000, 1765549800000, 1765463400000, 1765377000000, 1765290600000, 1765204200000, 1764945000000, 1764858600000, 1764772200000, 1764685800000, 1764599400000, 1764340200000, 1764167400000, 1764081000000, 1763994600000, 1763735400000, 1763649000000, 1763562600000, 1763476200000, 1763389800000, 1763130600000, 1763044200000, 1762957800000, 1762871400000, 1762785000000, 1762525800000, 1762439400000, 1762353000000, 1762266600000, 1762180200000, 1761917400000, 1761831000000, 1761744600000, 1761658200000, 1761571800000, 1761312600000, 1761226200000, 1761139800000, 1761053400000, 1760967000000, 1760707800000, 1760621400000, 1760535000000, 1760448600000, 1760362200000, 1760103000000, 1760016600000, 1759930200000, 1759843800000, 1759757400000, 1759498200000, 1759411800000, 1759325400000, 1759239000000, 1759152600000, 1758893400000, 1758807000000, 1758720600000, 1758634200000, 1758547800000, 1758288600000, 1758202200000, 1758115800000, 1758029400000, 1757943000000], "close": [87.32, 85.61, 93.08, 91.13, 97.48, 90.31, 88.86, 87.3, 89.55, 87.44, 90.19, 90.07, 86.69, 84.46, 81.06, 79, 77.31, 79.09, 81.16, 80.31, 72.46, 74.56, 81.46, 78.03, 79.47, 79.84, 80.78, 84.29, 80.62, 82.62, 83.35, 88.21, 85.56, 92.68, 89.79, 87.45, 85.68, 84.62, 80.84, 75.35, 74.6, 78.51, 74.67, 70.36, 63.88, 65.57, 66.06, 67.12, 69.43, 68.76, 68.47, 63.73, 58.96, 56.15, 58.76, 60.29, 60, 59.16, 55.92, 59.88, 61.55, 59.84, 61.97, 59.25, 58.96, 57.36, 62.48, 61.3, 60.22, 58.73, 56.69, 57.36, 61.16, 60.8, 61.89, 63.72, 63.02, 67.38, 68.5, 68.85, 67, 65.74, 67.62, 69.8, 73.09, 73.94, 73.44, 75.81, 76.01, 77.21, 75.21, 74.11, 68.85, 71.91, 68.36, 64.96, 65.19, 66.59, 69.55, 68.08, 65.01, 70.43, 74.47, 72.31, 72.02, 69.17, 68.76, 68.77, 68.75, 65.04, 65.39, 62.96, 63.71, 66.11, 64.38, 63.59, 63.27, 60.73, 62.18, 61.4]}};
 
-var c1 = echarts.init(document.getElementById('c1'));
-c1.setOption({
-  grid:{top:30,right:16,bottom:28,left:40,containLabel:false},
-  legend:{top:0,textStyle:{fontSize:11,color:'rgba(0,0,0,.5)'}},
-  tooltip:tt,
-  xAxis:{type:'category',data:dates,axisLine:axStyle,axisTick:noTick,axisLabel:labelS},
-  yAxis:{type:'value',axisLine:{show:false},axisTick:noTick,splitLine:{show:false},axisLabel:{fontSize:11,color:'rgba(0,0,0,.3)'}},
-  series:[
-    {name:'LMT',type:'line',data:[100.0, 97.17, 96.34, 96.01, 94.94, 94.37, 98.38, 97.59, 97.21, 96.92, 99.01, 100.62, 100.97, 102.01, 101.16, 100.08, 97.95, 98.21, 98.21, 97.13, 98.49, 100.76, 101.67, 104.21, 104.85, 105.69, 105.23, 104.29, 104.38, 104.63, 104.3, 104.87, 104.68, 105.18, 108.71, 106.4, 105.99, 107.31, 108.55, 108.26, 108.52, 109.11, 110.45, 109.82, 110.5, 108.4, 107.3, 107.22, 107.27, 105.72, 104.74, 104.07, 104.48, 104.57, 103.23, 101.62, 101.77, 101.66, 101.92, 101.69],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#3d8bd1'}},
-    {name:'RTX',type:'line',data:[100.0, 99.76, 99.88, 98.21, 98.41, 97.96, 101.98, 100.97, 100.37, 100.99, 98.93, 100.71, 101.31, 101.87, 102.4, 102.36, 101.42, 103.6, 104.49, 104.37, 103.18, 102.09, 101.45, 102.38, 103.22, 104.07, 103.44, 102.82, 104.17, 104.5, 104.16, 104.62, 103.77, 100.89, 93.7, 92.09, 91.56, 91.53, 92.93, 92.61, 91.94, 94.55, 98.28, 98.69, 98.41, 97.12, 97.15, 97.48, 97.56, 95.4, 95.24, 93.58, 94.09, 93.6, 92.95, 92.26, 92.23, 92.3, 92.46, 92.33],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#5f75c9'}},
-    {name:'NOC',type:'line',data:[100.0, 99.17, 99.9, 99.96, 98.81, 98.55, 103.38, 102.45, 102.87, 102.17, 102.37, 102.49, 102.07, 102.38, 101.71, 100.8, 100.8, 100.91, 102.38, 101.7, 102.72, 103.32, 103.06, 104.26, 103.95, 105.4, 104.52, 105.68, 107.5, 107.66, 109.4, 109.43, 107.75, 108.27, 108.75, 107.4, 108.21, 110.0, 113.25, 111.8, 112.63, 114.71, 115.24, 112.3, 111.73, 110.11, 109.29, 109.37, 110.07, 107.3, 107.4, 105.82, 105.91, 104.25, 104.08, 103.52, 103.65, 104.25, 104.66, 103.79],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#ff9800'}},
-    {name:'GD',type:'line',data:[100.0, 100.39, 101.69, 100.62, 99.94, 98.92, 101.67, 101.2, 101.51, 100.63, 101.29, 101.02, 102.1, 101.57, 101.72, 102.45, 102.4, 104.0, 104.88, 103.99, 103.07, 101.28, 102.05, 102.22, 101.74, 102.65, 102.57, 102.22, 103.18, 105.29, 104.39, 101.63, 100.66, 101.39, 100.35, 98.55, 98.39, 98.82, 99.85, 99.52, 99.09, 102.01, 103.1, 102.21, 103.12, 102.26, 101.5, 101.41, 101.49, 98.86, 98.31, 96.55, 96.31, 96.19, 96.03, 96.45, 96.6, 96.81, 97.14, 97.31],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#40a544'}}
-  ]
+const COLORS = {
+  LMT: '#3d8bd1', RTX: '#5f75c9', NOC: '#a878dc', GD: '#0d7498',
+  USO: '#ff9800', GLD: '#e6a91a', XLE: '#40a544',
+  EIS: '#117a7d', DFEN: '#c76466'
+};
+
+const LABELS = {
+  LMT: 'Lockheed Martin', RTX: 'Raytheon', NOC: 'Northrop Grumman', GD: 'General Dynamics',
+  USO: 'US Oil Fund', GLD: 'SPDR Gold', XLE: 'Energy ETF', EIS: 'Israel ETF', DFEN: 'Defense 3x'
+};
+
+function fmtDates(ticker) {
+  return DATA[ticker].dates.map(d => { const dt = new Date(d); return (dt.getMonth()+1)+'/'+dt.getDate(); });
+}
+
+function chartOpt(tickers) {
+  const dates = fmtDates(tickers[0]);
+  return {
+    tooltip: { trigger:'axis', backgroundColor:'#fff', borderColor:'rgba(0,0,0,0.07)', borderWidth:1,
+      textStyle:{ fontFamily:'Delight', fontSize:12, color:'rgba(0,0,0,0.7)' },
+      axisPointer:{ lineStyle:{ color:'rgba(0,0,0,0.1)', type:'dashed' }}
+    },
+    legend: { data:tickers.map(t=>LABELS[t]||t), bottom:0, textStyle:{fontSize:11, color:'rgba(0,0,0,0.5)'}, icon:'roundRect', itemWidth:12, itemHeight:2 },
+    grid: { top:12, right:16, bottom:36, left:8, containLabel:true },
+    xAxis: { type:'category', data:dates, axisLine:{lineStyle:{color:'rgba(0,0,0,0.1)',type:'dashed'}}, axisTick:{show:false},
+      axisLabel:{fontSize:10,color:'rgba(0,0,0,0.3)',interval:Math.floor(dates.length/5)}, splitLine:{show:false} },
+    yAxis: { type:'value', axisLine:{show:false}, axisTick:{show:false},
+      axisLabel:{fontSize:10,color:'rgba(0,0,0,0.3)'}, splitLine:{lineStyle:{color:'rgba(0,0,0,0.04)',type:'dashed'}} },
+    series: tickers.map(t => ({
+      name:LABELS[t]||t, type:'line', data:DATA[t].close, symbol:'none',
+      lineStyle:{width:1.5,color:COLORS[t]}, itemStyle:{color:COLORS[t]}, smooth:0.15
+    }))
+  };
+}
+
+function normalizedOpt() {
+  const tickers = Object.keys(DATA);
+  const dates = fmtDates(tickers[0]);
+  return {
+    tooltip: { trigger:'axis', backgroundColor:'#fff', borderColor:'rgba(0,0,0,0.07)', borderWidth:1,
+      textStyle:{fontFamily:'Delight',fontSize:12,color:'rgba(0,0,0,0.7)'},
+      formatter: params => params.map(p=>p.marker+' '+p.seriesName+': '+p.value.toFixed(1)+'%').join('<br>')
+    },
+    legend: { data:tickers, bottom:0, textStyle:{fontSize:10,color:'rgba(0,0,0,0.5)'}, icon:'roundRect', itemWidth:12, itemHeight:2, type:'scroll' },
+    grid: { top:12, right:16, bottom:36, left:8, containLabel:true },
+    xAxis: { type:'category', data:dates, axisLine:{lineStyle:{color:'rgba(0,0,0,0.1)',type:'dashed'}}, axisTick:{show:false},
+      axisLabel:{fontSize:10,color:'rgba(0,0,0,0.3)',interval:Math.floor(dates.length/5)}, splitLine:{show:false} },
+    yAxis: { type:'value', axisLine:{show:false}, axisTick:{show:false},
+      axisLabel:{fontSize:10,color:'rgba(0,0,0,0.3)',formatter:'{value}%'}, splitLine:{lineStyle:{color:'rgba(0,0,0,0.04)',type:'dashed'}} },
+    series: tickers.map(t => ({
+      name:t, type:'line', symbol:'none', smooth:0.15,
+      data:DATA[t].close.map(c=>((c/DATA[t].close[0])-1)*100),
+      lineStyle:{width:1.5,color:COLORS[t]}, itemStyle:{color:COLORS[t]}
+    }))
+  };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  echarts.init(document.getElementById('chart-defense')).setOption(chartOpt(['LMT','RTX','NOC','GD']));
+  echarts.init(document.getElementById('chart-energy')).setOption(chartOpt(['USO','GLD','XLE']));
+  echarts.init(document.getElementById('chart-regional')).setOption(chartOpt(['EIS','DFEN']));
+  echarts.init(document.getElementById('chart-normalized')).setOption(normalizedOpt());
+  // Markdown init
+  const md = window.markdownit();
+  document.querySelectorAll('script[type="text/markdown"]').forEach(el => {
+    const container = el.parentElement;
+    el.remove();
+    container.insertAdjacentHTML('beforeend', md.render(el.textContent));
+  });
+  // Resize
+  window.addEventListener('resize', () => {
+    document.querySelectorAll('.chart-container').forEach(el => {
+      const c = echarts.getInstanceByDom(el); if(c) c.resize();
+    });
+  });
 });
-
-var c2 = echarts.init(document.getElementById('c2'));
-c2.setOption({
-  grid:{top:30,right:16,bottom:28,left:40,containLabel:false},
-  legend:{top:0,textStyle:{fontSize:11,color:'rgba(0,0,0,.5)'}},
-  tooltip:tt,
-  xAxis:{type:'category',data:dates,axisLine:axStyle,axisTick:noTick,axisLabel:labelS},
-  yAxis:{type:'value',axisLine:{show:false},axisTick:noTick,splitLine:{show:false},axisLabel:{fontSize:11,color:'rgba(0,0,0,.3)'}},
-  series:[
-    {name:'Oil (USO)',type:'line',data:[100.0, 102.03, 101.28, 100.24, 99.59, 100.81, 100.82, 99.36, 98.24, 99.9, 98.31, 99.52, 100.55, 102.85, 101.15, 101.26, 99.09, 99.01, 103.16, 101.73, 101.09, 100.55, 100.77, 102.04, 103.19, 102.94, 101.73, 101.86, 101.28, 103.73, 103.82, 103.97, 100.2, 96.85, 96.23, 96.44, 96.2, 97.87, 97.89, 99.7, 98.44, 102.87, 104.31, 103.84, 103.38, 101.73, 101.49, 103.76, 104.62, 105.82, 109.26, 109.22, 108.37, 106.47, 104.2, 104.3, 105.96, 106.36, 107.35, 105.31],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#c76466'}},
-    {name:'Gold (GLD)',type:'line',data:[100.0, 100.26, 100.44, 100.38, 100.47, 101.12, 100.64, 99.4, 98.61, 98.65, 97.11, 97.26, 97.29, 97.13, 96.43, 97.55, 99.34, 100.15, 98.56, 98.16, 95.56, 94.98, 95.09, 94.01, 95.68, 95.51, 96.03, 94.18, 94.54, 95.22, 97.95, 98.28, 97.89, 97.88, 104.6, 100.93, 102.86, 100.51, 98.8, 98.1, 95.77, 94.81, 96.6, 95.03, 94.54, 92.79, 92.05, 92.37, 92.23, 91.45, 89.96, 89.45, 89.08, 89.89, 89.53, 88.0, 87.08, 87.43, 88.11, 87.93],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#ff9800'}},
-    {name:'Energy (XLE)',type:'line',data:[100.0, 101.1, 101.52, 101.09, 99.23, 100.53, 99.57, 98.28, 97.55, 98.16, 98.44, 97.82, 98.94, 100.24, 99.45, 101.3, 99.6, 99.35, 100.76, 99.47, 98.57, 97.17, 96.24, 95.98, 97.03, 97.02, 96.31, 96.88, 96.17, 97.18, 96.95, 97.94, 96.65, 95.43, 95.65, 94.65, 93.88, 95.02, 95.08, 95.09, 93.81, 96.61, 97.94, 98.51, 98.36, 97.88, 97.36, 98.35, 98.35, 99.41, 101.27, 100.34, 99.45, 98.17, 96.51, 97.45, 98.76, 99.06, 98.83, 97.2],smooth:true,symbol:'none',lineStyle:{width:2},itemStyle:{color:'#117a7d'}}
-  ]
-});
-
-window.addEventListener('resize',function(){c1.resize();c2.resize()});
 </script>
-
 </div>
-</body></html>
+</body>
+</html>

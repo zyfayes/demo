@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-12",
+  "summary": "今天 AI 圈的主旋律是：钱、问责、和一个「LLM 根本走不到 AGI」的豪赌。LeCun 拿了 10 亿美元要用 World Model 颠覆整个赛道；Amazon 被迫给 AI 代码加人肉审查；GPT-5.4 悄悄更新得相当扎实。能落地的故事越来越多，但 AI 把生产系统搞崩的故事也同样在变多——这两件事同时为真。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "LeCun 的 AMI Labs 融资 10 亿美元，押注 World Model 才是 AGI 正路",
+      "url": "https://techcrunch.com/2026/03/09/yann-lecuns-ami-labs-raises-1-03-billion-to-build-world-models/",
+      "source": "TechCrunch",
+      "tldr": "LeCun 离开 Meta 创立 AMI Labs，以 45 亿美元估值完成欧洲史上最大 AI seed 轮（10.3 亿美元）。核心论点：理解物理世界的 World Model 才是通往人类级智能的路，LLM 预测 next token 走不到 AGI。团队阵容超豪华——Saining Xie 任首席科学家，Michael Rabbat 负责 World Model。这是一场公开的路线赌注，赢了则整个行业叙事都得重写。",
+      "tags": ["WorldModel", "融资", "LeCun", "AMILabs"]
+    },
+    {
+      "num": 2,
+      "title": "AWS 连遭 AI 代码引发宕机，Amazon 被迫要求高级工程师审查所有 AI 辅助改动",
+      "url": "https://arstechnica.com/ai/2026/03/after-outages-amazon-to-make-senior-engineers-sign-off-on-ai-assisted-changes",
+      "source": "Ars Technica / Financial Times",
+      "tldr": "AWS 今年已发生至少两起与 AI 编码助手直接相关的生产事故，Dave Treadwell 在内部全员会上宣布：初中级工程师提交 AI 辅助代码，必须由高级工程师签字。这是大厂首次在制度层面承认 AI 生成代码存在系统性风险，而不只是「偶发问题」。信号很清晰：vibe coding 爽是爽，但 P0 incident 的代价正在被重新定价。",
+      "tags": ["AI代码安全", "Amazon", "AWS", "工程治理"]
+    },
+    {
+      "num": 3,
+      "title": "GPT-5.4 发布：Zvi 的详细评测说这是一次实质性升级",
+      "url": "https://thezvi.substack.com/p/gpt-54-is-a-substantial-upgrad",
+      "source": "Zvi Mowshowitz / Substack",
+      "tldr": "OpenAI 发布 GPT-5.4，同步推出带推理能力的 Thinking 版本，并加入原生 computer use 模式和 Excel/Sheets 金融插件。Zvi 认为这次升级是真实的——不是 PR 名称游戏，在编程、推理和多步任务上都有可感知提升。GPT-5.4 Thinking 对 Plus/Pro 用户开放，API 端以 gpt-5.4 调用。",
+      "tags": ["GPT-5.4", "OpenAI", "模型发布", "Thinking"]
+    },
+    {
+      "num": 4,
+      "title": "BitNet：微软开源 1-bit 模型框架，1000 亿参数在普通 CPU 上跑出「人类阅读速度」",
+      "url": "https://github.com/microsoft/BitNet",
+      "source": "Microsoft Research / GitHub",
+      "tldr": "微软研究院开源 BitNet，用 1.58-bit 三值量化权重（-1/0/+1）实现在单颗笔记本 CPU 上推理 1000 亿参数模型，速度达到人类阅读速度。内存占用不到 FP16 的 1/10，不需要 GPU。虽然当前 eval 分数不算顶尖，但「本地 CPU 运行 100B 模型」这个事实本身具有颠覆性——它把 AI 算力的门槛打得极低。",
+      "tags": ["BitNet", "微软", "1-bit量化", "本地AI", "开源"]
+    },
+    {
+      "num": 5,
+      "title": "Perplexity Personal Computer：一台永不关机的 AI Agent，跑在你的 Mac mini 上",
+      "url": "https://www.perplexity.ai/personal-computer-waitlist",
+      "source": "Perplexity",
+      "tldr": "Perplexity 在首届开发者大会上发布 Personal Computer——把 Mac mini 变成一台永远在线、可远程访问的 AI Agent 主机，本地文件访问 + 云端 AI 处理结合，敏感操作需用户审批。这直接对标 OpenClaw 的定位，Aravind Srinivas 的策略是把 AI agent 基础设施做成消费品。目前在 waitlist 阶段。",
+      "tags": ["Perplexity", "AIAgent", "个人电脑", "产品发布"]
+    },
+    {
+      "num": 6,
+      "title": "我们是怎么攻破麦肯锡 AI 平台的",
+      "url": "https://codewall.ai/blog/how-we-hacked-mckinseys-ai-platform",
+      "source": "Codewall AI Blog",
+      "tldr": "安全研究团队披露了麦肯锡内部 AI 平台的多个严重漏洞，包括提示注入、越权访问和数据泄露路径。这篇 write-up 是一个很好的教材——企业 AI 平台的攻击面和传统 Web 应用完全不同，RAG pipeline 和 tool-use 系统的每个接口都是潜在入口。大量企业 AI 基础设施在安全上仍处于「2010年的 Web 安全水平」。",
+      "tags": ["AI安全", "红队", "企业AI", "提示注入"]
+    },
+    {
+      "num": 7,
+      "title": "纵向研究初步数据：AI 带来的生产力提升是 10%，不是他们说的那个数字",
+      "url": "https://newsletter.getdx.com/p/ai-productivity-gains-are-10-not",
+      "source": "GetDX Newsletter",
+      "tldr": "一项跨多家公司、持续数月的纵向 AI 生产力研究公布初步数据，真实的开发者效率提升约为 10%，远低于各大 AI 厂商宣传的 30-55%。10% 并非不重要，但这个数字打破了「AI 编码工具让工程师效率翻倍」的叙事。研究方法和样本量有局限，但方向是对的——我们需要更多这类长期追踪数据，而不是 A/B 测试的宣传素材。",
+      "tags": ["生产力研究", "AI编码", "数据", "开发者工具"]
+    },
+    {
+      "num": 8,
+      "title": "Dwarkesh：我很庆幸 Anthropic 的战役正在现在发生",
+      "url": "https://www.dwarkesh.com/p/dow-anthropic",
+      "source": "Dwarkesh Patel / Substack",
+      "tldr": "Dwarkesh 就 Anthropic 反对被列入五角大楼黑名单一事写了一篇深度分析，认为这是 AI 公司在政治压力下维护自身「可信AI开发者」定位的关键战役。核心论点：AI 实验室现在就要建立和政府打交道的原则与先例，而不是等 AI 更强大后再谈——那时候主动权可能已经不在手上了。",
+      "tags": ["AI治理", "Anthropic", "政策", "AI安全"]
+    },
+    {
+      "num": 9,
+      "title": "TADA：Hume AI 开源了基于文本-声学同步的新一代语音生成系统",
+      "url": "https://www.hume.ai/blog/opensource-tada",
+      "source": "Hume AI Blog",
+      "tldr": "Hume AI 开源了 TADA（Text-Acoustic Driven Approach），通过同步文本语义和声学特征生成表达力更丰富的语音，能更自然地处理情绪、韵律和停顿。代码和模型权重完全开放，可本地部署。对比现有 TTS 系统，TADA 在情感表达和口语自然度上有明显提升，是播客生成和语音合成工具的好素材。",
+      "tags": ["TTS", "语音合成", "Hume", "开源", "TADA"]
+    },
+    {
+      "num": 10,
+      "title": "geohot：你每一分钟没有同时跑 69 个 Agent，就是在落后",
+      "url": "https://geohot.github.io//blog/jekyll/update/2026/03/11/running-69-agents.html",
+      "source": "George Hotz / Blog",
+      "tldr": "geohot 的一篇意气风发的短文，核心论点是：当前 AI agent 的边际成本已经足够低，任何没有并行跑大量 agent 的团队都在白白浪费竞争优势。他的视角极端但不无道理——agent 并行的经济学逻辑正在重塑软件开发的最优人机配比。当然，这类观点里的「69」更多是表演性挑衅，但底层的方向判断值得认真对待。",
+      "tags": ["AIAgent", "并行计算", "geohot", "工程哲学"]
+    }
+  ]
+}

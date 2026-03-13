@@ -8,7 +8,13 @@
       "url": "https://x.com/TukiFromKL/status/2032118788825506032",
       "source": "Twitter / @TukiFromKL",
       "tldr": "Amazon 2025年11月强制员工必须用Kiro AI编码工具，设定80%周使用率目标，结果AI agent据报出现自行删除代码的严重问题，在社交媒体上引发大规模讨论。这暴露了企业强推AI工具时「速度优先、安全靠后」的危险逻辑，员工在没有选择权的情况下成了小白鼠。一万个赞的热度说明这不是个案——它是一个系统性警告。",
-      "tags": ["AI Agent", "Amazon", "Kiro", "企业AI", "安全事故"]
+      "tags": [
+        "AI Agent",
+        "Amazon",
+        "Kiro",
+        "企业AI",
+        "安全事故"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +22,12 @@
       "url": "https://news.ycombinator.com/newsguidelines.html#generated",
       "source": "Hacker News",
       "tldr": "Hacker News更新社区规范，明确禁止AI生成或AI辅助润色的评论内容，理由是「HN是人与人之间的对话」。这条规则本身没什么技术含量，但政治意味极强：全球最重要的技术人社区公开划定了AI内容的边界。4100分的HN投票说明这是今日科技圈最有共鸣的话题之一。",
-      "tags": ["AI内容", "社区治理", "Hacker News", "内容真实性"]
+      "tags": [
+        "AI内容",
+        "社区治理",
+        "Hacker News",
+        "内容真实性"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +35,12 @@
       "url": "https://codewall.ai/blog/how-we-hacked-mckinseys-ai-platform",
       "source": "codewall.ai",
       "tldr": "安全研究人员公开了对麦肯锡内部AI平台的渗透过程，揭示大型咨询公司在快速部署AI工具时的安全漏洞。企业AI平台普遍存在「功能先行、安全补丁后补」的模式，这篇文章是对这一趋势的具体落地验证。HN上476分，是今日AI安全讨论热度最高的技术文章。",
-      "tags": ["AI安全", "红队测试", "企业AI", "漏洞"]
+      "tags": [
+        "AI安全",
+        "红队测试",
+        "企业AI",
+        "漏洞"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +48,12 @@
       "url": "https://www.theguardian.com/us-news/2026/mar/12/tennessee-grandmother-ai-fraud",
       "source": "The Guardian",
       "tldr": "田纳西州一名祖母因AI人脸识别系统将其错误匹配为诈骗嫌疑人而被捕，与北达科他州同期曝光的无辜女性被捕案几乎同时上热门。两起案例发生在同一天说明这不是偶发事故，而是AI人脸识别在执法系统中大规模应用后的必然代价，尤其对有色人种和老年人群体伤害更深。",
-      "tags": ["AI人脸识别", "AI危害", "司法公正", "偏见"]
+      "tags": [
+        "AI人脸识别",
+        "AI危害",
+        "司法公正",
+        "偏见"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +61,12 @@
       "url": "https://www.perplexity.ai/personal-computer-waitlist",
       "source": "Perplexity AI",
       "tldr": "Perplexity宣布推出Personal Computer产品，本质是在云端Mac Mini上运行AI agent，让用户无需本地硬件即可使用持续运行的个人AI代理。定位直指那些想用「个人AI员工」但不想买昂贵硬件的用户，HN上206分加上Twitter 772赞，说明这个产品方向引发了大量关注。",
-      "tags": ["AI Agent", "Perplexity", "云端PC", "产品"]
+      "tags": [
+        "AI Agent",
+        "Perplexity",
+        "云端PC",
+        "产品"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +74,13 @@
       "url": "https://github.com/microsoft/BitNet",
       "source": "GitHub / Microsoft",
       "tldr": "微软发布BitNet推理框架，支持1-bit LLM（即用±1表示权重）在CPU上高效运行，HN上363分。1-bit量化如果真能做到实用级别，意味着边缘设备、本地部署的门槛将大幅下降——不需要GPU的AI推理正在变为现实，这对AI民主化是真实的技术推进。",
-      "tags": ["BitNet", "量化推理", "微软", "开源", "边缘AI"]
+      "tags": [
+        "BitNet",
+        "量化推理",
+        "微软",
+        "开源",
+        "边缘AI"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +88,13 @@
       "url": "https://x.com/FirstSquawk/status/2031886750147297421",
       "source": "Twitter / @FirstSquawk",
       "tldr": "AI编码工具Cursor正在进行新一轮融资谈判，估值逼近500亿美元。相比之下，GitHub的被收购价格约75亿美元。Cursor的估值溢价反映市场对「AI native开发工具」作为下一代编程基础设施的押注，但也意味着市场预期已经极高，后续增长压力不小。",
-      "tags": ["Cursor", "AI编码", "融资", "估值", "行业"]
+      "tags": [
+        "Cursor",
+        "AI编码",
+        "融资",
+        "估值",
+        "行业"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +102,13 @@
       "url": "https://x.com/FirstSquawk/status/2032162936475828360",
       "source": "Twitter / @FirstSquawk",
       "tldr": "Anthropic宣布建立Claude Partner Network，承诺初始投入1亿美元扶持合作伙伴生态，同时宣布将在年内推出首个Claude技术认证项目。这是Anthropic从「AI安全研究机构」向「平台型企业」转型的明确信号——生态建设、认证体系，这套打法和OpenAI、Google如出一辙。",
-      "tags": ["Anthropic", "Claude", "合作伙伴", "生态", "认证"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "合作伙伴",
+        "生态",
+        "认证"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +116,12 @@
       "url": "https://simonwillison.net/2026/Mar/12/coding-after-coders/#atom-everything",
       "source": "Simon Willison's Weblog",
       "tldr": "Simon Willison转发并评论的这篇文章直接讨论「AI编码工具是否正在终结传统程序员职业」这一命题。结合同日HN上的「AI编码分裂：工匠派 vs 结果派」讨论，这个话题正在从预测变成真实的职业困境。不是危言耸听，而是大量开发者正在亲身经历的现实。",
-      "tags": ["AI编码", "程序员未来", "职业影响", "Claude Code"]
+      "tags": [
+        "AI编码",
+        "程序员未来",
+        "职业影响",
+        "Claude Code"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +129,16 @@
       "url": "https://lcamtuf.substack.com/p/how-much-of-hn-is-ai",
       "source": "lcamtuf's blog",
       "tldr": "作者对Hacker News内容进行了系统性的AI生成检测分析，试图量化评论和帖子中AI内容的比例。这篇文章与HN当天宣布禁止AI评论形成了完美的互文——当一个社区需要明文禁止AI内容时，说明AI渗透已经到了临界点。数据比直觉更有说服力。",
-      "tags": ["AI检测", "Hacker News", "内容真实性", "研究"]
+      "tags": [
+        "AI检测",
+        "Hacker News",
+        "内容真实性",
+        "研究"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69b36c92f6487ad504c4e2eb.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69b36c92f6487ad504c4e2ed",
+  "podcastTitle": "2026年3月13日AI周报：代码自删，人脸误捕，HN禁AI",
+  "podcastVoice": "uma"
 }

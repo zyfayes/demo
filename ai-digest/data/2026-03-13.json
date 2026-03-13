@@ -1,0 +1,111 @@
+{
+  "date": "2026-03-13",
+  "title": "AI 日报 2026-03-13",
+  "summary": "今日 AI 领域聚焦教育科技：Canvas LMS 推出 agentic AI 功能，英国调查显示 95% 本科生已用 GenAI，OpenAI 为 ChatGPT 添加交互式可视化学习，美国学区展示 AI 进校园的系统方法论。同时 Pew 五年追踪显示公众 AI 担忧持续走高，OpenAI 退役 GPT-5.1，Gartner 预言 AI 将成为组织协作伙伴。",
+  "items": [
+    {
+      "id": 1,
+      "title": "Instructure 发布 IgniteAI Agent：Canvas LMS 迎来 Agentic AI 时代",
+      "url": "https://www.prnewswire.com/news-releases/instructure-delivers-on-its-agentic-ai-promise-with-the-launch-of-igniteai-agent-302711937.html",
+      "tldr": "Canvas LMS 母公司 Instructure 推出 IgniteAI Agent，基于 AWS 构建，可为教育者自动化多步骤工作流。美国客户免费使用至 2026 年 6 月底，全球延至 9 月。这是 LMS 平台首次大规模引入 agentic AI 能力。",
+      "summary": "Instructure 正式发布 IgniteAI Agent，将 agentic AI 能力集成进全球最大 LMS 平台 Canvas。该 Agent 由 AWS 驱动，支持教育者和管理员自动完成多步骤复杂操作——如课程设置、评估流程编排、学情数据汇总等。Instructure 强调隐私优先和开放架构，Agent 操作全程透明可审计。对教育科技行业而言，这标志着 LMS 从工具平台向智能协作伙伴的转变。美区免费至 6 月，全球 9 月底前免费，降低了学校的试错门槛。",
+      "tags": [
+        "EdTech",
+        "Agentic AI",
+        "LMS",
+        "Canvas"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "HEPI 调查：英国本科生 AI 使用已近乎普遍，但院校支持远远滞后",
+      "url": "https://www.hepi.ac.uk/reports/student-generative-ai-survey-2026/",
+      "tldr": "HEPI 2026 年调查显示，95% 的英国本科生已使用生成式 AI 辅助学习，94% 用于评估作业。但仅 36% 感到学校鼓励使用 AI，38% 获得了学校提供的 AI 工具。机构采纳严重滞后于学生行为。",
+      "summary": "英国高等教育政策研究所（HEPI）发布第三年度学生生成式 AI 调查报告。基于 1054 名全日制本科生数据，AI 使用已从 2023 年的新奇事物变为近乎普遍。值得关注的是，直接在评估作业中插入 AI 生成文本的比例从 2024 年的 3% 飙升至 12%。65% 的学生表示评估方式已发生实质变化。报告核心矛盾：学生 AI 素养快速提升，但院校的制度支持、工具配备和伦理教育远远跟不上。对教育产品而言，这既是巨大市场机会也是警示——工具普及但指导缺位，可能导致 AI 沦为拐杖而非学习增强器。",
+      "tags": [
+        "EdTech",
+        "GenAI",
+        "高等教育",
+        "UK"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "OpenAI ChatGPT 新增 70+ 交互式数学/科学可视化模块",
+      "url": "https://releasebot.io/updates/openai",
+      "tldr": "OpenAI 为 ChatGPT 推出交互式可视化学习功能，覆盖 70+ 核心数学与科学概念。用户可实时调节变量观察图形变化，将抽象公式变为可操作实验。所有计划均可使用。",
+      "summary": "OpenAI 宣布 ChatGPT 新增动态交互式可视化解释功能，针对数学和科学学习场景。数据显示每周 1.4 亿人用 ChatGPT 学习数学和科学，Gallup 调查中超半数美国成人表示数学困难。新功能让学习者直接操控变量、实时观察公式和图形的联动变化，研究表明这种交互式视觉学习比传统教学更能强化概念理解。高中数学教师评价其突出特点是强调为什么有效而非仅仅给答案。AI 辅助学习正从问答模式向交互式概念探索模式升级。",
+      "tags": [
+        "EdTech",
+        "OpenAI",
+        "ChatGPT",
+        "交互式学习"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "美国 K-12 实践：North Penn 学区如何系统性引入 AI 教学",
+      "url": "https://northpennnow.com/news/2026/mar/12/ai-impact-north-penn-schools-education-technology/",
+      "tldr": "宾州 North Penn 学区选择拥抱而非禁止 AI，建立 AI 增强学习框架，对教师进行 LLM 原理培训，同时关注公平——确保所有背景的学生都能获得高质量 AI 工具和伦理指导。",
+      "summary": "North Penn 学区作为美国 K-12 阶段引入 AI 教学的典型案例，其策略值得关注：1) 不禁止而是建框架——创建 AI 增强而非 AI 依赖的学习模式；2) 教师先行——培训教师理解 LLM 工作原理；3) 公平优先——确保不同社经背景学生平等获得 AI 工具。该学区已实现 1:1 Chromebook 配备，AI 的引入被视为自然延伸。核心挑战在于平衡创新与批判性思维培养。对国内教育科技的启示：AI 进校园不只是工具问题，更是制度设计和教师能力建设问题。",
+      "tags": [
+        "EdTech",
+        "K-12",
+        "AI 素养",
+        "教育公平"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Pew 研究中心五年追踪：美国人对 AI 的担忧持续上升",
+      "url": "https://www.pewresearch.org/short-reads/2026/03/12/key-findings-about-how-americans-view-artificial-intelligence/",
+      "tldr": "Pew 最新报告整合五年调查数据：50% 的美国成人对 AI 融入日常生活感到担忧多于兴奋（2021 年为 37%），仅 10% 更兴奋。公众态度与技术普及速度的落差正在扩大。",
+      "summary": "Pew 研究中心发布覆盖五年的 AI 态度追踪综合分析，包含 13 项关键发现。核心趋势：AI 已渗透工作、教育、医疗等日常场景，但公众警惕心理持续走高。50% 成人表示担忧多于兴奋，相比 2021 年的 37% 显著上升。约四分之一美国青少年已将 ChatGPT 用于课业。报告指出美国人对 AI 的态度呈现明显的谨慎开放特征。这份数据对产品设计者的含义：信任建设、透明度和用户控制感是 AI 产品成功的关键。",
+      "tags": [
+        "AI 态度",
+        "用户研究",
+        "Pew Research",
+        "信任"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "OpenAI 退役 GPT-5.1，自动回落至 GPT-5.3/5.4",
+      "url": "https://releasebot.io/updates/openai",
+      "tldr": "OpenAI 于 3 月 11 日正式退役 GPT-5.1 系列模型，API 调用自动回落至 GPT-5.3 或 5.4。同时更新 Microsoft 应用权限范围，新 Actions 默认禁用需管理员审批。",
+      "summary": "OpenAI 继续推进模型换代：GPT-5.1 于 3 月 11 日正式退役，所有 API 流量自动路由至 GPT-5.3 或 5.4。对于依赖特定模型版本的应用，需注意回落后的行为差异。同时 OpenAI 收紧了 Microsoft 生态集成的权限管理——Outlook、Calendar、SharePoint、Teams 相关权限需管理员审批，新建 Actions 默认禁用。这反映了大模型厂商在快速迭代的同时开始重视企业级权限治理。开发者需关注模型退役时间线，避免硬编码模型版本。",
+      "tags": [
+        "OpenAI",
+        "GPT-5",
+        "模型迭代",
+        "API"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Gartner 2026 预测：AI 将从工具变为组织协作伙伴",
+      "url": "https://infotechlead.com/artificial-intelligence/gartner-reveals-top-data-and-analytics-predictions-for-2026-as-ai-reshapes-business-strategy-94382",
+      "tldr": "Gartner 在数据与分析峰会上发布 2026 年预测，核心观点：AI 将从被动工具升级为人类的协作伙伴，根本性地改变组织使用数据的方式。",
+      "summary": "Gartner 在 2026 数据与分析峰会上公布年度预测，核心论断是 AI 正从工具角色向协作伙伴角色跃迁。这不仅是技术层面的变化，更要求组织在数据治理、决策流程和人才结构上做根本调整。传统的人操作工具模式将被人与 AI 协同决策模式取代。对企业而言，挑战不再是要不要用 AI，而是如何重新设计围绕 AI 协作的组织架构和工作流。这与教育领域的 agentic AI 趋势高度呼应。",
+      "tags": [
+        "Gartner",
+        "企业战略",
+        "AI 协作",
+        "数据分析"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Breakout Ventures 融资 1.14 亿美元，专投 AI 驱动科学创业",
+      "url": "https://www.cxodigitalpulse.com/breakout-ventures-raises-114m-fund-to-back-ai-driven-science-startups-venture/",
+      "tldr": "VC 机构 Breakout Ventures 完成 1.14 亿美元 Fund III 募资，专注投资将 AI 应用于生物、化学等科学研究的早期创业公司。AI for Science 赛道持续吸引资本。",
+      "summary": "Breakout Ventures 宣布完成 1.14 亿美元第三期基金募集，明确聚焦 AI 与科学研究交叉领域的早期投资。投资方向包括利用 AI 加速生物学、化学和其他前沿科学的突破。这是 AI for Science 赛道的又一个资本信号，表明投资者正从泛 AI 概念转向更垂直、更有科学壁垒的应用场景。对教育科技的间接启示：AI 在 STEM 基础研究中的渗透，将反向推动科学教育内容和方法论的变革。",
+      "tags": [
+        "VC",
+        "AI for Science",
+        "投资",
+        "早期创业"
+      ]
+    }
+  ]
+}

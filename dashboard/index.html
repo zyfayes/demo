@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-14T16:01:17.043Z",
+  "generated": "2026-03-14T22:00:57.658Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -424,7 +424,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1773489741764,
+      "updatedAtMs": 1773518558233,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -440,10 +440,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1773504104426,
-        "lastRunAtMs": 1773489704447,
+        "nextRunAtMs": 1773532904426,
+        "lastRunAtMs": 1773518504451,
         "lastStatus": "ok",
-        "lastDurationMs": 37317,
+        "lastDurationMs": 53782,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -499,7 +499,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1773486120048,
+      "updatedAtMs": 1773507640330,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -514,15 +514,15 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.5"
       },
       "state": {
-        "nextRunAtMs": 1773507600000,
-        "lastRunAtMs": 1773486000026,
+        "nextRunAtMs": 1773529200000,
+        "lastRunAtMs": 1773507600024,
         "lastStatus": "error",
-        "lastDurationMs": 120022,
-        "consecutiveErrors": 1,
+        "lastDurationMs": 40306,
+        "consecutiveErrors": 2,
         "lastRunStatus": "error",
-        "lastDeliveryStatus": "unknown",
-        "lastError": "cron: job execution timed out",
-        "lastErrorReason": "timeout"
+        "lastDeliveryStatus": "delivered",
+        "lastError": "⚠️ ✉️ Message failed",
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -537,7 +537,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Idea Pipeline Researcher",
       "enabled": true,
       "createdAtMs": 1771231571634,
-      "updatedAtMs": 1773437427622,
+      "updatedAtMs": 1773523833988,
       "schedule": {
         "kind": "cron",
         "expr": "30 21 * * *",
@@ -558,10 +558,10 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1773523800000,
-        "lastRunAtMs": 1773437400028,
+        "nextRunAtMs": 1773610200000,
+        "lastRunAtMs": 1773523800021,
         "lastStatus": "ok",
-        "lastDurationMs": 27594,
+        "lastDurationMs": 33967,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDelivered": true,
@@ -574,7 +574,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Daily Session Reset",
       "enabled": true,
       "createdAtMs": 1771231578667,
-      "updatedAtMs": 1773435700977,
+      "updatedAtMs": 1773522085024,
       "schedule": {
         "kind": "cron",
         "expr": "0 21 * * *",
@@ -592,10 +592,10 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773522000000,
-        "lastRunAtMs": 1773435600021,
+        "nextRunAtMs": 1773608400000,
+        "lastRunAtMs": 1773522000023,
         "lastStatus": "ok",
-        "lastDurationMs": 100956,
+        "lastDurationMs": 85001,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-delivered",
@@ -645,7 +645,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Goal Agent Night Run",
       "enabled": true,
       "createdAtMs": 1771352603715,
-      "updatedAtMs": 1773430224359,
+      "updatedAtMs": 1773516626203,
       "schedule": {
         "kind": "cron",
         "expr": "30 3 * * *",
@@ -658,10 +658,10 @@ window.__DASHBOARD_DATA__ = {
         "text": "运行 Goal Agent 夜间执行。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json\n2) 找到 status=pending 的任务，按 priority 排序\n3) 执行第一个任务（调研类用 web_search，数据抓取类用 web_fetch）\n4) 更新 tasks.json 状态，写入 result 和 reflection\n5) 如果遇到需要 Leo 确认的分支，设置 status=waiting_confirmation\n6) 输出任务执行摘要（完成/进行中/需确认）\n\n如有 waiting_confirmation，末尾加：#Goal #NeedConfirmation"
       },
       "state": {
-        "nextRunAtMs": 1773516600000,
-        "lastRunAtMs": 1773430200019,
+        "nextRunAtMs": 1773603000000,
+        "lastRunAtMs": 1773516600021,
         "lastStatus": "ok",
-        "lastDurationMs": 24340,
+        "lastDurationMs": 26182,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-requested"
@@ -702,7 +702,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "BJ Daily Fiction",
       "enabled": true,
       "createdAtMs": 1771793957328,
-      "updatedAtMs": 1773432211757,
+      "updatedAtMs": 1773518411766,
       "schedule": {
         "kind": "cron",
         "expr": "0 20 * * *",
@@ -723,14 +723,16 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1773518400000,
-        "lastRunAtMs": 1773432000021,
-        "lastStatus": "ok",
-        "lastDurationMs": 211736,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
+        "nextRunAtMs": 1773604800000,
+        "lastRunAtMs": 1773518400021,
+        "lastStatus": "error",
+        "lastDurationMs": 11745,
+        "consecutiveErrors": 1,
+        "lastRunStatus": "error",
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered",
+        "lastError": "AppChatReverse: Chat failed, Failed to perform, curl: (56) Connection closed abruptly. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
+        "lastDeliveryError": "AppChatReverse: Chat failed, Failed to perform, curl: (56) Connection closed abruptly. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
       }
     },
     {
@@ -816,7 +818,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Daily Task Digest",
       "enabled": true,
       "createdAtMs": 1772010568955,
-      "updatedAtMs": 1773421390453,
+      "updatedAtMs": 1773507680001,
       "schedule": {
         "kind": "cron",
         "expr": "0 1 * * *",
@@ -836,11 +838,11 @@ window.__DASHBOARD_DATA__ = {
         "channel": "discord"
       },
       "state": {
-        "nextRunAtMs": 1773507600000,
-        "lastRunAtMs": 1773421320064,
+        "nextRunAtMs": 1773594000000,
+        "lastRunAtMs": 1773507640330,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 70389,
+        "lastDurationMs": 39671,
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
@@ -888,7 +890,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Douban Weekly Picks",
       "enabled": true,
       "createdAtMs": 1772114185376,
-      "updatedAtMs": 1772906615813,
+      "updatedAtMs": 1773511339475,
       "schedule": {
         "kind": "cron",
         "expr": "0 2 * * 0",
@@ -908,11 +910,11 @@ window.__DASHBOARD_DATA__ = {
         "to": "channel:1475125129708175380"
       },
       "state": {
-        "nextRunAtMs": 1773511200000,
-        "lastRunAtMs": 1772906400029,
+        "nextRunAtMs": 1774116000000,
+        "lastRunAtMs": 1773511200014,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 215784,
+        "lastDurationMs": 139461,
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
@@ -960,7 +962,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "知识星球日报",
       "enabled": true,
       "createdAtMs": 1772515117326,
-      "updatedAtMs": 1773426611570,
+      "updatedAtMs": 1773513041397,
       "schedule": {
         "kind": "cron",
         "expr": "30 2 * * *",
@@ -979,11 +981,11 @@ window.__DASHBOARD_DATA__ = {
         "channel": "1475153843707707412"
       },
       "state": {
-        "nextRunAtMs": 1773513000000,
-        "lastRunAtMs": 1773426600027,
+        "nextRunAtMs": 1773599400000,
+        "lastRunAtMs": 1773513000007,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 11543,
+        "lastDurationMs": 41390,
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
@@ -995,7 +997,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Max Daily Reflection",
       "enabled": true,
       "createdAtMs": 1772671200000,
-      "updatedAtMs": 1773428864491,
+      "updatedAtMs": 1773515238235,
       "schedule": {
         "kind": "cron",
         "expr": "5 3 * * *",
@@ -1015,11 +1017,11 @@ window.__DASHBOARD_DATA__ = {
         "to": "422039053"
       },
       "state": {
-        "nextRunAtMs": 1773515100000,
-        "lastRunAtMs": 1773428700026,
+        "nextRunAtMs": 1773601500000,
+        "lastRunAtMs": 1773515100022,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 164465,
+        "lastDurationMs": 138213,
         "lastDelivered": true,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0
@@ -1032,7 +1034,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1773482466332,
+      "updatedAtMs": 1773504083272,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1051,15 +1053,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773504051018,
-        "lastRunAtMs": 1773482451040,
+        "nextRunAtMs": 1773525651018,
+        "lastRunAtMs": 1773504051043,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 15292,
+        "lastDurationMs": 32229,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
         "lastDelivered": false,
-        "runningAtMs": 1773504051034
+        "runningAtMs": 1773525651033
       }
     },
     {
@@ -1104,7 +1106,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "BJ Daily Fiction - 配图",
       "enabled": true,
       "createdAtMs": 1773242692391,
-      "updatedAtMs": 1773432431554,
+      "updatedAtMs": 1773518755985,
       "schedule": {
         "kind": "cron",
         "expr": "5 20 * * *",
@@ -1122,11 +1124,11 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773518700000,
-        "lastRunAtMs": 1773432336009,
+        "nextRunAtMs": 1773605100000,
+        "lastRunAtMs": 1773518700018,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 95545,
+        "lastDurationMs": 55967,
         "lastDelivered": false,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0
@@ -1729,12 +1731,28 @@ window.__DASHBOARD_DATA__ = {
       "created": "2026-03-05",
       "file": "/Users/leo/.openclaw/workspace/memory/2026-03-05.md",
       "line": 45
+    },
+    {
+      "id": "mem-11",
+      "title": "待跟进",
+      "status": "open",
+      "rawStatus": "open",
+      "priority": "normal",
+      "type": "memo",
+      "source": "memory",
+      "owner": "moss",
+      "tags": [
+        "memory"
+      ],
+      "created": "2026-03-15",
+      "file": "/Users/leo/.openclaw/workspace/memory/2026-03-15.md",
+      "line": 12
     }
   ],
   "stats": {
     "totalJobs": 22,
-    "totalTodos": 36,
-    "openTodos": 14,
+    "totalTodos": 37,
+    "openTodos": 15,
     "inProgressTodos": 2,
     "doneTodos": 19
   }

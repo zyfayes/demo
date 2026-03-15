@@ -8,7 +8,12 @@
       "url": "https://claude.com/blog/1m-context-ga",
       "source": "Anthropic Blog",
       "tldr": "Anthropic 宣布 1M context 窗口正式 GA，标准 API 定价，不再收长上下文溢价。Opus 4.6 定价 $5/$5/$25 每百万 token，可处理 600 张图片或 PDF 页面。Gemini 和 OpenAI 早已开放，Anthropic 这次算是补课完成，对做大代码库分析和长文档 Agent 的开发者是实质性利好。",
-      "tags": ["Anthropic", "Claude", "Context Window", "API"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "Context Window",
+        "API"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://garymarcus.substack.com/p/breaking-expensive-new-evidence-that",
       "source": "Gary Marcus Substack",
       "tldr": "全球最富有的两位科技人最新烧钱实验双双失败，再次打脸「多堆算力就能到 AGI」的主流假设。Marcus 认为当前 Scaling 路线在系统性泛化上存在根本性缺陷，而非工程问题。这篇文章在社区引发激烈讨论，Scaling Law 信徒和批评者再次正面交锋。",
-      "tags": ["AGI", "Scaling Law", "Gary Marcus", "Critique"]
+      "tags": [
+        "AGI",
+        "Scaling Law",
+        "Gary Marcus",
+        "Critique"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,12 @@
       "url": "https://www.ft.com/content/e5fbc6c2-d5a6-4b97-a105-6a96ea849de5",
       "source": "Financial Times",
       "tldr": "FT 报道称 xAI AI 编程部门严重落后于 GitHub Copilot 和 Cursor 等竞争对手，马斯克对此极度不满，已将 Tesla/SpaceX 管理层派驻 xAI 进行「审计」。这是继早前清洗后的新一轮人事震荡，显示 xAI 内部管理问题远比外界想象的严重。",
-      "tags": ["xAI", "Elon Musk", "AI Coding", "Industry"]
+      "tags": [
+        "xAI",
+        "Elon Musk",
+        "AI Coding",
+        "Industry"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +47,12 @@
       "url": "https://futurism.com/artificial-intelligence/ars-technica-fires-reporter-ai-quotes",
       "source": "Futurism",
       "tldr": "Ars Technica 资深 AI 记者 Benj Edwards 因发表含 AI 生成假引语的文章被解雇——讽刺的是，他是专门报道 AI 的记者。文章撤回后，编辑部公开了事件经过，引发媒体行业对 AI 辅助写作规范的广泛讨论。这个案例说明 AI 工具的使用边界问题，不只是技术问题，更是职业伦理问题。",
-      "tags": ["Media", "AI Ethics", "Journalism", "Hallucination"]
+      "tags": [
+        "Media",
+        "AI Ethics",
+        "Journalism",
+        "Hallucination"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +60,12 @@
       "url": "https://www.anthropic.com/news/claude-partner-network",
       "source": "Anthropic",
       "tldr": "Anthropic 宣布向 Claude Partner Network 投入 1 亿美元，资金用于合作伙伴培训、销售赋能和联合营销。这是 Anthropic 从「做最好的模型」转向「做最大的企业 AI 生态」的明确信号，对标 OpenAI 的 GSI 合作体系。未来几年预计投入还会继续加大。",
-      "tags": ["Anthropic", "Enterprise", "Ecosystem", "Strategy"]
+      "tags": [
+        "Anthropic",
+        "Enterprise",
+        "Ecosystem",
+        "Strategy"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +73,12 @@
       "url": "https://chrlschn.dev/blog/2026/03/mcp-is-dead-long-live-mcp/",
       "source": "chrlschn.dev",
       "tldr": "作者认为 MCP 在生产环境中存在严重的可靠性、安全性和调试困难等问题，传统命令行接口对 AI Agent 来说可能更透明、更可控。与此同时，MCP 官方 2026 年路线图也坦承了这些生产痛点并承诺修复。一个值得关注的协议演化争议，关心 Agent 工具链的开发者必读。",
-      "tags": ["MCP", "AI Agent", "Protocol", "Tooling"]
+      "tags": [
+        "MCP",
+        "AI Agent",
+        "Protocol",
+        "Tooling"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +86,12 @@
       "url": "http://finance.china.com.cn/industry/20260313/6298149.shtml",
       "source": "中国网财经",
       "tldr": "英伟达宣布未来 18-24 个月内逐步落地 260 亿美元开源 AI 大模型投资，目前已完成一个 5500 亿参数超大模型的预训练。不只卖铲子了——英伟达正式入局大模型赛场，这对整个开源 AI 格局是个变量，也可能重新定义「硬件厂商」的边界。",
-      "tags": ["NVIDIA", "LLM", "Open Source", "Industry"]
+      "tags": [
+        "NVIDIA",
+        "LLM",
+        "Open Source",
+        "Industry"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +99,12 @@
       "url": "https://www.gitagent.sh/",
       "source": "GitAgent (Show HN)",
       "tldr": "GitAgent 提出一套开放标准，通过在代码仓库中放置约定的配置文件，让 AI 模型能够自主理解项目结构、运行任务、管理 issue。本质是「MCP for repos」——把代码库本身变成 Agent 的操作空间。HN 讨论热烈，争议点在于权限边界和安全模型设计。",
-      "tags": ["Open Source", "AI Agent", "Developer Tools", "Git"]
+      "tags": [
+        "Open Source",
+        "AI Agent",
+        "Developer Tools",
+        "Git"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +112,12 @@
       "url": "https://k.sina.com.cn/article_7879848900_1d5acf3c401902rre6.html",
       "source": "新浪科技",
       "tldr": "2026 年 2 月，华为 Pura 80、小米 17S Pro、荣耀 Robot Phone、三星 Galaxy S26 全系搭载专属端侧大模型，本地运行、不依赖云端、主动跨应用协作。这是移动端 AI 从「能用」到「真的有用」的关键拐点，隐私保护和响应速度是核心差异化。",
-      "tags": ["端侧AI", "移动端", "国产AI", "手机"]
+      "tags": [
+        "端侧AI",
+        "移动端",
+        "国产AI",
+        "手机"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +125,16 @@
       "url": "https://www.latent.space/p/ainews-context-drought",
       "source": "Latent Space",
       "tldr": "Latent Space 对 Anthropic 1M context GA 背后的技术和商业逻辑进行了深度复盘：为什么「1M context」从技术突破到全量 GA 要花这么长时间？这篇文章提供了一个理解长上下文窗口在 Agent 工作流中真实价值和实际限制的好框架。",
-      "tags": ["Anthropic", "Context Window", "Analysis", "Latent Space"]
+      "tags": [
+        "Anthropic",
+        "Context Window",
+        "Analysis",
+        "Latent Space"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69b5fe7c28de6826a33eda82.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69b5fe7c28de6826a33eda84",
+  "podcastTitle": "2026年3月15日AI日报：规模边界、权力游戏与工具链阵痛",
+  "podcastVoice": "uma"
 }

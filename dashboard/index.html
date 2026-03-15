@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-15T13:05:03.527Z",
+  "generated": "2026-03-15T16:01:04.374Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -462,7 +462,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Scanner",
       "enabled": true,
       "createdAtMs": 1771231556226,
-      "updatedAtMs": 1773536598186,
+      "updatedAtMs": 1773579874048,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,13 * * *",
@@ -477,15 +477,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1773579600000,
-        "lastRunAtMs": 1773536400020,
+        "nextRunAtMs": 1773622800000,
+        "lastRunAtMs": 1773579600016,
         "lastStatus": "ok",
-        "lastDurationMs": 198166,
+        "lastDurationMs": 274032,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "runningAtMs": 1773579600012
+        "lastDeliveryStatus": "delivered"
       },
       "delivery": {
         "mode": "announce",
@@ -1060,7 +1059,8 @@ window.__DASHBOARD_DATA__ = {
         "lastDurationMs": 26416,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false
+        "lastDelivered": false,
+        "runningAtMs": 1773590451030
       }
     },
     {
@@ -1070,7 +1070,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711342198,
-      "updatedAtMs": 1773536612124,
+      "updatedAtMs": 1773579909155,
       "schedule": {
         "kind": "cron",
         "expr": "0 9,21 * * *",
@@ -1088,15 +1088,14 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773579600000,
-        "lastRunAtMs": 1773536598186,
+        "nextRunAtMs": 1773622800000,
+        "lastRunAtMs": 1773579874048,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 13938,
+        "lastDurationMs": 35107,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1773579600012
+        "lastDelivered": false
       }
     },
     {
@@ -1388,6 +1387,25 @@ window.__DASHBOARD_DATA__ = {
       ],
       "created": "2026-03-03",
       "context": "研究如何定期监控和整理知识星球（zsxq.com）中 Leo 订阅的内容，主要是股票投资相关信息。需要调研：1) 知识星球有无开放 API 2) 网页/App 自动化抓取方案（cookie auth + 爬虫 or browser automation）3) 内容过滤和摘要策略（聚焦投资相关）4) 定期推送机制（cron → Discord #signals 或 Telegram）5) 与现有信息"
+    },
+    {
+      "id": "idea-mmrto4wl-mv5l",
+      "title": "OpenClaw 龙虾生态轻社交游戏构思",
+      "status": "open",
+      "rawStatus": "pending",
+      "priority": "high",
+      "type": "explore",
+      "source": "ideas",
+      "owner": "moss",
+      "tags": [
+        "openclaw",
+        "game",
+        "social",
+        "product",
+        "community"
+      ],
+      "created": "2026-03-15",
+      "context": "基于 OpenClaw 龙虾（Claw/Lobster）生态构思一个轻社交游戏。要求：广度优先多给 idea，不纯空想，research 真实标杆项目如 Moltbook 等吸取灵感。需要调研：1) Moltbook 等 AI agent 社交/游戏项目的玩法和机制 2) OpenClaw 生态已有能力（agent、cron、multi-channel、skill 系统）3) 轻社交游戏设计方向（"
     },
     {
       "id": "t001",
@@ -1751,8 +1769,8 @@ window.__DASHBOARD_DATA__ = {
   ],
   "stats": {
     "totalJobs": 22,
-    "totalTodos": 37,
-    "openTodos": 15,
+    "totalTodos": 38,
+    "openTodos": 16,
     "inProgressTodos": 2,
     "doneTodos": 19
   }

@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-15T10:00:59.341Z",
+  "generated": "2026-03-15T13:05:03.527Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -424,7 +424,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1773561746774,
+      "updatedAtMs": 1773576263153,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -435,19 +435,19 @@ window.__DASHBOARD_DATA__ = {
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（新版 alva-trading skill）。\n\n步骤：\n1. 读取 skills/alva-trading/SKILL.md 了解完整用法\n2. 执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/signal/fetch.mjs` 检查新信号\n3. 如果有 actionable 信号（ma_cross 类型且有 action），执行 `HTTPS_PROXY=http://127.0.0.1:7897 node skills/alva-trading/scripts/bridge.mjs --dry-run` 生成交易计划\n\n如果没有新信号，回复 NO_REPLY。\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Alva Signal Bridge] started | YYYY-MM-DD HH:MM UTC`\n\n运行 Alva Signal Bridge（v2，API Key 认证）。\n\n步骤：\n1. 执行 `node /Users/leo/.openclaw/workspace/skills/alva-signal/fetch.mjs` 检查新信号\n2. 如果所有信号 changed=false，回复 NO_REPLY\n3. 如果有 changed=true 的信号，完整输出信号详情（Discord announce 自动投递）\n4. 如果有 actionable 信号（action=BUY 或 SELL），执行 `node /Users/leo/.openclaw/workspace/skills/alva-signal/bridge.mjs --dry-run` 生成交易计划\n\n如果有新信号：\n1. 完整输出信号详情 + bridge 交易计划（Discord announce 自动投递）\n2. 用 message tool 发送到 Telegram：\n   - action: send\n   - channel: telegram\n   - target: 422039053\n   内容：信号类型 + 标的 + 方向 + 关键数据点，2-3 行干货。\n\n❗ 有输出时末尾加一行：#Alva #Signal\n\n## 执行记录（必做）\n无论是否有信号输出，每次执行完毕都用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Alva Signal Bridge] 执行完毕 | YYYY-MM-DD HH:MM UTC | [结果：无新信号 / 发现N条信号]`\n一行即可，不需要详细内容。这条记录在 NO_REPLY 之前发送。",
         "timeoutSeconds": 120,
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1773576104426,
-        "lastRunAtMs": 1773561704447,
+        "nextRunAtMs": 1773590504426,
+        "lastRunAtMs": 1773576104441,
         "lastStatus": "ok",
-        "lastDurationMs": 42327,
+        "lastDurationMs": 76943,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
-        "lastDeliveryStatus": "not-delivered",
-        "lastDelivered": false
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -484,7 +484,8 @@ window.__DASHBOARD_DATA__ = {
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDelivered": true,
-        "lastDeliveryStatus": "delivered"
+        "lastDeliveryStatus": "delivered",
+        "runningAtMs": 1773579600012
       },
       "delivery": {
         "mode": "announce",
@@ -499,7 +500,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1773550920034,
+      "updatedAtMs": 1773572432154,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -514,15 +515,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.5"
       },
       "state": {
-        "nextRunAtMs": 1773572400000,
-        "lastRunAtMs": 1773550800015,
-        "lastStatus": "error",
-        "lastDurationMs": 120019,
-        "consecutiveErrors": 4,
-        "lastRunStatus": "error",
-        "lastDeliveryStatus": "unknown",
-        "lastErrorReason": "timeout",
-        "lastError": "cron: job execution timed out"
+        "nextRunAtMs": 1773594000000,
+        "lastRunAtMs": 1773572400015,
+        "lastStatus": "ok",
+        "lastDurationMs": 32139,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -1034,7 +1034,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1773547266591,
+      "updatedAtMs": 1773568877457,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1053,15 +1053,14 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773568851018,
-        "lastRunAtMs": 1773547251034,
+        "nextRunAtMs": 1773590451018,
+        "lastRunAtMs": 1773568851041,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 15557,
+        "lastDurationMs": 26416,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1773568851032
+        "lastDelivered": false
       }
     },
     {
@@ -1096,7 +1095,8 @@ window.__DASHBOARD_DATA__ = {
         "lastDurationMs": 13938,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false
+        "lastDelivered": false,
+        "runningAtMs": 1773579600012
       }
     },
     {

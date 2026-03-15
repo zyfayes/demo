@@ -1,0 +1,102 @@
+{
+  "date": "2026-03-15",
+  "items": [
+    {
+      "title": "Morgan Stanley 警告：2026 上半年可能出现重大 AI 突破，电网与就业面临冲击",
+      "url": "https://www.digit.in/news/general/ai-breakthrough-2026-prediction-impact-report.html",
+      "tldr": "摩根士丹利最新报告预测，随着美国头部 AI 实验室算力急剧扩张，2026H1 可能迎来 AI 能力的重大跃升。OpenAI GPT-5.4 在 GDPVal 基准上达到 83%，逼近专家水平；报告同时警告美国 2028 年前可能面临 9-18GW 电力缺口。",
+      "summary": "摩根士丹利发布报告指出，AI scaling laws 仍然有效，十倍算力投入可能带来模型智能翻倍。GPT-5.4 Thinking 模型在经济价值任务评估中得分 83%，接近领域专家表现。报告提出递归自我改进 AI 系统可能在 2027 年出现。基础设施方面，美国电网承压严重，预计 2028 年前将面临 9-18GW 的电力缺口。报告呼吁政策制定者、产业界加速准备，因为 AI 进步速度已超出多数机构的预期。这对教育科技行业意味着：AI 工具的能力跃升将加速渗透到教学和评估场景中。",
+      "tags": [
+        "AI趋势",
+        "算力",
+        "基础设施",
+        "政策"
+      ]
+    },
+    {
+      "title": "Sam Altman：未来人们将按需购买智能，AI 将成为水电一样的基础设施",
+      "url": "https://ucstrategies.com/news/people-will-buy-intelligence-on-demand-sam-altmans-chilling-prediction/",
+      "tldr": "Altman 在 BlackRock 基础设施峰会上描绘了 AI 作为按需公用事业的未来愿景——企业不再购买软件许可或雇佣人力，而是像买水电一样购买「智能单元」。他预测 AI Agent 将从分钟级交互进化到持续数周的自主工作。",
+      "summary": "OpenAI CEO Sam Altman 在 BlackRock 峰会上发表约 35 分钟演讲，核心论点是 AI 将从软件产品进化为「智能公用事业」。用户可按需请求认知工作——战略分析、研究、编码或运营——并按用量付费。他将此类比为 1950 年代核能「廉价到无法计量」的承诺，但认为 AI 更有可能兑现。关于 AI Agent，Altman 预测交互模式将从短暂的问答进化为持续数天甚至数周的自主任务执行。这一愿景对教育行业启示深远：个性化学习、自适应评估等场景的成本可能大幅降低。演讲在投资者群体中引发热议，但也有声音质疑其乐观程度。",
+      "tags": [
+        "OpenAI",
+        "AI愿景",
+        "Agent",
+        "基础设施"
+      ]
+    },
+    {
+      "title": "Google 发布 AI 城市洪水预测系统，可提前 24 小时预警",
+      "url": "https://www.newsbytesapp.com/news/science/google-s-ai-can-now-predict-urban-flash-floods/story",
+      "tldr": "Google 基于 Gemini 技术和自研 Groundsource 方法，构建了能提前 24 小时预测城市暴洪的 AI 模型。系统分析了 150 个国家超 260 万历史洪水事件，数据已上线 Flood Hub 平台，覆盖 20 亿人口。",
+      "summary": "Google 宣布突破性进展：利用 Gemini 和名为 Groundsource 的新方法，训练出城市暴洪预测 AI。与有系统监测的河流洪水不同，城市暴洪数据长期缺乏结构化记录。Groundsource 通过分析数十年公开数据，结合 Google Maps 精确定位事件边界，识别出跨 150 国的 260 万+历史事件。预测结果已整合入 Google Flood Hub 平台，该平台此前仅支持河流洪水预警，覆盖 20 亿人。Google 表示 Groundsource 方法论未来可扩展至其他自然灾害类型。这展示了 AI 在公共安全和科学领域的巨大潜力。",
+      "tags": [
+        "Google",
+        "AI应用",
+        "防灾",
+        "Gemini"
+      ]
+    },
+    {
+      "title": "2026 年 2 月 AI 模型大混战：Gemini 3.1 Pro、Claude 4.6、GPT-5.3 Codex 同月发布",
+      "url": "https://designforonline.com/the-best-ai-models-so-far-in-2026/",
+      "tldr": "2026 年 2 月成为 AI 模型发布最密集的月份之一：Google Gemini 3.1 Pro 重回基准榜首，Anthropic Claude Sonnet 4.6 以 Sonnet 定价达到接近 Opus 水平，xAI Grok 4.20 引入四 Agent 并行架构，阿里 Qwen 3.5 持续缩小开源差距。",
+      "summary": "这篇深度横评覆盖了 2 月发布的六大主力模型。Gemini 3.1 Pro 让 Google 时隔多月重回基准测试第一；Claude Sonnet 4.6 实现了「Sonnet 价格 Opus 性能」的突破；GPT-5.3 Codex 在编码任务上表现强劲；Grok 4.20 最大亮点是四个 AI Agent 并行工作的全新架构；Qwen 3.5 作为开源模型继续追赶闭源前沿。文章强调，对企业和开发者来说，模型选择从未如此重要也如此困难——消费者订阅和 API 计费的差异需要仔细评估。这一轮模型竞赛对教育科技产品选型有直接影响。",
+      "tags": [
+        "模型评测",
+        "Gemini",
+        "Claude",
+        "GPT",
+        "开源"
+      ]
+    },
+    {
+      "title": "Fortune 深度：美国数学阅读成绩因数字化暴跌，AI 可能加剧「脑腐」危机",
+      "url": "https://fortune.com/2026/03/14/america-math-and-reading-scores-tanked-edtech-ai-brain-rot/",
+      "tldr": "Fortune 报道指出，美国学生数学和阅读成绩在学校数字化 25 年后显著下滑。Brookings 研究所调查 500+ 教育者发现，生成式 AI 在教育中的风险目前大于收益——认知外包导致批判性思维衰退。57% 的青少年学生已在用 AI 做作业。",
+      "summary": "自 2000 年代初美国学校大规模引入笔记本电脑以来，学生的基础学力持续下滑。Pew Research 最新调查显示 57% 的青少年使用 AI 搜索信息，54% 用于作业。Brookings 研究所在 1 月发布的重磅报告中，基于 50 国 500+ 教育者访谈和 400+ 研究分析得出结论：生成式 AI 在儿童教育中「风险超过收益」。微软 2025 年的研究也支持这一发现——AI 使用与判断力和批判性思维能力下降相关。教育顾问 Mary Burns 直言「认知外包和相关认知衰退绝对是真实的」。EdTech 正面临国会层面的审视。这对教育科技从业者是必读的警示信号。",
+      "tags": [
+        "教育科技",
+        "AI风险",
+        "批判性思维",
+        "政策"
+      ]
+    },
+    {
+      "title": "Frontiers 论文：AI 个性化学习系统性综述——趋势、缺陷与未来方向",
+      "url": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1782626/full",
+      "tldr": "Frontiers in Education 发表系统性综述，基于 PRISMA 协议分析 2013-2025 年 Scopus 文献，梳理 AI 个性化学习的全球研究格局。研究发现热点正从中美欧向更广泛的亚洲转移，但发展中国家 AI 教育标准化不足仍是隐忧。",
+      "summary": "这篇系统性综述采用 PRISMA 和元文献分析方法，覆盖 2013-2025 年间的大量文献。核心发现包括：AI 驱动的个性化学习已从早期规则系统进化到深度学习、强化学习和集成方法阶段；全球研究重心正从中国、美国、欧洲向更广泛的亚洲地区扩展；AI 口语评估、模拟教学等创新正提升评估有效性和包容性。但论文也指出，发展中国家 AI 的快速扩张配合教育标准化不足，可能产生新的制度压力。对从业者的启示是：教师专业发展需超越技术操作层面，聚焦教学整合和数字素养；政策制定者需建立 AI 教育伦理框架，解决数据隐私、算法偏见和不平等访问问题。",
+      "tags": [
+        "教育科技",
+        "个性化学习",
+        "学术研究",
+        "AI伦理"
+      ]
+    },
+    {
+      "title": "加州学校 AI 进课堂实录：透明度徽章、使用边界与教师困惑",
+      "url": "https://localnewsmatters.org/2026/03/14/schools-across-california-wrestle-with-how-or-whether-to-use-ai-in-classrooms/",
+      "tldr": "加州多个学区正在探索 AI 课堂应用的边界。一个创新实践是「透明度徽章」系统——标注文档（包括教师邮件和学生作业）中 AI 参与程度，如「AI Collab」表示约 60% 由 AI 完成。各校在拥抱与抵制之间艰难平衡。",
+      "summary": "加州学校正成为 AI 教育政策的前沿试验场。报道聚焦的透明度徽章（Transparency Badge）系统颇具创新性：学区要求所有文档——从给家长的邮件到学生作业——标注 AI 参与程度。「AI Collab」徽章意味着约 60% 内容由 AI 生成。这一做法试图在「完全禁止」和「不加限制」之间找到中间路径。不同学区态度差异巨大，有的积极拥抱 AI 辅助教学，有的仍在观望。教师们面临的核心矛盾是：如何利用 AI 提升教学效率，同时确保学生真正学到东西。这个案例对中国教育科技行业同样有参考价值。",
+      "tags": [
+        "教育科技",
+        "AI政策",
+        "课堂实践",
+        "透明度"
+      ]
+    },
+    {
+      "title": "Agentic AI 周报（3/7-13）：市场规模将达 1390 亿美元，企业从聊天机器人转向自主执行",
+      "url": "https://bostoninstituteofanalytics.org/blog/agentic-ai-news-roundup-7-13-march-2026-market-growth-enterprise-adoption-new-ai-agents/",
+      "tldr": "波士顿分析研究所的周度综述指出，Agentic AI 已从技术术语升级为企业运营核心框架。市场预计从 2026 年 91.4 亿美元增长至 2034 年 1390 亿美元（CAGR 40.5%），VC 资金大量涌入「AgentOps」基础设施。",
+      "summary": "这份周报标志性地宣告：2026 年 3 月第二周是 Agentic AI 从概念到主流的转折点。与 2024-25 年企业忙于部署 LLM 不同，2026 年的核心叙事是「从会说的 chatbot 到会做的 agent」。市场数据惊人——从当前 91.4 亿美元到 2034 年 1390 亿美元，CAGR 达 40.5%。投资者已认识到 AI 的真正价值在于无人干预的执行能力，「Agentic Economy」正成为企业 ERP/CRM 的实际运行系统。VC 资金重点流向 AgentOps——监控、安全管理 AI Agent 舰队的基础设施层。这些 agent 能规划复杂工作流、调用多工具 API、根据结果调整策略、与人类和其他 AI 协作。",
+      "tags": [
+        "Agentic AI",
+        "市场分析",
+        "企业应用",
+        "投资"
+      ]
+    }
+  ]
+}

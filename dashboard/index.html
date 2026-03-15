@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-15T04:00:58.972Z",
+  "generated": "2026-03-15T10:00:59.341Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -424,7 +424,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1773532943770,
+      "updatedAtMs": 1773561746774,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -440,14 +440,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1773547304426,
-        "lastRunAtMs": 1773532904445,
+        "nextRunAtMs": 1773576104426,
+        "lastRunAtMs": 1773561704447,
         "lastStatus": "ok",
-        "lastDurationMs": 39325,
+        "lastDurationMs": 42327,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
+        "lastDeliveryStatus": "not-delivered",
+        "lastDelivered": false
       },
       "delivery": {
         "mode": "announce",
@@ -499,7 +499,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1773529320042,
+      "updatedAtMs": 1773550920034,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -514,15 +514,15 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.5"
       },
       "state": {
-        "nextRunAtMs": 1773550800000,
-        "lastRunAtMs": 1773529200019,
+        "nextRunAtMs": 1773572400000,
+        "lastRunAtMs": 1773550800015,
         "lastStatus": "error",
-        "lastDurationMs": 120023,
-        "consecutiveErrors": 3,
+        "lastDurationMs": 120019,
+        "consecutiveErrors": 4,
         "lastRunStatus": "error",
         "lastDeliveryStatus": "unknown",
-        "lastError": "cron: job execution timed out",
-        "lastErrorReason": "timeout"
+        "lastErrorReason": "timeout",
+        "lastError": "cron: job execution timed out"
       },
       "delivery": {
         "mode": "announce",
@@ -1034,7 +1034,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1773525664666,
+      "updatedAtMs": 1773547266591,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1053,15 +1053,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1773547251018,
-        "lastRunAtMs": 1773525651040,
+        "nextRunAtMs": 1773568851018,
+        "lastRunAtMs": 1773547251034,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 13626,
+        "lastDurationMs": 15557,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
         "lastDelivered": false,
-        "runningAtMs": 1773547251030
+        "runningAtMs": 1773568851032
       }
     },
     {

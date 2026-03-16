@@ -1,0 +1,186 @@
+{
+  "updated": "2026-03-16T14:31:25.753Z",
+  "tweets": [],
+  "news": [],
+  "price": {
+    "price": 0.005560594403,
+    "mcap": 40218111.1385781,
+    "fdv": 64094509.7869865,
+    "vol24h": 630765.137753447
+  },
+  "whales": {
+    "netFlow": -41915,
+    "totalBuy": 105322,
+    "totalSell": 147237,
+    "walletCount": 67,
+    "tradeCount": 300,
+    "topWallets": [
+      {
+        "addr": "0x930b88a592a045c428f3d99f7f3e5f95e3967508",
+        "short": "0x930b…7508",
+        "total": 41444,
+        "buy": 22664,
+        "sell": 18780,
+        "txns": 42,
+        "direction": "Net Buy"
+      },
+      {
+        "addr": "0xecbb87ead837f3ce43044e1ed7fd5a01dd708b73",
+        "short": "0xecbb…8b73",
+        "total": 40079,
+        "buy": 9235,
+        "sell": 30844,
+        "txns": 42,
+        "direction": "Net Sell"
+      },
+      {
+        "addr": "0x8bf44b00436d41fef72474bb0fa0778f7bf956ac",
+        "short": "0x8bf4…56ac",
+        "total": 34029,
+        "buy": 0,
+        "sell": 34029,
+        "txns": 36,
+        "direction": "Sell Only"
+      },
+      {
+        "addr": "0x00000000000124d994209fbb955e0217b5c2eca1",
+        "short": "0x0000…eca1",
+        "total": 16679,
+        "buy": 0,
+        "sell": 16679,
+        "txns": 34,
+        "direction": "Sell Only"
+      },
+      {
+        "addr": "0x3f342e1e0774e893a66ea20e3e3032b99d86d84a",
+        "short": "0x3f34…d84a",
+        "total": 14575,
+        "buy": 14575,
+        "sell": 0,
+        "txns": 8,
+        "direction": "Buy Only"
+      },
+      {
+        "addr": "0x54620b9a8a2c43aa8ed028450a7ce656a9c69feb",
+        "short": "0x5462…9feb",
+        "total": 10990,
+        "buy": 10990,
+        "sell": 0,
+        "txns": 6,
+        "direction": "Buy Only"
+      },
+      {
+        "addr": "0x315d2ee4fccda0def532ef4108ff57204f8d9eba",
+        "short": "0x315d…9eba",
+        "total": 10852,
+        "buy": 10852,
+        "sell": 0,
+        "txns": 6,
+        "direction": "Buy Only"
+      },
+      {
+        "addr": "0x3cccfc040ac037322113dc7f862b785bb4099547",
+        "short": "0x3ccc…9547",
+        "total": 10381,
+        "buy": 881,
+        "sell": 9500,
+        "txns": 12,
+        "direction": "Net Sell"
+      },
+      {
+        "addr": "0xc86befab0f31dcffd93940975c796ef80f0b6a89",
+        "short": "0xc86b…6a89",
+        "total": 9338,
+        "buy": 1844,
+        "sell": 7494,
+        "txns": 10,
+        "direction": "Net Sell"
+      },
+      {
+        "addr": "0xeb9863e28d0fc0702a5197e66674f86ee2c35b5e",
+        "short": "0xeb98…5b5e",
+        "total": 8938,
+        "buy": 8938,
+        "sell": 0,
+        "txns": 3,
+        "direction": "Buy Only"
+      },
+      {
+        "addr": "0xc6275245f84c794617d78692ffd1be73720ba81a",
+        "short": "0xc627…a81a",
+        "total": 7591,
+        "buy": 0,
+        "sell": 7591,
+        "txns": 3,
+        "direction": "Sell Only"
+      },
+      {
+        "addr": "0xd8708c450e97f734249f245dd5eb05176d052d16",
+        "short": "0xd870…2d16",
+        "total": 6137,
+        "buy": 3092,
+        "sell": 3046,
+        "txns": 16,
+        "direction": "Net Buy"
+      }
+    ],
+    "largeTrades": [
+      {
+        "ts": "2026-03-16T12:31:11Z",
+        "kind": "buy",
+        "vol": 6528,
+        "maker": "0xeb9863e28d0fc0702a5197e66674f86ee2c35b5e",
+        "short": "0xeb98…5b5e",
+        "time": "12:31 UTC"
+      },
+      {
+        "ts": "2026-03-16T12:30:47Z",
+        "kind": "buy",
+        "vol": 5652,
+        "maker": "0x315d2ee4fccda0def532ef4108ff57204f8d9eba",
+        "short": "0x315d…9eba",
+        "time": "12:30 UTC"
+      },
+      {
+        "ts": "2026-03-16T09:57:47Z",
+        "kind": "sell",
+        "vol": 4974,
+        "maker": "0xecbb87ead837f3ce43044e1ed7fd5a01dd708b73",
+        "short": "0xecbb…8b73",
+        "time": "09:57 UTC"
+      },
+      {
+        "ts": "2026-03-16T11:21:59Z",
+        "kind": "buy",
+        "vol": 4099,
+        "maker": "0x4e9141d2fb79b2a94a0256283f1547c7d6a12e7f",
+        "short": "0x4e91…2e7f",
+        "time": "11:21 UTC"
+      },
+      {
+        "ts": "2026-03-16T12:31:23Z",
+        "kind": "buy",
+        "vol": 3994,
+        "maker": "0x54620b9a8a2c43aa8ed028450a7ce656a9c69feb",
+        "short": "0x5462…9feb",
+        "time": "12:31 UTC"
+      },
+      {
+        "ts": "2026-03-16T10:27:59Z",
+        "kind": "sell",
+        "vol": 3775,
+        "maker": "0xc6275245f84c794617d78692ffd1be73720ba81a",
+        "short": "0xc627…a81a",
+        "time": "10:27 UTC"
+      },
+      {
+        "ts": "2026-03-16T10:44:23Z",
+        "kind": "sell",
+        "vol": 3452,
+        "maker": "0xecbb87ead837f3ce43044e1ed7fd5a01dd708b73",
+        "short": "0xecbb…8b73",
+        "time": "10:44 UTC"
+      }
+    ]
+  }
+}

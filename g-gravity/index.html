@@ -86,6 +86,18 @@ table.ex td{padding:6px 7px;border-bottom:1px solid rgba(0,0,0,.03);color:var(--
   <div class="k"><div class="l">Txs Today</div><div class="v" id="kpi-txs">68,363</div><div class="h">31d history</div></div>
 </div>
 
+<!-- AI Intelligence Summary -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px">
+  <div style="background:rgba(42,155,125,.06);border:1px solid rgba(42,155,125,.15);border-radius:8px;padding:16px">
+    <div style="font-size:11px;font-weight:500;color:#2a9b7d;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">🐦 Social Intelligence</div>
+    <div style="font-size:12px;line-height:1.6;color:rgba(0,0,0,.7)">Twitter on March 16: dominated by automated exchange trackers confirming <b>$G as top gainer (+81%)</b>, plus traders celebrating 2X returns from accumulation-phase entries. Official @Galxe posted cryptic one-word hints ("early") but <b>no formal announcement</b>. No viral organic thread or influencer catalyst found. Reddit: zero threads. <b style="color:#2a9b7d">Verdict: price-driven attention, not narrative-driven.</b></div>
+  </div>
+  <div style="background:rgba(61,139,209,.06);border:1px solid rgba(61,139,209,.15);border-radius:8px;padding:16px">
+    <div style="font-size:11px;font-weight:500;color:#3d8bd1;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">📰 News Intelligence</div>
+    <div style="font-size:12px;line-height:1.6;color:rgba(0,0,0,.7)">Strongest identifiable catalyst: <b>Gravity L1 Longevity Testnet</b> launch (Mar 12) — final stage before mainnet, 9.5K–11K TPS. Same-day coverage by Japanese crypto media (CoinChoice) likely amplified Asian retail interest. Nansen H2 2025 report (Jan) validated 14.2M users + Reth contributions. GAL→G full migration (Feb 16) completed. <b style="color:#3d8bd1">No major exchange listing or tokenomics change found — surge is technical-progress + retail FOMO driven.</b></div>
+  </div>
+</div>
+
 <!-- TradingView K-Line -->
 <div class="c f" style="margin-bottom:18px;">
   <h3>📈 $G/USDT · K-Line</h3>
@@ -792,9 +804,9 @@ try {
       // Update tweets
       const tweetCol = document.querySelector('.sn-col');
       if(tweetCol && d.tweets && d.tweets.length > 0){
-        // Filter: only tweets from March 15+
-        const cutoff = new Date('2026-03-15T00:00:00Z').getTime();
-        d.tweets = d.tweets.filter(t => !t.date || t.date >= cutoff);
+        // Filter: remove GRVT/unrelated tokens, keep only Gravity/Galxe/$G relevant
+        const grvtRx = /\bGRVT\b|\$GRVT\b/i;
+        d.tweets = d.tweets.filter(t => !grvtRx.test(t.text||t.content||''));
         const h3 = tweetCol.querySelector('h3');
         let html = '';
         for(const t of d.tweets){

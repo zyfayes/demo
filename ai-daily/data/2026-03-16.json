@@ -8,7 +8,11 @@
       "url": "https://www.sohu.com/a/996744880_362225",
       "source": "搜狐",
       "tldr": "黄仁勋指出 AI 的下一个突破在于构建能理解自然法则的「物理 AI」，这将彻底改变制造业、交通和机器人领域。Nvidia 与达索系统战略合作，将加速计算能力与虚拟孪生平台深度融合，未来 100% 的生产流程都可通过软件定义，大幅降低研发成本和周期。",
-      "tags": ["物理AI", "英伟达", "制造业"]
+      "tags": [
+        "物理AI",
+        "英伟达",
+        "制造业"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,11 @@
       "url": "https://www.news.cn/20260128/3b2f11906fd74ca397fef9996c805a60/c.html",
       "source": "新华网",
       "tldr": "中国 AI 核心产业规模预计突破 1.2 万亿元，同比增长 30%；国产开源大模型全球累计下载量破百亿次。DeepSeek 标志着中国 AI 技术路线分化突破，转向拥抱更轻的模型、更聪明的架构、更高的效率和更低的价格。面壁智能联合清华提出《大模型的密度法则》，认为提升智能密度（用更少计算和数据得到更多智能）是演进核心逻辑。",
-      "tags": ["中国AI", "DeepSeek", "密度法则"]
+      "tags": [
+        "中国AI",
+        "DeepSeek",
+        "密度法则"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +32,11 @@
       "url": "https://x.com/openclaw/status/2032694713493406060",
       "source": "X/Twitter",
       "tldr": "OpenClaw 推出实时 Chrome 会话接入功能（一键切换，零扩展）、Android 客户端重新设计并瘦身至 7MB。同时宣布获得 Nvidia 工程师支持，帮助分流开源安全公告。这是大型 GPU 厂商首次以工程师人力形式直接支持开源 AI Agent 项目的安全工作。",
-      "tags": ["OpenClaw", "开源", "安全"]
+      "tags": [
+        "OpenClaw",
+        "开源",
+        "安全"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +44,11 @@
       "url": "https://developer.chrome.com/blog/chrome-devtools-mcp-debug-your-browser-session",
       "source": "Chrome DevBlog",
       "tldr": "Chrome 官方推出 DevTools MCP（Model Context Protocol）支持，允许开发者在浏览器会话中直接调试 AI Agent 行为。这是浏览器厂商首次在官方 DevTools 中集成 AI Agent 调试能力，标志着 Agent-driven development 成为一等公民开发模式。",
-      "tags": ["Chrome", "MCP", "调试"]
+      "tags": [
+        "Chrome",
+        "MCP",
+        "调试"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +56,11 @@
       "url": "https://chrlschn.dev/blog/2026/03/mcp-is-dead-long-live-mcp/",
       "source": "个人博客",
       "tldr": "作者认为 MCP（Model Context Protocol）正在走向过度工程化：标准变得臃肿、实现复杂、生态碎片化。核心观点：协议本身不是问题，过度抽象才是——大部分场景用简单的 REST API + 明确的 schema 就够了，别为了「通用性」牺牲可用性。",
-      "tags": ["MCP", "协议设计", "反思"]
+      "tags": [
+        "MCP",
+        "协议设计",
+        "反思"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +68,11 @@
       "url": "https://sebastianraschka.com/llm-architecture-gallery/",
       "source": "个人网站",
       "tldr": "Sebastian Raschka（《Build a Large Language Model (From Scratch)》作者）发布 LLM 架构可视化图谱，涵盖从 Transformer 原始论文到 Llama、GPT-4、Gemini 等主流架构的演进脉络，配有清晰的架构图和关键 paper 索引，是理解现代 LLM 架构演进的绝佳入口。",
-      "tags": ["架构", "可视化", "教育"]
+      "tags": [
+        "架构",
+        "可视化",
+        "教育"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +80,11 @@
       "url": "https://simonwillison.net/guides/agentic-engineering-patterns/what-is-agentic-engineering/#atom-everything",
       "source": "Simon Willison 博客",
       "tldr": "Simon Willison 定义 Agentic Engineering 为「在 coding agent 协助下开发软件的实践」。核心是 coding agent 能写代码也能执行代码，流行例子包括 Claude Code、Codex、Pi。这不是简单的 copilot 补全，而是 agent 主动探索代码库、执行测试、迭代修复的完整闭环。",
-      "tags": ["Agent", "编程范式", "定义"]
+      "tags": [
+        "Agent",
+        "编程范式",
+        "定义"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +92,11 @@
       "url": "https://garymarcus.substack.com/p/breaking-expensive-new-evidence-that",
       "source": "Substack",
       "tldr": "Gary Marcus 指出两项巨额实验失败（未披露具体项目名），再次证明 scaling law 不是万能药。核心论点：堆算力能提升某些能力（如语言流畅度），但在需要真正推理和泛化的任务上，架构创新比参数规模更关键。这与「密度法则」思路不谋而合。",
-      "tags": ["Scaling", "批判", "架构"]
+      "tags": [
+        "Scaling",
+        "批判",
+        "架构"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +104,11 @@
       "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_768697befce84652",
       "source": "腾讯网",
       "tldr": "报告预测 2026 年 AI 将在三条线并进：多模态世界模型探索（物理常识、时空理解）、具身智能落地（引入世界模型 + 强化学习自我修正）、大模型竞赛从参数规模转向效率和智能密度。同时警告具身智能领域可能迎来洗牌，采用「通用开源大模型 + 运动控制」模式的企业空间有限。",
-      "tags": ["趋势", "具身智能", "世界模型"]
+      "tags": [
+        "趋势",
+        "具身智能",
+        "世界模型"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +116,15 @@
       "url": "https://www.neuralbuddies.com/p/morgan-stanley-says-massive-ai-leap-months-away-world-not-ready",
       "source": "Neural Buddies",
       "tldr": "Morgan Stanley 在 TMT 会议上警告客户：OpenAI、Google DeepMind、Anthropic、xAI 等实验室前所未有的算力积累，将在 4-6 月引发模型能力的非线性跃迁。投资者和机构尚未对此定价。Sam Altman 二月表态「极度强大的模型即将到来，速度比预期快」，印证了这一判断。",
-      "tags": ["投资", "模型能力", "预测"]
+      "tags": [
+        "投资",
+        "模型能力",
+        "预测"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69b7502116a758dc65c026c3.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69b7502116a758dc65c026c5",
+  "podcastTitle": "2026年3月16日AI：物理AI、密度法则与模型非线性跃迁",
+  "podcastVoice": "uma"
 }

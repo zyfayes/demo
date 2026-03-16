@@ -1,0 +1,34 @@
+{
+  "updated": "2026-03-16T14:33:32.814285Z",
+  "tweets": [
+    {
+      "url": "https://x.com/CoinBubbles_App/status/2033506111916306677",
+      "author": "CoinBubbles",
+      "handle": "@CoinBubbles_App · Mar 16",
+      "text": "24hr Leading Climbers (Ranks 301-400 MC): $G (Gravity by Galxe) +81.30% — top gainer ahead of $ARIA, $DRIFT, $CELO",
+      "tag": "Market tracker"
+    },
+    {
+      "url": "https://x.com/ripple_horse/status/2033499391508541841",
+      "author": "Alexander Taylor",
+      "handle": "@ripple_horse · Mar 16",
+      "text": "$G up nearly 2X since our buy. Nothing was risked from this coin as it was in its accumulation phase, nice hold for a week for $23,000",
+      "tag": "Trader — accumulation phase entry"
+    },
+    {
+      "url": "https://x.com/cexscan/status/2033474685074072058",
+      "author": "cexscan",
+      "handle": "@cexscan · Mar 16",
+      "text": "Bybit Spot top gainer last 60min: $G +25.35%, $BLAST +13.7%, $TRIA +11.28%",
+      "tag": "Exchange scanner"
+    }
+  ],
+  "news": [
+    {
+      "url": "https://mpost.io/galxe-backed-gravity-chain-opens-developer-access-to-longevity-testnet/",
+      "title": "Gravity Opens Longevity Testnet",
+      "desc": "9.5K–11K TPS, 200ms blocks, final pre-mainnet stage",
+      "source": "CoinChoice · March 16"
+    }
+  ]
+}

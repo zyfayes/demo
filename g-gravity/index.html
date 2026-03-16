@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>$G Gravity — Live Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--m1:#49a3a6;--m3:#2a9b7d;--m3t:rgba(42,155,125,.1);--m4:#e05357;--m6:#ff9800;--bl:#3d8bd1;--pu:#5f75c9;--gn:#40a544;--t9:rgba(0,0,0,.9);--t7:rgba(0,0,0,.7);--t5:rgba(0,0,0,.5);--t3:rgba(0,0,0,.3);--g1:#fafafa;--g2:#f5f5f5}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',-apple-system,sans-serif;background:#fff;background-image:radial-gradient(circle,rgba(0,0,0,.18) .6px,transparent .6px);background-size:16px 16px;color:var(--t9);padding:28px;max-width:1200px;margin:0 auto}
+.hdr{text-align:center;margin-bottom:22px}.hdr h1{font-size:22px;font-weight:500;margin-bottom:4px}.hdr .a{color:var(--m1)}
+.hdr .s{font-size:11px;color:var(--t5)}.live{display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.kpis{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px}
+.k{background:var(--g1);border-radius:8px;padding:12px;text-align:center;border:1px solid rgba(0,0,0,.04)}
+.k .l{font-size:9px;color:var(--t5);text-transform:uppercase;letter-spacing:.3px;margin-bottom:4px}
+.k .v{font-size:17px;font-weight:500}.k .v.u{color:var(--m3)}.k .v.d{color:var(--m4)}
+.k .h{font-size:8px;color:var(--t3);margin-top:2px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.c{background:var(--g1);border:1px solid rgba(0,0,0,.04);border-radius:8px;padding:16px}
+.c.f{grid-column:1/-1}.c h3{font-size:11px;font-weight:500;color:var(--t5);margin-bottom:10px;text-transform:uppercase;letter-spacing:.3px}
+.ch{width:100%;height:240px}.cht{width:100%;height:300px}
+.ab{background:var(--m3t);border:1px solid rgba(42,155,125,.18);border-radius:8px;padding:18px;margin-bottom:18px}
+.ab h2{font-size:14px;font-weight:500;color:var(--m3);margin-bottom:10px}
+.fc{display:flex;gap:8px;margin-bottom:8px;align-items:flex-start}
+.tg{font-size:8px;font-weight:600;padding:2px 6px;border-radius:3px;white-space:nowrap;margin-top:2px}
+.tg.p{background:rgba(42,155,125,.15);color:var(--m3)}.tg.st{background:rgba(255,152,0,.12);color:var(--m6)}
+.tg.cx{background:rgba(61,139,209,.12);color:var(--bl)}.tg.ct{background:rgba(95,117,201,.12);color:var(--pu)}
+.fc p{font-size:11px;line-height:1.5;color:var(--t7)}.fc p b{color:var(--t9)}
+.sn{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px;overflow:hidden}
+.sn-col{background:var(--g1);border:1px solid rgba(0,0,0,.04);border-radius:8px;padding:16px;min-width:0;max-height:600px;overflow-y:auto;overflow-x:hidden}
+.sn-col h3{font-size:11px;font-weight:500;color:var(--t5);margin-bottom:10px;text-transform:uppercase;letter-spacing:.3px}
+.tcard{display:block;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:8px;padding:10px;text-decoration:none;color:inherit;margin-bottom:6px;transition:border-color .15s}
+.tcard:hover{border-color:rgba(73,163,166,.3)}.tcard.off{border-left:3px solid var(--m1)}
+.tl{display:flex;align-items:center;gap:7px;margin-bottom:4px}
+.av{width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.av-ph{display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--t5);background:var(--g2)}
+.tn{font-size:10px;font-weight:500;color:var(--t9)}.th{font-size:8px;color:var(--t5)}.vf{color:var(--m1);font-size:9px}
+.tcard .tx{font-size:10.5px;color:var(--t7);line-height:1.45}.tcard .tm{font-size:8px;color:var(--t3);margin-top:3px}
+.tcard .eng{font-size:8px;color:var(--t5);margin-top:3px}
+.sig{font-size:9px;color:var(--t5);margin-top:6px;padding:7px 10px;background:var(--g2);border-radius:5px;line-height:1.4}
+.ncard{display:block;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:8px;overflow:hidden;text-decoration:none;color:inherit;margin-bottom:8px;transition:border-color .15s;max-width:100%}
+.ncard:hover{border-color:rgba(73,163,166,.3)}
+.ni{width:100%;height:110px;overflow:hidden;background:var(--g2)}.ni img{width:100%;height:100%;object-fit:cover;display:block}
+.nb{padding:10px}.ns{font-size:8px;color:var(--t5);margin-bottom:2px}
+.nt{font-size:11px;font-weight:500;color:var(--t9);margin-bottom:3px;line-height:1.3}
+.nd{font-size:9.5px;color:var(--t7);line-height:1.4;margin-bottom:3px}
+.nl{font-size:8px;color:var(--m1);font-weight:500}
+table.ex{width:100%;border-collapse:collapse;font-size:10px}
+table.ex th{text-align:left;color:var(--t5);font-weight:500;padding:6px 7px;border-bottom:1px solid rgba(0,0,0,.06);font-size:8px;text-transform:uppercase}
+table.ex td{padding:6px 7px;border-bottom:1px solid rgba(0,0,0,.03);color:var(--t7)}
+.bar{display:inline-block;height:4px;border-radius:2px;background:var(--m1)}
+.ft{text-align:center;font-size:8px;color:var(--t3);padding-top:14px;opacity:.2}
+@media(max-width:768px){.g2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}body{padding:14px}}
+
+.sn-col::-webkit-scrollbar{width:4px}
+.sn-col::-webkit-scrollbar-track{background:transparent}
+.sn-col::-webkit-scrollbar-thumb{background:rgba(0,0,0,.12);border-radius:2px}
+.sn-col:hover::-webkit-scrollbar-thumb{background:rgba(0,0,0,.2)}
+
+.ncard-v2{display:block;background:#fff;border:1px solid rgba(0,0,0,.06);border-radius:6px;padding:14px 16px;text-decoration:none;color:inherit;margin-bottom:10px;transition:border-color .15s}
+.ncard-v2:hover{border-color:rgba(73,163,166,.3)}
+.nc-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.nc-favicon{width:16px;height:16px;border-radius:2px;flex-shrink:0}
+.nc-date{font-size:11px;color:rgba(0,0,0,.3);margin-left:auto}
+.nc-source{font-size:11px;color:rgba(0,0,0,.4);letter-spacing:0.2px}
+.nc-title{font-size:13px;font-weight:500;color:rgba(0,0,0,.9);line-height:1.5;margin-bottom:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nc-desc{font-size:12px;color:rgba(0,0,0,.5);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+</style>
+</head>
+<body>
+<div class="hdr">
+  <h1><span class="a">$G</span> Gravity — Live Dashboard</h1>
+  <p class="s"><span class="live"></span>Feed every 4h · Galxe L1 · Powered by Alva · 2026-03-16T23:19</p>
+</div>
+
+<div class="kpis">
+  <div class="k"><div class="l">Price</div><div class="v" id="kpi-price">$0.00592</div><div class="h">ATH $0.0917</div></div>
+  <div class="k"><div class="l">24h Change</div><div class="v" id="kpi-change" style="color:#2a9b7d">+71.9%</div><div class="h" id="kpi-7d">7d: +84.3%</div></div>
+  <div class="k"><div class="l">24h Volume</div><div class="v" id="kpi-vol">$241M</div><div class="h" id="kpi-volmcap">Vol/MCap 558%</div></div>
+  <div class="k"><div class="l">Market Cap</div><div class="v" id="kpi-mcap">$43M</div><div class="h" id="kpi-fdv">FDV $71M</div></div>
+  <div class="k"><div class="l">Gravity Addresses</div><div class="v">28.9M</div><div class="h">601M total txs</div></div>
+  <div class="k"><div class="l">Txs Today</div><div class="v" id="kpi-txs">68,363</div><div class="h">31d history</div></div>
+</div>
+
+<!-- TradingView K-Line -->
+<div class="c f" style="margin-bottom:18px;">
+  <h3>📈 $G/USDT · K-Line</h3>
+  <div id="tv-chart" style="width:100%;height:420px;overflow:hidden;"></div>
+</div>
+<!-- TradingView Ticker Tape -->
+<div style="margin-bottom:14px;border-radius:8px;overflow:hidden">
+<script type="module" src="https://widgets.tradingview-widget.com/w/en/tv-ticker-tape.js"></script>
+<tv-ticker-tape color-theme="light" symbols="BITSTAMP:BTCUSD,BITSTAMP:ETHUSD,BINANCE:GUSDT,BINANCE:BNBUSDT,FOREXCOM:SPXUSD,CMCMARKETS:GOLD" display-mode="compact"></tv-ticker-tape>
+</div>
+
+
+<!-- Attribution -->
+<div class="ab">
+  <h2>Surge Attribution — Why $G Pumped +73% Today</h2>
+
+  <div class="fc"><span class="tg p">DOMINANT</span>
+  <p><b>Korean retail frenzy — Upbit alone drove $119M (45% of global volume).</b> Add Bithumb ($24M) and KR exchanges account for 54% of all trading. Classic Kimchi Premium dynamic: KRW pairs, Won-Dollar above ₩1,480, aggressive momentum chasing on a low-cap alt. Vol/MCap ratio hit 558% — the entire market cap traded 5× in 24h. Pure retail FOMO.</p></div>
+
+  <div class="fc"><span class="tg st">STRUCTURAL</span>
+  <p><b>Extreme illiquidity amplifier — top 10 wallets hold 84.7%, circulating only 60% of total supply.</b> Free float is razor-thin. Concentrated buying + thin order books = vertical price action. On-chain Uniswap V3: 84 wallets in 300 recent trades, net buy +$27K. Five wallets buy-only (~$60K total), selling concentrated in 2 addresses ($38K). FDV/MCap = 1.66×.</p></div>
+
+  <div class="fc"><span class="tg ct">CATALYST</span>
+  <p><b>Longevity Testnet launch (March 12) — developers can now deploy on Gravity's testnet.</b> RPC endpoints, faucet, explorer all live. Reproduces mainnet performance: 1 Ggas/s throughput, subsecond finality. Signals progression from Galxe-internal chain to general-purpose L1. Mainnet: 28.9M addresses, 601M+ txs — real usage from Galxe quest/identity platform. This was the narrative trigger Korean retail latched onto.</p></div>
+
+  <div class="fc"><span class="tg cx">MACRO</span>
+  <p><b>Crypto risk-on tailwind — BTC +3.2%, ETH +8.7%, G alpha ≈ +65%.</b> Broad market provided permission for alt speculation, but doesn't explain a 73% move alone. Same environment lifted CELO and DRIFT — none matched G's magnitude. Amplifier, not cause.</p></div>
+
+  <div class="fc"><span class="tg" style="background:#dc2626;color:#fff">RISK</span>
+  <p><b>Supply overhang: 48% treasury allocation vesting through 2028, top 5 wallets control 71.6%.</b> GAL→G migration (1:60) done July 2025, but unlocks continue. 558% Vol/MCap = speculative churn, not organic accumulation. Korean retail pumps historically reverse sharply once momentum fades (LUNA, BORA, MBX precedents). Any large holder sell could crater price as fast as it rose.</p></div>
+
+  <div class="fc"><span class="tg" style="background:#0891b2;color:#fff">VERDICT</span>
+  <p><b>~60% Korean retail FOMO · ~20% illiquidity amplification · ~15% testnet catalyst · ~5% macro.</b> Flow-driven, not fundamentals-driven. Gravity has real infrastructure (28.9M addresses, Galxe backing), but price action is disproportionate to a testnet announcement. Watch for reversal risk as KRW volume normalizes.</p></div>
+</div>
+
+<div class="c" style="margin-bottom:18px;">
+  <h3>Exchange Breakdown</h3>
+  <table class="ex"><thead><tr><th>Exchange</th><th>Pair</th><th>24h Vol</th><th>Share</th><th></th></tr></thead><tbody><tr><td>Upbit</td><td>G/KRW</td><td>$106.3M</td><td>53.3%</td><td><span class="bar" style="width:95px"></span></td></tr><tr><td>Bithumb</td><td>G/KRW</td><td>$21.4M</td><td>10.7%</td><td><span class="bar" style="width:19px"></span></td></tr><tr><td>Binance</td><td>G/USDT</td><td>$21.4M</td><td>10.7%</td><td><span class="bar" style="width:19px"></span></td></tr><tr><td>CoinW</td><td>G/USDT</td><td>$15.6M</td><td>7.8%</td><td><span class="bar" style="width:14px"></span></td></tr><tr><td>Binance</td><td>G/TRY</td><td>$14.6M</td><td>7.3%</td><td><span class="bar" style="width:13px"></span></td></tr><tr><td>MEXC</td><td>G/USDT</td><td>$5.5M</td><td>2.7%</td><td><span class="bar" style="width:4px"></span></td></tr><tr><td>OKX</td><td>G/USDT</td><td>$5.0M</td><td>2.5%</td><td><span class="bar" style="width:4px"></span></td></tr><tr><td>Gate</td><td>G/USDT</td><td>$1.4M</td><td>0.7%</td><td><span class="bar" style="width:3px"></span></td></tr><tr><td>Bitunix</td><td>G/USDT</td><td>$1.2M</td><td>0.6%</td><td><span class="bar" style="width:3px"></span></td></tr><tr><td>Bitget</td><td>G/USDT</td><td>$1.2M</td><td>0.6%</td><td><span class="bar" style="width:3px"></span></td></tr></tbody></table></div>
+
+<div class="sn" style="display:grid;grid-template-columns:1fr 1fr !important;gap:16px;margin-bottom:18px;overflow:hidden;">
+  <div class="sn-col" style="min-width:0;">
+    <h3>𝕏 Social Pulse — March 16</h3>
+    <a target="_blank" rel="noopener" href="https://x.com/CoinBubbles_App/status/2033506111916306677" class="tcard">
+      <div class="tl"><div class="av av-ph">CO</div><div><div class="tn">CoinBubbles</div><div class="th">@CoinBubbles_App · Mar 16</div></div></div>
+      <div class="tx">24hr Leading Climbers (Ranks 301-400 MC): <b>$G (Gravity by Galxe) +81.30%</b> — top gainer ahead of $ARIA, $DRIFT, $CELO</div>
+      <div class="tm">Market tracker</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://x.com/ripple_horse/status/2033499391508541841" class="tcard">
+      <div class="tl"><div class="av av-ph">AL</div><div><div class="tn">Alexander Taylor</div><div class="th">@ripple_horse · Mar 16</div></div></div>
+      <div class="tx">$G up nearly 2X since our buy. Nothing was risked from this coin as it was in its accumulation phase, nice hold for a week for $23,000</div>
+      <div class="tm">Trader — accumulation phase entry</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://x.com/cexscan/status/2033474685074072058" class="tcard">
+      <div class="tl"><div class="av av-ph">CE</div><div><div class="tn">cexscan</div><div class="th">@cexscan · Mar 16</div></div></div>
+      <div class="tx">Bybit Spot top gainer last 60min: <b>$G +25.35%</b>, $BLAST +13.7%, $TRIA +11.28%</div>
+      <div class="tm">Exchange scanner</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://x.com/Galxe/status/2033464525408907669" class="tcard off">
+      <div class="tl"><div class="av av-ph" style="background:#e0f2f1;color:#49a3a6;">G</div><div><div class="tn">Galxe <span class="vf">✓</span></div><div class="th">@Galxe · Mar 16</div></div></div>
+      <div class="tx">"early"</div>
+      <div class="tm">Official — cryptic, may have fueled speculation</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://x.com/Galxe/status/2033449106237001899" class="tcard off">
+      <div class="tl"><div class="av av-ph" style="background:#e0f2f1;color:#49a3a6;">G</div><div><div class="tn">Galxe <span class="vf">✓</span></div><div class="th">@Galxe · Mar 16</div></div></div>
+      <div class="tx">Engaged with <b>@travalacom</b> — hinting at partnership</div>
+      <div class="tm">Official</div>
+    </a>
+    <div class="sig"><b>Social Summary (Mar 16):</b> Twitter on March 16: dominated by automated exchange trackers confirming $G as top gainer (+81%), plus traders celebrating 2X returns from accumulation-phase entries. Official @Galxe posted cryptic one-word hints but no formal announcement. No viral organic thread or influencer catalyst found. Reddit: zero threads. <b>Verdict: price-driven attention, not narrative-driven.</b></div>
+  </div>
+  
+<div class="sn-col" style="min-width:0;">
+    <h3 style="font-size:12px;font-weight:500;color:rgba(0,0,0,.4);letter-spacing:1px;margin:0 0 14px">📰 NEWS</h3>
+    <a target="_blank" rel="noopener" href="https://coinchoice.net/gravity-galxe-blockchain/" class="ncard-v2">
+      <div class="nc-header"><img src="https://www.google.com/s2/favicons?domain=coinchoice.net&sz=32" class="nc-favicon" onerror="this.style.display='none'"><span class="nc-source">coinchoice.net</span><span class="nc-date">Mar 16</span></div>
+      <div class="nc-title">Galxeの新ブロックチェーン「Gravity（G）」とは？— JP retail deep-dive</div>
+      <div class="nc-desc">Japanese crypto media publishes same-day explainer covering architecture, Grevm, restaking, and $G tokenomics. Likely amplified Asian retail FOMO.</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://www.bitget.com/news/detail/12560605203027" class="ncard-v2">
+      <div class="nc-header"><img src="https://www.google.com/s2/favicons?domain=bitget.com&sz=32" class="nc-favicon" onerror="this.style.display='none'"><span class="nc-source">bitget.com</span><span class="nc-date">Feb 16</span></div>
+      <div class="nc-title">Galxe (GAL) Migrates to GravityChain (G) — Full Network Migration</div>
+      <div class="nc-desc">Galxe completes GAL→G token migration. Web3 network now fully powered by GravityChain. Nansen H2 2025 Report cites industry-leading throughput.</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://research.nansen.ai/articles/gravity-h2-2025-report" class="ncard-v2">
+      <div class="nc-header"><img src="https://www.google.com/s2/favicons?domain=nansen.ai&sz=32" class="nc-favicon" onerror="this.style.display='none'"><span class="nc-source">nansen.ai</span><span class="nc-date">Jan 23</span></div>
+      <div class="nc-title">Nansen: Gravity H2 2025 Report — 14.2M Unique Users, 39.6% Growth</div>
+      <div class="nc-desc">$G led with 54.1% of total users. 677K daily transactions, 153K DAA on alpha mainnet. Meaningful Reth ecosystem contributions.</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://mpost.io/galxe-backed-gravity-chain-opens-developer-access-to-longevity-testnet/" class="ncard-v2">
+      <div class="nc-header"><img src="https://www.google.com/s2/favicons?domain=mpost.io&sz=32" class="nc-favicon" onerror="this.style.display='none'"><span class="nc-source">mpost.io</span><span class="nc-date">Mar 12</span></div>
+      <div class="nc-title">Gravity L1 Longevity Testnet — Final Stage Before Mainnet</div>
+      <div class="nc-desc">9.5K–11K TPS on modest hardware. Replicable gravity_bench framework. RPC, faucet, explorer all live. 🔥 Strongest catalyst for the surge.</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://www.prnewswire.com/news-releases/galxe-starboard-leads-infofi-boom-with-5-million-engagements-302500560.html" class="ncard-v2">
+      <div class="nc-header"><img src="https://www.google.com/s2/favicons?domain=prnewswire.com&sz=32" class="nc-favicon" onerror="this.style.display='none'"><span class="nc-source">prnewswire.com</span><span class="nc-date">Jul '25</span></div>
+      <div class="nc-title">Galxe Starboard Leads InfoFi Boom — 5M Engagements, Messari Report</div>
+      <div class="nc-desc">Starboard positions $G at center of Information Finance. 20+ registered projects, Messari validation. Ongoing ecosystem tailwind.</div>
+    </a>
+    <a target="_blank" rel="noopener" href="https://coinmarketcap.com/cmc-ai/gravity-token/latest-updates/" class="ncard-v2">
+      <div class="nc-header"><img src="https://www.google.com/s2/favicons?domain=coinmarketcap.com&sz=32" class="nc-favicon" onerror="this.style.display='none'"><span class="nc-source">coinmarketcap.com</span><span class="nc-date">Live</span></div>
+      <div class="nc-title">CMC AI Pulse: Gravity Reth 41K TPS, Starboard $100K G Rewards</div>
+      <div class="nc-desc">Community chatter tech-optimistic but price-cautious. Tracks developer activity and whale wallet movements.</div>
+    </a>
+  </div>
+</div>
+  
+</div>
+
+<!-- On-Chain & Exchange Charts -->
+<div class="g2">
+  <div class="c"><h3>⛓️ Gravity Chain — Daily Transactions</h3><div id="txChart" class="ch"></div></div>
+  <div class="c"><h3>⛓️ Gravity Chain — Cumulative Addresses</h3><div id="addrChart" class="ch"></div></div>
+</div>
+
+<div style="margin-bottom:18px">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:22px;margin-bottom:16px">
+    <span style="font-size:14px;font-weight:400;color:rgba(0,0,0,.9);letter-spacing:0.14px">On-Chain Whale Activity</span>
+    <span style="font-size:12px;color:rgba(0,0,0,.5)">Uniswap V3 · G/USDC · last 300 trades</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Net Flow</div>
+      <div style="font-size:20px;font-weight:400;color:#2a9b7d" id="whale-net">+$27,249</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Buy Volume</div>
+      <div style="font-size:20px;font-weight:400;color:#2a9b7d" id="whale-buy">$135,562</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Sell Volume</div>
+      <div style="font-size:20px;font-weight:400;color:#e05357" id="whale-sell">$108,313</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Wallets / Trades</div>
+      <div style="font-size:20px;font-weight:400;color:rgba(0,0,0,.9)" id="whale-count">84 / 300</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:20px">
+    <div>
+      <div style="font-size:13px;font-weight:500;color:rgba(0,0,0,.7);margin-bottom:12px">Top Wallets by Volume</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid rgba(0,0,0,.07)">
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Wallet</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Volume</th>
+          <th style="text-align:center;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Buy / Sell</th>
+          <th style="text-align:center;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Direction</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Txns</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x930b88a592a045c428f3d99f7f3e5f95e3967508" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x930b88a5...7508</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$34,521</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:47px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:33px;height:10px;background:#e05357;border-radius:0 2px 2px 0;min-width:2px"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Net Buy</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">33</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xecbb87ead837f3ce43044e1ed7fd5a01dd708b73" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xecbb...8b73</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$30,171</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:25px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:45px;height:10px;background:#e05357;border-radius:0 2px 2px 0;min-width:2px"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#e05357"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#e05357;margin-right:4px"></span>Net Sell</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">35</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x8bf44b00436d41fef72474bb0fa0778f7bf956ac" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x8bf4...56ac</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$24,839</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:0px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;"></div>
+                <div style="width:58px;height:10px;background:#e05357;border-radius:0 2px 2px 0;min-width:2px"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#e05357"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#e05357;margin-right:4px"></span>Sell Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">26</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x3f342e1e0774e893a66ea20e3e3032b99d86d84a" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x3f34...d84a</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$20,161</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:47px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:0px;height:10px;background:#e05357;border-radius:0 2px 2px 0;"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Buy Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">10</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x315d2ee4fccda0def532ef4108ff57204f8d9eba" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x315d...9eba</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$18,690</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:43px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:0px;height:10px;background:#e05357;border-radius:0 2px 2px 0;"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Buy Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">11</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x00000000000124d994209fbb955e0217b5c2eca1" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x0000...eca1</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$13,185</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:0px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;"></div>
+                <div style="width:31px;height:10px;background:#e05357;border-radius:0 2px 2px 0;min-width:2px"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#e05357"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#e05357;margin-right:4px"></span>Sell Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">27</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x54620b9a8a2c43aa8ed028450a7ce656a9c69feb" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x5462...9feb</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$10,990</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:25px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:0px;height:10px;background:#e05357;border-radius:0 2px 2px 0;"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Buy Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">6</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x3cccfc040ac037322113dc7f862b785bb4099547" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x3ccc...9547</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$10,677</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:7px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:18px;height:10px;background:#e05357;border-radius:0 2px 2px 0;min-width:2px"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#e05357"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#e05357;margin-right:4px"></span>Net Sell</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">12</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xeb9863e28d0fc0702a5197e66674f86ee2c35b5e" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xeb98...5b5e</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$10,642</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:25px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:0px;height:10px;background:#e05357;border-radius:0 2px 2px 0;"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Buy Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">3</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xc86befab0f31dcffd93940975c796ef80f0b6a89" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xc86b...6a89</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$8,926</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:8px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:12px;height:10px;background:#e05357;border-radius:0 2px 2px 0;min-width:2px"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#e05357"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#e05357;margin-right:4px"></span>Net Sell</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">12</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x3d53c172c5fa064fdaa5d7fb661fb4281fe05cf1" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x3d53...5cf1</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$5,008</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:12px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:0px;height:10px;background:#e05357;border-radius:0 2px 2px 0;"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Buy Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">2</td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xa4a81b6915ff619b667154ba9bc462342afbd7ce" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xa4a8...d7ce</a></td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$4,990</td>
+            <td style="text-align:center;padding:5px 8px">
+              <div style="display:flex;gap:1px;align-items:center;justify-content:center">
+                <div style="width:12px;height:10px;background:#2a9b7d;border-radius:2px 0 0 2px;min-width:2px"></div>
+                <div style="width:0px;height:10px;background:#e05357;border-radius:0 2px 2px 0;"></div>
+              </div>
+            </td>
+            <td style="text-align:center;padding:5px 8px;font-size:11px;color:#2a9b7d"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#2a9b7d;margin-right:4px"></span>Buy Only</td>
+            <td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.5)">1</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:500;color:rgba(0,0,0,.7);margin-bottom:12px">Largest Trades (>$3K)</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid rgba(0,0,0,.07)">
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Time</th>
+          <th style="text-align:center;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Side</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Size</th>
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Wallet</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">12:31 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$6,528</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xeb9863e28d0fc0702a5197e66674f86ee2c35b5e" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xeb98...5b5e</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">12:30 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$5,652</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x315d2ee4fccda0def532ef4108ff57204f8d9eba" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x315d...9eba</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">09:31 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$5,440</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x315d2ee4fccda0def532ef4108ff57204f8d9eba" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x315d...9eba</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">09:10 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$4,990</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xa4a81b6915ff619b667154ba9bc462342afbd7ce" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xa4a8...d7ce</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">09:57 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#e05357">SELL</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$4,974</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xecbb87ead837f3ce43044e1ed7fd5a01dd708b73" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xecbb...8b73</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">09:19 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$4,549</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x3d53c172c5fa064fdaa5d7fb661fb4281fe05cf1" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x3d53...5cf1</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">11:21 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$4,099</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x4e9141d2fb79b2a94a0256283f1547c7d6a12e7f" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x4e91...2e7f</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">12:31 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#2a9b7d">BUY</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$3,994</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0x54620b9a8a2c43aa8ed028450a7ce656a9c69feb" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0x5462...9feb</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">10:27 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#e05357">SELL</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$3,775</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xc6275245f84c794617d78692ffd1be73720ba81a" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xc627...a81a</a></td>
+          </tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)">
+            <td style="padding:5px 8px;color:rgba(0,0,0,.5)">10:44 UTC</td>
+            <td style="text-align:center;padding:5px 8px;font-weight:500;color:#e05357">SELL</td>
+            <td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">$3,452</td>
+            <td style="padding:5px 8px"><a href="https://etherscan.io/address/0xecbb87ead837f3ce43044e1ed7fd5a01dd708b73" target="_blank" style="color:#49A3A6;text-decoration:none;font-family:monospace;font-size:11px">0xecbb...8b73</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Exchange table -->
+
+<div class="ft">Alva · Feed #2035 · Cronjob #99</div>
+
+<div style="margin-bottom:18px">
+  <div style="display:flex;align-items:center;justify-content:space-between;height:22px;margin-bottom:16px">
+    <span style="font-size:14px;font-weight:400;color:rgba(0,0,0,.9);letter-spacing:0.14px">Galxe Platform Health</span>
+    <a href="https://app.galxe.com/quest/explore/all" target="_blank" style="font-size:12px;color:#49A3A6;text-decoration:none">Explore All Quests →</a>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Total Spaces</div>
+      <div style="font-size:20px;font-weight:400;color:rgba(0,0,0,.9)">7,850</div>
+      <div style="font-size:11px;color:rgba(0,0,0,.3)">1,005 verified</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Active Quests</div>
+      <div style="font-size:20px;font-weight:400;color:rgba(0,0,0,.9)">9,156</div>
+      <div style="font-size:11px;color:rgba(0,0,0,.3)">+100 last week</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Top Quest</div>
+      <div style="font-size:20px;font-weight:400;color:rgba(0,0,0,.9)"><a href="https://app.galxe.com/quest/irys/GCrXbtggAG" target="_blank" style="color:rgba(0,0,0,.9);text-decoration:none">7.2M</a></div>
+      <div style="font-size:11px;color:rgba(0,0,0,.3)">Irys SpriteType</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Top Space</div>
+      <div style="font-size:20px;font-weight:400;color:rgba(0,0,0,.9)"><a href="https://app.galxe.com/quest/Dwinity" target="_blank" style="color:rgba(0,0,0,.9);text-decoration:none">4.0M</a></div>
+      <div style="font-size:11px;color:rgba(0,0,0,.3)">Dwinity followers</div>
+    </div>
+    <div style="background:#fafafa;border-radius:6px;padding:12px 16px">
+      <div style="font-size:12px;color:rgba(0,0,0,.5);margin-bottom:4px">Trending #1</div>
+      <div style="font-size:20px;font-weight:400;color:#49A3A6"><a href="https://app.galxe.com/quest/Galxe" target="_blank" style="color:#49A3A6;text-decoration:none">Galxe</a></div>
+      <div style="font-size:11px;color:rgba(0,0,0,.3)">578K followers</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div>
+      <div style="font-size:13px;font-weight:500;color:rgba(0,0,0,.7);margin-bottom:12px">Active Quests by Category</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid rgba(0,0,0,.07)">
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Category</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Active</th>
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Share</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.9)">DeFi</td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">3,930</td><td style="padding:5px 8px"><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:8px;background:rgba(0,0,0,.05);border-radius:4px;overflow:hidden"><div style="width:43%;height:100%;background:#49A3A6;border-radius:4px"></div></div><span style="font-size:11px;color:rgba(0,0,0,.5)">43%</span></div></td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.9)">NFT</td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2,657</td><td style="padding:5px 8px"><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:8px;background:rgba(0,0,0,.05);border-radius:4px;overflow:hidden"><div style="width:29%;height:100%;background:#3D8BD1;border-radius:4px"></div></div><span style="font-size:11px;color:rgba(0,0,0,.5)">29%</span></div></td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.9)">GameFi</td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2,536</td><td style="padding:5px 8px"><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:8px;background:rgba(0,0,0,.05);border-radius:4px;overflow:hidden"><div style="width:28%;height:100%;background:#7474D8;border-radius:4px"></div></div><span style="font-size:11px;color:rgba(0,0,0,.5)">28%</span></div></td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.9)">Infrastructure</td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2,192</td><td style="padding:5px 8px"><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:8px;background:rgba(0,0,0,.05);border-radius:4px;overflow:hidden"><div style="width:24%;height:100%;background:#FF9800;border-radius:4px"></div></div><span style="font-size:11px;color:rgba(0,0,0,.5)">24%</span></div></td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.9)">Layer 2</td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">1,478</td><td style="padding:5px 8px"><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:8px;background:rgba(0,0,0,.05);border-radius:4px;overflow:hidden"><div style="width:16%;height:100%;background:#8FC13A;border-radius:4px"></div></div><span style="font-size:11px;color:rgba(0,0,0,.5)">16%</span></div></td></tr>
+          <tr><td style="padding:5px 8px;color:rgba(0,0,0,.9)">Layer 1</td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">735</td><td style="padding:5px 8px"><div style="display:flex;align-items:center;gap:6px"><div style="width:80px;height:8px;background:rgba(0,0,0,.05);border-radius:4px;overflow:hidden"><div style="width:8%;height:100%;background:#A878DC;border-radius:4px"></div></div><span style="font-size:11px;color:rgba(0,0,0,.5)">8%</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:500;color:rgba(0,0,0,.7);margin-bottom:12px">Trending Spaces This Week</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid rgba(0,0,0,.07)">
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">#</th>
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Space</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Followers</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">1</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Galxe" target="_blank" style="font-weight:500;color:#49A3A6;text-decoration:none">Galxe</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">578,693</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">2</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/0GLabs" target="_blank" style="color:#49A3A6;text-decoration:none">0G Labs</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">320,623</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">3</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/moso" target="_blank" style="color:#49A3A6;text-decoration:none">Moso</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">151,183</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">4</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/LayerN" target="_blank" style="color:#49A3A6;text-decoration:none">Layer N</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">95,483</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">5</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/ALLO" target="_blank" style="color:#49A3A6;text-decoration:none">ALLO</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">3,911,092</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">6</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Blockwise" target="_blank" style="color:#49A3A6;text-decoration:none">Blockwise</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">3,541,801</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.3)">7</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/movement" target="_blank" style="color:#49A3A6;text-decoration:none">Movement</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">2,721,053</td></tr>
+          <tr><td style="padding:5px 8px;color:rgba(0,0,0,.3)">8</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Nexio" target="_blank" style="color:#49A3A6;text-decoration:none">Nexio</a></td><td style="text-align:right;padding:5px 8px;color:rgba(0,0,0,.9)">1,367,557</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:24px">
+    <div>
+      <div style="font-size:13px;font-weight:500;color:rgba(0,0,0,.7);margin-bottom:12px">All-Time Top Active Quests</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid rgba(0,0,0,.07)">
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Quest</th>
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Space</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Participants</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Irys/GCLjLtf7zj" target="_blank" style="color:#49A3A6;text-decoration:none">Play SpriteType 5× (daily)</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Irys" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Irys</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">7.24M</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Irys/GCo13t6RXN" target="_blank" style="color:#49A3A6;text-decoration:none">Step into the Irysverse</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Irys" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Irys</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">6.57M</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/HenrySocial/GCzCGtgKvi" target="_blank" style="color:#49A3A6;text-decoration:none">Scholars</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/HenrySocial" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Henry Social</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">5.66M</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/ZetaChain/GCatUUwYSY" target="_blank" style="color:#49A3A6;text-decoration:none">Mission Bring ZETA Home</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/ZetaChain" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">ZetaChain</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2.91M</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Nexio/GCSkFtgoEZ" target="_blank" style="color:#49A3A6;text-decoration:none">Creators</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Nexio" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Nexio</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2.63M</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Linera/GCyjetoEuB" target="_blank" style="color:#49A3A6;text-decoration:none">Real-Time Blockchain Testnet</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Linera" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Linera</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2.41M</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Movement/GCWk2tvsCB" target="_blank" style="color:#49A3A6;text-decoration:none">Build The Parthenon</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Movement" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Movement</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2.04M</td></tr>
+          <tr><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/InfiniteSeas/GCNm5tkREm" target="_blank" style="color:#49A3A6;text-decoration:none">Explorers</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/InfiniteSeas" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Infinite Seas</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">1.93M</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <div style="font-size:13px;font-weight:500;color:rgba(0,0,0,.7);margin-bottom:12px">This Week — New Quests by Traction</div>
+      <table style="width:100%;border-collapse:collapse;font-size:12px">
+        <thead><tr style="border-bottom:1px solid rgba(0,0,0,.07)">
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Date</th>
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Quest</th>
+          <th style="text-align:left;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400">Space</th>
+          <th style="text-align:right;padding:6px 8px;color:rgba(0,0,0,.5);font-weight:400;white-space:nowrap">Participants</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/11</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Whiffin/GCKCLtYHdK" target="_blank" style="color:#49A3A6;text-decoration:none">Pi Day Quest #1</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Whiffin" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Whiffin</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">78,185</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/12</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Startale/GCCbstYgcv" target="_blank" style="color:#49A3A6;text-decoration:none">Startale × Soneium S8</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Startale" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Startale</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">9,120</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/10</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Kommunitas/GCZyLtY8Wr" target="_blank" style="color:#49A3A6;text-decoration:none">KOMmunity Learn</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Kommunitas" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Kommunitas</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">7,150</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/12</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/DeriwFinance/GCR4ctYJuf" target="_blank" style="color:#49A3A6;text-decoration:none">DeriW 邀请好友赢 100U</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/DeriwFinance" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Deriw</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">5,337</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/11</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Permission/GC2DctYeex" target="_blank" style="color:#49A3A6;text-decoration:none">Permission Flash Quest</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Permission" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Permission</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2,123</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/12</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/MVuShJPY5iefFbAjoabYuE/GCcGctYysU" target="_blank" style="color:#49A3A6;text-decoration:none">$1000 Raffle - KriptoK</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/MVuShJPY5iefFbAjoabYuE" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">KriptoK</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">2,361</td></tr>
+          <tr style="border-bottom:1px solid rgba(0,0,0,.05)"><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/10</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Theo" target="_blank" style="color:#49A3A6;text-decoration:none">Theo's thUSD Genesis</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/Theo" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">Theo</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">1,202</td></tr>
+          <tr><td style="padding:5px 8px;color:rgba(0,0,0,.5)">3/13</td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/BeatSwap" target="_blank" style="color:#49A3A6;text-decoration:none">Grow with BeatSwap</a></td><td style="padding:5px 8px"><a href="https://app.galxe.com/quest/BeatSwap" target="_blank" style="color:rgba(0,0,0,.7);text-decoration:none">BeatSwap</a></td><td style="text-align:right;padding:5px 8px;font-weight:500;color:rgba(0,0,0,.9)">1,615</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+const ax={axisLine:{show:false},axisTick:{show:false},splitLine:{lineStyle:{color:'rgba(0,0,0,.04)'}}};
+const tp={backgroundColor:'rgba(255,255,255,.96)',borderColor:'rgba(0,0,0,.08)',textStyle:{color:'rgba(0,0,0,.8)',fontSize:10}};
+
+// Daily txs
+echarts.init(document.getElementById('txChart')).setOption({
+  tooltip:{trigger:'axis',...tp},
+  grid:{left:55,right:12,top:8,bottom:22,containLabel:false},
+  xAxis:{type:'category',data:["2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15"],...ax,axisLabel:{color:'rgba(0,0,0,.35)',fontSize:9,formatter:v=>v.slice(5)}},
+  yAxis:{type:'value',...ax,axisLabel:{color:'rgba(0,0,0,.4)',fontSize:9,formatter:v=>(v/1000).toFixed(0)+'K'}},
+  series:[{type:'bar',data:[274914, 219451, 129594, 83812, 108743, 248995, 199796, 239484, 319554, 307898, 410575, 346583, 459563, 579457, 142331, 170180, 252407, 237619, 169413, 229183, 117786, 439151, 426723, 159218, 151515, 199409, 271657, 90918, 85198, 91586, 68363],itemStyle:{color:'rgba(73,163,166,.35)',borderRadius:[2,2,0,0]}}]
+});
+
+// Cumulative addresses (line chart)
+echarts.init(document.getElementById('addrChart')).setOption({
+  tooltip:{trigger:'axis',...tp},
+  grid:{left:60,right:12,top:8,bottom:22,containLabel:false},
+  xAxis:{type:'category',data:["2026-02-13", "2026-02-14", "2026-02-15", "2026-02-16", "2026-02-17", "2026-02-18", "2026-02-19", "2026-02-20", "2026-02-21", "2026-02-22", "2026-02-23", "2026-02-24", "2026-02-25", "2026-02-26", "2026-02-27", "2026-02-28", "2026-03-01", "2026-03-02", "2026-03-03", "2026-03-04", "2026-03-05", "2026-03-06", "2026-03-07", "2026-03-08", "2026-03-09", "2026-03-10", "2026-03-11", "2026-03-12", "2026-03-13", "2026-03-14", "2026-03-15"],...ax,axisLabel:{color:'rgba(0,0,0,.35)',fontSize:9,formatter:v=>v.slice(5)}},
+  yAxis:{type:'value',min:'dataMin',...ax,axisLabel:{color:'rgba(0,0,0,.4)',fontSize:9,formatter:v=>(v/1e6).toFixed(1)+'M'}},
+  series:[{type:'line',data:[28229259, 28238417, 28246936, 28256027, 28283192, 28303132, 28318283, 28334204, 28376876, 28420791, 28432569, 28455487, 28472428, 28496189, 28521429, 28538447, 28552680, 28610625, 28656581, 28691239, 28732296, 28763085, 28795040, 28818988, 28838967, 28863866, 28874740, 28883121, 28896080, 28918025, 28945516],smooth:true,lineStyle:{color:'#5f75c9',width:1.5},itemStyle:{color:'#5f75c9'},areaStyle:{color:{type:'linear',x:0,y:0,x2:0,y2:1,colorStops:[{offset:0,color:'rgba(95,117,201,.12)'},{offset:1,color:'rgba(95,117,201,0)'}]}},symbol:'none'}]
+});
+
+</script>
+<script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+<script>
+try {
+  new TradingView.widget({
+    "container_id": "tv-chart",
+    "autosize": true,
+    "symbol": "BINANCE:GUSDT",
+    "interval": "60",
+    "timezone": "Asia/Shanghai",
+    "theme": "light",
+    "style": "1",
+    "locale": "en",
+    "enable_publishing": false,
+    "hide_top_toolbar": false,
+    "hide_legend": false,
+    "save_image": false,
+    "hide_volume": false,
+    "allow_symbol_change": false,
+    "studies": ["RSI@tv-basicstudies"],
+    "show_popup_button": true,
+    "popup_width": "1000",
+    "popup_height": "650"
+  });
+} catch(e) {}
+</script>
+
+<script>
+// === LIVE DATA FEEDS ===
+(function(){
+  const $ = id => document.getElementById(id);
+  const fmtUsd = (n,d=2) => n>=1e9?'$'+(n/1e9).toFixed(1)+'B':n>=1e6?'$'+(n/1e6).toFixed(0)+'M':n>=1e3?'$'+(n/1e3).toFixed(0)+'K':'$'+n.toFixed(d);
+  const fmtN = n => n>=1e6?(n/1e6).toFixed(1)+'M':n>=1e3?(n/1e3).toFixed(0)+'K':n.toLocaleString();
+
+  // --- 1. KPI PRICES (60s) ---
+  async function refreshKPI(){
+    try{
+      const [gt, cg] = await Promise.all([
+        fetch('https://api.geckoterminal.com/api/v2/networks/eth/tokens/0x9c7beba8f6ef6643abd725e45a4e8387ef260649').then(r=>r.json()),
+        fetch('https://api.coingecko.com/api/v3/simple/price?ids=g-token&vs_currencies=usd&include_24hr_change=true&include_7d_change=true').then(r=>r.json()).catch(()=>({}))
+      ]);
+      const a = gt.data.attributes;
+      const price = parseFloat(a.price_usd);
+      const mcap = parseFloat(a.market_cap_usd||0);
+      const fdv = parseFloat(a.fdv_usd||0);
+      const vol = parseFloat((a.volume_usd||{}).h24||0);
+      
+      if($('kpi-price')) $('kpi-price').textContent = '$'+price.toFixed(5);
+      if($('kpi-vol')) $('kpi-vol').textContent = fmtUsd(vol);
+      if($('kpi-mcap')) $('kpi-mcap').textContent = fmtUsd(mcap);
+      if($('kpi-fdv')) $('kpi-fdv').textContent = 'FDV '+fmtUsd(fdv);
+      if(mcap>0 && $('kpi-volmcap')) $('kpi-volmcap').textContent = 'Vol/MCap '+(vol/mcap*100).toFixed(0)+'%';
+      
+      const g = (cg||{})['g-token'];
+      if(g && g.usd_24h_change!==undefined){
+        const c = g.usd_24h_change;
+        if($('kpi-change')){
+          $('kpi-change').textContent = (c>=0?'+':'')+c.toFixed(1)+'%';
+          $('kpi-change').style.color = c>=0?'#2a9b7d':'#e05357';
+        }
+      }
+      
+      // Timestamp
+      const ts = document.querySelector('.ft');
+      if(ts) ts.innerHTML = ts.innerHTML.replace(/Data updated:.*/, '')+'Data updated: '+new Date().toISOString().slice(0,16).replace('T',' ')+' UTC';
+    }catch(e){console.warn('KPI refresh:',e)}
+  }
+
+  // --- 2. EXCHANGE BREAKDOWN (5min) ---
+  async function refreshExchanges(){
+    try{
+      const r = await fetch('https://api.coingecko.com/api/v3/coins/g-token/tickers?include_exchange_logo=false');
+      const d = await r.json();
+      const exVols = {};
+      for(const t of d.tickers||[]){
+        const name = t.market?.name||'?';
+        const vol = t.converted_volume?.usd||0;
+        exVols[name] = (exVols[name]||0) + vol;
+      }
+      const sorted = Object.entries(exVols).sort((a,b)=>b[1]-a[1]);
+      const totalVol = sorted.reduce((s,x)=>s+x[1],0);
+      
+      const tbody = document.querySelector('.ex tbody');
+      if(!tbody || sorted.length===0) return;
+      tbody.innerHTML = '';
+      for(const [name, vol] of sorted.slice(0,8)){
+        const pct = totalVol>0?(vol/totalVol*100).toFixed(1)+'%':'—';
+        const tr = document.createElement('tr');
+        tr.innerHTML = '<td>'+name+'</td><td>G/USDT</td><td>'+fmtUsd(vol)+'</td><td>'+pct+'</td><td><div class="bar" style="width:'+Math.round(vol/sorted[0][1]*100)+'px;background:var(--m1,#49A3A6)"></div></td>';
+        tbody.appendChild(tr);
+      }
+    }catch(e){console.warn('Exchange refresh:',e)}
+  }
+
+  // --- 3. WHALE ACTIVITY (5min) ---
+  async function refreshWhales(){
+    try{
+      const r = await fetch('https://api.geckoterminal.com/api/v2/networks/eth/pools/0xc4dbe30fecc148a8755c970f3b8b0c9af0db81f5/trades');
+      const d = await r.json();
+      const trades = d.data||[];
+      const makers = {};
+      let totalBuy=0, totalSell=0;
+      
+      for(const t of trades){
+        const a = t.attributes;
+        const vol = parseFloat(a.volume_in_usd||0);
+        const kind = a.kind;
+        const maker = a.tx_from_address;
+        if(!makers[maker]) makers[maker]={buy:0,sell:0,buys:0,sells:0};
+        if(kind==='buy'){makers[maker].buy+=vol;makers[maker].buys++;totalBuy+=vol}
+        else{makers[maker].sell+=vol;makers[maker].sells++;totalSell+=vol}
+      }
+      
+      // Update summary KPIs
+      const net = totalBuy-totalSell;
+      const walletCount = Object.keys(makers).length;
+      const kpis = document.querySelectorAll('[id^="whale-"]');
+      if($('whale-net')){$('whale-net').textContent=(net>=0?'+':'')+fmtUsd(Math.abs(net));$('whale-net').style.color=net>=0?'#2a9b7d':'#e05357'}
+      if($('whale-buy')) $('whale-buy').textContent=fmtUsd(totalBuy);
+      if($('whale-sell')) $('whale-sell').textContent=fmtUsd(totalSell);
+      if($('whale-count')) $('whale-count').textContent=walletCount+' / '+trades.length;
+    }catch(e){console.warn('Whale refresh:',e)}
+  }
+
+  // --- 4. GRAVITY CHAIN CHARTS (30min) ---
+  async function refreshChain(){
+    try{
+      const [txR, addrR] = await Promise.all([
+        fetch('https://explorer.gravity.xyz/api/v2/stats/charts/transactions').then(r=>r.json()),
+        fetch('https://explorer.gravity.xyz/api/v2/stats/charts/addresses').then(r=>r.json()).catch(()=>null)
+      ]);
+      
+      // Update tx chart
+      if(txR && Array.isArray(txR)){
+        txR.sort((a,b)=>a.date.localeCompare(b.date));
+        const labels = txR.map(x=>x.date);
+        const values = txR.map(x=>x.transactions_count);
+        
+        const txEl = document.getElementById('txChart');
+        if(txEl && typeof echarts!=='undefined'){
+          const chart = echarts.getInstanceByDom(txEl);
+          if(chart) chart.setOption({xAxis:{data:labels},series:[{data:values}]});
+        }
+        
+        // Update "Txs Today" KPI if exists
+        if($('kpi-txs') && values.length>0) $('kpi-txs').textContent = fmtN(values[values.length-1]);
+      }
+    }catch(e){console.warn('Chain refresh:',e)}
+  }
+
+  // --- 5. GALXE STATS (30min) ---
+  async function refreshGalxe(){
+    try{
+      const query = '{"query":"query{active:campaigns(input:{first:1,statuses:[Active]}){totalCount}gravity:space(alias:\\"Gravity\\"){followersCount}galxe:space(alias:\\"Galxe\\"){followersCount}}"}';
+      const r = await fetch('https://graphigo.prd.galaxy.eco/query',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:query
+      });
+      const d = await r.json();
+      if(d.data){
+        // Update active quests count if element exists
+        const activeEl = document.querySelector('[data-galxe="active-quests"]');
+        if(activeEl) activeEl.textContent = d.data.active.totalCount.toLocaleString();
+      }
+    }catch(e){console.warn('Galxe refresh:',e)}
+  }
+
+
+  // --- 6. SOCIAL + NEWS (from GitHub Pages, updated by cron) ---
+  const ALVA_BASE = 'https://api-llm.prd.alva.ai/api/v1/fs/read?path=/alva/home/leoz/feeds/g-gravity-social/v1/data/social';
+  
+  async function refreshSocial(){
+    try{
+      const [tR, nR, sR] = await Promise.all([
+        fetch(ALVA_BASE + '/tweets/@last/8').then(r=>r.json()).catch(()=>[]),
+        fetch(ALVA_BASE + '/news/@last/6').then(r=>r.json()).catch(()=>[]),
+        fetch(ALVA_BASE + '/summary/@last/1').then(r=>r.json()).catch(()=>[])
+      ]);
+      const d = { tweets: tR, news: nR, summary: sR[0]||{} };
+      
+      // Update tweets
+      const tweetCol = document.querySelector('.sn-col');
+      if(tweetCol && d.tweets && d.tweets.length > 0){
+        // Filter: only tweets from March 15+
+        const cutoff = new Date('2026-03-15T00:00:00Z').getTime();
+        d.tweets = d.tweets.filter(t => !t.date || t.date >= cutoff);
+        const h3 = tweetCol.querySelector('h3');
+        let html = '';
+        for(const t of d.tweets){
+          const initials = (t.author||'?').slice(0,2).toUpperCase();
+          const likes = t.likes>0?' · '+t.likes+'♥':'';
+          const rt = t.retweets>0?' · '+t.retweets+'↻':'';
+          html += '<a target="_blank" rel="noopener" href="'+t.url+'" class="tcard">'
+            +'<div class="tl">'+(t.avatar?'<img class="av" src="'+t.avatar+'" style="width:28px;height:28px;border-radius:50%">':'<div class="av av-ph">'+initials+'</div>')+'<div><div class="tn">'+t.author+'</div><div class="th">'+t.handle+likes+rt+'</div></div></div>'
+            +'<div class="tx">'+t.text+'</div>'
+            +'<div class="tm">'+(t.tag||'')+'</div></a>';
+        }
+        // Keep h3, replace rest
+        const cards = tweetCol.querySelectorAll('.tcard');
+        cards.forEach(c=>c.remove());
+        h3.insertAdjacentHTML('afterend', html);
+        // Update title with timestamp
+        const updTime = new Date(d.updated).toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit',hour12:false});
+        h3.innerHTML = h3.innerHTML.replace(/\d{2}:\d{2}/, updTime) || h3.innerHTML;
+      }
+      
+      // Update news
+      const newsCols = document.querySelectorAll('.sn-col');
+      const newsCol = newsCols.length > 1 ? newsCols[1] : null;
+      // Show latest news from feed (no date cutoff — feed handles freshness)
+      if(newsCol && d.news && d.news.length > 0){
+        const h3 = newsCol.querySelector('h3');
+        let html = '';
+        for(const n of d.news){
+          let src = n.source || '';
+          if(!src && n.url){ try{ src = new URL(n.url).hostname.replace('www.',''); }catch(e){} }
+          // Favicon from Google
+          const favicon = n.url ? 'https://www.google.com/s2/favicons?domain='+encodeURIComponent(src)+'&sz=32' : '';
+          const dateStr = n.date ? new Date(n.date).toLocaleDateString('en',{month:'short',day:'numeric'}) : '';
+          html += '<a target="_blank" rel="noopener" href="'+n.url+'" class="ncard-v2">'
+            +'<div class="nc-header">'
+            +(favicon?'<img src="'+favicon+'" class="nc-favicon" onerror="this.style.display=\'none\'">':'')
+            +'<span class="nc-source">'+src+'</span>'
+            +(dateStr?'<span class="nc-date">'+dateStr+'</span>':'')
+            +'</div>'
+            +'<div class="nc-title">'+(n.title||src||'News')+'</div>'
+            +(n.desc?'<div class="nc-desc">'+n.desc+'</div>':'')
+            +'</a>';
+        }
+        const cards = newsCol.querySelectorAll('.ncard');
+        cards.forEach(c=>c.remove());
+        h3.insertAdjacentHTML('afterend', html);
+      }
+    }catch(e){console.warn('Social refresh:',e)}
+  }
+  
+  setTimeout(refreshSocial, 3000); // initial load after 3s
+  setInterval(refreshSocial, 15*60*1000); // 15min
+
+  // --- SCHEDULE ---
+  refreshKPI();
+  refreshExchanges();
+  refreshWhales();
+  refreshChain();
+  
+  setInterval(refreshKPI, 60*1000);         // 60s
+  setInterval(refreshExchanges, 5*60*1000); // 5min
+  setInterval(refreshWhales, 5*60*1000);    // 5min
+  setInterval(refreshChain, 30*60*1000);    // 30min
+  setInterval(refreshGalxe, 30*60*1000);    // 30min
+})();
+</script>
+</body></html>

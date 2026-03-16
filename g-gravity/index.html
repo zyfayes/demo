@@ -473,6 +473,104 @@ table.ex td{padding:6px 7px;border-bottom:1px solid rgba(0,0,0,.03);color:var(--
 
 <!-- Exchange table -->
 
+<!-- Data Sources & Methodology -->
+<div style="background:var(--g1);border:1px solid rgba(0,0,0,.04);border-radius:8px;padding:20px 24px;margin-bottom:18px">
+  <h3 style="font-size:13px;font-weight:500;color:var(--t9);margin-bottom:14px;letter-spacing:.2px">📋 Data Sources & Update Mechanisms</h3>
+  <table style="width:100%;border-collapse:collapse;font-size:11px;line-height:1.5">
+    <thead>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.08)">
+        <th style="text-align:left;padding:6px 8px;color:var(--t5);font-weight:500;font-size:9px;text-transform:uppercase;letter-spacing:.3px;width:22%">Widget</th>
+        <th style="text-align:left;padding:6px 8px;color:var(--t5);font-weight:500;font-size:9px;text-transform:uppercase;letter-spacing:.3px;width:30%">Data Source</th>
+        <th style="text-align:left;padding:6px 8px;color:var(--t5);font-weight:500;font-size:9px;text-transform:uppercase;letter-spacing:.3px;width:18%">Refresh Rate</th>
+        <th style="text-align:left;padding:6px 8px;color:var(--t5);font-weight:500;font-size:9px;text-transform:uppercase;letter-spacing:.3px;width:30%">Notes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">KPI Cards</td>
+        <td style="padding:7px 8px;color:var(--t7)">CoinGecko API <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">/api/v3/coins/g-token</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 60s</td>
+        <td style="padding:7px 8px;color:var(--t5)">Price, 24h change, 7d change, volume, market cap, FDV</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">K-Line Chart</td>
+        <td style="padding:7px 8px;color:var(--t7)">TradingView Widget <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">BINANCE:GUSDT</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Real-time (streaming)</td>
+        <td style="padding:7px 8px;color:var(--t5)">Embedded TradingView advanced chart, 4H candles</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">Ticker Tape</td>
+        <td style="padding:7px 8px;color:var(--t7)">TradingView Widget</td>
+        <td style="padding:7px 8px;color:var(--t7)">Real-time (streaming)</td>
+        <td style="padding:7px 8px;color:var(--t5)">BTC, ETH, G, BNB, SPX, Gold comparison</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">Surge Attribution</td>
+        <td style="padding:7px 8px;color:var(--t7)">Manual analysis (LLM-assisted)</td>
+        <td style="padding:7px 8px;color:var(--t7)">Static (snapshot)</td>
+        <td style="padding:7px 8px;color:var(--t5)">One-time deep analysis combining on-chain, exchange, social data</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">Exchange Breakdown</td>
+        <td style="padding:7px 8px;color:var(--t7)">CoinGecko Tickers API</td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 5 min</td>
+        <td style="padding:7px 8px;color:var(--t5)">Top 10 exchanges by 24h volume, auto-sorted</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">AI Social Summary</td>
+        <td style="padding:7px 8px;color:var(--t7)">Alva Feed → Grok X Search API <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">searchGrokX</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 4h (Alva cron) + 15min client</td>
+        <td style="padding:7px 8px;color:var(--t5)">Server: Alva cronjob runs search + dedup + filter (excl. GRVT). Client: fetches from ALFS every 15min</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">AI News Summary</td>
+        <td style="padding:7px 8px;color:var(--t7)">Alva Feed + Brave Search + manual curation</td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 4h (Alva cron) + 15min client</td>
+        <td style="padding:7px 8px;color:var(--t5)">Curated initial set; dynamic overlay from Alva ALFS news feed</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">𝕏 Social Pulse</td>
+        <td style="padding:7px 8px;color:var(--t7)">Alva SDK <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">getTwitterFeed</code> + <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">searchGrokX</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 4h (server) + 15min (client)</td>
+        <td style="padding:7px 8px;color:var(--t5)">Ranked by authority (verified > followers > engagement), bot/scanner filtered</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">📰 News Cards</td>
+        <td style="padding:7px 8px;color:var(--t7)">Brave Search API + manual curation</td>
+        <td style="padding:7px 8px;color:var(--t7)">Curated + 15min overlay</td>
+        <td style="padding:7px 8px;color:var(--t5)">6 curated articles; dynamic ALFS feed can overlay fresher results</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">On-Chain Charts</td>
+        <td style="padding:7px 8px;color:var(--t7)">Gravity Explorer API <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">explorer.gravity.xyz/api/v2</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 30 min</td>
+        <td style="padding:7px 8px;color:var(--t5)">Daily transactions + cumulative addresses (31-day history)</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">Whale Activity</td>
+        <td style="padding:7px 8px;color:var(--t7)">Uniswap V3 Subgraph <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">api.thegraph.com</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 5 min</td>
+        <td style="padding:7px 8px;color:var(--t5)">Last 300 swaps on G/USDC pool. Net flow, buy/sell volume, unique wallets, top 5 whales</td>
+      </tr>
+      <tr style="border-bottom:1px solid rgba(0,0,0,.03)">
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">Galxe Quest Activity</td>
+        <td style="padding:7px 8px;color:var(--t7)">Galxe GraphQL API <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">graphigo.prd.galaxy.eco</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 30 min</td>
+        <td style="padding:7px 8px;color:var(--t5)">Top trending quests on Gravity chain by participant count</td>
+      </tr>
+      <tr>
+        <td style="padding:7px 8px;color:var(--t9);font-weight:500">BTC/ETH Comparison</td>
+        <td style="padding:7px 8px;color:var(--t7)">Alva SDK <code style="font-size:10px;background:rgba(0,0,0,.04);padding:1px 4px;border-radius:3px">getCryptoKline</code></td>
+        <td style="padding:7px 8px;color:var(--t7)">Every 4h (server)</td>
+        <td style="padding:7px 8px;color:var(--t5)">30-day daily OHLCV for macro context overlay</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="margin-top:14px;padding-top:12px;border-top:1px solid rgba(0,0,0,.06);font-size:10px;color:var(--t5);line-height:1.6">
+    <b style="color:var(--t7)">Architecture:</b> Two-tier refresh — <b>Server</b> (Alva Cloud cronjob every 4h) fetches Twitter, news, on-chain, and market data via Alva SDKs, writes to ALFS time series. <b>Client</b> (this page) fetches from CoinGecko, Gravity Explorer, Uniswap Subgraph, and Alva ALFS directly, with per-widget refresh intervals (60s–30min). All data is public-read via ALFS grant.
+  </div>
+</div>
+
 <div class="ft">Alva · Feed #2035 · Cronjob #99</div>
 
 <div style="margin-bottom:18px">

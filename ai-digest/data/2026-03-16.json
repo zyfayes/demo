@@ -1,0 +1,137 @@
+{
+  "date": "2026-03-16",
+  "title": "AI 日报 2026-03-16",
+  "summary": "本周末 AI 行业重磅消息密集：Meta 据报计划裁员 20% 以抵消 AI 基建的天文数字投入；Tesla Terafab AI 芯片工厂将于下周启动；美国商务部意外撤回全球 AI 芯片出口许可规则草案。技术层面，NVIDIA Nemotron 3 Super 开源模型和 Claude 多 Agent 编译器项目展示了 AI 工程能力的新高度。教育科技方面，美国 16 州推进校园屏幕时间限制立法、SXSW 教育专场热议 AI 时代教育变革，以及后训练技术范式转移对自适应学习的启示值得关注。",
+  "items": [
+    {
+      "id": 1,
+      "title": "Reuters 独家：Meta 计划裁员 20%，AI 基建成本飙升",
+      "url": "https://www.reuters.com/business/world-at-work/meta-planning-sweeping-layoffs-ai-costs-mount-2026-03-14/",
+      "tldr": "据 Reuters 独家报道，Meta 正在酝酿大规模裁员，可能影响 20% 以上员工（约 15,800 人）。此举旨在抵消 AI 基础设施的巨额投入——公司计划到 2028 年投入 6000 亿美元建设数据中心，同时以数亿美元薪酬包争抢顶级 AI 研究员。",
+      "summary": "Reuters 援引三位知情人士称，Meta 高层已向管理层传达了裁员计划，要求开始准备缩编方案。如果最终确定 20% 的裁员幅度，这将是 2022-2023 年效率年以来最大规模的人员调整。裁员背景是 Zuckerberg 全力押注生成式 AI：公司近期以至少 20 亿美元收购中国 AI 初创公司 Manus，又收购了 AI Agent 社交平台 Moltbook，并组建了超级智能团队。Zuckerberg 曾表示 2026 年中期将用 AI 代替部分中级工程师。Meta 发言人称报道属推测性内容。市场反应剧烈，Meta 股价显著下跌。",
+      "tags": [
+        "Meta",
+        "裁员",
+        "AI基建",
+        "行业动态"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Tesla Terafab：马斯克宣布 AI 芯片超级工厂 7 天后启动",
+      "url": "https://www.tomshardware.com/tech-industry/semiconductors/elon-musk-says-his-terafab-project-chipmaking-venture-will-launch-in-seven-days-musks-latest-moonshot-multi-billion-project-launches-on-a-saturday",
+      "tldr": "Elon Musk 宣布 Tesla 的 Terafab AI 芯片制造项目将于 3 月 21 日正式启动。该设施旨在自主生产用于自动驾驶和机器人的定制 AI 芯片，应对供应商产能不足的问题。",
+      "summary": "Tesla 进军半导体制造标志着重大战略转变。Terafab 项目目标是建设大规模自有芯片工厂，为自动驾驶和人形机器人提供定制 AI 芯片。这与此前 Dojo 超算芯片路线一脉相承，但 Terafab 从设计延伸到制造。如果成功将成为继苹果之后又一家深度整合芯片设计与制造的科技公司。GTC 2026 今日开幕，预计会有更多 AI 硬件相关重磅消息。",
+      "tags": [
+        "Tesla",
+        "AI芯片",
+        "半导体",
+        "硬件"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "美商务部撤回 AI 芯片全球出口许可规则草案",
+      "url": "https://www.pymnts.com/cpi-posts/us-pulls-back-draft-regulation-targeting-global-ai-chip-shipments/",
+      "tldr": "美国商务部悄然撤回了一项拟要求全球 AI 芯片出口须获政府许可的规则草案。该举措为 Nvidia 等芯片厂商移除了短期增长障碍，但新出口管控规则仍在制定中。",
+      "summary": "OMB 网站周五更新显示拟议规则的跨部门审查已结束并被撤回。此前 Bloomberg 报道该提案是特朗普政府控制全球先进半导体技术获取的重大步骤之一。商务部曾批评拜登时期的 AI 扩散框架繁琐且灾难性。撤回让 Nvidia、AMD 松了口气，但中国相关限制和核心出口管制仍有效。特朗普政府并非放松管控而是在寻找更精准的替代方案。",
+      "tags": [
+        "AI芯片",
+        "出口管制",
+        "政策",
+        "Nvidia"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Guardian 深度：AI 战争伦理——从加沙到伊朗的算法暴力",
+      "url": "https://www.theguardian.com/us-news/ng-interactive/2026/mar/15/ai-defense-warfare-companies",
+      "tldr": "Guardian 长文剖析 AI 在现代战争中的角色。美军在伊朗战役首日用 AI 系统生成 1000 个攻击目标，一所小学因情报过时十年被精确打击致 168 人死亡。Anthropic 因拒绝为军方授权大规模监控被标记为供应链风险。",
+      "summary": "文章揭示 AI 战争中被选择的盲目——算法将暴力系统化并创造可否认性。伊朗 Minab 的小学已从军事基地改为民用近十年但情报从未更新。文章指出 AI 公司不应以科技公司自居隐匿军事承包商本质。Anthropic 的立场值得关注：拒绝授权 Claude 用于大规模监控或自主武器，结果被 DoD 标记为供应链风险。",
+      "tags": [
+        "AI伦理",
+        "军事AI",
+        "Anthropic",
+        "深度报道"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "美国 16 州推进校园屏幕时间限制立法，EdTech 行业面临监管浪潮",
+      "url": "https://www.pymnts.com/cpi-posts/ed-tech-industry-scrambles-to-fend-off-wave-of-legislation-to-limit-screen-time-in-schools/",
+      "tldr": "美国至少 16 个州正在推进限制学校技术使用的立法，要求减少学生屏幕时间、审查教育软件，给 1640 亿美元的 EdTech 行业带来前所未有的监管压力。",
+      "summary": "家长和医疗专业人士的证词推动了立法：犹他州母亲称学校笔记本让孩子持续接触干扰，田纳西州儿科医生警告学校设备上的不当内容和网络骚扰。提案涵盖限制低年级每日屏幕时间、禁止向幼儿园发放设备和邮箱、建立教育软件州级审批流程等。密苏里州曾提议 45 分钟/天上限。这是十年来 EdTech 行业首次面临系统性立法挑战。",
+      "tags": [
+        "教育科技",
+        "监管",
+        "屏幕时间",
+        "EdTech"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Perplexity CEO：AI 正将计算机科学拉回数学与物理的本源",
+      "url": "https://www.livemint.com/technology/tech-news/will-ai-change-how-computer-science-is-taught-perplexity-ceo-thinks-so-11773547841279.html",
+      "tldr": "Perplexity AI CEO Aravind Srinivas 认同 AI 正将 CS 从手写代码推向理论思维和系统级推理。Anthropic CEO 预计 AI 可能在 6-12 个月内完成大部分软件工程工作。",
+      "summary": "多位科技领袖的不同解读引人深思：Anthropic CEO Dario Amodei 警告 AI 可能在 6-12 月内端到端完成软件工程；Replit CEO 认为软件工程将消失，取而代之的是通才型产品人员；NVIDIA CEO Jensen Huang 则认为 AI 改造工作而非取代。对 CS 教育的启示：需要更强调数学基础、系统思维和 AI 协作能力而非纯编码技能。",
+      "tags": [
+        "教育科技",
+        "AI教育",
+        "CS教育",
+        "行业观点"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "SXSW 2026 教育专场：混沌时代的教育战略与 AI 创新",
+      "url": "https://www.cnet.com/news-live/sxsw-2026-updates-news-tech-culture/",
+      "tldr": "SXSW 2026 设置多个教育科技专场，包括 Moonshots that Move the Needle 教学创新讨论和混沌时代的教育战略。Google DeepMind、OpenAI 高管同台探讨 AI 与教育的交汇。",
+      "summary": "SXSW 2026 的教育议程包括上午的教学技术创新面板和教育未来战略讨论，还有 AI 言论自由和平台治理的深度面板。SXSW Pitch 环节多个 AI+教育初创公司路演，展示从 AI 辅助教学到自适应学习的创新方向。今年明显增加了 AI 安全和伦理议题比重。",
+      "tags": [
+        "教育科技",
+        "SXSW",
+        "AI教育",
+        "行业会议"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "NVIDIA Nemotron 3 Super：120B MoE 混合架构开源模型，为 Agent 而生",
+      "url": "https://siliconangle.com/2026/03/11/nvidias-nemotron-super-3-model-agentic-systems-launches-five-times-higher-throughput/",
+      "tldr": "NVIDIA 发布开源模型 Nemotron 3 Super——120B 参数 Mamba-Transformer 混合 MoE，仅 12B 活跃参数，吞吐量 5 倍于同级模型，专为自主 AI Agent 设计。",
+      "summary": "采用 LatentMoE 技术的混合架构，总参数量 120B 但活跃仅 12B，实现极高计算效率。支持 100 万 token 上下文窗口，吞吐量是 GPT-OSS-120B 的 2.2 倍。在 GPQA 研究生级推理上表现优异。GTC 2026 今日开幕，Apache 2.0 许可可自由商用。标志 NVIDIA 从芯片供应商向 AI 全栈生态扩张。",
+      "tags": [
+        "NVIDIA",
+        "开源模型",
+        "MoE",
+        "Agent"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "16 个 Claude Opus 4.6 Agent 协作用 Rust 从零写出 C 编译器",
+      "url": "https://www.dawnliphardt.com/claude-builds-his-own-c-compiler-yes-but-theres-a-catch/",
+      "tldr": "Anthropic 研究员 Nicholas Carlini 报告 16 个 Claude Opus 4.6 实例协作从零编写了完整的 C 编译器 CCC，用 Rust 实现，能编译 Linux 内核。多 Agent 协作的里程碑成果。",
+      "summary": "CCC 项目采用任务专业化分工：代码合并、文档撰写、架构分析等各有专职 Agent。最终产出能成功编译 Linux 内核——传统上需资深编译器团队数年完成的工程壮举。不过 Agent 仍需人类设定任务边界和协调策略，边缘案例处理可能不如 GCC/Clang 成熟。但标志着 AI 编程从写代码片段跃升到构建复杂系统级软件。",
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "多Agent协作",
+        "编译器"
+      ]
+    },
+    {
+      "id": 10,
+      "title": "后训练技术全景：GRPO、DAPO、RLVR 如何取代 RLHF",
+      "url": "https://llm-stats.com/blog/research/post-training-techniques-2026",
+      "tldr": "LLM-Stats 发布 2026 后训练技术综述：GRPO、DAPO 和 RLVR 已取代 RLHF 成为主流后训练范式。核心转变是从人工标注转向可自动验证的奖励信号。",
+      "summary": "RLVR 在数学和代码等可自动验证正确性的任务上训练模型。GRPO 源自 DeepSeek-R1，通过组内归一化奖励稳定训练。最新研究 CLIPO 将对比学习引入策略优化。这些技术在 AIME 2025 和 SWE-Bench 上效果显著。对教育 AI 的启示：可验证奖励机制特别适用于自适应学习系统的自动评估和个性化反馈。",
+      "tags": [
+        "后训练",
+        "RLVR",
+        "技术研究",
+        "教育科技"
+      ]
+    }
+  ]
+}

@@ -8,7 +8,12 @@
       "url": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano",
       "source": "OpenAI / HN",
       "tldr": "GPT-5.4 mini 正式上线 ChatGPT、Codex 和 API，比前代 GPT-5 mini 快 2 倍，专门针对编程、computer use、多模态理解和 subagent 场景调优。nano 版在最大推理 effort 下超越旧版 GPT-5 mini，进一步压低成本门槛。Simon Willison 算了一笔账：用 nano 给 76000 张照片做描述只需 $52，价格压缩程度相当惊人。",
-      "tags": ["OpenAI", "GPT-5.4", "模型发布", "Agent"]
+      "tags": [
+        "OpenAI",
+        "GPT-5.4",
+        "模型发布",
+        "Agent"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://mistral.ai/news/mistral-small-4",
       "source": "Mistral AI / Simon Willison",
       "tldr": "Mistral 发布 Small 4（名字骗人，实际是 119B 参数 MoE、6B 激活），Apache 2 协议开源，把旗舰 Magistral（推理）、Pixtral（多模态）和 Devstral（代码）的能力融合进一个模型。NVIDIA 同步宣布在 vLLM 上优化推理吞吐，意味着真·可商用开源大模型又多一个选择。",
-      "tags": ["Mistral", "开源", "MoE", "模型发布"]
+      "tags": [
+        "Mistral",
+        "开源",
+        "MoE",
+        "模型发布"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,12 @@
       "url": "https://mistral.ai/news/leanstral",
       "source": "Mistral AI / HN #1",
       "tldr": "HN 今日热榜第一（738 分）。Leanstral 是 Mistral 推出的开源编程 Agent，核心卖点是「可信」——通过集成 Lean 4 形式化证明引擎，让 Agent 能对自己写的代码做数学级别的验证，而不是靠 LLM 自我审查。对需要高可靠性代码的场景（金融、航天、密码学）意义重大。",
-      "tags": ["Mistral", "Leanstral", "形式化验证", "开源Agent"]
+      "tags": [
+        "Mistral",
+        "Leanstral",
+        "形式化验证",
+        "开源Agent"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +47,12 @@
       "url": "https://www.latent.space/p/ainews-nvidia-gtc-jensen-goes-hard",
       "source": "Latent Space / NVIDIA",
       "tldr": "NVIDIA GTC 2026 上，Jensen 力推 OpenClaw 生态，并联合 steipete 推出 NemoClaw（OpenShell），让 OpenClaw Agent 能在本地全离线运行，私有文件不上云，并添加沙箱安全层。同时 AMD 也跟进发布了在 Ryzen AI Max+ 和 Radeon GPU 上本地运行 AI Agent 的方案——本地推理的基础设施竞争已经全面打响。",
-      "tags": ["NVIDIA", "GTC", "本地Agent", "安全"]
+      "tags": [
+        "NVIDIA",
+        "GTC",
+        "本地Agent",
+        "安全"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +60,12 @@
       "url": "https://x.com/RoundtableSpace/status/2033585333028204877",
       "source": "Twitter / @RoundtableSpace",
       "tldr": "有人把 Claude Code 指向五角大楼公开预算数据，要求找出「溢价 10 倍以上的合同」，Agent 直接标记出 340 个、潜在节省 $4.2B，然后自动写好商业提案并指引用户去 SAM.gov 注册投标资质。这个案例刷爆 Twitter（7122 likes），是迄今为止对「Agent 做真实世界任务」最有说服力的公开 demo 之一。",
-      "tags": ["ClaudeCode", "Agent应用", "政府预算", "viral"]
+      "tags": [
+        "ClaudeCode",
+        "Agent应用",
+        "政府预算",
+        "viral"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +73,12 @@
       "url": "https://x.com/AndrewYNg/status/2033577583200354812",
       "source": "Twitter / @AndrewYNg",
       "tldr": "Andrew Ng 上周开源了 Context Hub（chub）——一个给 coding agent 提供实时 API 文档的 CLI 工具，一周内 GitHub stars 超 6K，现已扩展为支持 2000+ 个工具包的文档集市。他提出的核心问题很有意思：Agent 之间应该如何共享「踩坑经验」？这可能是下一个基础设施层的空白。",
-      "tags": ["AndrewNg", "ContextHub", "Agent工具链", "开源"]
+      "tags": [
+        "AndrewNg",
+        "ContextHub",
+        "Agent工具链",
+        "开源"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +86,12 @@
       "url": "https://arxiv.org/abs/2511.04427",
       "source": "arXiv / HN",
       "tldr": "2025 年的一篇论文（今日 HN 热榜，138 分）追踪了开源项目引入 Cursor AI 前后的代码质量变化，结论是：速度确实变快了，但 bug 引入率和代码复杂度同步上升。这与 Django 贡献者 Tim Schilling 本周的公开批评形成互证——「如果你不理解 PR，你的 LLM 使用正在伤害整个 Django 社区」。",
-      "tags": ["CursorAI", "代码质量", "研究", "开源社区"]
+      "tags": [
+        "CursorAI",
+        "代码质量",
+        "研究",
+        "开源社区"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +99,12 @@
       "url": "https://www.apideck.com/blog/mcp-server-eating-context-window-cli-alternative",
       "source": "Apideck / HN",
       "tldr": "HN 133 分。Apideck 发现 MCP Server 在大量工具注册后会吃掉大量 context window（有时候光工具描述就用掉 30%+），于是用 CLI 接口替代：Agent 只在需要时按需拉取工具描述，而不是一次性塞进 context。这个思路对需要接入几十个外部 API 的复杂 Agent 系统来说，是个实用的工程优化方向。",
-      "tags": ["MCP", "Agent工具链", "context优化", "工程实践"]
+      "tags": [
+        "MCP",
+        "Agent工具链",
+        "context优化",
+        "工程实践"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +112,12 @@
       "url": "https://simonwillison.net/2026/Mar/16/blackmail/#atom-everything",
       "source": "Simon Willison / New Yorker",
       "tldr": "《纽约客》本周披露 Anthropic 曾故意训练模型做「勒索」行为测试——目的不是真要部署，而是制造「足够震撼政策制定者的真实案例」，让对齐风险从抽象理论变成可感知的现实。一位 Anthropic 对齐科学家说：「演练的意义在于，有了能描述给政策制定者的东西，让 misalignment 风险真正落地。」",
-      "tags": ["Anthropic", "AI对齐", "安全", "政策"]
+      "tags": [
+        "Anthropic",
+        "AI对齐",
+        "安全",
+        "政策"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +125,16 @@
       "url": "http://finance.sina.com.cn/wm/2026-03-16/doc-inhreeew9822760.shtml",
       "source": "新浪财经 / 央视",
       "tldr": "2026 年 3·15 晚会揭露了 GEO（生成引擎优化）被滥用的黑色产业链：服务商批量制造虚假信息、系统性投喂 AI 大模型，让虚构产品成为 AI 推荐的「标准答案」。这是 SEO 的进化版，但危害更深——用户信任 AI 的答案远超信任搜索结果，而 AI 无法像搜索引擎那样被轻易审计。",
-      "tags": ["GEO", "AI安全", "虚假信息", "监管"]
+      "tags": [
+        "GEO",
+        "AI安全",
+        "虚假信息",
+        "监管"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69b9f2f9afd6a4c0cc677fc2.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69b9f2f9afd6a4c0cc677fc5",
+  "podcastTitle": "2026年3月18日AI前沿：Agent潮涌、模型普惠与安全警钟",
+  "podcastVoice": "uma"
 }

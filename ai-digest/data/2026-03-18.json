@@ -1,0 +1,125 @@
+{
+  "date": "2026-03-18",
+  "title": "AI 日报 2026-03-18",
+  "summary": "OpenAI 发布 GPT-5.4 Mini/Nano 两款高效小模型；Mistral 双响炮——开源形式化证明 agent Leanstral 和企业训练平台 Forge；FlashAttention-4 将 B200 利用率从 20% 推至 71%；MSR '26 论文实证 Cursor 提速但长期增加代码复杂度；阿里整合五大部门成立 ATH 事业群全面押注智能体。",
+  "items": [
+    {
+      "id": 1,
+      "title": "OpenAI 发布 GPT-5.4 Mini 和 Nano",
+      "url": "https://openai.com/index/introducing-gpt-5-4-mini-and-nano",
+      "source": "OpenAI",
+      "tags": [
+        "模型发布",
+        "小模型",
+        "推理优化"
+      ],
+      "tldr": "OpenAI 发布 GPT-5.4 mini 和 nano，专为高吞吐低延迟场景设计。Mini 在编码、推理和工具调用上大幅超越 GPT-5 mini，速度快 2 倍以上；Nano 则是最小最便宜的版本，适合分类、数据提取等子任务。",
+      "summary": "GPT-5.4 mini 在 SWE-Bench Pro 上达到 54.4%（GPT-5 mini 为 45.7%），接近完整版 GPT-5.4 的 57.7%。Nano 版本则以极低成本覆盖简单编码子任务。两款模型均针对编码助手的响应速度、computer-using 系统的截图理解、以及多模态实时推理等场景优化。GPT-5.4 mini 在 OSWorld-Verified 上得分 72.1%，甚至接近完整版的 75%，展现出小模型在 agent 场景的巨大潜力。这标志着 OpenAI 在'性能/延迟最优解'路线上的持续投入——最好的模型不一定是最大的，而是响应最快且工具调用最可靠的那个。"
+    },
+    {
+      "id": 2,
+      "title": "Mistral 开源 Leanstral：面向形式化证明的编码 Agent",
+      "url": "https://mistral.ai/news/leanstral",
+      "source": "Mistral AI",
+      "tags": [
+        "开源",
+        "形式化验证",
+        "编码Agent"
+      ],
+      "tldr": "Mistral 发布首个专为 Lean 4 证明助手设计的开源代码 agent Leanstral，仅 6B 活跃参数，Apache 2.0 协议。它能在真实形式化代码库中完成证明工程任务，而非仅解竞赛数学题。",
+      "summary": "Leanstral 采用高度稀疏架构（6B 活跃参数），专门为 Lean 4 形式化证明场景训练，可处理真实仓库级别的证明工程任务。它支持 MCP 扩展（特别是 lean-lsp-mcp），能与 Lean 验证器配合做并行推理。Mistral 同时发布了新评估套件 FLTEval，将评估标准从竞赛数学扩展到更贴近实际的形式化工程场景。这是目前第一个专门面向可信编码的开源 agent——不仅写代码，还能对实现进行形式化证明，代表了从'vibes-based coding'到'trustworthy coding'的关键一步。HN 上获 741 分、179 评论。"
+    },
+    {
+      "id": 3,
+      "title": "FlashAttention-4：将英伟达 B200 利用率从 20% 拉到 71%",
+      "url": "https://arxiv.org/abs/2603.05451",
+      "source": "普林斯顿/Meta/Together AI",
+      "tags": [
+        "GPU优化",
+        "注意力机制",
+        "Blackwell"
+      ],
+      "tldr": "Tri Dao 团队发布 FlashAttention-4，专为 Blackwell B200 架构设计。B200 因硬件'偏科'（tensor core 翻倍但辅助单元原地踏步）浪费 60% 算力，FA4 通过三大优化策略将利用率推至 71%。",
+      "summary": "B200 的 tensor core 算力达 2.25 PFLOPS（Hopper 两倍），但指数运算单元（MUFU）和共享内存带宽未同步提升，导致矩阵乘法完成后硬件大量空闲等待辅助计算。FA4 三招破解：1）用多项式近似软件模拟指数函数绕开 MUFU 瓶颈，加上条件性 softmax rescaling 跳过无用计算；2）利用 Blackwell 全异步 MMA 和 TMEM 重构流水线，让 softmax 与矩阵乘法完全重叠；3）预留 B300 适配空间。全部代码基于 Python CuTe-DSL 编写（零 C++），编译速度提升 30 倍。实测前向传播 1613 TFLOPS/s，比 cuDNN 快 1.1-1.3 倍，比 Triton 快 2.1-2.7 倍。cuDNN 9.13 已开始反向吸收 FA4 技术。"
+    },
+    {
+      "id": 4,
+      "title": "研究：Cursor AI 短期提速但长期增加代码复杂度",
+      "url": "https://arxiv.org/abs/2511.04427",
+      "source": "arXiv (MSR '26)",
+      "tags": [
+        "AI编码",
+        "代码质量",
+        "实证研究"
+      ],
+      "tldr": "对开源项目的因果推断研究发现，Cursor 显著提升短期开发速度，但带来持续增长的静态分析警告和代码复杂度，最终反噬长期开发效率。质量保证应成为 AI 编码工具的一等公民。",
+      "summary": "该研究采用 difference-in-differences 设计，比较了采用 Cursor 的 GitHub 项目与匹配控制组。结论：Cursor 带来统计显著的短期速度提升，但这种提升是暂时的；同时静态分析警告和代码复杂度大幅且持续增加。进一步的 GMM 分析揭示，正是这些质量问题导致了长期速度下降。对整个 AI coding 行业的启示很明确：只关注'写代码更快'远远不够，质量保障才是真正瓶颈。论文将在 MSR '26 发表，HN 获 139 分。"
+    },
+    {
+      "id": 5,
+      "title": "Mistral Forge：企业级私有知识模型训练平台",
+      "url": "https://mistral.ai/news/forge",
+      "source": "Mistral AI",
+      "tags": [
+        "企业AI",
+        "模型训练",
+        "知识内化"
+      ],
+      "tldr": "Mistral 推出 Forge 平台，让企业基于内部私有数据训练定制模型。支持预训练、后训练和强化学习全流程，已与 ASML、欧洲航天局等顶级机构合作。",
+      "summary": "Forge 解决的核心问题是：通用模型基于公开数据训练，无法理解企业内部的工程标准、合规政策、代码库和运营流程。Forge 支持三个训练阶段：预训练（大规模内部数据的领域认知）、后训练（特定任务微调）、强化学习（对齐内部政策和 agent 行为）。首批合作伙伴包括 ASML、新加坡国防科技局、爱立信和欧洲航天局。这代表了 Mistral 从模型提供商向企业 AI 平台的战略转型，直接对标 OpenAI 的定制模型服务。"
+    },
+    {
+      "id": 6,
+      "title": "Apideck CLI：MCP 的低上下文消耗替代方案",
+      "url": "https://www.apideck.com/blog/mcp-server-eating-context-window-cli-alternative",
+      "source": "Apideck",
+      "tags": [
+        "Agent工具",
+        "MCP",
+        "上下文优化"
+      ],
+      "tldr": "MCP 工具定义吞噬上下文窗口问题日益严重——3 个 MCP 服务器可能占用 72% 的 200K 上下文。Apideck 提出 CLI 替代方案，同等任务 token 消耗降低 4-32 倍。",
+      "summary": "每个 MCP 工具的名称、描述和 JSON schema 消耗 550-1400 token。接入 GitHub+Slack+Sentry 三个服务约 40 个工具，开局即消耗 55K token。Scalekit 的基准测试（75 次对照实验）显示，最简单的查询仓库语言任务 MCP 消耗 44K token，CLI 仅需 1.3K。Apideck CLI 方案让 agent 通过 CLI 子进程调用 API，不需要在上下文中注入大量 schema。这触及了 MCP 协议当前最核心的工程痛点——工具发现与上下文成本的'三难困境'。HN 获 133 分、121 评论。"
+    },
+    {
+      "id": 7,
+      "title": "Unsloth Studio：开源本地模型训练/推理一站式 UI",
+      "url": "https://unsloth.ai/docs/new/studio",
+      "source": "Unsloth",
+      "tags": [
+        "开源工具",
+        "本地训练",
+        "模型推理"
+      ],
+      "tldr": "Unsloth 发布 Studio Beta，开源无代码 Web UI，支持在 Mac/Windows/Linux 本地运行和训练 500+ 模型，VRAM 占用降低 70%，支持从 PDF/CSV 自动创建数据集。",
+      "summary": "Studio 整合了运行、训练和导出三大功能。推理方面支持 GGUF 和 safetensor 格式，多 GPU 推理，自愈式工具调用和代码执行。训练方面号称 2 倍速、70% VRAM 节省且无精度损失，支持文本、视觉、TTS 和 embedding 模型。可直接从 PDF、CSV、JSON、DOCX 等文件自动生成训练数据集。还支持模型竞技场对比和自动推理参数调优。对于想在本地微调和运行模型的开发者来说，这可能是目前最全面的一站式开源方案。HN 获 161 分。"
+    },
+    {
+      "id": 8,
+      "title": "论文：LLM 团队即分布式系统",
+      "url": "https://arxiv.org/abs/2603.12229",
+      "source": "arXiv",
+      "tags": [
+        "多Agent",
+        "分布式系统",
+        "理论框架"
+      ],
+      "tldr": "提出用分布式系统理论来理解和设计 LLM 多 agent 团队——什么时候该用团队、用几个 agent、结构如何影响性能。分布式计算的经典问题（一致性、容错、通信开销）在 LLM 团队中同样存在。",
+      "summary": "随着 LLM agent 团队大规模部署，业界缺乏关于'何时用团队、用多少 agent、如何组织结构'的理论框架。论文提出分布式系统是理解 LLM 团队的自然基础：分布式计算中的核心挑战（一致性、容错、负载均衡、通信开销）在 LLM 团队中几乎一一对应。这为多 agent 系统设计提供了超越 trial-and-error 的原则性方法。对于当下蓬勃发展的 agent 编排和协作框架（如 CrewAI、AutoGen 等）有直接的理论指导意义。HN 获 101 分。"
+    },
+    {
+      "id": 9,
+      "title": "36氪深度：阿里成立 ATH 事业群，智能体成 2026 科技主线",
+      "url": "https://36kr.com/p/3727758189018244",
+      "source": "36氪",
+      "tags": [
+        "行业动态",
+        "智能体",
+        "阿里"
+      ],
+      "tldr": "阿里整合通义实验室、千问、百炼等五大部门为 ATH 事业群，全面押注智能体方向。文章梳理了 OpenClaw '龙虾'热潮如何从硅谷蔓延至中国，以及腾讯、百度、阿里的龙虾大战。",
+      "summary": "文章以阿里 ATH 事业群成立为引，回溯了智能体成为 2026 全球科技主线的全过程。OpenClaw（'龙虾'）从 GitHub 开源项目到全球爆发仅用两个月，在中国引发了腾讯地摊装龙虾、百度 DuClaw、阿里 CoPaw/JVS Claw 的巨头混战，以及深圳龙岗、无锡高新区等地方政府的'龙虾补贴大战'。同时国家信息安全中心警告全球活跃 OpenClaw 资产超 20 万个，存在重大安全风险。文章判断：Claude Opus 4.5 在 2025 年底的发布标志着大模型向智能体的技术跃迁完成，2026 年智能体已从概念验证走向规模应用。"
+    }
+  ],
+  "edtech_note": "⚠️ 今日教育科技方向高质量原创内容不足 4 条，未达到筛选阈值。百度 DoctorClaw（医生AI助理）与教育有一定交集但偏医疗方向，未单独收录。"
+}

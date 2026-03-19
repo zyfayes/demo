@@ -1,0 +1,101 @@
+{
+  "date": "2026-03-19",
+  "items": [
+    {
+      "title": "Mistral AI 发布 Forge：企业级私有知识模型训练平台",
+      "url": "https://mistral.ai/news/forge",
+      "tldr": "Mistral AI 推出 Forge，让企业在自有私有数据上训练前沿级 AI 模型。支持预训练、后训练和强化学习全流程，ASML、ESA 等已率先合作。",
+      "summary": "Forge 是 Mistral AI 面向企业的模型定制训练系统，核心理念是让 AI 真正内化企业的内部知识——工程标准、合规政策、代码库和运营流程，而非依赖公开数据。平台支持三个训练阶段：预训练（大规模内部数据集学习领域感知）、后训练（针对特定任务微调）、强化学习（对齐内部策略和评估标准，提升 agent 在真实环境中的工具使用和决策能力）。首批合作伙伴包括 ASML、欧洲航天局、新加坡 DSO 和爱立信等。这标志着大模型竞争正式从「通用能力」转向「企业知识深度定制」赛道。",
+      "tags": [
+        "LLM",
+        "企业AI",
+        "模型训练",
+        "Mistral"
+      ]
+    },
+    {
+      "title": "Unsloth Studio：开源无代码本地模型训练 + 推理一体化平台",
+      "url": "https://unsloth.ai/docs/new/studio",
+      "tldr": "Unsloth 推出 Studio Beta，一个开源无代码 Web UI，支持本地训练、运行和导出 500+ 开源模型，训练速度 2x、显存省 70%。Mac/Windows/Linux 全平台支持。",
+      "summary": "Unsloth Studio 是一个集训练、推理、导出于一体的本地 AI 工作台。支持 GGUF 和 safetensor 格式，可运行文本、视觉、TTS 和嵌入模型。亮点包括：从 PDF/CSV/JSON 等文件自动创建训练数据集；自愈式工具调用和代码执行；自动推理参数调优。训练速度比标准方案快 2 倍，显存占用低 70%，且无精度损失。对于想在本地微调和运行开源模型但不想写代码的开发者和研究者来说，这可能是目前最低门槛的方案。",
+      "tags": [
+        "开源",
+        "模型训练",
+        "本地推理",
+        "工具"
+      ]
+    },
+    {
+      "title": "Snowflake Cortex AI 沙箱逃逸漏洞：通过 prompt injection 执行恶意代码",
+      "url": "https://www.promptarmor.com/resources/snowflake-ai-escapes-sandbox-and-executes-malware",
+      "tldr": "安全研究人员发现 Snowflake 的 Cortex Code CLI 存在沙箱逃逸漏洞，攻击者可通过 indirect prompt injection 绕过审批执行任意命令、窃取数据。已在 v1.0.25 修复。",
+      "summary": "PromptArmor 披露了 Snowflake Cortex Code CLI（类似 Claude Code 的命令行 coding agent）的严重安全漏洞。攻击链：用户在沙箱模式下使用 Cortex 分析第三方代码库时，README 中隐藏的 prompt injection 可让 AI 绕过 human-in-the-loop 审批，在沙箱外执行任意命令，利用用户的 Snowflake 凭证进行数据泄露或删除操作。漏洞适用于所有沙箱模式，注入源可以是 web 搜索结果、数据库记录、终端输出或 MCP 响应等任何不可信数据。Snowflake 在 2 月 28 日发布修复。这再次敲响警钟：AI coding agent 的沙箱安全和 prompt injection 防御仍是行业短板。",
+      "tags": [
+        "AI安全",
+        "prompt injection",
+        "coding agent",
+        "漏洞"
+      ]
+    },
+    {
+      "title": "Google DeepMind 发布 AGI 认知测量框架，配套 Kaggle $20 万黑客松",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/measuring-agi-cognitive-framework/",
+      "tldr": "DeepMind 发布论文提出基于认知科学的 AGI 测量框架，识别 10 项关键认知能力，并联合 Kaggle 举办黑客松邀请社区共建评估工具。",
+      "summary": "Google DeepMind 发布《Measuring Progress Toward AGI: A Cognitive Taxonomy》，从心理学、神经科学和认知科学数十年研究中提炼出 10 项关键认知能力，构建了一个系统化评估 AI 系统通用智能的科学框架。论文认为，追踪 AGI 进展需要超越当前基准测试，用认知科学提供的结构化视角来理解模型能力的边界。配套的 Kaggle 黑客松（奖金池 $20 万）邀请研究社区为框架中的各项认知能力设计实际评估方案。这是 DeepMind 在 AGI 定义和测量领域的又一次重要推进。",
+      "tags": [
+        "AGI",
+        "认知科学",
+        "评估框架",
+        "DeepMind"
+      ]
+    },
+    {
+      "title": "Google 开源 Sashiko：用 Agentic AI 审查 Linux 内核代码",
+      "url": "https://www.phoronix.com/news/Sashiko-Linux-AI-Code-Review",
+      "tldr": "Google 工程师开源 Sashiko，一个基于 Gemini 3.1 Pro 的 agentic AI 代码审查系统，覆盖所有 Linux 内核邮件列表提交，能发现人类审查员遗漏的 53% bug。",
+      "summary": "Google Linux 内核团队的 Roman Gushchin 公开了内部使用数月的 Sashiko 项目。这是一个 agentic AI 代码审查系统，基于 Gemini 3.1 Pro（也兼容 Claude 等），对 Linux 内核邮件列表的所有补丁提交进行自动审查。在 1000 个近期上游 issue 的测试中，Sashiko 发现了 53% 的 bug——关键是这些 bug 100% 被人类审查员遗漏了。Google 资助 token 预算和基础设施，项目正在迁移到 Linux 基金会托管，代码已在 GitHub 开源。这代表了 AI 辅助大规模开源协作的一个实质性里程碑。",
+      "tags": [
+        "AI代码审查",
+        "Linux",
+        "开源",
+        "Google"
+      ]
+    },
+    {
+      "title": "Mamba-3：面向推理时代的新一代状态空间模型",
+      "url": "https://www.together.ai/blog/mamba-3",
+      "tldr": "Together AI 联合 CMU、Princeton 等发布 Mamba-3，以推理效率为核心设计目标，在 1.5B 规模上 prefill+decode 延迟全面优于 Mamba-2、Transformer (Llama-3.2-1B)。",
+      "summary": "Mamba-3 是 SSM 架构的重要迭代，核心转向从训练优先变为推理优先。关键创新包括：更具表达力的循环公式、复数值状态追踪、以及 MIMO（多输入多输出）变体。Mamba-2 为了训练速度简化了底层 SSM 机制，导致推理步骤过于简单、受限于内存带宽。Mamba-3 重新设计了这一环节，在所有序列长度上都实现了更低的端到端延迟。内核使用 Triton、TileLang 和 CuTe DSL 混合编写并完全开源。在后训练（RL）和 agentic 工作流推理需求爆发的当下，这一架构转向极具战略意义。",
+      "tags": [
+        "SSM",
+        "模型架构",
+        "推理效率",
+        "开源"
+      ]
+    },
+    {
+      "title": "复制 3 层权重，逻辑推理从 0.22 飙升到 0.76——无需训练",
+      "url": "https://github.com/alainnothere/llm-circuit-finder",
+      "tldr": "开发者复现 RYS 方法，发现在 Devstral-24B 中复制 3 层特定权重（layers 12-14），逻辑推理能力提升 245%，平均提升 8%，无需任何训练或权重修改。",
+      "summary": "这个开源工具基于 David Ng 的 RYS（Repeat Your Steps）方法，揭示了 Transformer 中的「推理电路」现象：特定连续层块作为不可分割的认知单元，在前向传播中复制这些层（相同权重、零训练）即可显著提升模型在特定能力上的表现。Devstral-24B 的推理电路在 12-14 层，Qwen2.5-32B 在 7-9 层，边界极为锐利——偏移一层效果就消失。在 BBH 逻辑推理上从 0.22 跳到 0.76（+245%），GSM8K 数学题 +33%，代码生成 +8%，且无任何指标退化。整个实验仅用两块 AMD 消费级 GPU 一晚完成。这为理解 Transformer 内部认知结构提供了极具启发性的新视角。",
+      "tags": [
+        "可解释性",
+        "模型架构",
+        "推理能力",
+        "开源"
+      ]
+    },
+    {
+      "title": "\"AI Coding is Gambling\"：当代码生成变成拉老虎机",
+      "url": "https://notes.visaint.space/ai-coding-is-gambling/",
+      "tldr": "一篇引发 380+ 评论热议的文章，将 AI 编程体验类比为赌博机制——即时生成看似体面的代码让人上瘾，但实际质量参差不齐，且这种模式正在改变开发者与代码的关系。",
+      "summary": "作者从去年 11 月开始大量使用 AI 编程，观察到一个核心矛盾：AI 能瞬间生成「看起来半体面」的代码，这种「任何改动都变得轻而易举」的状态令人陶醉，但实际上更像是在拉老虎机——你输入一个 prompt，得到一个「看似合理但往往出乎意料地错误」的结果。文章不谈工具评测，而是聚焦于心理层面：这种模式完美映射了科技行业最爱的机制——赌博。下拉刷新、信息流、现在连编程都变成了赌博机。这也解释了为什么 AI 编程对这么多人有如此强的成瘾性。文章在 HN 引发 380+ 评论的激烈讨论。",
+      "tags": [
+        "AI编程",
+        "开发者体验",
+        "观点",
+        "社区热议"
+      ]
+    }
+  ]
+}

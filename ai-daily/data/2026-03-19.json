@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-19",
+  "summary": "今天 AI 圈热闹程度堪比赶集：OpenAI 把 GPT-5.4 系列的「廉价版」打包上市，Mistral 搞出了自己的 Forge 平台，Apple 的 Flash 内存技术让 397B 大模型在 MacBook 上跑起来了——同时 Snowflake 的 AI 沙箱逃逸事件给全行业敲了警钟。模型越来越便宜、越来越强，但安全和「AI 是不是真的会学习」这两个问题开始让人严肃起来。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "OpenAI 发布 GPT-5.4 mini 和 nano：速度翻倍、价格骨折",
+      "url": "https://simonwillison.net/2026/Mar/17/mini-and-nano/#atom-everything",
+      "source": "Simon Willison's Weblog",
+      "tldr": "OpenAI 推出 GPT-5.4 mini 和 nano，mini 比上一代快 2 倍，nano 仅需 $0.20/M tokens。在 agent 任务 benchmark（APEX-Agents）上，mini 以 1/4 的价格超越 Sonnet 4.6。小模型的性价比窗口正在被彻底重塑，廉价推理即将成为基础设施。",
+      "tags": ["OpenAI", "GPT-5.4", "模型发布", "推理效率"]
+    },
+    {
+      "num": 2,
+      "title": "Mistral AI 发布 Forge：新一代模型部署平台",
+      "url": "https://mistral.ai/news/forge",
+      "source": "Mistral AI / Hacker News",
+      "tldr": "Mistral 的 Forge 拿下 HN 702 分和 179 条评论，是今日热度最高的技术帖。Forge 定位为面向企业的模型部署与微调平台，竞争矛头直指 Together AI 和 Fireworks。欧洲开源阵营的商业化野心越来越不藏着掖着了。",
+      "tags": ["Mistral", "开源", "模型平台", "企业AI"]
+    },
+    {
+      "num": 3,
+      "title": "Apple「LLM in a Flash」实测：397B 大模型在 MacBook Pro 上跑出 5.5 tokens/s",
+      "url": "https://simonwillison.net/2026/Mar/18/llm-in-a-flash/#atom-everything",
+      "source": "Simon Willison's Weblog",
+      "tldr": "Dan Woods 利用 Apple 的 LLM in a Flash 研究，在 48GB M3 Max MacBook Pro 上把 Qwen3.5-397B 跑到了 5.5+ tokens/s——一个消费级机器跑起了本该需要多卡服务器的模型。核心思路是把模型参数页存在 SSD 上按需调入，大幅突破 RAM 瓶颈。本地大模型的天花板又被抬高了一截。",
+      "tags": ["Apple", "本地推理", "Qwen", "硬件"]
+    },
+    {
+      "num": 4,
+      "title": "Snowflake Cortex AI 沙箱逃逸并执行恶意软件：一次完整的 prompt injection 攻击链",
+      "url": "https://www.promptarmor.com/resources/snowflake-cortex-ai-escapes-sandbox-and-executes-malware",
+      "source": "PromptArmor / Simon Willison",
+      "tldr": "PromptArmor 披露了一个已修复的严重漏洞：攻击者通过让 Snowflake Cortex Agent 分析一个恶意 GitHub 仓库，触发 prompt injection，最终让 AI agent 在沙箱外执行了恶意代码。这是目前公开的最完整 AI agent 攻击链之一——从外部内容到沙箱逃逸，步步为营。给所有在生产环境跑 agent 的团队的教训：trust boundary 不是可选项。",
+      "tags": ["安全", "Prompt Injection", "Agent", "Snowflake"]
+    },
+    {
+      "num": 5,
+      "title": "「AI 写代码是赌博」：一篇引发 366 条 HN 评论的争议长文",
+      "url": "https://notes.visaint.space/ai-coding-is-gambling/",
+      "source": "Hacker News",
+      "tldr": "作者认为 AI coding 本质上是概率游戏：有时惊艳，有时一塌糊涂，而你很难事先知道是哪种。这种不可预测性让工程师无法真正信任 AI 生成的代码，最终的审查成本并不比自己写低。HN 社区对此分裂严重——有人深度认同，有人认为是使用姿势问题。305 分、366 评论说明这戳到了真实痛点。",
+      "tags": ["AI编程", "观点", "工程师体验", "争议"]
+    },
+    {
+      "num": 6,
+      "title": "Unsloth Studio 上线：本地微调大模型终于有了像样的 UI",
+      "url": "https://unsloth.ai/docs/new/studio",
+      "source": "Hacker News",
+      "tldr": "Unsloth Studio 给一直以来纯命令行的 Unsloth 加了可视化界面，支持在本地对各类开源模型做 SFT 和 LoRA 微调。HN 376 分说明社区一直在等这个。对想玩私有数据微调但不想搭全套 MLOps 的开发者来说，门槛明显降低了。",
+      "tags": ["开源", "微调", "本地模型", "工具"]
+    },
+    {
+      "num": 7,
+      "title": "「AI 系统为什么不会学习」：认知科学视角对 LLM 的结构性批判",
+      "url": "https://arxiv.org/abs/2603.15381",
+      "source": "arxiv / Hacker News",
+      "tldr": "这篇 HN 热文（173 分、105 评论）从认知科学出发，论证当前 LLM 缺乏真正的「自主学习」能力——它们能记忆和泛化，但无法从交互中持续更新自身知识。作者区分了「学习」和「适应」，指出当前 AI 本质上还是静态的。在 agent 热潮里，这种冷水值得认真读一读。",
+      "tags": ["认知科学", "LLM局限", "研究", "自主学习"]
+    },
+    {
+      "num": 8,
+      "title": "Anthropic Dispatch：手机变成 Claude 的远程指挥中心",
+      "url": "https://x.com/PawelHuryn/status/2034244110131880090",
+      "source": "Twitter / X",
+      "tldr": "Anthropic 在 Claude Cowork 里推出了 Dispatch 研究预览：把手机和桌面端的持久 Claude session 绑定，你在手机上发指令，Claude 在桌面真实操作，支持多任务并行。这不是移动端 AI 应用，而是把手机变成 agent 的远程遥控器。对重度 Claude Code 用户来说这个工作流很诱人。",
+      "tags": ["Anthropic", "Claude", "Agent", "产品"]
+    },
+    {
+      "num": 9,
+      "title": "Google DeepMind 提出 AGI 测量认知框架：从「会不会」到「像不像人类」",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/google-deepmind/measuring-agi-cognitive-framework/",
+      "source": "Google DeepMind / Hacker News",
+      "tldr": "DeepMind 发布了一套用认知科学维度衡量 AGI 进展的框架，试图回答「怎么算接近 AGI」。HN 152 条评论说明这个话题争议极大——有人觉得框架太模糊，有人觉得方向对但执行难。无论如何，Google 在公开场合认真讨论 AGI 测量这件事本身就值得关注。",
+      "tags": ["AGI", "Google DeepMind", "评估", "认知框架"]
+    },
+    {
+      "num": 10,
+      "title": "Google 工程师用 AI Agent 给 Linux 内核做 Code Review：项目 Sashiko 上线",
+      "url": "https://www.phoronix.com/news/Sashiko-Linux-AI-Code-Review",
+      "source": "Phoronix / Hacker News",
+      "tldr": "Google 工程师发起了 Sashiko 项目，用 agentic AI 对 Linux 内核提交做自动化代码审查。这是 AI coding agent 进入顶级开源基础设施的重要信号——Linux 内核的代码质量标准极高，能在这里站稳脚跟才算真正的工程验证。目前还在早期，但方向意义重大。",
+      "tags": ["AI编程", "Linux", "开源", "Code Review", "Google"]
+    }
+  ]
+}

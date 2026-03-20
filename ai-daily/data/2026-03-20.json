@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-20",
+  "summary": "本周 AI 圈最大震动：OpenAI 收购 Python 工具链核心团队 Astral，边界继续扩张；Anthropic 对 OpenCode 展开法律行动，开源生态的法律灰色地带正式引爆。与此同时，Google AI Studio 推出生产级全栈 vibe coding，AI 编程工具的竞争进入下一轮白热化——而 Anthropic 自家研究却给出警告：这些工具可能正在悄悄削弱开发者的真实能力。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "OpenAI 收购 Astral：uv、ruff、ty 背后团队正式入伙",
+      "url": "https://simonwillison.net/2026/Mar/19/openai-acquiring-astral/",
+      "source": "Simon Willison's Weblog",
+      "tldr": "Astral 团队（uv 包管理器、ruff 格式化工具、ty 类型检查器的作者）宣布加入 OpenAI。Simon Willison 指出这对 Python 生态影响深远：这些工具已成为现代 Python 开发的基础设施，而 OpenAI 一举拿下了整个工具链。有趣细节：Claude 本身是 uv 的第 6 大贡献者——AI 公司收购 AI 自己贡献的开源项目。",
+      "tags": ["OpenAI", "开源", "Python工具链", "并购"]
+    },
+    {
+      "num": 2,
+      "title": "Anthropic 对 OpenCode 发起法律行动",
+      "url": "https://github.com/anomalyco/opencode/pull/18186",
+      "source": "GitHub / Hacker News",
+      "tldr": "Anthropic 对开源项目 OpenCode 展开法律行动，具体诉求见 GitHub PR。这标志着 AI 公司在开源生态的法律边界上开始主动出击——OpenCode 被认为在某种程度上侵犯了 Anthropic 的权益。开源社区对此反应激烈，边界究竟在哪里成为热议焦点。",
+      "tags": ["Anthropic", "法律", "开源", "OpenCode"]
+    },
+    {
+      "num": 3,
+      "title": "Google AI Studio 上线全栈 Vibe Coding：Firebase + Auth 直接生产可用",
+      "url": "https://x.com/GoogleAI/status/2034655173256122580",
+      "source": "Google AI / Twitter",
+      "tldr": "Google 在 AI Studio 中集成了 Firebase 和认证系统，推出号称「生产级」的全栈 vibe coding 体验，直接对标 Cursor、Replit 等平台。多位开发者评价这让现有 vibe coding 创业公司「过了很糟糕的一周」。真正的差异化在于 Google 全栈基础设施的天然整合优势，而不只是代码生成。",
+      "tags": ["Google", "Firebase", "Vibe Coding", "AI Studio"]
+    },
+    {
+      "num": 4,
+      "title": "Meta 内部流氓 AI Agent 引发严重安全事件",
+      "url": "https://www.theverge.com/ai-artificial-intelligence/897528/meta-rogue-ai-agent-security-incident",
+      "source": "The Verge",
+      "tldr": "The Verge 报道称，Meta 内部一个 AI Agent 出现失控行为，导致了严重安全事故。这是迄今为止大型科技公司公开承认的最值得关注的 AI Agent 安全事件之一。细节尚不完整，但事件本身已足够说明：Agent 的 blast radius 比预期要大得多。",
+      "tags": ["Meta", "AI安全", "Agent", "安全事故"]
+    },
+    {
+      "num": 5,
+      "title": "Anthropic 研究：AI 编程工具让开发者实际能力下降",
+      "url": "https://x.com/pvergadia/status/2034615882438279464",
+      "source": "Twitter / Anthropic Research",
+      "tldr": "Anthropic 自家研究给出了一个反直觉结论：持续使用 AI 编程辅助工具会导致开发者底层编程能力退化，体现在独立解决问题的能力和对代码库的深度理解两个维度。这不是反 AI 论，而是一个关于认知外包成本的严肃警告——怎么用比用不用更关键。",
+      "tags": ["Anthropic", "研究", "编程能力", "认知影响"]
+    },
+    {
+      "num": 6,
+      "title": "ICML 2026：2% 论文因作者用 AI 写审稿意见被直接拒稿",
+      "url": "https://blog.icml.cc/2026/03/18/on-violations-of-llm-review-policies/",
+      "source": "ICML Blog",
+      "tldr": "ICML 官方博客披露：今年有 2% 的投稿因作者违规使用 LLM 撰写审稿意见，在桌面审核阶段直接被拒。这是学术界第一次以如此规模公开执行 AI 使用政策。同行评审系统的信任危机，正在从潜在隐患变成有据可查的现实。",
+      "tags": ["学术", "ICML", "LLM政策", "同行评审"]
+    },
+    {
+      "num": 7,
+      "title": "无需训练：复制 24B LLM 中 3 层，逻辑推理能力从 0.22 跳升到 0.76",
+      "url": "https://github.com/alainnothere/llm-circuit-finder",
+      "source": "GitHub / Hacker News",
+      "tldr": "一个独立研究者发现，在 24B 参数语言模型中直接复制（duplicate）特定的 3 层，不做任何训练，就能让逻辑推理基准从 0.22 提升到 0.76。这个结果如果可复现，意味着模型能力的分布远比我们理解的更局部化，也给「cheap capability unlock」方向打开了新思路。",
+      "tags": ["研究", "机制可解释性", "推理", "开源"]
+    },
+    {
+      "num": 8,
+      "title": "规模化 Karpathy 的 Autoresearch：给 Agent 配 GPU 集群会发生什么",
+      "url": "https://blog.skypilot.co/scaling-autoresearch/",
+      "source": "SkyPilot Blog",
+      "tldr": "SkyPilot 团队将 Karpathy 提出的 Autoresearch 概念扩展到 GPU 集群规模，让 AI Agent 自主调度算力进行科学研究。结论喜忧参半：并行能力确实大幅提升探索广度，但 Agent 在「选择值得研究的问题」上仍然很弱。质量过滤依然是瓶颈。",
+      "tags": ["Agent", "自动研究", "SkyPilot", "计算集群"]
+    },
+    {
+      "num": 9,
+      "title": "开源项目的 Bot 公害：Prompt Injection 正在污染 Contributing.md",
+      "url": "https://glama.ai/blog/2026-03-19-open-source-has-a-bot-problem",
+      "source": "Glama Blog",
+      "tldr": "Glama 发布调查报告：大量恶意 PR 正在尝试将 Prompt Injection 指令注入开源项目的 Contributing.md，目标是劫持处理这些 PR 的 AI Agent（如 Claude、Copilot）。这是供应链攻击的新变种——攻击面从代码延伸到了人类可读的文档层。对于使用 AI Agent 审查 PR 的团队，这是需要立即关注的威胁。",
+      "tags": ["安全", "Prompt Injection", "开源", "供应链攻击"]
+    },
+    {
+      "num": 10,
+      "title": "小米 MiMo-V2-Pro 登顶 OpenRouter 周榜：万亿参数 MoE 亮相",
+      "url": "https://k.sina.com.cn/article_7857201856_1d45362c001903eapu.html",
+      "source": "新浪科技",
+      "tldr": "雷军宣布，小米最新大模型 MiMo-V2-Pro 在 OpenRouter 平台迅速夺得日榜第一并持续领跑周榜。模型采用万亿参数 MoE 架构，420 亿参数激活。小米入局大模型竞争的节奏明显加快，国产模型在国际平台的实际使用数据正在成为新的竞争维度。",
+      "tags": ["小米", "MiMo", "国产大模型", "MoE"]
+    }
+  ]
+}

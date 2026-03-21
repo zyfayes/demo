@@ -1,0 +1,134 @@
+{
+  "date": "2026-03-21",
+  "title": "AI 日报 2026-03-21",
+  "summary": "本日 AI 领域焦点：Nvidia GTC 大会上 Jensen Huang 预言万亿美元 AI 芯片市场并力推 Agentic 战略；Cursor Composer 2 确认基于月之暗面 Kimi-K2.5 构建，开源模型生态再进一步；Google 搜索开始用 AI 改写新闻标题引发媒体反弹；微软则反向操作回撤 Copilot 过度集成。Agent 平台赛道迎来 Dreamer 重磅入场，WordPress.com 也向 AI Agent 开放内容发布权限。",
+  "items": [
+    {
+      "id": 1,
+      "title": "Nvidia GTC: Jensen Huang 预言 $1 万亿 AI 芯片销售，提出「每家公司都需要 Agentic 战略」",
+      "url": "https://techcrunch.com/video/what-happened-at-nvidia-gtc-nemoclaw-robot-olaf-and-a-1-trillion-bet/",
+      "tldr": "Jensen Huang 在 GTC 大会上发表长达两个半小时的主题演讲，预测到 2027 年 AI 芯片累计销售将达 1 万亿美元，并宣称每家公司都需要 agentic AI 战略。演讲以一个失控的 Olaf 机器人被切麦收场。",
+      "summary": "Nvidia CEO 黄仁勋身着标志性皮夹克登台，在本周 GTC 大会上勾勒了一幅宏大蓝图：AI 基础设施将渗透从训练到自动驾驶到迪士尼乐园的一切领域。他发布了 Blackwell 和 Vera Rubin 芯片的销售预测，将目标直指万亿美元量级。最引人注目的是他对 agentic AI 的押注——Nvidia 认为这不再是可选项而是必需品。演讲中还展示了与多家合作伙伴的基础设施协议。不过闭幕环节颇为戏剧化：一个迪士尼 Olaf 机器人在台上漫无边际地说了起来，最终被工作人员切断了麦克风。TechCrunch Equity 播客团队随后讨论了这些合作对创业公司意味着什么。",
+      "tags": [
+        "Nvidia",
+        "GTC",
+        "AI芯片",
+        "Agentic AI",
+        "基础设施"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Cursor 发布 Composer 2，底层基于月之暗面 Kimi-K2.5 模型",
+      "url": "https://simonwillison.net/2026/Mar/20/cursor-on-kimi/",
+      "tldr": "Cursor 推出 Composer 2，其基础模型为月之暗面（Moonshot）的 Kimi-K2.5，通过 Fireworks AI 进行 RL 训练和推理。这是开源模型生态合作的标志性案例。",
+      "summary": "月之暗面官方确认，Cursor 新发布的 Composer 2 编程助手是基于 Kimi-K2.5 模型构建的。Cursor 团队在 K2.5 基础上进行了持续预训练和高算力强化学习，通过 Fireworks AI 平台进行商业化推理部署。这一合作模式展示了 AI 编程工具生态的新范式：基础模型提供商（Kimi）+ 推理平台（Fireworks）+ 应用层（Cursor）的三方协作。对中国 AI 公司来说，这也是模型出海、融入全球开发者生态的重要里程碑。Simon Willison 在博客中记录了这一消息。",
+      "tags": [
+        "Cursor",
+        "Kimi",
+        "AI编程",
+        "开源模型",
+        "月之暗面"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Dreamer 正式亮相：前 Stripe/Android 高管打造「个人 Agent OS」",
+      "url": "https://www.latent.space/p/dreamer",
+      "tldr": "此前以 /dev/agents 名义秘密运营的创业公司正式以 Dreamer 品牌亮相，定位为消费级 AI Agent 平台。核心产品是一个「能构建 Agent 的 Agent」——Sidekick。",
+      "summary": "前 Stripe 工程副总裁 David Singleton 与前 Android/Meta 高管 Hugo Barra 联合创立的 Dreamer 结束隐身模式正式发布。该平台提供完整的全栈 Agent 开发体验：自研 SDK、数据库、日志、Prompt 管理和 Serverless 函数，允许开发者将任意代码推送到其虚拟机上运行。核心卖点 Sidekick 是一个通过自然语言构建 Agent 的元 Agent。Dreamer 深谙平台效应，正通过 Builder in Residence 计划和 $10,000 现金奖励吸引生态开发者。这是 Agent 平台竞争中又一重量级玩家入场。",
+      "tags": [
+        "Agent平台",
+        "Dreamer",
+        "消费级AI",
+        "创业",
+        "全栈"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Google 搜索开始用 AI 替换新闻标题，引发媒体强烈反弹",
+      "url": "https://www.theverge.com/tech/896490/google-replace-news-headlines-in-search-canary-coal-mine-experiment",
+      "tldr": "继 Google Discover 之后，Google 搜索的传统「十个蓝色链接」也开始用 AI 改写新闻标题，有时会改变原意。The Verge 多名员工发现自家文章标题被篡改。",
+      "summary": "Google 正在搜索结果中进行一项「小规模」实验，用 AI 生成的标题替换新闻网站的原始标题。The Verge 发现自家文章标题被改得面目全非——例如一篇评测 AI 作弊工具的文章标题被缩减为看似推荐该产品的五个词。Google 发言人承认这是一个尚未全面推出的实验，但拒绝透露规模。The Verge 将此比作「书店撕掉书的封面并改写书名」。这触及了 AI 对内容创作者权益的根本性威胁：当平台可以随意改写你的作品呈现方式时，创作者对自身内容的控制权何在？Vox Media（The Verge 母公司）已对此提起诉讼。",
+      "tags": [
+        "Google",
+        "AI标题",
+        "新闻媒体",
+        "内容权益",
+        "搜索"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Microsoft 回撤 Windows Copilot 集成：AI 膨胀遭用户反弹",
+      "url": "https://techcrunch.com/2026/03/20/microsoft-rolls-back-some-of-its-copilot-ai-bloat-on-windows/",
+      "tldr": "微软宣布减少 Windows 11 中 Copilot 的入口点，从照片、Widgets、记事本等应用开始。Pew 研究显示半数美国成年人对 AI 更担忧而非兴奋。",
+      "summary": "微软 Windows 和设备部门 EVP Pavan Davuluri 宣布将「更有意识地」选择 Copilot 在 Windows 中的集成位置，首批削减涉及照片、Widgets、记事本和截图工具。这是微软在 AI 产品策略上的重要转向——从「无处不在」转向「有意义的地方才出现」。此前微软已悄然搁置了将 Copilot 集成到设置和文件管理器的计划，Windows Recall 功能也因隐私问题延迟了一年多。Pew 研究中心本月数据显示，截至 2025 年 6 月，50% 的美国成年人对 AI 更多是担忧而非兴奋，较 2021 年的 37% 显著上升。这是 AI 产品化过程中「少即是多」的重要信号。",
+      "tags": [
+        "Microsoft",
+        "Copilot",
+        "Windows",
+        "AI产品",
+        "用户反馈"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "WordPress.com 向 AI Agent 开放内容创建和发布权限",
+      "url": "https://techcrunch.com/2026/03/20/wordpress-com-now-lets-ai-agents-write-and-publish-posts-and-more/",
+      "tldr": "WordPress.com 宣布允许 AI Agent 通过自然语言指令起草、编辑和发布内容，管理评论和 SEO。这可能大幅降低建站门槛，但也将加速机器生成内容的泛滥。",
+      "summary": "WordPress.com 在去年秋天推出 MCP（Model Context Protocol）支持后更进一步：现在 AI Agent 不仅可以读取站点内容，还能创建文章、着陆页、关于页面，审批和回复评论，管理标签分类，修复 alt 文本以改善 SEO。所有操作通过自然语言界面控制，并在活动日志中追踪。考虑到 WordPress 驱动了互联网 43% 以上的网站，这一变化的影响范围巨大。它代表了 Agent 从「辅助」到「执行」的跨越——网站可以几乎完全由 AI 运营。但这也引发了关于网络内容真实性的深层担忧。",
+      "tags": [
+        "WordPress",
+        "AI Agent",
+        "内容创作",
+        "MCP",
+        "网络生态"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "美国联邦 AI 政策框架发布：Zvi 评「改进但仍远远不够」",
+      "url": "https://thezvi.substack.com/p/the-federal-ai-policy-framework-an",
+      "tldr": "白宫发布四页 AI 政策框架纲要，包含对言论自由的保护和通过国会立法的承诺，但在前沿风险监管上几乎空白，被批评为意在取代州级 AI 法案却不提供替代方案。",
+      "summary": "白宫发布了联邦 AI 政策框架——一份四页的立法建议纲要。AI 安全领域知名评论者 Zvi Mowshowitz 的评价是「进步但不够」。框架最积极的部分是对言论自由的明确保护（特别是限制联邦政府干预），以及承认需要通过国会正式立法。然而框架在最关键的前沿和灾难性风险领域几乎空白，没有透明度要求，对风险的唯一提及局限于「国家安全」语境。Zvi 认为这本质上是试图否决加州 SB 53 和 RAISE Act 等州级法案，却没有提供联邦层面的替代监管。不过他承认，如果最终法案能加入前沿风险例外条款，可能是可接受的起点。",
+      "tags": [
+        "AI政策",
+        "监管",
+        "美国",
+        "前沿风险",
+        "立法"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Oregon 全州手机禁令成效显著：「学生更投入，教师更快乐」",
+      "url": "https://portlandtribune.com/2026/03/18/oregon-school-cell-phone-ban-engaged-students-joyful-teachers/",
+      "tldr": "Oregon 州长去年夏天签署的 K-12 学校手机禁令已实现 100% 学区合规。教师反馈课堂讨论质量显著提升，学生无法再用手机回避面对面交流。",
+      "summary": "Oregon 州长 Tina Kotek 去年夏天签署行政命令禁止 K-12 公立学校学生在校期间使用手机。本周她访问了 Estacada 高中了解实施效果。24 年教龄的语言艺术教师 Jeff Mellema 表示「课堂讨论质量大幅提升——学生再也无法用手机逃避对话了」，称这项禁令「让这个暴躁的老教师重新感到快乐」。Oregon 教育局与州长办公室合作，为各学校提供了灵活的实施指南和范例政策。目前全州所有公立学校学区都已合规。研究早已表明手机即使放在桌上不用也会削弱注意力。这是教育科技领域「减法」思维的重要案例——有时最好的技术干预是减少技术干扰。",
+      "tags": [
+        "教育",
+        "手机禁令",
+        "课堂注意力",
+        "Oregon",
+        "K-12"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "如何有意识地管理 AI 对代码库的影响",
+      "url": "https://aicode.swerdlow.dev",
+      "tldr": "一篇 HN 热文探讨在 AI 编程时代如何保持代码质量：将函数分为「语义函数」和「务实函数」两类，让 AI 生成的代码也符合人类可读的架构原则。",
+      "summary": "这篇在 Hacker News 获得 164 分的文章提出了 AI 时代代码组织的实用框架。作者将函数分为两类：语义函数（Semantic Functions）应该最小化、无副作用、自描述且高度可测试，如 quadratic_formula()；务实函数（Pragmatic Functions）则是包装语义函数和独特逻辑的复杂流程编排。核心主张是「代码应自我文档化」——在 AI 大量生成代码的今天，好的架构比好的注释更重要。这个框架不仅帮助人类理解代码，也帮助未来的 AI Agent 理解和维护代码库。对于正在大规模引入 AI 编程的团队来说，这是一份及时的架构思考。",
+      "tags": [
+        "AI编程",
+        "代码质量",
+        "软件架构",
+        "最佳实践",
+        "开发者"
+      ]
+    }
+  ],
+  "eduNote": "⚠️ 本日教育科技相关内容不足 4 条。仅 Oregon 手机禁令直接涉及教育领域，web_search API 配额已耗尽无法补充更多 EdTech 来源。"
+}

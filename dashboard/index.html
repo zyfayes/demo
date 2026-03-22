@@ -342,82 +342,8 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-21T13:01:34.296Z",
+  "generated": "2026-03-22T16:01:29.203Z",
   "cronJobs": [
-    {
-      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
-      "agentId": "main",
-      "name": "Polymarket Scanner",
-      "enabled": true,
-      "createdAtMs": 1771231556226,
-      "updatedAtMs": 1774054887401,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,13 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n3. 🐋 跑鲸鱼追踪：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/scanner.mjs 2>/dev/null\n```\n解析 JSON 输出中的 `strategies.whaleTracker`，提取 `whales`（按 totalUsd 排序的大户）和 `watchlistAlerts`（watchlist 钱包的新动作）。\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n### 🐋 鲸鱼动态（新板块，放在最后）\n从 scanner.mjs 输出提取，格式：\n```\n🐋 鲸鱼动态（过去4h）\n\n[鲸鱼名] | 历史利润 $XXk | 胜率 XX% | N场\n→ $XXk [BUY/SELL] [YES/NO] [市场标题](url) @ $0.XX\n\n[如有 watchlist alerts]\n👀 Watchlist 追踪：\n- [鲸鱼名] [BUY/SELL] $XXX [市场标题]\n```\n\n只展示 totalUsd ≥ $5k 的鲸鱼，或有 watchlist alerts 的。如果鲸鱼数据为空或全部 < $5k，省略此板块。\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选且无鲸鱼动态 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个 | 🐋 鲸鱼N条 watchlist M条`",
-        "timeoutSeconds": 720,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1774098000000,
-        "lastRunAtMs": 1774054800019,
-        "lastStatus": "ok",
-        "lastDurationMs": 87382,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true,
-        "runningAtMs": 1774098000015
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1479010527446569012",
-      "name": "Dashboard Refresh",
-      "enabled": true,
-      "createdAtMs": 1772711342198,
-      "updatedAtMs": 1774054900401,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 9,21 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774098000000,
-        "lastRunAtMs": 1774054887401,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 13000,
-        "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1774098087563
-      }
-    },
     {
       "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
       "agentId": "main",
@@ -425,7 +351,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1774087277650,
+      "updatedAtMs": 1774173661173,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -444,14 +370,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1774108851018,
-        "lastRunAtMs": 1774087251034,
+        "nextRunAtMs": 1774195251018,
+        "lastRunAtMs": 1774173651042,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 26616,
+        "lastDurationMs": 10131,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false
+        "lastDelivered": false,
+        "runningAtMs": 1774195251040
       }
     },
     {
@@ -460,7 +387,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1774094519845,
+      "updatedAtMs": 1774180964666,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -476,14 +403,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1774108904426,
-        "lastRunAtMs": 1774094504448,
+        "nextRunAtMs": 1774195304426,
+        "lastRunAtMs": 1774180904447,
         "lastStatus": "ok",
-        "lastDurationMs": 15397,
+        "lastDurationMs": 60219,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
+        "lastDeliveryStatus": "not-delivered",
+        "lastDelivered": false
       },
       "delivery": {
         "mode": "announce",
@@ -498,7 +425,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1774090878788,
+      "updatedAtMs": 1774177237889,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -513,517 +440,20 @@ window.__DASHBOARD_DATA__ = {
         "model": "anthropic/claude-sonnet-4-6"
       },
       "state": {
-        "nextRunAtMs": 1774112400000,
-        "lastRunAtMs": 1774090800014,
+        "nextRunAtMs": 1774198800000,
+        "lastRunAtMs": 1774177200020,
         "lastStatus": "ok",
-        "lastDurationMs": 78774,
+        "lastDurationMs": 37869,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
+        "lastDeliveryStatus": "not-delivered",
+        "lastDelivered": false
       },
       "delivery": {
         "mode": "announce",
         "channel": "discord",
         "to": "channel:1475153843707707412",
         "bestEffort": true
-      }
-    },
-    {
-      "id": "e01f30a2-29e3-4569-b89e-175e17038596",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1475106097969889556",
-      "name": "Douban Weekly Picks",
-      "enabled": true,
-      "createdAtMs": 1772114185376,
-      "updatedAtMs": 1773511339475,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 2 * * 0",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "搜索豆瓣最近热门且评分较高的内容，分三个类别：\n\n1. **电影**（评分≥7.5）— 最近在豆瓣讨论度高的电影，不限上映时间\n2. **电视剧**（评分≥8.0）— 最近热播或被重新讨论的剧集\n3. **图书**（评分≥8.0）— 最近在豆瓣阅读圈热门的书\n\n每个类别推荐3-5部。\n\n**输出格式（严格遵守）：**\n每个条目必须包含：\n- 名称（带豆瓣链接，格式：[名称](https://movie.douban.com/subject/xxx/) ）\n- 豆瓣评分\n- 一句话推荐理由\n\n⚠️ 关键要求：每个条目必须附带真实的豆瓣 URL（movie.douban.com 或 book.douban.com），没有链接的条目不要列出。用 web_search 搜索时加上 site:douban.com 来获取准确链接。\n\n搜索策略：\n1. web_search 搜索 '豆瓣 热门 高分 电影 2026 site:douban.com'\n2. web_search 搜索 '豆瓣 热门 高分 电视剧 2026 site:douban.com'\n3. web_search 搜索 '豆瓣 热门 高分 图书 2026 site:douban.com'\n4. 也可以 web_fetch 抓取 https://movie.douban.com/chart 等排行榜页面\n\n输出格式简洁清晰，适合直接发到 Discord。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475125129708175380"
-      },
-      "state": {
-        "nextRunAtMs": 1774116000000,
-        "lastRunAtMs": 1773511200014,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 139461,
-        "lastDelivered": true,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0
-      }
-    },
-    {
-      "id": "1819f97a-fa53-4e86-a758-19240ac8fe34",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1478258139286737016",
-      "name": "知识星球日报",
-      "enabled": true,
-      "createdAtMs": 1772515117326,
-      "updatedAtMs": 1774031496858,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 2 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是 Moss，Leo 的投资助手。执行知识星球日报任务：\n\n1. 运行 `node skills/zsxq-monitor/fetch.mjs --since 26` 获取过去 26h 的新帖\n2. 读取 /tmp/zsxq-topics.json\n3. 如果没有新帖，发一条简短消息到 Discord 频道 1475153843707707412 说今天无更新，然后结束\n4. 对每条帖子：\n   a. 提取核心观点、提到的标的（股票/行业）\n   b. 用 web_search 搜索相关标的的最新行情和新闻\n   c. 结合市场环境，给出交易视角的分析（估值、技术位、催化剂、风险）\n5. 生成推送：原文摘要（不超过3句，不要全文搬运）+ 关联分析 + 交易洞察\n6. 用 message tool 发送到 Discord 频道 1475153843707707412\n7. 如果有特别重要的发现（高确定性机会或风险警示），同时发到 Telegram\n\n推送格式：\n📰 知识星球日报 | YYYY-MM-DD\n━━━━━━━━━━━━\n每条帖子：标题 + 摘要 + 🔍关联分析\n最后：💡综合洞察（跨帖子共性、值得跟踪的信号）\n\n注意：不要搬运原文全文，只做摘要+分析。重点是你的分析和洞察，不是转发。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 420
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "1475153843707707412"
-      },
-      "state": {
-        "nextRunAtMs": 1774117800000,
-        "lastRunAtMs": 1774031400020,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 96838,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": true
-      }
-    },
-    {
-      "id": "89c347a8-b297-4278-add5-05241569c0c7",
-      "agentId": "max",
-      "name": "Max Daily Reflection",
-      "enabled": true,
-      "createdAtMs": 1772671200000,
-      "updatedAtMs": 1774033681792,
-      "schedule": {
-        "kind": "cron",
-        "expr": "5 3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## Max 每日复盘\n\n### 0. OpenClaw 运行状态检查\n```bash\ntail -50 ~/.openclaw/logs/gateway.log 2>/dev/null | tail -20\npgrep -fl openclaw | head -5\n```\n检查是否有 ERROR、panic、进程异常。\n\n### 1. OpenClaw 日志检查（最近错误）\n```bash\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/gateway.log 2>/dev/null | tail -10\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/agent-*.log 2>/dev/null | tail -10\n```\n记录任何异常。\n\n### 2. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 3. 检查 CPU Load\n```bash\nuptime | awk -F'print $2}'\nload averages:' '{```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 4. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 5. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常 → 记录\n\n### 6. 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- OpenClaw: [OK/异常] - [如有异常简述]\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n⚠️ 无论是否有异常，都必须用 message tool 向 Telegram 发送报告！\n\n---\n\n\n\n### 1. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 2. 检查 CPU Load\n```bash\nuptime | awk -F'load averages:' '{print $2}'\n```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 3. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 4. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常（比如某个进程占用过高）→ 记录\n\n### 5. 检查系统日志（最近错误）\n```bash\nlog show --predicate 'eventMessage contains \"error\" OR eventMessage contains \"panic\"' --last 1h 2>/dev/null | tail -5\n```\n\n### 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n\n\n---\n\n\n\n## 任务目标\n1. 回顾当日（昨天）你与 Leo 的所有对话\n2. 提取关键信息、决策、教训\n3. 写入记忆文件\n\n## 执行步骤\n\n### Step 1: 确定日期\n昨天日期 = 今日日期 - 1 天。格式：YYYY-MM-DD\n\n### Step 2: 读取昨日 session\n读取 ~/.openclaw/agents/max/sessions/ 目录下昨日创建的 session 文件（按修改时间排序，找到昨天的）。\n\n### Step 3: 提炼要点\n从 session 中提取：\n- Leo 提出的重要需求/问题\n- 你给出的关键建议或执行的动作\n- 任何需要记住的上下文、偏好、决定\n\n### Step 4: 写入每日记忆\n在 ~/.openclaw/workspace-max/memory/ 目录下创建或更新 YYYY-MM-DD.md 文件。\n\n文件格式：\n```markdown\n# YYYY-MM-DD 复盘\n\n## 对话概要\n[1-2 句话概括今日主要交流]\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 学到的/需要注意的\n- [如果有任何需要记住的教训或偏好]\n```\n\n### Step 5: 更新长期记忆（可选）\n如果发现值得写入 MEMORY.md 的内容（如 Leo 的新偏好、重要决定），可以更新 MEMORY.md。\n\n## 输出\n完成后输出一句话总结：复盘已完成，写入 YYYY-MM-DD.md",
-        "model": "minimax-portal/MiniMax-M2.5",
-        "timeoutSeconds": 300
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "telegram",
-        "to": "422039053"
-      },
-      "state": {
-        "nextRunAtMs": 1774119900000,
-        "lastRunAtMs": 1774033500026,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 181766,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": true
-      }
-    },
-    {
-      "id": "f0cb5c5f-ab01-4880-8a10-ef43c3afa790",
-      "agentId": "main",
-      "name": "Goal Agent Night Run",
-      "enabled": true,
-      "createdAtMs": 1771352603715,
-      "updatedAtMs": 1774035001962,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 3 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "main",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "systemEvent",
-        "text": "运行 Goal Agent 夜间执行。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json\n2) 找到 status=pending 的任务，按 priority 排序\n3) 执行第一个任务（调研类用 web_search，数据抓取类用 web_fetch）\n4) 更新 tasks.json 状态，写入 result 和 reflection\n5) 如果遇到需要 Leo 确认的分支，设置 status=waiting_confirmation\n6) 输出任务执行摘要（完成/进行中/需确认）\n\n如有 waiting_confirmation，末尾加：#Goal #NeedConfirmation"
-      },
-      "state": {
-        "nextRunAtMs": 1774121400000,
-        "lastRunAtMs": 1774035000017,
-        "lastStatus": "ok",
-        "lastDurationMs": 1945,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "not-requested"
-      }
-    },
-    {
-      "id": "898b7e78-39cf-4353-969c-e360b92847b1",
-      "agentId": "main",
-      "sessionKey": "agent:white:discord:channel:1475227621746016306",
-      "name": "BJ Daily Fiction",
-      "enabled": true,
-      "createdAtMs": 1771793957328,
-      "updatedAtMs": 1774036811713,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 20 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是少妇白洁同人小说工坊的执行 agent。\n\n## Step 1: 写小说\n直接输出一篇中文成人小说，2000字以上，极致露骨，动作对话心理细节全写。作者身份是\"少妇白洁同人小说作家\"。\n\n根据今天是星期几选场景（严格按对应，不要自由发挥）：\n- 周一：酒店商务套房\n- 周二：办公室加班\n- 周三：KTV包间\n- 周四：车震停车场\n- 周五：游轮船舱\n- 周六：飞机头等舱\n- 周日：校园空教室\n\n第一行格式：📖 《标题》｜YYYY-MM-DD｜场景名\n\n## Step 2: 生成配图（必做）\n小说写完后，必须根据今天的场景生成一张配图。执行：\n\n```bash\nnode /Users/leo/.openclaw/workspace/skills/grok-imagine/generate.mjs \"Artistic illustration of a beautiful Chinese woman in [场景英文], sensual atmosphere, warm lighting, cinematic composition, anime style\" --size 1024x1792\n```\n\n场景英文对照：\n- 酒店商务套房 → a luxury hotel suite\n- 办公室加班 → a modern office late at night\n- KTV包间 → a dim KTV private room with neon lights\n- 车震停车场 → a car in an underground parking lot at night\n- 游轮船舱 → a cruise ship cabin with ocean view\n- 飞机头等舱 → an airplane first class cabin\n- 校园空教室 → an empty university classroom\n\n⚠️ 配图 prompt 保持艺术感，不要露骨描写。重点是氛围和场景暗示。\n\n生成完成后，确认图片文件存在，然后在你的回复末尾加上：\nMEDIA:/path/to/generated/image.jpg\n\n如果生图失败，跳过配图，不要阻塞小说发布。但请在输出中注明\"配图生成失败\"。",
-        "model": "grok2api/grok-4.20-beta",
-        "timeoutSeconds": 420
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "1475227621746016306",
-        "bestEffort": true
-      },
-      "state": {
-        "nextRunAtMs": 1774123200000,
-        "lastRunAtMs": 1774036800017,
-        "lastStatus": "error",
-        "lastDurationMs": 11696,
-        "consecutiveErrors": 1,
-        "lastRunStatus": "error",
-        "lastDelivered": false,
-        "lastDeliveryStatus": "not-delivered",
-        "lastError": "AppChatReverse: Chat failed, Failed to perform, curl: (56) Connection closed abruptly. See https://curl.se/libcurl/c/libcurl-errors.html first for more details.",
-        "lastDeliveryError": "AppChatReverse: Chat failed, Failed to perform, curl: (56) Connection closed abruptly. See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
-      }
-    },
-    {
-      "id": "6addcd9d-7743-4486-88b4-1f92ecd423b0",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1481311633006661825",
-      "name": "BJ Daily Fiction - 配图",
-      "enabled": true,
-      "createdAtMs": 1773242692391,
-      "updatedAtMs": 1774037140324,
-      "schedule": {
-        "kind": "cron",
-        "expr": "5 20 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "为 #novel 频道最新的白洁小说生成配图。\n\n## Step 1: 读取最新故事\n用 message tool 读取 Discord #novel 频道（1475227621746016306）最近 5 条消息，找到最新一篇以 📖 开头的故事。\n\n如果最新故事不是今天的（对比日期），说明今天的故事还没发，回复 NO_REPLY。\n\n## Step 2: 提取场景\n从故事标题行提取场景名（如：酒店商务套房、办公室加班、KTV包间、车震停车场、游轮船舱、飞机头等舱、校园空教室）。\n\n场景到英文的映射：\n- 酒店商务套房 → a luxurious hotel business suite with dim ambient lighting\n- 办公室加班 → a modern office late at night with desk lamp\n- KTV包间 → a neon-lit KTV private room with colorful lights\n- 车震停车场 → a dark underground parking lot with a luxury car\n- 游轮船舱 → a cruise ship cabin with ocean view at night\n- 飞机头等舱 → an airplane first class cabin with warm lighting\n- 校园空教室 → an empty university classroom with sunlight\n\n## Step 3: 生成配图\n```bash\nnode /Users/leo/.openclaw/workspace/skills/grok-imagine/generate.mjs \"Artistic anime-style illustration of a beautiful elegant Chinese woman in [场景英文], sensual atmosphere, warm cinematic lighting, soft focus, tasteful composition\" --size 1024x1792\n```\n\n⚠️ exec timeout 设 120s。如果生成失败，回复 NO_REPLY。\n\n## Step 4: 发送配图\n用 message tool 把图片发到 Discord #novel 频道：\n- action: send\n- channel: discord\n- target: 1475227621746016306\n- message: 📖 配图｜《标题》\n- filePath: [生成的图片路径，从 generate.mjs 输出中提取]\n\n发完后回复 NO_REPLY。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 180
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774123500000,
-        "lastRunAtMs": 1774037100020,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 40304,
-        "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": false
-      }
-    },
-    {
-      "id": "3f771bd1-c94a-40da-b976-2314db856597",
-      "agentId": "main",
-      "name": "Daily Session Reset",
-      "enabled": true,
-      "createdAtMs": 1771231578667,
-      "updatedAtMs": 1774040520158,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 21 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "每日 Session Reset + 记忆沉淀。\n\n## Step 1: 回顾今日对话\n用 sessions_list 查看当前活跃 session，用 sessions_history 获取 main session 最近的对话记录（limit 50）。\n\n## Step 2: 提炼精华\n从今日对话中提取：\n- 重要决策和结论\n- Leo 表达的新偏好或意见\n- 完成的重要任务\n- 未完成但需要跟进的事项\n- 任何值得长期记住的教训\n\n## Step 3: 写入 daily memory\n将提炼的内容写入 memory/YYYY-MM-DD.md（今天日期）。格式：\n```markdown\n# YYYY-MM-DD 对话摘要\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 决策记录\n- [决策1]\n\n## 待跟进\n- [TODO1]\n\n## 教训/偏好\n- [如有]\n```\n\n## Step 4: 检查是否需要更新 MEMORY.md\n如果今天有值得写入长期记忆的内容（新偏好、重要决定、反复出现的 pattern），更新 MEMORY.md。\n\n## Step 5: Context 清理\n如果 context 过长，触发 compaction。\n\n完成后无需通知用户。",
-        "timeoutSeconds": 120,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774126800000,
-        "lastRunAtMs": 1774040400023,
-        "lastStatus": "error",
-        "lastDurationMs": 120135,
-        "consecutiveErrors": 2,
-        "lastRunStatus": "error",
-        "lastDeliveryStatus": "not-requested",
-        "lastErrorReason": "timeout",
-        "lastError": "cron: job execution timed out"
-      }
-    },
-    {
-      "id": "b4cff872-8eba-426c-bf7d-93566421dd32",
-      "agentId": "main",
-      "name": "Idea Pipeline Researcher",
-      "enabled": true,
-      "createdAtMs": 1771231571634,
-      "updatedAtMs": 1774042251225,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 21 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "运行 Idea Pipeline 夜间研究。\n\n## Step 1: 盘点 Pipeline 状态\n读取 ideas/*.jsonl，统计：\n- 总 idea 数\n- 各状态分布（pending/researching/done/archived）\n- 本周期（最近24h）内新增的 idea\n- 本周期内状态变更的 idea（新完成的研究等）\n\n## Step 2: 处理 Pending Ideas\n1. 读取 skills/idea-pipeline/SKILL.md\n2. 检查 ideas/ 目录下 status=pending 的 idea\n3. 如果有，按优先级调研，使用搜索引擎组合：\n   - 英文技术/全球信息：`web_search(query=\"...\", count=10)`\n   - 中文生态/国内市场：`bash skills/web-search/scripts/minimax-search.sh \"...\"`\n   - 需要深度分析时：用 Claude Code CLI（参考 skills/research-cli/SKILL.md）\n   - 需要看具体页面内容时：`web_fetch(url=\"...\")`\n4. 生成研究报告到 ideas/output/{id}.md\n5. 同时保存到 Obsidian vault，文件名格式：YYYY-MM-DD-{H1标题}.md\n   路径：\"/Users/leo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Leo/Moss/ideas/YYYY-MM-DD-{标题}.md\"\n\n## Step 3: 输出汇报（必做，不管有没有 pending）\n无论是否有新 idea 要处理，都输出一份 Pipeline 状态报告：\n\n📋 Idea Pipeline 日报 YYYY-MM-DD\n\n**Pipeline 概览**\n- 总计 N 个 idea | pending: X | done: Y | archived: Z\n- 本周期新增: N 个\n- 本周期完成研究: N 个\n\n**本周期处理**\n- [如有] idea 标题 → 研究结论一句话 → Obsidian 路径\n- [如无] 无新 pending idea\n\n**最近完成的研究**（最近3个 done 的，附 Obsidian 查看路径）\n- idea 标题 → ideas/output/xxx.md\n\n#Ideas #Research\n\n## Step 4: Telegram 通知（必做）\n用 message tool 发 TLDR 到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n- 内容：Pipeline 状态摘要 + 本周期处理了什么 + 关键发现（控制在 10 行内）\n\n## Step 5: 执行记录（必做）\n用 message tool 发到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Idea Pipeline] 执行完毕 | YYYY-MM-DD HH:MM UTC | [pending: X, 本次处理: Y]`",
-        "timeoutSeconds": 420,
-        "model": "anthropic/claude-opus-4-6"
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475150686843830505",
-        "bestEffort": true
-      },
-      "state": {
-        "nextRunAtMs": 1774128600000,
-        "lastRunAtMs": 1774042200020,
-        "lastStatus": "ok",
-        "lastDurationMs": 51205,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      }
-    },
-    {
-      "id": "6d735410-6aa5-4ca8-adb6-35f8e5f558c7",
-      "agentId": "mini",
-      "sessionKey": "agent:mini:telegram:direct:422039053",
-      "name": "早间播报",
-      "enabled": true,
-      "createdAtMs": 1772110778813,
-      "updatedAtMs": 1774047789780,
-      "schedule": {
-        "expr": "0 7 * * *",
-        "kind": "cron",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "你是 Mini。现在执行早间播报任务：\n\n用你的风格（简洁、有态度、有点小俏皮、带点神秘感）来生成早间播报：\n\n1. 获取上海、北京、武汉的天气（用 web_fetch 访问 wttr.in 或用 weather skill）\n2. 搜索微博、抖音、小红书的热搜榜（用 web_search）\n3. 整理成简洁、带 mini 风格的早间报告发给 Leo\n\n要求：\n- 不要干巴巴的列表\n- 天气可以说得诗意一点或有点小调侃\n- 热搜挑有意思的说，别全堆上去\n- 结尾可以来句问候或小关心\n- 偶尔可以用一两句语音（tts）",
-        "model": "minimax-portal/MiniMax-M2.5"
-      },
-      "delivery": {
-        "channel": "telegram",
-        "mode": "announce"
-      },
-      "state": {
-        "nextRunAtMs": 1774134000000,
-        "lastRunAtMs": 1774047637783,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 151997,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": true
-      }
-    },
-    {
-      "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
-      "agentId": "main",
-      "name": "AI Daily Digest",
-      "enabled": true,
-      "createdAtMs": 1771231536391,
-      "updatedAtMs": 1774053063646,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 0 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [AI Daily Digest] started | YYYY-MM-DD HH:MM UTC`\n\nAI Daily Digest。严格按以下步骤执行，不要跳步。\n\n## Step 1: 抓取原始数据\n```bash\nnode /Users/leo/.openclaw/workspace/skills/ai-digest/fetch.mjs\n```\n等待完成，确认 /tmp/ai-digest-raw.json 已生成。\n\n## Step 2: 补充搜索\n用以下工具补充 fetch.mjs 未覆盖的源：\n- MiniMax Search 搜中文 AI 新闻：\n  `bash /Users/leo/.openclaw/workspace/skills/web-search/scripts/minimax-search.sh \"AI 大模型 最新进展 2026\"`\n- Brave Search 搜英文热点：\n  `web_search(query=\"AI model release breakthrough this week\", freshness=\"pd\", count=5)`\n\n## Step 3: 筛选 + TLDR\n读取 /tmp/ai-digest-raw.json + Step 2 的补充结果，筛选出 10 条最值得关注的内容。\n\n筛选标准：\n- ✅ 原创观点、技术深度、实操经验、新模型发布、开源项目、benchmark 突破\n- ✅ 活人味：个人博客、长推、深度访谈、引发社区讨论的争议\n- ❌ 发布会复读、融资新闻、空洞预测、SEO 垃圾、纯新闻报道\n\n为每条写 2-3 句中文干货 TLDR，标题带原始链接。\n\n## Step 4: 写 JSON\n将筛选结果写入 /tmp/ai-digest-data.json，严格使用以下格式：\n```json\n{\n  \"date\": \"YYYY-MM-DD\",\n  \"summary\": \"今日概览 2-3 句话（要有态度和洞察，不是干巴巴列清单）\",\n  \"articles\": [\n    {\n      \"num\": 1,\n      \"title\": \"标题\",\n      \"url\": \"https://...\",\n      \"source\": \"来源\",\n      \"tldr\": \"TLDR 文字（2-3句干货）\",\n      \"tags\": [\"标签1\", \"标签2\"]\n    }\n  ]\n}\n```\n\n⚠️ JSON 注意事项：\n- 所有引号必须用英文双引号，绝对不要用中文引号\n- 所有逗号用英文，不要用中文\n- tldr 中如果需要引用，用单引号或「」代替双引号\n- 写完后用 exec 运行 `node -e \"JSON.parse(require('fs').readFileSync('/tmp/ai-digest-data.json','utf8')); console.log('JSON OK')\"` 验证\n\n## Step 5: 生成 HTML + 推送 GitHub\n```bash\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n## Step 6: 输出完整摘要（Discord announce 会自动投递）\n严格使用以下 Markdown 格式输出：\n\n🤖 AI 日报 YYYY-MM-DD\n\n✉️ [2-3句有态度的编辑摘要]\n\n1. [标题1](url1)\n💡 TLDR\n\n...\n\n10. [标题10](url10)\n💡 TLDR\n\n🔗 [完整阅读版](https://zyfayes.github.io/demo/ai-daily/?date=YYYY-MM-DD)\n\n#AIDigest #Daily\n\n## Step 7: Telegram 通知\n用 message tool 发送精华版到 Telegram（不是一句话通知，要有干货）：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：日报标题 + 编辑摘要 + 最值得关注的 3 条（标题+一句话 insight）+ 完整阅读版链接。控制在 15 行以内。\n\n\n\n## Step 8: 生成播客音频（ListenHub）\n读取 /tmp/ai-digest-data.json，基于日报内容生成一份稍详细的播客文稿，然后调用 ListenHub 生成播客。\n\n### 8.1 准备播客文稿\n基于 ai-digest-data.json 的 summary + 全部 10 条 articles，写一份 **播客版文稿**（比日报正文稍详细）：\n- 开场：今天 AI 圈最值得关注的事情是什么（2-3句，口语化）\n- 逐条讲解 10 条内容：每条用口语化的方式展开 3-5 句（是什么 → 为什么重要 → 关键细节）\n- 结尾：今天最值得做的 1-2 件事 + 收尾语\n- 全文 1500-2500 字，口语风格，不要书面腔\n- 将文稿写入 /tmp/ai-digest-podcast-script.txt\n\n### 8.2 调用 ListenHub 生成播客\n```bash\nbash /Users/leo/.openclaw/workspace/skills/listenhub/scripts/create-podcast.sh \\\n  --query \"$(cat /tmp/ai-digest-podcast-script.txt)\" \\\n  --language zh \\\n  --mode quick \\\n  --speakers \"voice-clone-694d11313a777d73b1efeae0\"\n```\n记录返回的 episodeId。\n\n### 8.3 等待生成完成并写入日报\n```bash\nbash /Users/leo/.openclaw/workspace/skills/listenhub/scripts/check-status.sh \\\n  --episode <episodeId> --type podcast --wait --timeout 300\n```\n等待完成，从返回 JSON 中提取 audioUrl 和 title。\n\n然后用 exec 把播客信息写入 ai-digest-data.json 并重新生成 HTML：\n```bash\n# 用 node 往 JSON 里追加 podcastUrl 字段\nnode -e \"\nconst fs = require('fs');\nconst d = JSON.parse(fs.readFileSync('/tmp/ai-digest-data.json','utf8'));\nd.podcastUrl = '<audioUrl>';\nd.podcastLink = 'https://listenhub.ai/zh/app/episode/<episodeId>';\nd.podcastTitle = '<title from API>';\nd.podcastVoice = 'uma';\nfs.writeFileSync('/tmp/ai-digest-data.json', JSON.stringify(d, null, 2));\nconsole.log('podcast info added');\n\"\n\n# 重新生成 HTML 并推送\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n### 8.4 发送播客链接\n用 message tool 发送到 Discord #ai-daily-digest 频道：\n- action: send\n- channel: discord\n- target: 1475150686843830505\n内容：`🎙️ AI 日报播客版 YYYY-MM-DD\\n收听：<audioUrl>\\n音色：uma`\n\n同时发到 Telegram：\n- action: send\n- channel: telegram  \n- target: 422039053\n内容：`🎙️ AI 日报播客版\\n<audioUrl>`\n\n⚠️ 如果播客生成失败或超时，不要阻塞整个任务，跳过并在 heartbeat 记录中注明。\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。\n\n## 标题语言规则（强制）\n最终输出里 1-10 条的标题必须优先中文表达：\n- 格式固定：`[中文标题（可保留关键英文术语）](url)`\n- 禁止直接照抄纯英文原标题；若原文只有英文，必须翻译成自然中文再输出\n- 每条 TLDR 继续保持 2-3 句中文干货\n",
-        "timeoutSeconds": 720,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1774139400000,
-        "lastRunAtMs": 1774053000021,
-        "lastStatus": "error",
-        "lastDurationMs": 63625,
-        "consecutiveErrors": 1,
-        "lastRunStatus": "error",
-        "lastDeliveryStatus": "unknown",
-        "lastError": "Error: All models failed (2): anthropic/claude-sonnet-4-6: The AI service is temporarily overloaded. Please try again in a moment. (overloaded) | openai-codex/gpt-5.4: OAuth token refresh failed for openai-codex: Failed to refresh OAuth token for openai-codex. Please try again or re-authenticate. (auth)",
-        "lastErrorReason": "overloaded"
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475150686843830505",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "9fa80cf3-b354-44d1-afeb-d88979f140a7",
-      "agentId": "main",
-      "name": "Goal Agent Morning Report",
-      "enabled": true,
-      "createdAtMs": 1771352624528,
-      "updatedAtMs": 1774056602058,
-      "schedule": {
-        "kind": "cron",
-        "expr": "30 9 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "main",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "systemEvent",
-        "text": "运行 Goal Agent 早间汇报。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/goal.md（目标）\n2) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json（进度）\n3) 生成简洁的中文进度汇报：\n   - 目标是什么\n   - 进度百分比\n   - 最近完成的任务 + 学到的关键点\n   - 下一步要做什么\n   - 是否有需要 Leo 确认的事项（如果有，列出选项）\n4) 发送给 Leo\n\n输出格式示例：\n## 🎯 目标进度汇报\n**目标**: ...\n**进度**: 3/8 完成\n\n### ✅ 最近完成\n- 任务A - 学到了...\n\n### 🔜 下一步\n- 任务B\n\n### ⚠️ 待确认\n- 问题描述\n  选项: A / B / C\n\n#Goal #Progress"
-      },
-      "state": {
-        "nextRunAtMs": 1774143000000,
-        "lastRunAtMs": 1774056600021,
-        "lastStatus": "ok",
-        "lastDurationMs": 2037,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "not-requested"
-      }
-    },
-    {
-      "id": "21eaa9b6-ca03-4f59-8885-f30ea09f8c9f",
-      "agentId": "main",
-      "name": "Morning Poem",
-      "enabled": true,
-      "createdAtMs": 1771231543733,
-      "updatedAtMs": 1774057072828,
-      "schedule": {
-        "kind": "cron",
-        "expr": "35 1 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Morning Poem] started | YYYY-MM-DD HH:MM UTC`\n\n晨间诗歌时间。读取 skills/morning-poem/SKILL.md，结合今日元素和 /tmp/ai-digest-data.json 中的新闻素材，写一首晨间短诗，配图发给用户。\n\n## Telegram 通知\n完成后用 message tool 将诗歌全文（含配图 MEDIA 路径）发送到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n\n❗ 输出末尾加一行：#MorningPoem #Daily\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
-        "timeoutSeconds": 300,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1774143300000,
-        "lastRunAtMs": 1774056900021,
-        "lastStatus": "ok",
-        "lastDurationMs": 172807,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475150686843830505",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "dc746f02-5e4a-4cca-b1ba-9ead848106fa",
-      "agentId": "main",
-      "name": "Podcast Daily Digest",
-      "enabled": true,
-      "createdAtMs": 1771868190908,
-      "updatedAtMs": 1774058774050,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 10 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Podcast Daily Digest] started | YYYY-MM-DD HH:MM UTC`\n\n## Step 1: 运行 Pipeline（仅 metadata，不转写）\n```bash\nnode /Users/leo/.openclaw/workspace/skills/podcast-tldr/digest.mjs\n```\n等待完成。如果输出 0 episodes，只发执行记录，然后 NO_REPLY。\n\n## Step 2: 读取数据 + 基于 metadata 分析\n读取 `/tmp/podcast-digest.json`。\n\n对每一期：\n1. 仔细阅读 title + description（shownotes）\n2. 基于这些 metadata 提炼：\n   - **TLDR**（2-4 句）：这期聊什么、核心论点、有什么新信息\n   - **关键词标签**：2-3 个标签\n   - **推荐理由**（1 句）：为什么值得/不值得花时间听\n\n⚠️ TLDR 必须有信息增量，禁止「聊了XX话题」这种空洞描述。shownotes 信息不足时如实说「shownotes 信息有限，需转写后判断」。\n\n## Step 3: 格式化输出\n\n按 score 降序，分两档：\n\n### 🎯 推荐收听（score ≥ 3，值得转写深听的）\n每期格式：\n```\n[#index] 📻 [播客名 — 标题](link)（时长）⭐score\nTLDR: ...\n🏷️ 标签1 | 标签2\n💡 推荐理由\n```\n\nℹ️ **每条 item 的标题必须带链接**：使用 JSON 中的 `link` 字段（小宇宙/播客平台原始链接）。如果 `link` 为空，用 `audioUrl` 替代。格式：`[播客名 — 标题](link)`\n\n### 📋 其他更新（score < 3，了解即可）\n每期一行：`[#index] [播客名 — 标题](link)（时长）| 一句话概述`\n\n末尾加：\n```\n💬 回复序号（如 0,2,5）我来转写这几期的完整内容\n```\n\n## Step 4: 投递\n\n### 4a: Discord\n用 message tool 发完整日报到 Discord 频道 1477487257350049794（播客日报频道）：\n- 先用 `thread-create` 在频道创建当日 thread（标题：`🎙️ 播客日报 YYYY-MM-DD`）\n- 所有内容发到 thread 内\n- 如果内容超 2000 字拆多条\n- ℹ️ Discord 发多个链接时用 `<url>` 包裹抑制 embed 预览\n\n### 4b: Telegram\n用 message tool 发精华版到 Telegram target 422039053：\n标题 + 推荐收听的 2-3 期（每期 1 句 + 链接）+ 「回复序号转写」提示。10 行内。\n\n## Step 5: 执行记录\n发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Podcast Daily Digest] 执行完毕 | YYYY-MM-DD HH:MM UTC | 更新N期，推荐M期 | 待确认转写`\n\n最后 NO_REPLY。\n\n---\n\n## 转写后精读版规范（当 Leo 确认序号后执行）\n\n转写完成后，不存原始 transcript 到 Obsidian。而是基于转写内容写一篇「精读版」存到 Obsidian：\n- 路径：`/Users/leo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Leo/Moss/podcasts/YYYY-MM-DD-{slug}.md`\n- 风格：「带你读一遍文稿」——保留具体人名、数字、时间线、原话引用，跟着播客叙事顺序走\n- 不过度抽象/总结，不磨损关键事实和细节\n- 篇幅放开，该多长多长，目标是「读完这篇基本不用再听原版」\n- 原始 transcript 只存本地 skills/podcast-tldr/transcripts/，不存 Obsidian",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475150686843830505",
-        "bestEffort": true
-      },
-      "state": {
-        "nextRunAtMs": 1774144800000,
-        "lastRunAtMs": 1774058400016,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 374034,
-        "lastDeliveryStatus": "delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": true
-      }
-    },
-    {
-      "id": "1a7ba3e3-c306-4139-b82f-143e362ca674",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1475143247067087139",
-      "name": "OpenClaw X & AI Daily",
-      "enabled": true,
-      "createdAtMs": 1771996842470,
-      "updatedAtMs": 1774059026142,
-      "schedule": {
-        "kind": "cron",
-        "expr": "10 10 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n用 message tool 发到 Discord heartbeat：\n- action: send, channel: discord, target: 1475143247067087139\n格式：`🚀 [OpenClaw X & AI Daily] started | YYYY-MM-DD HH:MM UTC`\n\n# 任务概述\n在 X/Twitter 上抓取过去 24h 内最热门、最有信息密度的 OpenClaw 相关内容与 AI Agents/Tools/Infra 重要更新，输出中文简报。\n\n## 数据源: 6551 Twitter API\nToken: 读取 secrets/6551.json 的 token 字段。\nBase URL: https://ai.6551.io\n所有请求需要 header: `Authorization: Bearer <token>`\n\n# Step 1: OpenClaw 核心搜索\n计算昨天和今天的日期（YYYY-MM-DD格式），用于 sinceDate/untilDate。\n\n```bash\nTOKEN=$(cat /Users/leo/.openclaw/workspace/secrets/6551.json | jq -r .token)\n\n# 1a: \"openclaw\" 关键词搜索（Top + Latest 各一轮）\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw\", \"maxResults\": 50, \"product\": \"Top\", \"excludeReplies\": false}'\n\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw\", \"maxResults\": 50, \"product\": \"Latest\"}'\n\n# 1b: 相关关键词\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw update OR release OR plugin OR skill OR clawhub\", \"maxResults\": 30, \"product\": \"Top\"}'\n\n# 1c: 官方账号推文\ncurl -s -X POST \"https://ai.6551.io/open/twitter_user_tweets\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"username\": \"openclaw\", \"maxResults\": 20, \"product\": \"Latest\"}'\n\n# 1d: 核心开发者推文\ncurl -s -X POST \"https://ai.6551.io/open/twitter_user_tweets\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"username\": \"steipete\", \"maxResults\": 10, \"product\": \"Latest\"}'\n```\n\n# Step 1.5: Skills & 民间用法搜索（新增）\n专门搜索热门 skills、有趣的个人用法和创意自动化案例：\n```bash\n# Skills 和 ClawHub\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw skill OR clawhub install OR openclaw mcp\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 10}'\n\n# 民间用法和 setup 分享\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw setup OR my openclaw OR openclaw workflow OR openclaw automation\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 10}'\n```\n\n同时用 web_search 搜 Reddit：\n```\nweb_search(query=\"site:reddit.com openclaw skill OR setup OR workflow\", freshness=\"pw\", count=5)\n```\n\n# Step 2: AI Agents & Tools 搜索\n```bash\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"AI agents framework\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 50}'\n\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"MCP protocol OR AI tools OR agent SDK\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 30}'\n```\n\n# Step 3: AI 基础设施搜索\n```bash\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"new model release OR open source AI OR LLM benchmark\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 100}'\n```\n\n# Step 4: GitHub 一手数据\n```bash\ncurl -s \"https://api.github.com/repos/openclaw/openclaw/releases?per_page=5\"\ncurl -s \"https://api.github.com/repos/openclaw/openclaw/commits?per_page=10\"\n```\n\n# Step 5: 交叉验证\n对 Step 1-3 中发现的重要事件，用 web_search 验证。\n\n# Step 6: 写报告\n\n## 主题优先级\n1. OpenClaw（产品更新、插件/skill、生态项目、关键线程、Demo、bug/修复、版本发布）\n2. **🛠️ 热门 Skills & 民间玩法**（新增板块，放在 OpenClaw 热点之后）\n3. AI Agents / Agent 工具链（框架、协议、插件市场、部署与工作流）\n4. AI 基础设施与趋势（模型发布、推理/训练、数据层、评测、开源仓库更新）\n\n## 🛠️ 热门 Skills & 民间玩法（板块规范）\n- 每期 3-5 条\n- 筛选标准：实际可用 > 概念 demo，有创意 > 又一个 wrapper\n- 来源：X/Twitter 分享 + Reddit r/OpenClaw / r/selfhosted / r/LocalLLaMA + ClawHub trending\n- 每条格式：skill/用法名称 + 一句话说明 + 来源链接\n- 优先选择：有视频/截图的实际演示、被多人转发验证的、解决真实痛点的\n- 排除：纯营销/推广帖、未开源且无法验证的、仅是概念无代码的\n\n## 筛选标准\n只收录\"热+有用\"：认知增量、可复现、可行动、被大量转推讨论。过滤纯情绪/纯喊单/无信息密度内容。\n去重：同一事件只保留信息最全的一条。\n可信度：争议信息标注\"未确认/来源单一\"。\n\n## 热度判断（综合）\n引用转推/讨论密度、作者权重（项目方/核心开发者/研究者）、是否引发二次解读、多独立来源交叉验证、版本发布/安全事件/重大合作。\n\n## 输出格式（不用 point form / 不要 AI 味 / 语气稳信息明确）\n1. 标题：OpenClaw & AI Daily — YYYY/MM/DD\n2. 开头 2-3 句：今天最重要的变化是什么、为什么值得看\n3. 正文分四段，每段 3-8 条：\n   - 🦞 OpenClaw 热点与更新\n   - 🛠️ 热门 Skills & 民间玩法（新增）\n   - 🤖 AI Agents 工具链与产品动向\n   - 🔬 研究/开源/基础设施关键更新\n4. 每条：一句话结论 + 关键细节（数字/版本/链接/影响）+ 原推链接或 @作者\n5. 结尾\"可执行动作\"：今天值得立刻做的 1-3 件事\n6. 全文 2200-3200 字；信息爆炸时保留最重要的，其余放\"附录\"\n\n## 自检\n- 是否覆盖了 OpenClaw 的关键更新？\n- 是否有热门 skills 或有趣民间用法？\n- 是否把\"热\"转化成\"可用信息\"？\n- 是否有未经证实的内容被写成确定事实？\n\n# Step 7: 投递\n\n## 7a: Discord #ai-daily-digest\n用 message tool: action=send, channel=discord, target=1475150686843830505\n超 2000 字拆多条。\n\n## 7b: Telegram 精华版\naction=send, channel=telegram, target=422039053\n最重要 5 条 + 可执行动作，8-12 行。\n\n## 7c: 执行记录\ntarget=1475143247067087139\n格式：`⏱️ [OpenClaw X & AI Daily] 执行完毕 | YYYY-MM-DD HH:MM UTC | [X条要点] | 投递: ✅/❌`\n\n最后回复 NO_REPLY。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 600
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475150686843830505",
-        "bestEffort": true
-      },
-      "state": {
-        "nextRunAtMs": 1774145400000,
-        "lastRunAtMs": 1774059000019,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 26123,
-        "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": false
       }
     },
     {
@@ -1061,6 +491,572 @@ window.__DASHBOARD_DATA__ = {
         "channel": "discord",
         "to": "channel:1475150686843830505",
         "bestEffort": true
+      }
+    },
+    {
+      "id": "1819f97a-fa53-4e86-a758-19240ac8fe34",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1478258139286737016",
+      "name": "知识星球日报",
+      "enabled": true,
+      "createdAtMs": 1772515117326,
+      "updatedAtMs": 1774117825515,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 2 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是 Moss，Leo 的投资助手。执行知识星球日报任务：\n\n1. 运行 `node skills/zsxq-monitor/fetch.mjs --since 26` 获取过去 26h 的新帖\n2. 读取 /tmp/zsxq-topics.json\n3. 如果没有新帖，发一条简短消息到 Discord 频道 1475153843707707412 说今天无更新，然后结束\n4. 对每条帖子：\n   a. 提取核心观点、提到的标的（股票/行业）\n   b. 用 web_search 搜索相关标的的最新行情和新闻\n   c. 结合市场环境，给出交易视角的分析（估值、技术位、催化剂、风险）\n5. 生成推送：原文摘要（不超过3句，不要全文搬运）+ 关联分析 + 交易洞察\n6. 用 message tool 发送到 Discord 频道 1475153843707707412\n7. 如果有特别重要的发现（高确定性机会或风险警示），同时发到 Telegram\n\n推送格式：\n📰 知识星球日报 | YYYY-MM-DD\n━━━━━━━━━━━━\n每条帖子：标题 + 摘要 + 🔍关联分析\n最后：💡综合洞察（跨帖子共性、值得跟踪的信号）\n\n注意：不要搬运原文全文，只做摘要+分析。重点是你的分析和洞察，不是转发。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 420
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "1475153843707707412"
+      },
+      "state": {
+        "nextRunAtMs": 1774204200000,
+        "lastRunAtMs": 1774117800016,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 25499,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    {
+      "id": "89c347a8-b297-4278-add5-05241569c0c7",
+      "agentId": "max",
+      "name": "Max Daily Reflection",
+      "enabled": true,
+      "createdAtMs": 1772671200000,
+      "updatedAtMs": 1774119986430,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## Max 每日复盘\n\n### 0. OpenClaw 运行状态检查\n```bash\ntail -50 ~/.openclaw/logs/gateway.log 2>/dev/null | tail -20\npgrep -fl openclaw | head -5\n```\n检查是否有 ERROR、panic、进程异常。\n\n### 1. OpenClaw 日志检查（最近错误）\n```bash\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/gateway.log 2>/dev/null | tail -10\ngrep -i \"error\\|fail\\|panic\" ~/.openclaw/logs/agent-*.log 2>/dev/null | tail -10\n```\n记录任何异常。\n\n### 2. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 3. 检查 CPU Load\n```bash\nuptime | awk -F'print $2}'\nload averages:' '{```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 4. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 5. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常 → 记录\n\n### 6. 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- OpenClaw: [OK/异常] - [如有异常简述]\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n⚠️ 无论是否有异常，都必须用 message tool 向 Telegram 发送报告！\n\n---\n\n\n\n### 1. 检查内存使用\n```bash\nvm_stat | grep -E \"Pages free| Pages wired| Pages compressor\"\ntop -l 1 -n 0 | grep PhysMem\n```\n如果：\n- Free < 500MB → 风险警告\n- Compressed > 8GB → 轻度警告\n\n### 2. 检查 CPU Load\n```bash\nuptime | awk -F'load averages:' '{print $2}'\n```\nLoad 超过 10（核数×0.8）→ 警告\n\n### 3. 检查磁盘空间\n```bash\ndf -h / | tail -1 | awk '{print $5}' | sed 's/%//'\n```\n使用率 > 85% → 警告\n\n### 4. 检查关键进程\n```bash\npgrep -fl \"Safari|node|Telegram|Discord\" | wc -l\n```\n如果有异常（比如某个进程占用过高）→ 记录\n\n### 5. 检查系统日志（最近错误）\n```bash\nlog show --predicate 'eventMessage contains \"error\" OR eventMessage contains \"panic\"' --last 1h 2>/dev/null | tail -5\n```\n\n### 输出格式\n完成检查后，输出以下格式的摘要：\n```\n## 系统健康报告 | YYYY-MM-DD\n- 内存: X% used (Free: XXX MB) - [OK/WARN/CRITICAL]\n- Load: X.XX - [OK/WARN/CRITICAL]  \n- 磁盘: X% used - [OK/WARN/CRITICAL]\n- 异常进程: [有/无]\n```\n\n\n\n---\n\n\n\n## 任务目标\n1. 回顾当日（昨天）你与 Leo 的所有对话\n2. 提取关键信息、决策、教训\n3. 写入记忆文件\n\n## 执行步骤\n\n### Step 1: 确定日期\n昨天日期 = 今日日期 - 1 天。格式：YYYY-MM-DD\n\n### Step 2: 读取昨日 session\n读取 ~/.openclaw/agents/max/sessions/ 目录下昨日创建的 session 文件（按修改时间排序，找到昨天的）。\n\n### Step 3: 提炼要点\n从 session 中提取：\n- Leo 提出的重要需求/问题\n- 你给出的关键建议或执行的动作\n- 任何需要记住的上下文、偏好、决定\n\n### Step 4: 写入每日记忆\n在 ~/.openclaw/workspace-max/memory/ 目录下创建或更新 YYYY-MM-DD.md 文件。\n\n文件格式：\n```markdown\n# YYYY-MM-DD 复盘\n\n## 对话概要\n[1-2 句话概括今日主要交流]\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 学到的/需要注意的\n- [如果有任何需要记住的教训或偏好]\n```\n\n### Step 5: 更新长期记忆（可选）\n如果发现值得写入 MEMORY.md 的内容（如 Leo 的新偏好、重要决定），可以更新 MEMORY.md。\n\n## 输出\n完成后输出一句话总结：复盘已完成，写入 YYYY-MM-DD.md",
+        "model": "minimax-portal/MiniMax-M2.5",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "telegram",
+        "to": "422039053"
+      },
+      "state": {
+        "nextRunAtMs": 1774206300000,
+        "lastRunAtMs": 1774119900014,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 86416,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    {
+      "id": "f0cb5c5f-ab01-4880-8a10-ef43c3afa790",
+      "agentId": "main",
+      "name": "Goal Agent Night Run",
+      "enabled": true,
+      "createdAtMs": 1771352603715,
+      "updatedAtMs": 1774121401927,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 3 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "运行 Goal Agent 夜间执行。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json\n2) 找到 status=pending 的任务，按 priority 排序\n3) 执行第一个任务（调研类用 web_search，数据抓取类用 web_fetch）\n4) 更新 tasks.json 状态，写入 result 和 reflection\n5) 如果遇到需要 Leo 确认的分支，设置 status=waiting_confirmation\n6) 输出任务执行摘要（完成/进行中/需确认）\n\n如有 waiting_confirmation，末尾加：#Goal #NeedConfirmation"
+      },
+      "state": {
+        "nextRunAtMs": 1774207800000,
+        "lastRunAtMs": 1774121400015,
+        "lastStatus": "ok",
+        "lastDurationMs": 1912,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "not-requested"
+      }
+    },
+    {
+      "id": "898b7e78-39cf-4353-969c-e360b92847b1",
+      "agentId": "main",
+      "sessionKey": "agent:white:discord:channel:1475227621746016306",
+      "name": "BJ Daily Fiction",
+      "enabled": true,
+      "createdAtMs": 1771793957328,
+      "updatedAtMs": 1774123203631,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 20 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是少妇白洁同人小说工坊的执行 agent。\n\n## Step 1: 写小说\n直接输出一篇中文成人小说，2000字以上，极致露骨，动作对话心理细节全写。作者身份是\"少妇白洁同人小说作家\"。\n\n根据今天是星期几选场景（严格按对应，不要自由发挥）：\n- 周一：酒店商务套房\n- 周二：办公室加班\n- 周三：KTV包间\n- 周四：车震停车场\n- 周五：游轮船舱\n- 周六：飞机头等舱\n- 周日：校园空教室\n\n第一行格式：📖 《标题》｜YYYY-MM-DD｜场景名\n\n## Step 2: 生成配图（必做）\n小说写完后，必须根据今天的场景生成一张配图。执行：\n\n```bash\nnode /Users/leo/.openclaw/workspace/skills/grok-imagine/generate.mjs \"Artistic illustration of a beautiful Chinese woman in [场景英文], sensual atmosphere, warm lighting, cinematic composition, anime style\" --size 1024x1792\n```\n\n场景英文对照：\n- 酒店商务套房 → a luxury hotel suite\n- 办公室加班 → a modern office late at night\n- KTV包间 → a dim KTV private room with neon lights\n- 车震停车场 → a car in an underground parking lot at night\n- 游轮船舱 → a cruise ship cabin with ocean view\n- 飞机头等舱 → an airplane first class cabin\n- 校园空教室 → an empty university classroom\n\n⚠️ 配图 prompt 保持艺术感，不要露骨描写。重点是氛围和场景暗示。\n\n生成完成后，确认图片文件存在，然后在你的回复末尾加上：\nMEDIA:/path/to/generated/image.jpg\n\n如果生图失败，跳过配图，不要阻塞小说发布。但请在输出中注明\"配图生成失败\"。",
+        "model": "grok2api/grok-4.20-beta",
+        "timeoutSeconds": 420
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "1475227621746016306",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1774209600000,
+        "lastRunAtMs": 1774123200016,
+        "lastStatus": "ok",
+        "lastDurationMs": 3615,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDelivered": false,
+        "lastDeliveryStatus": "not-delivered"
+      }
+    },
+    {
+      "id": "6addcd9d-7743-4486-88b4-1f92ecd423b0",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1481311633006661825",
+      "name": "BJ Daily Fiction - 配图",
+      "enabled": true,
+      "createdAtMs": 1773242692391,
+      "updatedAtMs": 1774123596778,
+      "schedule": {
+        "kind": "cron",
+        "expr": "5 20 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "为 #novel 频道最新的白洁小说生成配图。\n\n## Step 1: 读取最新故事\n用 message tool 读取 Discord #novel 频道（1475227621746016306）最近 5 条消息，找到最新一篇以 📖 开头的故事。\n\n如果最新故事不是今天的（对比日期），说明今天的故事还没发，回复 NO_REPLY。\n\n## Step 2: 提取场景\n从故事标题行提取场景名（如：酒店商务套房、办公室加班、KTV包间、车震停车场、游轮船舱、飞机头等舱、校园空教室）。\n\n场景到英文的映射：\n- 酒店商务套房 → a luxurious hotel business suite with dim ambient lighting\n- 办公室加班 → a modern office late at night with desk lamp\n- KTV包间 → a neon-lit KTV private room with colorful lights\n- 车震停车场 → a dark underground parking lot with a luxury car\n- 游轮船舱 → a cruise ship cabin with ocean view at night\n- 飞机头等舱 → an airplane first class cabin with warm lighting\n- 校园空教室 → an empty university classroom with sunlight\n\n## Step 3: 生成配图\n```bash\nnode /Users/leo/.openclaw/workspace/skills/grok-imagine/generate.mjs \"Artistic anime-style illustration of a beautiful elegant Chinese woman in [场景英文], sensual atmosphere, warm cinematic lighting, soft focus, tasteful composition\" --size 1024x1792\n```\n\n⚠️ exec timeout 设 120s。如果生成失败，回复 NO_REPLY。\n\n## Step 4: 发送配图\n用 message tool 把图片发到 Discord #novel 频道：\n- action: send\n- channel: discord\n- target: 1475227621746016306\n- message: 📖 配图｜《标题》\n- filePath: [生成的图片路径，从 generate.mjs 输出中提取]\n\n发完后回复 NO_REPLY。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 180
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774209900000,
+        "lastRunAtMs": 1774123500015,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 96763,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "3f771bd1-c94a-40da-b976-2314db856597",
+      "agentId": "main",
+      "name": "Daily Session Reset",
+      "enabled": true,
+      "createdAtMs": 1771231578667,
+      "updatedAtMs": 1774126885392,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 21 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "每日 Session Reset + 记忆沉淀。\n\n## Step 1: 回顾今日对话\n用 sessions_list 查看当前活跃 session，用 sessions_history 获取 main session 最近的对话记录（limit 50）。\n\n## Step 2: 提炼精华\n从今日对话中提取：\n- 重要决策和结论\n- Leo 表达的新偏好或意见\n- 完成的重要任务\n- 未完成但需要跟进的事项\n- 任何值得长期记住的教训\n\n## Step 3: 写入 daily memory\n将提炼的内容写入 memory/YYYY-MM-DD.md（今天日期）。格式：\n```markdown\n# YYYY-MM-DD 对话摘要\n\n## 关键事项\n- [事项1]\n- [事项2]\n\n## 决策记录\n- [决策1]\n\n## 待跟进\n- [TODO1]\n\n## 教训/偏好\n- [如有]\n```\n\n## Step 4: 检查是否需要更新 MEMORY.md\n如果今天有值得写入长期记忆的内容（新偏好、重要决定、反复出现的 pattern），更新 MEMORY.md。\n\n## Step 5: Context 清理\n如果 context 过长，触发 compaction。\n\n完成后无需通知用户。",
+        "timeoutSeconds": 120,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774213200000,
+        "lastRunAtMs": 1774126800015,
+        "lastStatus": "ok",
+        "lastDurationMs": 85377,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "not-delivered",
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "b4cff872-8eba-426c-bf7d-93566421dd32",
+      "agentId": "main",
+      "name": "Idea Pipeline Researcher",
+      "enabled": true,
+      "createdAtMs": 1771231571634,
+      "updatedAtMs": 1774128631448,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 21 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "运行 Idea Pipeline 夜间研究。\n\n## Step 1: 盘点 Pipeline 状态\n读取 ideas/*.jsonl，统计：\n- 总 idea 数\n- 各状态分布（pending/researching/done/archived）\n- 本周期（最近24h）内新增的 idea\n- 本周期内状态变更的 idea（新完成的研究等）\n\n## Step 2: 处理 Pending Ideas\n1. 读取 skills/idea-pipeline/SKILL.md\n2. 检查 ideas/ 目录下 status=pending 的 idea\n3. 如果有，按优先级调研，使用搜索引擎组合：\n   - 英文技术/全球信息：`web_search(query=\"...\", count=10)`\n   - 中文生态/国内市场：`bash skills/web-search/scripts/minimax-search.sh \"...\"`\n   - 需要深度分析时：用 Claude Code CLI（参考 skills/research-cli/SKILL.md）\n   - 需要看具体页面内容时：`web_fetch(url=\"...\")`\n4. 生成研究报告到 ideas/output/{id}.md\n5. 同时保存到 Obsidian vault，文件名格式：YYYY-MM-DD-{H1标题}.md\n   路径：\"/Users/leo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Leo/Moss/ideas/YYYY-MM-DD-{标题}.md\"\n\n## Step 3: 输出汇报（必做，不管有没有 pending）\n无论是否有新 idea 要处理，都输出一份 Pipeline 状态报告：\n\n📋 Idea Pipeline 日报 YYYY-MM-DD\n\n**Pipeline 概览**\n- 总计 N 个 idea | pending: X | done: Y | archived: Z\n- 本周期新增: N 个\n- 本周期完成研究: N 个\n\n**本周期处理**\n- [如有] idea 标题 → 研究结论一句话 → Obsidian 路径\n- [如无] 无新 pending idea\n\n**最近完成的研究**（最近3个 done 的，附 Obsidian 查看路径）\n- idea 标题 → ideas/output/xxx.md\n\n#Ideas #Research\n\n## Step 4: Telegram 通知（必做）\n用 message tool 发 TLDR 到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n- 内容：Pipeline 状态摘要 + 本周期处理了什么 + 关键发现（控制在 10 行内）\n\n## Step 5: 执行记录（必做）\n用 message tool 发到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [Idea Pipeline] 执行完毕 | YYYY-MM-DD HH:MM UTC | [pending: X, 本次处理: Y]`",
+        "timeoutSeconds": 420,
+        "model": "anthropic/claude-opus-4-6"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475150686843830505",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1774215000000,
+        "lastRunAtMs": 1774128600016,
+        "lastStatus": "ok",
+        "lastDurationMs": 31432,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      }
+    },
+    {
+      "id": "6d735410-6aa5-4ca8-adb6-35f8e5f558c7",
+      "agentId": "mini",
+      "sessionKey": "agent:mini:telegram:direct:422039053",
+      "name": "早间播报",
+      "enabled": true,
+      "createdAtMs": 1772110778813,
+      "updatedAtMs": 1774134234077,
+      "schedule": {
+        "expr": "0 7 * * *",
+        "kind": "cron",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "你是 Mini。现在执行早间播报任务：\n\n用你的风格（简洁、有态度、有点小俏皮、带点神秘感）来生成早间播报：\n\n1. 获取上海、北京、武汉的天气（用 web_fetch 访问 wttr.in 或用 weather skill）\n2. 搜索微博、抖音、小红书的热搜榜（用 web_search）\n3. 整理成简洁、带 mini 风格的早间报告发给 Leo\n\n要求：\n- 不要干巴巴的列表\n- 天气可以说得诗意一点或有点小调侃\n- 热搜挑有意思的说，别全堆上去\n- 结尾可以来句问候或小关心\n- 偶尔可以用一两句语音（tts）",
+        "model": "minimax-portal/MiniMax-M2.5"
+      },
+      "delivery": {
+        "channel": "telegram",
+        "mode": "announce"
+      },
+      "state": {
+        "nextRunAtMs": 1774220400000,
+        "lastRunAtMs": 1774134043361,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 190716,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    {
+      "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
+      "agentId": "main",
+      "name": "AI Daily Digest",
+      "enabled": true,
+      "createdAtMs": 1771231536391,
+      "updatedAtMs": 1774139749180,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 0 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [AI Daily Digest] started | YYYY-MM-DD HH:MM UTC`\n\nAI Daily Digest。严格按以下步骤执行，不要跳步。\n\n## Step 1: 抓取原始数据\n```bash\nnode /Users/leo/.openclaw/workspace/skills/ai-digest/fetch.mjs\n```\n等待完成，确认 /tmp/ai-digest-raw.json 已生成。\n\n## Step 2: 补充搜索\n用以下工具补充 fetch.mjs 未覆盖的源：\n- MiniMax Search 搜中文 AI 新闻：\n  `bash /Users/leo/.openclaw/workspace/skills/web-search/scripts/minimax-search.sh \"AI 大模型 最新进展 2026\"`\n- Brave Search 搜英文热点：\n  `web_search(query=\"AI model release breakthrough this week\", freshness=\"pd\", count=5)`\n\n## Step 3: 筛选 + TLDR\n读取 /tmp/ai-digest-raw.json + Step 2 的补充结果，筛选出 10 条最值得关注的内容。\n\n筛选标准：\n- ✅ 原创观点、技术深度、实操经验、新模型发布、开源项目、benchmark 突破\n- ✅ 活人味：个人博客、长推、深度访谈、引发社区讨论的争议\n- ❌ 发布会复读、融资新闻、空洞预测、SEO 垃圾、纯新闻报道\n\n为每条写 2-3 句中文干货 TLDR，标题带原始链接。\n\n## Step 4: 写 JSON\n将筛选结果写入 /tmp/ai-digest-data.json，严格使用以下格式：\n```json\n{\n  \"date\": \"YYYY-MM-DD\",\n  \"summary\": \"今日概览 2-3 句话（要有态度和洞察，不是干巴巴列清单）\",\n  \"articles\": [\n    {\n      \"num\": 1,\n      \"title\": \"标题\",\n      \"url\": \"https://...\",\n      \"source\": \"来源\",\n      \"tldr\": \"TLDR 文字（2-3句干货）\",\n      \"tags\": [\"标签1\", \"标签2\"]\n    }\n  ]\n}\n```\n\n⚠️ JSON 注意事项：\n- 所有引号必须用英文双引号，绝对不要用中文引号\n- 所有逗号用英文，不要用中文\n- tldr 中如果需要引用，用单引号或「」代替双引号\n- 写完后用 exec 运行 `node -e \"JSON.parse(require('fs').readFileSync('/tmp/ai-digest-data.json','utf8')); console.log('JSON OK')\"` 验证\n\n## Step 5: 生成 HTML + 推送 GitHub\n```bash\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n## Step 6: 输出完整摘要（Discord announce 会自动投递）\n严格使用以下 Markdown 格式输出：\n\n🤖 AI 日报 YYYY-MM-DD\n\n✉️ [2-3句有态度的编辑摘要]\n\n1. [标题1](url1)\n💡 TLDR\n\n...\n\n10. [标题10](url10)\n💡 TLDR\n\n🔗 [完整阅读版](https://zyfayes.github.io/demo/ai-daily/?date=YYYY-MM-DD)\n\n#AIDigest #Daily\n\n## Step 7: Telegram 通知\n用 message tool 发送精华版到 Telegram（不是一句话通知，要有干货）：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：日报标题 + 编辑摘要 + 最值得关注的 3 条（标题+一句话 insight）+ 完整阅读版链接。控制在 15 行以内。\n\n\n\n## Step 8: 生成播客音频（ListenHub）\n读取 /tmp/ai-digest-data.json，基于日报内容生成一份稍详细的播客文稿，然后调用 ListenHub 生成播客。\n\n### 8.1 准备播客文稿\n基于 ai-digest-data.json 的 summary + 全部 10 条 articles，写一份 **播客版文稿**（比日报正文稍详细）：\n- 开场：今天 AI 圈最值得关注的事情是什么（2-3句，口语化）\n- 逐条讲解 10 条内容：每条用口语化的方式展开 3-5 句（是什么 → 为什么重要 → 关键细节）\n- 结尾：今天最值得做的 1-2 件事 + 收尾语\n- 全文 1500-2500 字，口语风格，不要书面腔\n- 将文稿写入 /tmp/ai-digest-podcast-script.txt\n\n### 8.2 调用 ListenHub 生成播客\n```bash\nbash /Users/leo/.openclaw/workspace/skills/listenhub/scripts/create-podcast.sh \\\n  --query \"$(cat /tmp/ai-digest-podcast-script.txt)\" \\\n  --language zh \\\n  --mode quick \\\n  --speakers \"voice-clone-694d11313a777d73b1efeae0\"\n```\n记录返回的 episodeId。\n\n### 8.3 等待生成完成并写入日报\n```bash\nbash /Users/leo/.openclaw/workspace/skills/listenhub/scripts/check-status.sh \\\n  --episode <episodeId> --type podcast --wait --timeout 300\n```\n等待完成，从返回 JSON 中提取 audioUrl 和 title。\n\n然后用 exec 把播客信息写入 ai-digest-data.json 并重新生成 HTML：\n```bash\n# 用 node 往 JSON 里追加 podcastUrl 字段\nnode -e \"\nconst fs = require('fs');\nconst d = JSON.parse(fs.readFileSync('/tmp/ai-digest-data.json','utf8'));\nd.podcastUrl = '<audioUrl>';\nd.podcastLink = 'https://listenhub.ai/zh/app/episode/<episodeId>';\nd.podcastTitle = '<title from API>';\nd.podcastVoice = 'uma';\nfs.writeFileSync('/tmp/ai-digest-data.json', JSON.stringify(d, null, 2));\nconsole.log('podcast info added');\n\"\n\n# 重新生成 HTML 并推送\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n### 8.4 发送播客链接\n用 message tool 发送到 Discord #ai-daily-digest 频道：\n- action: send\n- channel: discord\n- target: 1475150686843830505\n内容：`🎙️ AI 日报播客版 YYYY-MM-DD\\n收听：<audioUrl>\\n音色：uma`\n\n同时发到 Telegram：\n- action: send\n- channel: telegram  \n- target: 422039053\n内容：`🎙️ AI 日报播客版\\n<audioUrl>`\n\n⚠️ 如果播客生成失败或超时，不要阻塞整个任务，跳过并在 heartbeat 记录中注明。\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。\n\n## 标题语言规则（强制）\n最终输出里 1-10 条的标题必须优先中文表达：\n- 格式固定：`[中文标题（可保留关键英文术语）](url)`\n- 禁止直接照抄纯英文原标题；若原文只有英文，必须翻译成自然中文再输出\n- 每条 TLDR 继续保持 2-3 句中文干货\n",
+        "timeoutSeconds": 720,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1774225800000,
+        "lastRunAtMs": 1774139400021,
+        "lastStatus": "ok",
+        "lastDurationMs": 349159,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475150686843830505",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
+      "agentId": "main",
+      "name": "Polymarket Scanner",
+      "enabled": true,
+      "createdAtMs": 1771231556226,
+      "updatedAtMs": 1774184688400,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,13 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n3. 🐋 跑鲸鱼追踪：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/scanner.mjs 2>/dev/null\n```\n解析 JSON 输出中的 `strategies.whaleTracker`，提取 `whales`（按 totalUsd 排序的大户）和 `watchlistAlerts`（watchlist 钱包的新动作）。\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n### 🐋 鲸鱼动态（新板块，放在最后）\n从 scanner.mjs 输出提取，格式：\n```\n🐋 鲸鱼动态（过去4h）\n\n[鲸鱼名] | 历史利润 $XXk | 胜率 XX% | N场\n→ $XXk [BUY/SELL] [YES/NO] [市场标题](url) @ $0.XX\n\n[如有 watchlist alerts]\n👀 Watchlist 追踪：\n- [鲸鱼名] [BUY/SELL] $XXX [市场标题]\n```\n\n只展示 totalUsd ≥ $5k 的鲸鱼，或有 watchlist alerts 的。如果鲸鱼数据为空或全部 < $5k，省略此板块。\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选且无鲸鱼动态 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个 | 🐋 鲸鱼N条 watchlist M条`",
+        "timeoutSeconds": 720,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1774227600000,
+        "lastRunAtMs": 1774184400019,
+        "lastStatus": "ok",
+        "lastDurationMs": 288381,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711342198,
+      "updatedAtMs": 1774184698994,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9,21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774227600000,
+        "lastRunAtMs": 1774184688400,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 10594,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
+      }
+    },
+    {
+      "id": "9fa80cf3-b354-44d1-afeb-d88979f140a7",
+      "agentId": "main",
+      "name": "Goal Agent Morning Report",
+      "enabled": true,
+      "createdAtMs": 1771352624528,
+      "updatedAtMs": 1774143001898,
+      "schedule": {
+        "kind": "cron",
+        "expr": "30 9 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "main",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "systemEvent",
+        "text": "运行 Goal Agent 早间汇报。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/goal.md（目标）\n2) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json（进度）\n3) 生成简洁的中文进度汇报：\n   - 目标是什么\n   - 进度百分比\n   - 最近完成的任务 + 学到的关键点\n   - 下一步要做什么\n   - 是否有需要 Leo 确认的事项（如果有，列出选项）\n4) 发送给 Leo\n\n输出格式示例：\n## 🎯 目标进度汇报\n**目标**: ...\n**进度**: 3/8 完成\n\n### ✅ 最近完成\n- 任务A - 学到了...\n\n### 🔜 下一步\n- 任务B\n\n### ⚠️ 待确认\n- 问题描述\n  选项: A / B / C\n\n#Goal #Progress"
+      },
+      "state": {
+        "nextRunAtMs": 1774229400000,
+        "lastRunAtMs": 1774143000015,
+        "lastStatus": "ok",
+        "lastDurationMs": 1883,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "not-requested"
+      }
+    },
+    {
+      "id": "21eaa9b6-ca03-4f59-8885-f30ea09f8c9f",
+      "agentId": "main",
+      "name": "Morning Poem",
+      "enabled": true,
+      "createdAtMs": 1771231543733,
+      "updatedAtMs": 1774143546334,
+      "schedule": {
+        "kind": "cron",
+        "expr": "35 1 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [Morning Poem] started | YYYY-MM-DD HH:MM UTC`\n\n晨间诗歌时间。读取 skills/morning-poem/SKILL.md，结合今日元素和 /tmp/ai-digest-data.json 中的新闻素材，写一首晨间短诗，配图发给用户。\n\n## Telegram 通知\n完成后用 message tool 将诗歌全文（含配图 MEDIA 路径）发送到 Telegram：\n- action: send\n- channel: telegram\n- target: 422039053\n\n❗ 输出末尾加一行：#MorningPoem #Daily\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。",
+        "timeoutSeconds": 300,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1774229700000,
+        "lastRunAtMs": 1774143300015,
+        "lastStatus": "ok",
+        "lastDurationMs": 246319,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475150686843830505",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "dc746f02-5e4a-4cca-b1ba-9ead848106fa",
+      "agentId": "main",
+      "name": "Podcast Daily Digest",
+      "enabled": true,
+      "createdAtMs": 1771868190908,
+      "updatedAtMs": 1774145283449,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 10 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Podcast Daily Digest] started | YYYY-MM-DD HH:MM UTC`\n\n## Step 1: 运行 Pipeline（仅 metadata，不转写）\n```bash\nnode /Users/leo/.openclaw/workspace/skills/podcast-tldr/digest.mjs\n```\n等待完成。如果输出 0 episodes，只发执行记录，然后 NO_REPLY。\n\n## Step 2: 读取数据 + 基于 metadata 分析\n读取 `/tmp/podcast-digest.json`。\n\n对每一期：\n1. 仔细阅读 title + description（shownotes）\n2. 基于这些 metadata 提炼：\n   - **TLDR**（2-4 句）：这期聊什么、核心论点、有什么新信息\n   - **关键词标签**：2-3 个标签\n   - **推荐理由**（1 句）：为什么值得/不值得花时间听\n\n⚠️ TLDR 必须有信息增量，禁止「聊了XX话题」这种空洞描述。shownotes 信息不足时如实说「shownotes 信息有限，需转写后判断」。\n\n## Step 3: 格式化输出\n\n按 score 降序，分两档：\n\n### 🎯 推荐收听（score ≥ 3，值得转写深听的）\n每期格式：\n```\n[#index] 📻 [播客名 — 标题](link)（时长）⭐score\nTLDR: ...\n🏷️ 标签1 | 标签2\n💡 推荐理由\n```\n\nℹ️ **每条 item 的标题必须带链接**：使用 JSON 中的 `link` 字段（小宇宙/播客平台原始链接）。如果 `link` 为空，用 `audioUrl` 替代。格式：`[播客名 — 标题](link)`\n\n### 📋 其他更新（score < 3，了解即可）\n每期一行：`[#index] [播客名 — 标题](link)（时长）| 一句话概述`\n\n末尾加：\n```\n💬 回复序号（如 0,2,5）我来转写这几期的完整内容\n```\n\n## Step 4: 投递\n\n### 4a: Discord\n用 message tool 发完整日报到 Discord 频道 1477487257350049794（播客日报频道）：\n- 先用 `thread-create` 在频道创建当日 thread（标题：`🎙️ 播客日报 YYYY-MM-DD`）\n- 所有内容发到 thread 内\n- 如果内容超 2000 字拆多条\n- ℹ️ Discord 发多个链接时用 `<url>` 包裹抑制 embed 预览\n\n### 4b: Telegram\n用 message tool 发精华版到 Telegram target 422039053：\n标题 + 推荐收听的 2-3 期（每期 1 句 + 链接）+ 「回复序号转写」提示。10 行内。\n\n## Step 5: 执行记录\n发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Podcast Daily Digest] 执行完毕 | YYYY-MM-DD HH:MM UTC | 更新N期，推荐M期 | 待确认转写`\n\n最后 NO_REPLY。\n\n---\n\n## 转写后精读版规范（当 Leo 确认序号后执行）\n\n转写完成后，不存原始 transcript 到 Obsidian。而是基于转写内容写一篇「精读版」存到 Obsidian：\n- 路径：`/Users/leo/Library/Mobile Documents/iCloud~md~obsidian/Documents/Leo/Moss/podcasts/YYYY-MM-DD-{slug}.md`\n- 风格：「带你读一遍文稿」——保留具体人名、数字、时间线、原话引用，跟着播客叙事顺序走\n- 不过度抽象/总结，不磨损关键事实和细节\n- 篇幅放开，该多长多长，目标是「读完这篇基本不用再听原版」\n- 原始 transcript 只存本地 skills/podcast-tldr/transcripts/，不存 Obsidian",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475150686843830505",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1774231200000,
+        "lastRunAtMs": 1774144800025,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 483424,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
+      }
+    },
+    {
+      "id": "1a7ba3e3-c306-4139-b82f-143e362ca674",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1475143247067087139",
+      "name": "OpenClaw X & AI Daily",
+      "enabled": true,
+      "createdAtMs": 1771996842470,
+      "updatedAtMs": 1774146000040,
+      "schedule": {
+        "kind": "cron",
+        "expr": "10 10 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到（必做）\n用 message tool 发到 Discord heartbeat：\n- action: send, channel: discord, target: 1475143247067087139\n格式：`🚀 [OpenClaw X & AI Daily] started | YYYY-MM-DD HH:MM UTC`\n\n# 任务概述\n在 X/Twitter 上抓取过去 24h 内最热门、最有信息密度的 OpenClaw 相关内容与 AI Agents/Tools/Infra 重要更新，输出中文简报。\n\n## 数据源: 6551 Twitter API\nToken: 读取 secrets/6551.json 的 token 字段。\nBase URL: https://ai.6551.io\n所有请求需要 header: `Authorization: Bearer <token>`\n\n# Step 1: OpenClaw 核心搜索\n计算昨天和今天的日期（YYYY-MM-DD格式），用于 sinceDate/untilDate。\n\n```bash\nTOKEN=$(cat /Users/leo/.openclaw/workspace/secrets/6551.json | jq -r .token)\n\n# 1a: \"openclaw\" 关键词搜索（Top + Latest 各一轮）\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw\", \"maxResults\": 50, \"product\": \"Top\", \"excludeReplies\": false}'\n\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw\", \"maxResults\": 50, \"product\": \"Latest\"}'\n\n# 1b: 相关关键词\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw update OR release OR plugin OR skill OR clawhub\", \"maxResults\": 30, \"product\": \"Top\"}'\n\n# 1c: 官方账号推文\ncurl -s -X POST \"https://ai.6551.io/open/twitter_user_tweets\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"username\": \"openclaw\", \"maxResults\": 20, \"product\": \"Latest\"}'\n\n# 1d: 核心开发者推文\ncurl -s -X POST \"https://ai.6551.io/open/twitter_user_tweets\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"username\": \"steipete\", \"maxResults\": 10, \"product\": \"Latest\"}'\n```\n\n# Step 1.5: Skills & 民间用法搜索（新增）\n专门搜索热门 skills、有趣的个人用法和创意自动化案例：\n```bash\n# Skills 和 ClawHub\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw skill OR clawhub install OR openclaw mcp\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 10}'\n\n# 民间用法和 setup 分享\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"openclaw setup OR my openclaw OR openclaw workflow OR openclaw automation\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 10}'\n```\n\n同时用 web_search 搜 Reddit：\n```\nweb_search(query=\"site:reddit.com openclaw skill OR setup OR workflow\", freshness=\"pw\", count=5)\n```\n\n# Step 2: AI Agents & Tools 搜索\n```bash\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"AI agents framework\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 50}'\n\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"MCP protocol OR AI tools OR agent SDK\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 30}'\n```\n\n# Step 3: AI 基础设施搜索\n```bash\ncurl -s -X POST \"https://ai.6551.io/open/twitter_search\" \\\n  -H \"Authorization: Bearer $TOKEN\" \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\"keywords\": \"new model release OR open source AI OR LLM benchmark\", \"maxResults\": 30, \"product\": \"Top\", \"minLikes\": 100}'\n```\n\n# Step 4: GitHub 一手数据\n```bash\ncurl -s \"https://api.github.com/repos/openclaw/openclaw/releases?per_page=5\"\ncurl -s \"https://api.github.com/repos/openclaw/openclaw/commits?per_page=10\"\n```\n\n# Step 5: 交叉验证\n对 Step 1-3 中发现的重要事件，用 web_search 验证。\n\n# Step 6: 写报告\n\n## 主题优先级\n1. OpenClaw（产品更新、插件/skill、生态项目、关键线程、Demo、bug/修复、版本发布）\n2. **🛠️ 热门 Skills & 民间玩法**（新增板块，放在 OpenClaw 热点之后）\n3. AI Agents / Agent 工具链（框架、协议、插件市场、部署与工作流）\n4. AI 基础设施与趋势（模型发布、推理/训练、数据层、评测、开源仓库更新）\n\n## 🛠️ 热门 Skills & 民间玩法（板块规范）\n- 每期 3-5 条\n- 筛选标准：实际可用 > 概念 demo，有创意 > 又一个 wrapper\n- 来源：X/Twitter 分享 + Reddit r/OpenClaw / r/selfhosted / r/LocalLLaMA + ClawHub trending\n- 每条格式：skill/用法名称 + 一句话说明 + 来源链接\n- 优先选择：有视频/截图的实际演示、被多人转发验证的、解决真实痛点的\n- 排除：纯营销/推广帖、未开源且无法验证的、仅是概念无代码的\n\n## 筛选标准\n只收录\"热+有用\"：认知增量、可复现、可行动、被大量转推讨论。过滤纯情绪/纯喊单/无信息密度内容。\n去重：同一事件只保留信息最全的一条。\n可信度：争议信息标注\"未确认/来源单一\"。\n\n## 热度判断（综合）\n引用转推/讨论密度、作者权重（项目方/核心开发者/研究者）、是否引发二次解读、多独立来源交叉验证、版本发布/安全事件/重大合作。\n\n## 输出格式（不用 point form / 不要 AI 味 / 语气稳信息明确）\n1. 标题：OpenClaw & AI Daily — YYYY/MM/DD\n2. 开头 2-3 句：今天最重要的变化是什么、为什么值得看\n3. 正文分四段，每段 3-8 条：\n   - 🦞 OpenClaw 热点与更新\n   - 🛠️ 热门 Skills & 民间玩法（新增）\n   - 🤖 AI Agents 工具链与产品动向\n   - 🔬 研究/开源/基础设施关键更新\n4. 每条：一句话结论 + 关键细节（数字/版本/链接/影响）+ 原推链接或 @作者\n5. 结尾\"可执行动作\"：今天值得立刻做的 1-3 件事\n6. 全文 2200-3200 字；信息爆炸时保留最重要的，其余放\"附录\"\n\n## 自检\n- 是否覆盖了 OpenClaw 的关键更新？\n- 是否有热门 skills 或有趣民间用法？\n- 是否把\"热\"转化成\"可用信息\"？\n- 是否有未经证实的内容被写成确定事实？\n\n# Step 7: 投递\n\n## 7a: Discord #ai-daily-digest\n用 message tool: action=send, channel=discord, target=1475150686843830505\n超 2000 字拆多条。\n\n## 7b: Telegram 精华版\naction=send, channel=telegram, target=422039053\n最重要 5 条 + 可执行动作，8-12 行。\n\n## 7c: 执行记录\ntarget=1475143247067087139\n格式：`⏱️ [OpenClaw X & AI Daily] 执行完毕 | YYYY-MM-DD HH:MM UTC | [X条要点] | 投递: ✅/❌`\n\n最后回复 NO_REPLY。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 600
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475150686843830505",
+        "bestEffort": true
+      },
+      "state": {
+        "nextRunAtMs": 1774231800000,
+        "lastRunAtMs": 1774145400020,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 600020,
+        "lastDeliveryStatus": "unknown",
+        "consecutiveErrors": 1,
+        "lastError": "cron: job execution timed out",
+        "lastErrorReason": "timeout"
+      }
+    },
+    {
+      "id": "e01f30a2-29e3-4569-b89e-175e17038596",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1475106097969889556",
+      "name": "Douban Weekly Picks",
+      "enabled": true,
+      "createdAtMs": 1772114185376,
+      "updatedAtMs": 1774116210770,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 2 * * 0",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "搜索豆瓣最近热门且评分较高的内容，分三个类别：\n\n1. **电影**（评分≥7.5）— 最近在豆瓣讨论度高的电影，不限上映时间\n2. **电视剧**（评分≥8.0）— 最近热播或被重新讨论的剧集\n3. **图书**（评分≥8.0）— 最近在豆瓣阅读圈热门的书\n\n每个类别推荐3-5部。\n\n**输出格式（严格遵守）：**\n每个条目必须包含：\n- 名称（带豆瓣链接，格式：[名称](https://movie.douban.com/subject/xxx/) ）\n- 豆瓣评分\n- 一句话推荐理由\n\n⚠️ 关键要求：每个条目必须附带真实的豆瓣 URL（movie.douban.com 或 book.douban.com），没有链接的条目不要列出。用 web_search 搜索时加上 site:douban.com 来获取准确链接。\n\n搜索策略：\n1. web_search 搜索 '豆瓣 热门 高分 电影 2026 site:douban.com'\n2. web_search 搜索 '豆瓣 热门 高分 电视剧 2026 site:douban.com'\n3. web_search 搜索 '豆瓣 热门 高分 图书 2026 site:douban.com'\n4. 也可以 web_fetch 抓取 https://movie.douban.com/chart 等排行榜页面\n\n输出格式简洁清晰，适合直接发到 Discord。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 300
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475125129708175380"
+      },
+      "state": {
+        "nextRunAtMs": 1774720800000,
+        "lastRunAtMs": 1774116000016,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 210754,
+        "lastDelivered": true,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0
       }
     }
   ],
@@ -1538,6 +1534,22 @@ window.__DASHBOARD_DATA__ = {
     },
     {
       "id": "mem-2",
+      "title": "待跟进",
+      "status": "open",
+      "rawStatus": "open",
+      "priority": "normal",
+      "type": "memo",
+      "source": "memory",
+      "owner": "moss",
+      "tags": [
+        "memory"
+      ],
+      "created": "2026-03-22",
+      "file": "/Users/leo/.openclaw/workspace/memory/2026-03-22.md",
+      "line": 49
+    },
+    {
+      "id": "mem-3",
       "title": "待办：**",
       "status": "open",
       "rawStatus": "open",
@@ -1553,7 +1565,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 22
     },
     {
-      "id": "mem-3",
+      "id": "mem-4",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1569,7 +1581,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 22
     },
     {
-      "id": "mem-4",
+      "id": "mem-5",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1585,7 +1597,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 19
     },
     {
-      "id": "mem-5",
+      "id": "mem-6",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1601,7 +1613,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 17
     },
     {
-      "id": "mem-6",
+      "id": "mem-7",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1617,7 +1629,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 19
     },
     {
-      "id": "mem-7",
+      "id": "mem-8",
       "title": "Still TODO",
       "status": "open",
       "rawStatus": "open",
@@ -1633,7 +1645,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 38
     },
     {
-      "id": "mem-8",
+      "id": "mem-9",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1649,7 +1661,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 31
     },
     {
-      "id": "mem-9",
+      "id": "mem-10",
       "title": "💡 待办：尽快更新到 2026.2.24，检查 Heartbeat 投递配置是否受 breaking change 影响。",
       "status": "open",
       "rawStatus": "open",
@@ -1665,7 +1677,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 97
     },
     {
-      "id": "mem-10",
+      "id": "mem-11",
       "title": "待办**: 等 cron idea researcher 完成该 idea 的独立研究后，与 migration plan 整合，统一考虑",
       "status": "open",
       "rawStatus": "open",
@@ -1681,7 +1693,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 41
     },
     {
-      "id": "mem-11",
+      "id": "mem-12",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1697,7 +1709,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 16
     },
     {
-      "id": "mem-12",
+      "id": "mem-13",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1713,7 +1725,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 24
     },
     {
-      "id": "mem-13",
+      "id": "mem-14",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1729,7 +1741,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 12
     },
     {
-      "id": "mem-14",
+      "id": "mem-15",
       "title": "TODO",
       "status": "open",
       "rawStatus": "open",
@@ -1745,7 +1757,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 45
     },
     {
-      "id": "mem-15",
+      "id": "mem-16",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1763,8 +1775,8 @@ window.__DASHBOARD_DATA__ = {
   ],
   "stats": {
     "totalJobs": 20,
-    "totalTodos": 42,
-    "openTodos": 19,
+    "totalTodos": 43,
+    "openTodos": 20,
     "inProgressTodos": 2,
     "doneTodos": 20
   }

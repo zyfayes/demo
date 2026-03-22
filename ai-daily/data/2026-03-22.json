@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-22",
+  "summary": "本周最劲爆的瓜：Cursor 花了几个月吹嘘「自研模型」，结果 24 小时内被扒出来是 Kimi K2.5 加 RL——$50B 估值的公司用开源模型包装成自家黑科技，AI 圈的「洗模型」现象终于被逮现行。与此同时，OpenCode 开源编程 Agent 冲顶 HN，大厂收购开发者工具军备竞赛愈演愈烈，AI 正在从「工具」变成「基础设施」——这条路比想象中走得更快。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Cursor「自研模型」被曝光：实为 Kimi K2.5 + RL 微调，24 小时翻车",
+      "url": "https://x.com/ns123abc/status/2035058399067435474",
+      "source": "Twitter @ns123abc",
+      "tldr": "估值 $50B 的 Cursor 宣称推出「自研模型」，但社区在 24 小时内发现这就是 Moonshot AI 的 Kimi K2.5（万亿参数 MoE 架构）再加一层 RL 训练。Moonshot 官方随后发帖「恭喜 Cursor 发布 Composer 2，我们为能提供底座感到骄傲」，算是含蓄打脸。AI 「洗模型」正成为新型营销风险，开源生态的透明度让这类操作越来越难藏。",
+      "tags": ["Cursor", "Kimi", "开源", "模型竞争"]
+    },
+    {
+      "num": 2,
+      "title": "OpenCode：开源 AI 编程 Agent 登顶 HN，1190 分 585 条讨论",
+      "url": "https://opencode.ai/",
+      "source": "Hacker News",
+      "tldr": "OpenCode 是一个完全开源的 AI 编程 Agent，上线即登顶 HN 并引发近 600 条讨论，社区热度比肩当年的 Cursor 首发。项目定位是「你自己跑的 Claude Code / Cursor」，强调本地控制和隐私，对不想把代码库交给商业服务的团队吸引力极大。在 Claude Code 引发「生产力恐慌」的背景下，开源替代品的需求正在爆发。",
+      "tags": ["开源", "编程Agent", "工具"]
+    },
+    {
+      "num": 3,
+      "title": "大厂疯狂收购开发者工具：OpenAI 买 Astral，Anthropic 买 Bun，Google 买 Antigravity",
+      "url": "https://www.latent.space/p/ainews-every-lab-serious-enough-about",
+      "source": "Latent Space (swyx.io)",
+      "tldr": "三大 AI 实验室在同一时间窗口都选择了「买工具」而非「建工具」：OpenAI 收购 Python 包管理工具 Astral，Anthropic 收购 JS 运行时 Bun，Google DeepMind 买下 Antigravity 团队。背后逻辑很清晰——谁控制了开发者的工具链，谁就控制了 AI 落地的入口。这场军备竞赛从模型层已经蔓延到基础设施层。",
+      "tags": ["并购", "开发者工具", "行业格局"]
+    },
+    {
+      "num": 4,
+      "title": "PentAGI：开源全自主 AI 红队系统，8200+ GitHub Stars",
+      "url": "https://x.com/heygurisingh/status/2035307276022784402",
+      "source": "Twitter @heygurisingh",
+      "tldr": "PentAGI 是一套开源的全自主 AI 网络安全红队系统，内置研究员、开发者、渗透测试者等多个专业 Agent 协作，已获 8200+ stars。与此前 Anthropic 发布 Claude Code Security 扫描漏洞并自动生成补丁不同，PentAGI 更像一个完整的「AI 安全公司」模拟。传统安全行业正在被 AI 从两端夹击：防守端和进攻端都在快速 AI 化。",
+      "tags": ["网络安全", "开源", "多智能体"]
+    },
+    {
+      "num": 5,
+      "title": "Dreamer：个人 Agent 操作系统出 Stealth，愿景是「AI 原生 OS」",
+      "url": "https://www.latent.space/p/dreamer",
+      "source": "Latent Space",
+      "tldr": "/dev/agents 正式更名为 Dreamer，定位「个人 Agent 操作系统」——不是 App，是让 Agent 在你的设备上持续运行、管理任务、调用工具的底层平台。David Singleton（前 Google 高管）主导，Latent Space 订阅者有特殊访问权限，并提供 $10,000 的工具开发奖金。如果说 OpenCode 是开源 Cursor，Dreamer 瞄准的则是开源版「个人 AI 操作系统」这个更大的野心。",
+      "tags": ["Agent OS", "个人AI", "新产品"]
+    },
+    {
+      "num": 6,
+      "title": "Google Search 开始用 AI 改写新闻标题，有时改变原意",
+      "url": "https://www.theverge.com/tech/896490/google-replace-news-headlines-in-search-canary-coal-mine-experiment",
+      "source": "The Verge / Daring Fireball",
+      "tldr": "Google 正在实验性地用 AI 替换搜索结果中的新闻标题，The Verge 发现多个例子里 Google 把他们写的标题改成了另一个版本，有时连意思都变了。这不是第一次——此前 Discover 信息流已有类似操作。媒体人担忧的是：如果 AI 可以随意改写标题，发布者对内容呈现的控制权还剩多少？",
+      "tags": ["Google", "媒体", "AI生成"]
+    },
+    {
+      "num": 7,
+      "title": "TradingAgents：开源多智能体量化交易系统，声称年化回报 30.5%",
+      "url": "https://x.com/heynavtoor/status/2035199111872618555",
+      "source": "Twitter @heynavtoor",
+      "tldr": "TradingAgents 是一套开源的多 Agent 交易系统，模拟完整的交易公司架构（分析师、研究员、交易员、风控），声称年化回报 30.5%、零管理费。项目在 AI Twitter 引发大量转发，但需要注意：回测数据和实盘表现差距往往很大，且这类系统的边界效应会随使用规模快速衰减。有趣的实验，但别太当真当真实信号。",
+      "tags": ["量化交易", "多智能体", "开源", "金融"]
+    },
+    {
+      "num": 8,
+      "title": "Simon Willison：用 AI 给 HN 用户做心理画像，微型反乌托邦实验",
+      "url": "https://simonwillison.net/2026/Mar/21/profiling-hacker-news-users/#atom-everything",
+      "source": "Simon Willison's Weblog",
+      "tldr": "Simon 用 Algolia HN API 抓取用户最近 1000 条评论，然后让 AI 生成性格画像。结果出奇地准确，连他自己都觉得「有点毛骨悚然」。这个实验揭示了一个被低估的隐私问题：公开数据 + 大模型语义理解 = 意想不到的个人信息提取能力。你以为自己在匿名发帖，但 AI 可能早就认出你了。",
+      "tags": ["隐私", "LLM应用", "社区分析"]
+    },
+    {
+      "num": 9,
+      "title": "Zvi 解读联邦 AI 政策框架：进步有限，但比没有强",
+      "url": "https://thezvi.substack.com/p/the-federal-ai-policy-framework-an",
+      "source": "The Zvi (Substack)",
+      "tldr": "美国联邦 AI 政策框架正式发布，Zvi Mowshowitz 做了详细解读：总体比之前预期的要温和，有一些值得肯定的安全要求，但在关键监管机制和执行力度上依然模糊。Zvi 的核心评价是「有改善但报价接近零」——对 AI 安全真正关心的人来说，这个框架离「够用」还差得远。",
+      "tags": ["AI政策", "监管", "美国"]
+    },
+    {
+      "num": 10,
+      "title": "封锁 Internet Archive 阻止不了 AI，却会抹去网络历史记录",
+      "url": "https://www.eff.org/deeplinks/2026/03/blocking-internet-archive-wont-stop-ai-it-will-erase-webs-historical-record",
+      "source": "EFF / Hacker News",
+      "tldr": "EFF 发文指出：出版商封锁 Internet Archive 的初衷是防止 AI 爬取训练数据，但实际效果是 AI 早有多渠道获取数据，Archive 被封只会让几十年的历史网页永久消失。这是一个典型的「打击错了目标」案例，真正受损的是历史存档和研究者，而不是大模型训练。HN 484 分、137 条讨论，社区对此深感忧虑。",
+      "tags": ["Internet Archive", "版权", "AI训练数据", "数字保护"]
+    }
+  ]
+}

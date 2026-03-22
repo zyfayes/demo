@@ -1,0 +1,114 @@
+{
+  "date": "2026-03-22",
+  "summary": "今日 AI 圈焦点：开源 AI 编程助手 OpenCode 以 12 万 GitHub Stars 强势出圈；EFF 发文警告屏蔽 Internet Archive 将抹除互联网历史记录而无法遏制 AI 训练；tinygrad 推出可离线运行 120B 参数模型的 tinybox 硬件；Simon Willison 发布 Agentic Engineering 实践指南。教育科技相关内容今日偏少（仅 2 条），Alabama 州推动 K-12 屏幕时间立法值得关注。",
+  "items": [
+    {
+      "title": "OpenCode — 开源 AI 编程 Agent，12 万 Star 月活 500 万",
+      "url": "https://opencode.ai/",
+      "tldr": "OpenCode 是一款开源 AI 编程 agent，支持终端/IDE/桌面多端使用，兼容 Claude、GPT、Gemini 等 75+ 模型。内置 LSP 支持、多会话并行、GitHub Copilot 登录等特性，已获 12 万 GitHub Stars、800+ 贡献者、月活超 500 万开发者。",
+      "summary": "OpenCode 定位为开源的 AI coding agent，核心卖点是对开发者隐私友好——不存储任何代码或上下文数据。支持通过 GitHub Copilot 或 ChatGPT Plus/Pro 账号直接使用，也可连接任意 LLM 提供商（含本地模型）。提供 LSP 自动加载、多 session 并行、会话分享链接等功能。其 Zen 付费服务提供经过专门 benchmark 验证的编程模型，避免跨提供商的质量不一致问题。在 HN 获得 1194 分和 586 条评论，社区讨论集中在与 Claude Code、Cursor 的对比以及开源编程 agent 的商业模式上。",
+      "tags": [
+        "开源",
+        "AI编程",
+        "Agent",
+        "开发者工具"
+      ]
+    },
+    {
+      "title": "EFF：屏蔽 Internet Archive 挡不住 AI，只会抹掉互联网历史",
+      "url": "https://www.eff.org/deeplinks/2026/03/blocking-internet-archive-wont-stop-ai-it-will-erase-webs-historical-record",
+      "tldr": "EFF 发文指出纽约时报等媒体以防 AI 抓取为由屏蔽 Internet Archive 的爬虫，但这不会阻止商业 AI 公司的数据获取，反而会摧毁记者、历史学家和法庭依赖了近 30 年的网页历史记录。",
+      "summary": "纽约时报近月开始用技术手段（超越 robots.txt）阻止 Internet Archive 的 Wayback Machine 爬取其网站，卫报等也在跟进。EFF 认为这是把非营利档案机构误伤为 AI 训练的替罪羊。Internet Archive 保存了超过一万亿个网页快照，是新闻报道被修改或删除后唯一的可靠记录。EFF 援引 Google Books 案等判例指出，建立可搜索索引属于合理使用。文章呼吁出版商将版权诉讼的矛头对准商业 AI 公司，而非打击公益性质的数字图书馆。",
+      "tags": [
+        "版权",
+        "Internet Archive",
+        "AI训练",
+        "数字保存"
+      ]
+    },
+    {
+      "title": "tinybox：tinygrad 推出可离线跑 120B 参数模型的 AI 硬件",
+      "url": "https://tinygrad.org/#tinybox",
+      "tldr": "tinygrad 团队发布 tinybox 系列硬件产品，从红色版（4×9070XT，778 TFLOPS）到绿色 Blackwell 版（4×RTX PRO 6000，3086 TFLOPS），以及 exabox（720×RDNA5，约 1 EXAFLOP），主打完全离线运行大模型。",
+      "summary": "tinybox 是 tinygrad 推出的消费级/专业级 AI 计算硬件产品线。红色 v2 版搭载 4 张 AMD 9070XT（64GB 显存），售价可能面向个人开发者；绿色 v2 版用 4 张 NVIDIA RTX PRO 6000 Blackwell（384GB 显存），面向更高端需求。最夸张的 exabox 计划用 720 张 RDNA5 GPU 达到约 1 EXAFLOP 算力、25.9TB 显存。所有型号都基于 tinygrad 框架优化，强调离线私有部署，无需云端 API。HN 上获 300 分，讨论集中在性价比和实际推理能力上。",
+      "tags": [
+        "AI硬件",
+        "tinygrad",
+        "边缘计算",
+        "离线推理"
+      ]
+    },
+    {
+      "title": "研究论文：AI 如何重塑人类推理 — 快思考、慢思考与人工思考",
+      "url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6097646",
+      "tldr": "SSRN 新论文探讨 AI 工具对人类认知和推理模式的影响，将 Kahneman 的双系统理论延伸到 AI 辅助决策场景，分析 AI 如何同时增强和削弱人类的深度思考能力。",
+      "summary": "这篇论文从认知心理学角度审视 AI 对人类推理的影响。作者将 Kahneman 的快思考（System 1）和慢思考（System 2）框架与 AI 辅助决策结合，提出'人工思考'（Artificial Thinking）概念。论文分析了 AI 工具在增强人类信息处理效率的同时，可能导致认知懒惰和批判性思维能力退化的风险。对教育领域尤其有启示——当学生过度依赖 AI 生成答案时，深度学习和独立推理能力可能受损。HN 上引发 57 条讨论，多数关注 AI 对下一代认知发展的长期影响。",
+      "tags": [
+        "认知科学",
+        "AI与教育",
+        "批判性思维",
+        "研究论文"
+      ]
+    },
+    {
+      "title": "Simon Willison：用 LLM 画像 Hacker News 用户 — 一个温和的反乌托邦实验",
+      "url": "https://simonwillison.net/2026/Mar/21/profiling-hacker-news-users/",
+      "tldr": "Simon Willison 用 HN Algolia API 抓取用户最近 1000 条评论，喂给 Claude Opus 做用户画像。效果惊人地准确，也引发了关于公开数据 + LLM 带来的隐私风险的反思。",
+      "summary": "Willison 搭建了一个简单工具，通过 Algolia API 获取任意 HN 用户的最近 1000 条评论，然后用 Claude Opus 4.6 生成详细的用户画像。他用自己做测试对象，AI 准确推断出了职业身份、技术偏好、工作方式甚至日常生活习惯（比如在 iPhone 上用 Claude Code 编程、坐 BART 时写代码）。Willison 称这是一个'温和的反乌托邦'实验——所有数据都是公开的，但当 LLM 将碎片化信息综合后，画像精度令人不安。这对数据隐私和社交平台匿名性有深远影响。",
+      "tags": [
+        "隐私",
+        "LLM应用",
+        "数据安全",
+        "用户画像"
+      ]
+    },
+    {
+      "title": "Simon Willison：Agentic Engineering 实践指南 — 用 Git 协同 AI 编程",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/using-git-with-coding-agents/",
+      "tldr": "Willison 新发布的 Agentic Engineering Patterns 指南中，详细讲解了如何用 Git 作为 AI 编程 agent 的安全网：版本控制、分支隔离、并行会话和回滚策略。",
+      "summary": "这是 Simon Willison 正在编写的 Agentic Engineering 指南的最新章节，聚焦 Git 在 AI 编程工作流中的核心作用。核心观点：Git 不仅是版本控制工具，更是与 AI agent 协作的安全机制。指南涵盖了让 agent 在独立分支工作、用 git log 引导 agent 理解项目上下文、多种合并策略的选择、以及如何利用 Git 的回滚能力给 agent 更大的自主权。实用建议包括'每个 session 开始先 git log'来加载上下文，以及用分支隔离并行 agent 会话。对使用 AI 编程工具的开发者非常实用。",
+      "tags": [
+        "AI编程",
+        "工程实践",
+        "Git",
+        "开发者工具"
+      ]
+    },
+    {
+      "title": "AndroTMem：长序列 GUI Agent 的锚定记忆框架",
+      "url": "https://huggingface.co/papers/2603.18429",
+      "tldr": "新论文提出 AndroTMem，一个专为长序列 Android GUI agent 设计的锚定记忆框架和评测基准，包含 1069 个任务、34473 步交互，揭示当前 agent 在长期任务中的记忆瓶颈。",
+      "summary": "AndroTMem 针对 GUI agent 在长序列操作中的记忆问题提出解决方案。现有方法要么回放完整交互序列（冗余且引入噪声），要么用摘要（丢失关键依赖信息和可追溯性）。该框架提出'锚定记忆'概念，在交互轨迹中保留关键决策节点。配套的 AndroTMem-Bench 基准包含 1069 个任务、平均 32 步交互，是目前最大的长序列 GUI agent 评测集。论文在 HuggingFace 获 19 票，对 AI agent 产品化落地（尤其是教育类 App 的智能辅导场景）有直接启发。",
+      "tags": [
+        "AI Agent",
+        "GUI自动化",
+        "记忆机制",
+        "研究论文"
+      ]
+    },
+    {
+      "title": "Alabama 州推动 K-12 屏幕时间立法：每日不超过 2 小时",
+      "url": "https://www.the74million.org/article/alabama-legislators-launch-late-push-to-expand-screen-time-limits-to-k-12-students/",
+      "tldr": "继限制学前儿童屏幕时间后，Alabama 州议会正推动将限制扩展至 K-12 全学段，要求课堂屏幕教学每日不超过 2 小时，并强制执行 20-20-20 护眼规则。",
+      "summary": "Alabama 州众议院教育政策委员会通过 HB 584 法案，将屏幕时间限制从学前扩展至 K-12。法案要求：课堂屏幕教学每日不超过 2 小时；学生必须遵循 20-20-20 规则（每 20 分钟看 20 英尺外物体 20 秒）；将组建 17 人工作组（含教育者、视力专家和儿童发展专家）制定具体实施指南。此前 Alabama 州长 Kay Ivey 已签署《健康早期发展和屏幕时间法》。A+ Education Partnership 表示支持，称去年的手机禁令已在课堂中显现成效。这是美国教育科技政策从'拥抱数字化'转向'审慎使用技术'的最新信号。",
+      "tags": [
+        "教育政策",
+        "屏幕时间",
+        "K-12",
+        "教育科技"
+      ]
+    },
+    {
+      "title": "宇树科技科创板 IPO 获受理：具身智能第一股，年入 17 亿",
+      "url": "https://36kr.com/p/3732145162944770",
+      "tldr": "宇树科技科创板 IPO 申请获受理，拟募资 42 亿元。2025 年营收约 17 亿元（同比+335%），扣非净利润超 6 亿元，毛利率 60%，人形机器人出货量全球第一。",
+      "summary": "宇树科技正式冲击科创板'具身智能第一股'。招股书显示 2022-2025 年营收从 1.23 亿飙升至 17.08 亿元，2025 年毛利率达 60.27%，人形和四足机器人毛利均超 60%——在同行普遍亏损的赛道上显得格外亮眼。42 亿募资中超 20 亿将投向具身大模型等核心技术研发，还将扩产至年产人形机器人 7.5 万台、四足 11.5 万台。小米雷军在发布会上公开感谢五年前的投资机会，投资人队伍从深创投、经纬到红杉，即将分享首波具身智能上市红利。这是中国机器人赛道从概念验证走向规模化商业化的标志性事件。",
+      "tags": [
+        "具身智能",
+        "机器人",
+        "IPO",
+        "中国科技"
+      ]
+    }
+  ]
+}

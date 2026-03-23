@@ -1,0 +1,134 @@
+{
+  "date": "2026-03-23",
+  "title": "AI 日报 2026-03-23",
+  "summary": "今日 AI 领域亮点集中在推理效率和硬件突围：Flash-MoE 实现 397B 模型在笔记本上运行，tinybox 和 Cerebras 从不同路径挑战 NVIDIA 算力垄断。AI agent 继续从对话走向行动——千问上线打车能力展示多场景串联。学术界关注 VLM 的选择性失明和 GUI agent 长程记忆问题。值得一读的是 LLM 时代手艺人异化的深度反思，对教育产品设计有启发。",
+  "edtech_note": "今日教育科技专题内容较少，但多篇文章与教育场景强相关：VLM 框架效应论文直接影响多模态评估设计，GUI agent 记忆框架适用于自适应学习系统，手艺异化讨论启发 AI 辅助学习的边界思考。",
+  "items": [
+    {
+      "title": "Flash-MoE: 在笔记本上跑 397B 参数模型",
+      "url": "https://github.com/danveloper/flash-moe",
+      "source": "Hacker News (302 pts)",
+      "tldr": "纯 C/Metal 推理引擎，在 48GB MacBook Pro 上以 4.4 tok/s 跑 Qwen3.5-397B MoE 模型。无 Python 无框架，通过 SSD 流式加载 209GB 权重，FMA 优化的 4-bit 反量化内核带来 12% 加速。",
+      "summary": "Flash-MoE 是一个纯 C 和 Metal 实现的推理引擎，能在 48GB M3 Max MacBook Pro 上运行 Qwen3.5-397B-A17B（397B 参数 MoE 模型），达到 4.4+ tok/s 并支持 tool calling。核心技术是 SSD Expert Streaming——209GB 模型权重按需从 NVMe SSD 读取，每层仅加载 4 个激活专家（每个约 6.75MB），利用 OS 页缓存管理。FMA 优化的反量化内核将 (nibble × scale + bias) × x 重排为 fma 指令，GPU 单指令完成反量化+乘法。模型有 60 层 transformer：45 层 GatedDeltaNet（线性注意力）+ 15 层标准全注意力，每层 512 个专家中激活 4 个。",
+      "tags": [
+        "MoE",
+        "推理优化",
+        "边缘部署",
+        "Metal",
+        "量化"
+      ]
+    },
+    {
+      "title": "Tinybox: tinygrad 的深度学习专用硬件",
+      "url": "https://tinygrad.org/#tinybox",
+      "source": "Hacker News (575 pts)",
+      "tldr": "George Hotz 的 tinygrad 团队推出三款硬件：tinybox red（4×9070XT, 778 TFLOPS）、green（4×RTX PRO 6000 Blackwell, 3086 TFLOPS）和 exabox（720×RDNA5, ~1 EXAFLOP）。直接向 NVIDIA 垄断发起挑战。",
+      "summary": "tinygrad 团队正式发售 tinybox 系列深度学习计算机。tinybox red v2 配备 4 块 AMD 9070XT（64GB GPU RAM，778 TFLOPS FP16），tinybox green v2 用 4 块 NVIDIA RTX PRO 6000 Blackwell（384GB GPU RAM，3086 TFLOPS），最激进的 exabox 计划用 720 块 RDNA5 AT0 XL 达到约 1 EXAFLOP。HN 社区讨论热烈（575 分、333 评论），焦点在于能否真正撼动 NVIDIA 的生态壁垒。",
+      "tags": [
+        "AI硬件",
+        "tinygrad",
+        "GPU",
+        "NVIDIA替代",
+        "开源"
+      ]
+    },
+    {
+      "title": "Cerebras 撕开英伟达的算力围城",
+      "url": "https://36kr.com/p/3733539811885314",
+      "source": "36氪深度",
+      "tldr": "Cerebras 用餐盘大小的晶圆级引擎 WSE-3（90 万核心）挑战 NVIDIA GPU 霸权，Oracle 已将其列为核心加速器供应商。核心洞察：深度学习瓶颈不在算力，在内存墙。",
+      "summary": "Cerebras 创始人 Andrew Feldman 认为 AI 行业在用错误的工具。其 WSE-3 芯片拥有 900,000 个核心，采用一颗芯片即一个集群方案，试图绕过 GPU 集群中数据跨芯片传输的内存墙瓶颈。2026 年 3 月 Oracle 在财报会上将 Cerebras 与 NVIDIA、AMD 并列为核心供应商，被业内视为进入超大企业采购视野的标志。",
+      "tags": [
+        "AI芯片",
+        "Cerebras",
+        "算力",
+        "NVIDIA",
+        "基础设施"
+      ]
+    },
+    {
+      "title": "Why craft-lovers are losing their craft：LLM 时代的手艺人异化",
+      "url": "https://writings.hongminhee.org/2026/03/craft-alienation-llm/",
+      "source": "Hacker News (88 pts, 117 评论)",
+      "tldr": "LLM 编程工具没有制造开发者分裂，而是揭示了一直存在的分裂：热爱手艺的人和追求结果的人。作者借马克思异化劳动理论分析，手艺型开发者正经历与劳动行为本身的分离。",
+      "summary": "文章从 Les Orchard 和 Nolan Lawson 两位开发者对 LLM 编程工具的不同感受切入。Orchard 是结果导向型，认为 LLM 只是抽象层次又升了一级；Lawson 是手艺型，哀悼的是手持代码如雕塑家捏泥的创作体验本身。作者引用马克思异化劳动的四个维度，聚焦与劳动行为的分离。对教育科技领域思考 AI 辅助学习是否会剥夺学生的认知建构过程有直接启发。",
+      "tags": [
+        "AI与社会",
+        "开发者体验",
+        "异化",
+        "教育启示",
+        "深度思考"
+      ]
+    },
+    {
+      "title": "Teaching Claude to QA a Mobile App",
+      "url": "https://christophermeiklejohn.com/ai/zabriskie/development/android/ios/2026/03/22/teaching-claude-to-qa-a-mobile-app.html",
+      "source": "Hacker News (63 pts)",
+      "tldr": "独立开发者用 Claude 实现 Capacitor 混合应用的自动化 QA，解决了 Playwright 无法触及原生壳、XCTest/Espresso 无法操作 WebView 的测试真空地带。",
+      "summary": "作者独自开发社区应用 Zabriskie，用 Capacitor 将 React 应用包装为 iOS/Android 原生应用。这产生了测试真空：Playwright 无法进入原生壳，XCTest/Espresso 无法操作 WebView 内容。作者详细描述了如何教 Claude 理解混合应用架构，让 AI 接管移动端 QA 流程。对教育科技产品的跨平台测试有直接参考价值。",
+      "tags": [
+        "AI测试",
+        "移动开发",
+        "Claude",
+        "自动化QA",
+        "教育科技适用"
+      ]
+    },
+    {
+      "title": "Rust 项目对 AI 的多元观点汇编",
+      "url": "https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html",
+      "source": "Hacker News (119 pts)",
+      "tldr": "Rust 核心贡献者和维护者就 AI 在开源开发中的角色展开系统讨论。核心共识：AI 是需要工程化驾驭的工具，不是魔法；好结果需要精心的上下文管理和问题结构化。",
+      "summary": "Rust 项目从 2 月起系统收集贡献者对 AI 的看法，由 nikomatsakis 整理为汇编文档。关键论点包括：AI 是需要工程能力才能用好的工具；AI 生成的低质量 PR 正成为开源维护者的新负担；模型在快速进化，今天的判断可能很快过时。这对任何技术团队制定 AI 使用策略都有参考价值。",
+      "tags": [
+        "开源",
+        "Rust",
+        "AI治理",
+        "工程实践",
+        "团队策略"
+      ]
+    },
+    {
+      "title": "千问上线打车能力：AI 助手的多场景串联",
+      "url": "https://36kr.com/newsflashes/3734842729906185",
+      "source": "36氪",
+      "tldr": "阿里千问接入打车功能，支持自然语言选车型、设途经点、预约时间，甚至能处理「要空气清新的车」这种个性化需求。AI 助手正从对话走向真实世界的行动执行。",
+      "summary": "3 月 23 日千问上线打车能力，用户一句话即可完成选车型、添加途经点、预约时间等操作。亮点在于支持驾驶平稳、服务态度好、价格不超过 30 元等个性化自然语言需求。系统还具备记忆能力——用户告知家庭和公司地址后可直接说打车回家。结合阿里生态，千问已能串联机票、酒店、打车等多场景。这是 AI agent 落地的典型案例。",
+      "tags": [
+        "AI Agent",
+        "千问",
+        "落地应用",
+        "阿里",
+        "多模态交互"
+      ]
+    },
+    {
+      "title": "Tinted Frames: 问题框架如何让视觉语言模型选择性失明",
+      "url": "https://arxiv.org/abs/2603.19203",
+      "source": "HuggingFace Papers (14 upvotes)",
+      "tldr": "VLM 的失明不是全局性的，而是选择性的——语言框架（如选择题 vs 开放问答）会显著改变模型对图像的注意力分配，即使两种提问方式需要完全相同的视觉推理。",
+      "summary": "UBC 和 UC Berkeley 的研究者发现 VLM 会根据语言提问方式调节对视觉输入的关注程度。选择题和是/否题等约束性框架导致模型对图像的注意力显著低于开放式提问，注意力偏离任务相关区域。这对教育科技中的多模态 AI 评估设计有直接影响：如果用选择题格式考察 VLM 的视觉理解能力，可能系统性地低估其真实水平。",
+      "tags": [
+        "VLM",
+        "注意力机制",
+        "多模态",
+        "评估设计",
+        "教育科技适用"
+      ]
+    },
+    {
+      "title": "AndroTMem: 长程 GUI Agent 的锚定记忆框架",
+      "url": "https://arxiv.org/abs/2603.18429",
+      "source": "HuggingFace Papers (23 upvotes)",
+      "tldr": "长程 GUI agent 的记忆问题：完整回放交互序列太冗余，摘要又丢失依赖关系。AndroTMem 提出锚定记忆机制，在 1069 个任务、34473 步交互上建立诊断基准。",
+      "summary": "长程 GUI agent 是迈向真实部署的关键，但交互记忆管理仍被低估。AndroTMem 提出锚定记忆框架：从交互轨迹中提取锚点，保留步骤间的依赖关系同时大幅压缩上下文。配套的 AndroTMem-Bench 包含 1069 个任务、34473 步交互（平均每任务 32 步），是当前最大规模的长程 Android GUI agent 基准。对教育科技中需要跨多轮交互保持学生状态的 AI tutor 有直接的架构启发。",
+      "tags": [
+        "GUI Agent",
+        "长程记忆",
+        "benchmark",
+        "Android",
+        "教育科技适用"
+      ]
+    }
+  ]
+}

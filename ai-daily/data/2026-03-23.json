@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-23",
+  "summary": "今天 AI 圈的核心矛盾越来越清晰：一边是技术狂飙——397B 参数模型跑上了笔记本、开源 Agent 框架疯狂涌现；另一边是人文反思——Rust 社区在问 AI 有没有在偷走他们的乐趣，工匠们在问满足感去了哪里。最值得关注的是字节跳动 DeerFlow 2.0 和 GitHub spec-kit，这两个工具正在重新定义 AI 辅助开发的工作流边界。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Flash-MoE：笔记本电脑运行 397B 参数大模型",
+      "url": "https://github.com/danveloper/flash-moe",
+      "source": "Hacker News",
+      "tldr": "使用 Flash Attention + MoE 稀疏激活，每次推理只激活少量专家，内存占用大幅降低，实现在消费级硬件上运行接近 GPT-4 量级的大模型。HN 295 分热议，边缘侧大模型不再只是 PPT。证明算力民主化正在真正发生。",
+      "tags": ["开源", "推理优化", "MoE", "边缘部署"]
+    },
+    {
+      "num": 2,
+      "title": "Anthropic 推出免费 Claude Certified Architect 认证，与 Deloitte 企业培训内容相同",
+      "url": "https://x.com/EvanLuthra/status/2035615077056045449",
+      "source": "Twitter",
+      "tldr": "Anthropic 上线免费的 'Claude Certified Architect' 认证，和 Deloitte 正在为 15000 名员工采购的企业培训内容完全相同，只需一台笔记本。类比 AWS 认证早期——先拿证的人将享有大幅职场溢价。15k+ 点赞说明市场对 AI 职业认证的焦虑已相当真实。",
+      "tags": ["Anthropic", "职业认证", "学习资源"]
+    },
+    {
+      "num": 3,
+      "title": "字节跳动 DeerFlow 2.0：开源超级 Agent 框架，集成子 Agent + 记忆 + 沙盒",
+      "url": "https://x.com/minchoi/status/2035465290071281967",
+      "source": "Twitter",
+      "tldr": "字节跳动开源 DeerFlow 2.0，集成子 Agent、持久记忆、沙盒隔离、IM 频道和 Claude Code 集成，是一套完整的 multi-agent 生产框架。相比 LangGraph 等方案主打企业级可靠性和多模态协作，对 Agent 开发者来说值得认真评估。",
+      "tags": ["开源", "字节跳动", "Multi-Agent", "Agent框架"]
+    },
+    {
+      "num": 4,
+      "title": "TradingAgents：开源复刻整个对冲基金，回测年化收益 30.5%",
+      "url": "https://x.com/heynavtoor/status/2035199111872618555",
+      "source": "Twitter",
+      "tldr": "开源项目 TradingAgents 模拟一个完整虚拟对冲基金，涵盖分析师、研究员、交易员和风控多 Agent 协作决策链，零管理费，回测年化 30.5%。背后是结构化 multi-agent 分工而非单一 LLM 买卖信号，是量化 + AI Agent 结合的有趣实验。",
+      "tags": ["开源", "量化交易", "Multi-Agent"]
+    },
+    {
+      "num": 5,
+      "title": "GitHub 发布 spec-kit：从想法描述到产品构建的 AI 编程新范式",
+      "url": "https://x.com/alifcoder/status/2035687155478237225",
+      "source": "Twitter",
+      "tldr": "GitHub 开源 spec-kit，流程是描述想法 → AI 写规格文档 → 生成实施计划 → 构建项目，兼容所有主流 AI Agent。'Vibe coding' 的自由输入被结构化 spec 替代，信噪比大幅提升，有望成为 AI 辅助开发的标准工作流。",
+      "tags": ["开源", "GitHub", "AI编程", "工作流"]
+    },
+    {
+      "num": 6,
+      "title": "AI 自我改进为何不会导致快速起飞：有损自我改进的技术分析",
+      "url": "https://www.interconnects.ai/p/lossy-self-improvement",
+      "source": "interconnects.ai",
+      "tldr": "Nathan Lambert 深度分析 LLM 自我改进的本质局限：每轮自我生成的训练数据都有信息损耗，导致能力边界逐渐收窄而非无限扩张。这是对「AI 递归自我改进导致快速起飞」论断的有力反驳，适合思考 AI 安全和能力扩展上限时参考。",
+      "tags": ["AI安全", "自我改进", "技术分析", "技术深度"]
+    },
+    {
+      "num": 7,
+      "title": "AndroTMem：长视野 GUI Agent 的锚定记忆框架",
+      "url": "https://huggingface.co/papers/2603.18429",
+      "source": "HuggingFace Papers",
+      "tldr": "论文提出 AndroTMem，专为长任务 Android GUI Agent 设计的记忆机制——不是重放全历史（冗余），也不是压缩摘要（丢关键依赖），而是基于「锚点」的结构化记忆。基准含 1069 个任务、34473 步交互。GUI Agent 实用化的关键瓶颈之一就是长任务记忆。",
+      "tags": ["GUI Agent", "记忆机制", "Android", "研究论文"]
+    },
+    {
+      "num": 8,
+      "title": "VLM 的选择性盲目：语言框架系统性影响模型的视觉注意力",
+      "url": "https://huggingface.co/papers/2603.19203",
+      "source": "HuggingFace Papers",
+      "tldr": "新研究发现 VLM 不是随机「视觉盲」，而是被语言提问方式系统性地影响视觉注意分布——相同图片、不同问法，模型看到的东西截然不同。对多模态应用的 Prompt 工程有直接指导意义：问法本身就是答案的一部分。",
+      "tags": ["VLM", "多模态", "研究论文", "Prompt工程"]
+    },
+    {
+      "num": 9,
+      "title": "Rust 社区对 AI 的多元视角：核心贡献者们怎么看 AI 编程辅助",
+      "url": "https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html",
+      "source": "Hacker News",
+      "tldr": "Rust 核心贡献者和维护者对 AI 编程辅助的真实看法汇总：有人显著提效，有人担心 AI 生成的不安全代码绕过了 Rust 类型系统的保障，还有人认为这正在改变「谁适合参与开源」的门槛。比营销文章真实 100 倍的一手社区反馈。",
+      "tags": ["Rust", "开发者社区", "AI编程", "观点"]
+    },
+    {
+      "num": 10,
+      "title": "手艺之死：LLM 如何侵蚀工匠的内在满足感",
+      "url": "https://writings.hongminhee.org/2026/03/craft-alienation-llm/",
+      "source": "Hacker News",
+      "tldr": "当 AI 代劳了编程、写作中原本让人有成就感的部分，人还剩下什么？这篇文章探讨 LLM 造成的「技艺异化」，不是反 AI，是在问 AI 改变工作的同时我们有没有算清楚代价。115 条 HN 评论说明这个问题触到了很多开发者的痛处。",
+      "tags": ["文化", "工匠精神", "AI与工作", "思考"]
+    }
+  ]
+}

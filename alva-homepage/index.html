@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alva — AI-Powered Research & Strategy Platform</title>
+<style>
+@font-face {
+  font-family: 'Delight';
+  src: url('https://alva-ai-static.b-cdn.net/fonts/Delight-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Delight';
+  src: url('https://alva-ai-static.b-cdn.net/fonts/Delight-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --main-m1: #49a3a6;
+  --main-m3: #2a9b7d;
+  --main-m4: #e05357;
+  --main-m5: #e6a91a;
+  --text-n9: rgba(0,0,0,0.9);
+  --text-n7: rgba(0,0,0,0.7);
+  --text-n5: rgba(0,0,0,0.5);
+  --text-n3: rgba(0,0,0,0.3);
+  --b0-page: #ffffff;
+  --grey-g01: #fafafa;
+  --grey-g02: #f5f5f5;
+  --grey-g03: #f0f0f0;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: 'Delight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--text-n9);
+  background: var(--b0-page);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 1: NAV + COMMAND BAR
+   ═══════════════════════════════════════════ */
+
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 16px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.3s, backdrop-filter 0.3s;
+}
+.nav-bar.scrolled {
+  background: rgba(255,255,255,0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--grey-g03);
+}
+
+.nav-logo {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--main-m1);
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-n5);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--text-n9); }
+
+.command-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px 80px;
+  background: linear-gradient(180deg, #fafefe 0%, #ffffff 60%);
+}
+
+.command-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: radial-gradient(ellipse 800px 600px at 50% 30%, rgba(73,163,166,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-tagline {
+  text-align: center;
+  margin-bottom: 48px;
+  position: relative;
+}
+.hero-tagline h1 {
+  font-size: 52px;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+  color: var(--text-n9);
+  margin-bottom: 16px;
+}
+.hero-tagline h1 span { color: var(--main-m1); }
+.hero-tagline p {
+  font-size: 18px;
+  color: var(--text-n5);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.command-bar-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 660px;
+  z-index: 10;
+}
+
+.command-bar {
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(255,255,255,0.06) inset;
+  cursor: text;
+  transition: box-shadow 0.3s;
+}
+.command-bar:hover {
+  box-shadow: 0 8px 50px rgba(0,0,0,0.18), 0 0 0 1px rgba(255,255,255,0.1) inset;
+}
+
+.command-bar .search-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  opacity: 0.4;
+}
+
+.typewriter-text {
+  flex: 1;
+  font-size: 15px;
+  color: rgba(255,255,255,0.75);
+  font-family: inherit;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.typewriter-text .cursor {
+  display: inline-block;
+  width: 2px;
+  height: 18px;
+  background: var(--main-m1);
+  margin-left: 2px;
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+.command-bar .kbd {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 6px;
+  padding: 3px 8px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+  flex-shrink: 0;
+}
+
+.command-pills {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 20px;
+}
+.command-pills button {
+  background: var(--b0-page);
+  border: 1px solid var(--grey-g03);
+  border-radius: 100px;
+  padding: 8px 20px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-n7);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.command-pills button:hover {
+  border-color: var(--main-m1);
+  color: var(--main-m1);
+  background: rgba(73,163,166,0.04);
+}
+.command-pills button.active {
+  background: var(--main-m1);
+  color: #fff;
+  border-color: var(--main-m1);
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-n3);
+  font-size: 12px;
+  animation: float 3s ease-in-out infinite;
+}
+.scroll-hint svg { opacity: 0.3; }
+
+@keyframes float {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(6px); }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 2: SHOWCASE STAGE
+   ═══════════════════════════════════════════ */
+
+.showcase-section {
+  position: relative;
+  background: var(--grey-g01);
+  padding: 80px 0 100px;
+  overflow: hidden;
+}
+
+.showcase-section .section-header {
+  text-align: center;
+  margin-bottom: 60px;
+  padding: 0 20px;
+}
+.showcase-section .section-header h2 {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+  margin-bottom: 12px;
+}
+.showcase-section .section-header p {
+  color: var(--text-n5);
+  font-size: 16px;
+}
+
+.showcase-carousel {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.showcase-track {
+  display: flex;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.showcase-item {
+  min-width: 100%;
+  display: grid;
+  grid-template-columns: 38% 62%;
+  gap: 48px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s 0.15s, transform 0.5s 0.15s;
+}
+.showcase-item.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.showcase-meta {
+  padding: 20px 0;
+}
+
+.showcase-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(73,163,166,0.08);
+  color: var(--main-m1);
+  border-radius: 100px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.showcase-meta h3 {
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.showcase-meta .desc {
+  color: var(--text-n5);
+  font-size: 15px;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.showcase-author {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.showcase-author .avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--main-m1), var(--main-m3));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+}
+.showcase-author .handle {
+  font-size: 14px;
+  color: var(--text-n7);
+}
+
+.showcase-stats {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+.showcase-stats .stat {
+  font-size: 13px;
+  color: var(--text-n5);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.showcase-metrics {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.showcase-metrics .metric {
+  display: flex;
+  flex-direction: column;
+}
+.showcase-metrics .metric .label {
+  font-size: 11px;
+  color: var(--text-n3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.showcase-metrics .metric .value {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--main-m3);
+}
+
+.showcase-updated {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-n3);
+  margin-bottom: 24px;
+}
+.pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--main-m3);
+  animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(42,155,125,0.4); }
+  50% { opacity: 0.7; box-shadow: 0 0 0 6px rgba(42,155,125,0); }
+}
+
+.showcase-actions {
+  display: flex;
+  gap: 10px;
+}
+.showcase-actions .btn {
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+.btn-primary {
+  background: var(--main-m1);
+  color: #fff;
+}
+.btn-primary:hover { background: #3d9093; }
+.btn-secondary {
+  background: var(--b0-page);
+  color: var(--text-n7);
+  border: 1px solid var(--grey-g03) !important;
+}
+.btn-secondary:hover { border-color: var(--text-n3) !important; }
+
+/* App Window Mock */
+.app-window {
+  background: var(--b0-page);
+  border-radius: 16px;
+  border: 1px solid var(--grey-g03);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04);
+  overflow: hidden;
+  position: relative;
+}
+
+.window-titlebar {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--grey-g03);
+  background: var(--grey-g01);
+}
+.window-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.window-dot.red { background: #ff5f57; }
+.window-dot.yellow { background: #febc2e; }
+.window-dot.green { background: #28c840; }
+.window-titlebar .title {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  color: var(--text-n3);
+  margin-right: 30px;
+}
+
+.window-content {
+  padding: 24px;
+  min-height: 380px;
+  position: relative;
+}
+
+.live-badge {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(42,155,125,0.08);
+  color: var(--main-m3);
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  z-index: 5;
+}
+.live-badge .pulse-dot { width: 5px; height: 5px; }
+
+/* Showcase Dots */
+.showcase-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 48px;
+}
+.showcase-dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: var(--text-n3);
+  cursor: pointer;
+  transition: all 0.3s;
+  padding: 0;
+}
+.showcase-dots button.active {
+  background: var(--main-m1);
+  width: 24px;
+  border-radius: 4px;
+}
+
+/* ── Showcase 1: AI Daily Digest ── */
+.mock-digest .digest-date {
+  font-size: 12px;
+  color: var(--text-n3);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.mock-digest .digest-item {
+  display: flex;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--grey-g03);
+  align-items: flex-start;
+}
+.mock-digest .digest-item:last-of-type { border-bottom: none; }
+.mock-digest .digest-num {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--grey-g02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--text-n5);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.mock-digest .digest-text {
+  flex: 1;
+}
+.mock-digest .digest-text .title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-n9);
+  margin-bottom: 2px;
+  line-height: 1.4;
+}
+.mock-digest .digest-text .source {
+  font-size: 12px;
+  color: var(--text-n3);
+}
+.mock-digest .audio-bar {
+  margin-top: 16px;
+  background: var(--grey-g02);
+  border-radius: 10px;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.mock-digest .audio-bar .play-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--main-m1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.mock-digest .audio-bar .waveform {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  height: 20px;
+}
+.mock-digest .audio-bar .waveform .bar {
+  width: 3px;
+  border-radius: 2px;
+  background: var(--main-m1);
+  opacity: 0.4;
+}
+.mock-digest .audio-bar .duration {
+  font-size: 11px;
+  color: var(--text-n3);
+  flex-shrink: 0;
+}
+
+/* ── Showcase 2: BTC Macro Regime ── */
+.mock-regime .regime-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.mock-regime .regime-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(42,155,125,0.1);
+  color: var(--main-m3);
+  padding: 8px 16px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+}
+.mock-regime .regime-pill .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--main-m3);
+  animation: pulse 2s ease-in-out infinite;
+}
+.mock-regime .regime-conf {
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--main-m3);
+}
+.mock-regime .regime-conf span {
+  font-size: 14px;
+  color: var(--text-n3);
+  font-weight: 400;
+}
+.mock-regime .sparkline-wrap {
+  margin-bottom: 20px;
+  background: var(--grey-g01);
+  border-radius: 12px;
+  padding: 16px;
+}
+.mock-regime .sparkline-label {
+  font-size: 11px;
+  color: var(--text-n3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.mock-regime .signal-table {
+  width: 100%;
+}
+.mock-regime .signal-row {
+  display: grid;
+  grid-template-columns: 1fr auto auto auto;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--grey-g03);
+  font-size: 13px;
+  align-items: center;
+}
+.mock-regime .signal-row:last-child { border-bottom: none; }
+.mock-regime .signal-row .sig-date { color: var(--text-n3); }
+.mock-regime .signal-row .sig-type { font-weight: 500; }
+.mock-regime .signal-row .sig-type.long { color: var(--main-m3); }
+.mock-regime .signal-row .sig-type.short { color: var(--main-m4); }
+.mock-regime .signal-row .sig-price { color: var(--text-n7); }
+.mock-regime .signal-row .sig-pnl { font-weight: 500; }
+.mock-regime .signal-row .sig-pnl.pos { color: var(--main-m3); }
+.mock-regime .signal-row .sig-pnl.neg { color: var(--main-m4); }
+
+/* ── Showcase 3: Narrative Radar ── */
+.mock-narrative .narrative-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+.mock-narrative .narrative-cell {
+  aspect-ratio: 1.4;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  color: #fff;
+  position: relative;
+  transition: transform 0.2s;
+  cursor: default;
+}
+.mock-narrative .narrative-cell:hover { transform: scale(1.05); }
+.mock-narrative .narrative-cell .cell-label {
+  font-size: 10px;
+  opacity: 0.8;
+  margin-top: 2px;
+}
+.mock-narrative .stance-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+}
+.mock-narrative .stance-bar {
+  flex: 1;
+  height: 4px;
+  background: var(--grey-g03);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.mock-narrative .stance-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 1s ease;
+}
+.mock-narrative .stance-label {
+  width: 80px;
+  color: var(--text-n7);
+  font-size: 12px;
+}
+.mock-narrative .stance-val {
+  width: 36px;
+  text-align: right;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+/* ── Showcase 4: Factor Momentum ── */
+.mock-factor .chart-area {
+  margin-bottom: 20px;
+  background: var(--grey-g01);
+  border-radius: 12px;
+  padding: 16px;
+}
+.mock-factor .chart-label {
+  font-size: 11px;
+  color: var(--text-n3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.mock-factor .factor-bars {
+  display: flex;
+  gap: 8px;
+  align-items: flex-end;
+  height: 100px;
+}
+.mock-factor .factor-bar-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.mock-factor .factor-bar-item .bar {
+  width: 100%;
+  border-radius: 4px 4px 0 0;
+  transition: height 0.6s ease;
+}
+.mock-factor .factor-bar-item .label {
+  font-size: 10px;
+  color: var(--text-n3);
+  text-align: center;
+}
+
+/* ── Showcase 5: Whale Alert ── */
+.mock-whale .whale-feed {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mock-whale .whale-tx {
+  background: var(--grey-g01);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--grey-g03);
+  transition: border-color 0.2s;
+}
+.mock-whale .whale-tx:first-child {
+  border-color: rgba(42,155,125,0.2);
+  animation: txFade 3s ease-in-out infinite;
+}
+@keyframes txFade {
+  0%,100% { border-color: rgba(42,155,125,0.2); }
+  50% { border-color: rgba(42,155,125,0.4); }
+}
+.mock-whale .tx-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.mock-whale .tx-icon.btc { background: rgba(230,169,26,0.1); color: var(--main-m5); }
+.mock-whale .tx-icon.eth { background: rgba(73,163,166,0.1); color: var(--main-m1); }
+.mock-whale .tx-icon.usdt { background: rgba(42,155,125,0.1); color: var(--main-m3); }
+.mock-whale .tx-body { flex: 1; }
+.mock-whale .tx-amount {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-n9);
+}
+.mock-whale .tx-route {
+  font-size: 12px;
+  color: var(--text-n3);
+}
+.mock-whale .tx-time {
+  font-size: 11px;
+  color: var(--text-n3);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 3: BEFORE → AFTER
+   ═══════════════════════════════════════════ */
+
+.transform-section {
+  padding: 120px 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.transform-section .section-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.transform-section .section-header h2 {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+  margin-bottom: 12px;
+}
+.transform-section .section-header p {
+  color: var(--text-n5);
+  font-size: 16px;
+}
+
+.transform-row {
+  display: grid;
+  grid-template-columns: 1fr 60px 1fr;
+  gap: 0;
+  align-items: center;
+  margin-bottom: 48px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s, transform 0.6s;
+}
+.transform-row.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.transform-prompt {
+  background: var(--grey-g01);
+  border-radius: 14px;
+  padding: 24px;
+  border: 1px solid var(--grey-g03);
+}
+.transform-prompt .prompt-label {
+  font-size: 11px;
+  color: var(--text-n3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.transform-prompt .prompt-text {
+  font-size: 15px;
+  color: var(--text-n7);
+  line-height: 1.5;
+}
+
+.transform-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-n3);
+}
+
+.transform-output {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s 0.3s, transform 0.5s 0.3s;
+}
+.transform-row.visible .transform-output {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.mini-card {
+  background: var(--b0-page);
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid var(--grey-g03);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+}
+
+.mini-digest-item {
+  display: flex;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--grey-g03);
+  font-size: 12px;
+  color: var(--text-n7);
+  align-items: center;
+}
+.mini-digest-item:last-child { border-bottom: none; }
+.mini-digest-item .num {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--grey-g02);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  color: var(--text-n5);
+  flex-shrink: 0;
+}
+
+.mini-signal {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.mini-signal .pill {
+  background: rgba(42,155,125,0.1);
+  color: var(--main-m3);
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.mini-signal .conf {
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--main-m3);
+}
+
+/* ═══════════════════════════════════════════
+   SECTION 4: EXPLORE GRID
+   ═══════════════════════════════════════════ */
+
+.explore-section {
+  padding: 100px 40px 120px;
+  background: var(--grey-g01);
+}
+
+.explore-section .section-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.explore-section .section-header h2 {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -0.8px;
+  margin-bottom: 12px;
+}
+
+.filter-pills {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 48px;
+  flex-wrap: wrap;
+}
+.filter-pills button {
+  background: var(--b0-page);
+  border: 1px solid var(--grey-g03);
+  border-radius: 100px;
+  padding: 7px 18px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text-n5);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-pills button:hover {
+  border-color: var(--main-m1);
+  color: var(--main-m1);
+}
+.filter-pills button.active {
+  background: var(--text-n9);
+  color: #fff;
+  border-color: var(--text-n9);
+}
+
+.explore-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  max-width: 1200px;
+  margin: 0 auto 60px;
+}
+
+.explore-card {
+  background: var(--b0-page);
+  border-radius: 14px;
+  border: 1px solid var(--grey-g03);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.explore-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.06);
+  border-color: var(--text-n3);
+}
+
+.explore-card .card-thumb {
+  height: 120px;
+  position: relative;
+}
+.explore-card .card-body {
+  padding: 16px;
+}
+.explore-card .card-type {
+  font-size: 11px;
+  color: var(--main-m1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+.explore-card .card-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-n9);
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.explore-card .card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.explore-card .card-author {
+  font-size: 12px;
+  color: var(--text-n5);
+}
+.explore-card .card-stats {
+  display: flex;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--text-n3);
+}
+
+.explore-footer {
+  text-align: center;
+}
+.explore-footer .stats-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--text-n5);
+}
+.explore-footer .stats-line .pulse-dot {
+  width: 6px;
+  height: 6px;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+
+.site-footer {
+  padding: 60px 40px 40px;
+  text-align: center;
+  border-top: 1px solid var(--grey-g03);
+}
+.site-footer .footer-logo {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--main-m1);
+  margin-bottom: 12px;
+}
+.site-footer p {
+  font-size: 13px;
+  color: var(--text-n3);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+
+@media (max-width: 1024px) {
+  .showcase-item {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .explore-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-tagline h1 { font-size: 34px; }
+  .command-bar { padding: 14px 20px; }
+  .typewriter-text { font-size: 13px; }
+  .nav-bar { padding: 12px 20px; }
+  .nav-links { gap: 20px; }
+  .nav-links a { font-size: 13px; }
+  .showcase-carousel { padding: 0 20px; }
+  .transform-row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .transform-arrow { transform: rotate(90deg); }
+  .transform-section { padding: 80px 20px; }
+  .explore-section { padding: 80px 20px; }
+  .explore-grid { grid-template-columns: 1fr; }
+  .showcase-section .section-header h2,
+  .transform-section .section-header h2,
+  .explore-section .section-header h2 {
+    font-size: 28px;
+  }
+  .showcase-meta h3 { font-size: 24px; }
+  .window-content { padding: 16px; min-height: 300px; }
+  .mock-narrative .narrative-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-tagline h1 { font-size: 28px; }
+  .command-pills { flex-wrap: wrap; }
+  .command-bar-wrap { max-width: 100%; }
+  .showcase-metrics { gap: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV BAR ═══ -->
+<nav class="nav-bar" id="navbar">
+  <a href="#" class="nav-logo">alva</a>
+  <ul class="nav-links">
+    <li><a href="#showcase">Explore</a></li>
+    <li><a href="#explore">Developers</a></li>
+    <li><a href="#">Pricing</a></li>
+  </ul>
+</nav>
+
+<!-- ═══ SECTION 1: COMMAND BAR ═══ -->
+<section class="command-section" id="hero">
+  <div class="hero-tagline">
+    <h1>Research smarter.<br>Trade with <span>conviction</span>.</h1>
+    <p>AI-powered playbooks that turn your ideas into live research, signals, and strategies — running 24/7.</p>
+  </div>
+
+  <div class="command-bar-wrap">
+    <div class="command-bar" id="commandBar">
+      <svg class="search-icon" viewBox="0 0 20 20" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="1.5">
+        <circle cx="9" cy="9" r="6.5"/>
+        <line x1="13.5" y1="13.5" x2="18" y2="18"/>
+      </svg>
+      <div class="typewriter-text" id="typewriter"><span class="cursor"></span></div>
+      <span class="kbd">⌘K</span>
+    </div>
+    <div class="command-pills">
+      <button>Ask</button>
+      <button class="active">Build Research</button>
+      <button>Build Strategy</button>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M10 4v12M5 11l5 5 5-5"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══ SECTION 2: SHOWCASE STAGE ═══ -->
+<section class="showcase-section" id="showcase">
+  <div class="section-header">
+    <h2>See what's running right now</h2>
+    <p>Live playbooks built by the community — research, strategies, and monitors running in production.</p>
+  </div>
+
+  <div class="showcase-carousel">
+    <div class="showcase-track" id="showcaseTrack">
+
+      <!-- SHOWCASE 1: AI Daily Digest -->
+      <div class="showcase-item active" data-index="0">
+        <div class="showcase-meta">
+          <div class="showcase-badge">Research</div>
+          <h3>AI Daily Digest</h3>
+          <p class="desc">Curated AI industry briefing with source aggregation, key takeaways, and audio summary — delivered every morning at 8am.</p>
+          <div class="showcase-author">
+            <div class="avatar">L</div>
+            <span class="handle">@leoz</span>
+          </div>
+          <div class="showcase-stats">
+            <span class="stat">⭐ 142</span>
+            <span class="stat">🔀 38</span>
+          </div>
+          <div class="showcase-updated">
+            <span class="pulse-dot"></span>
+            Updated 3 min ago
+          </div>
+          <div class="showcase-actions">
+            <button class="btn btn-primary">Open</button>
+            <button class="btn btn-secondary">Fork</button>
+          </div>
+        </div>
+        <div class="app-window">
+          <div class="window-titlebar">
+            <div class="window-dot red"></div>
+            <div class="window-dot yellow"></div>
+            <div class="window-dot green"></div>
+            <span class="title">AI Daily Digest — Mar 23, 2026</span>
+          </div>
+          <div class="live-badge"><span class="pulse-dot"></span> LIVE</div>
+          <div class="window-content mock-digest">
+            <div class="digest-date">Today's Briefing · March 23, 2026</div>
+            <div class="digest-item">
+              <div class="digest-num">1</div>
+              <div class="digest-text">
+                <div class="title">Anthropic launches Claude 4.6 with native agent capabilities</div>
+                <div class="source">TechCrunch · The Information · 12 sources</div>
+              </div>
+            </div>
+            <div class="digest-item">
+              <div class="digest-num">2</div>
+              <div class="digest-text">
+                <div class="title">Google DeepMind achieves breakthrough in protein-drug interaction modeling</div>
+                <div class="source">Nature · arXiv · 8 sources</div>
+              </div>
+            </div>
+            <div class="digest-item">
+              <div class="digest-num">3</div>
+              <div class="digest-text">
+                <div class="title">OpenAI reportedly in talks for $30B secondary at $350B valuation</div>
+                <div class="source">Bloomberg · Reuters · 6 sources</div>
+              </div>
+            </div>
+            <div class="digest-item">
+              <div class="digest-num">4</div>
+              <div class="digest-text">
+                <div class="title">NVIDIA announces next-gen Blackwell Ultra chips for AI inference</div>
+                <div class="source">The Verge · Wired · 9 sources</div>
+              </div>
+            </div>
+            <div class="digest-item">
+              <div class="digest-num">5</div>
+              <div class="digest-text">
+                <div class="title">AI agent frameworks see 400% adoption spike in enterprise sector</div>
+                <div class="source">a16z · Sequoia Blog · 5 sources</div>
+              </div>
+            </div>
+            <div class="audio-bar">
+              <div class="play-btn">
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="#fff"><polygon points="3,1 10,6 3,11"/></svg>
+              </div>
+              <div class="waveform" id="waveform1"></div>
+              <span class="duration">4:32</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWCASE 2: BTC Macro Regime -->
+      <div class="showcase-item" data-index="1">
+        <div class="showcase-meta">
+          <div class="showcase-badge">Strategy</div>
+          <h3>BTC Macro Regime</h3>
+          <p class="desc">Multi-factor regime detection using on-chain data, macro indicators, and sentiment — identifies risk-on/risk-off transitions.</p>
+          <div class="showcase-author">
+            <div class="avatar" style="background:linear-gradient(135deg,var(--main-m5),var(--main-m4))">T</div>
+            <span class="handle">@trader_x</span>
+          </div>
+          <div class="showcase-stats">
+            <span class="stat">⭐ 89</span>
+            <span class="stat">🔀 24</span>
+          </div>
+          <div class="showcase-metrics">
+            <div class="metric"><span class="label">Sharpe</span><span class="value">2.1</span></div>
+            <div class="metric"><span class="label">MDD</span><span class="value" style="color:var(--main-m4)">-8.2%</span></div>
+            <div class="metric"><span class="label">Win Rate</span><span class="value">67%</span></div>
+          </div>
+          <div class="showcase-updated">
+            <span class="pulse-dot"></span>
+            Updated 1 min ago
+          </div>
+          <div class="showcase-actions">
+            <button class="btn btn-primary">Open</button>
+            <button class="btn btn-secondary">Fork</button>
+          </div>
+        </div>
+        <div class="app-window">
+          <div class="window-titlebar">
+            <div class="window-dot red"></div>
+            <div class="window-dot yellow"></div>
+            <div class="window-dot green"></div>
+            <span class="title">BTC Macro Regime Detector</span>
+          </div>
+          <div class="live-badge"><span class="pulse-dot"></span> LIVE</div>
+          <div class="window-content mock-regime">
+            <div class="regime-header">
+              <div class="regime-pill"><span class="dot"></span> RISK-ON</div>
+              <div class="regime-conf">87%<span> confidence</span></div>
+            </div>
+            <div class="sparkline-wrap">
+              <div class="sparkline-label">BTC Price — 90 Day</div>
+              <svg viewBox="0 0 400 80" width="100%" height="80" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--main-m3)" stop-opacity="0.2"/>
+                    <stop offset="100%" stop-color="var(--main-m3)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,60 Q20,58 40,55 T80,48 T120,42 T160,50 T200,35 T240,28 T280,22 T320,18 T360,15 T400,10" fill="none" stroke="var(--main-m3)" stroke-width="2"/>
+                <path d="M0,60 Q20,58 40,55 T80,48 T120,42 T160,50 T200,35 T240,28 T280,22 T320,18 T360,15 T400,10 V80 H0 Z" fill="url(#sparkGrad)"/>
+              </svg>
+            </div>
+            <div class="signal-table">
+              <div class="signal-row" style="font-size:11px;color:var(--text-n3);border-bottom:1px solid var(--grey-g03);padding-bottom:8px;">
+                <span>Date</span><span>Signal</span><span>Price</span><span>P&L</span>
+              </div>
+              <div class="signal-row">
+                <span class="sig-date">Mar 18</span>
+                <span class="sig-type long">● LONG</span>
+                <span class="sig-price">$94,280</span>
+                <span class="sig-pnl pos">+6.2%</span>
+              </div>
+              <div class="signal-row">
+                <span class="sig-date">Mar 02</span>
+                <span class="sig-type short">● EXIT</span>
+                <span class="sig-price">$88,150</span>
+                <span class="sig-pnl pos">+3.8%</span>
+              </div>
+              <div class="signal-row">
+                <span class="sig-date">Feb 14</span>
+                <span class="sig-type long">● LONG</span>
+                <span class="sig-price">$82,400</span>
+                <span class="sig-pnl pos">+7.0%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWCASE 3: Narrative Radar -->
+      <div class="showcase-item" data-index="2">
+        <div class="showcase-meta">
+          <div class="showcase-badge">Research</div>
+          <h3>Narrative Radar</h3>
+          <p class="desc">Tracks narrative momentum across crypto Twitter KOLs — maps consensus shifts, detects emerging themes before they trend.</p>
+          <div class="showcase-author">
+            <div class="avatar">L</div>
+            <span class="handle">@leoz</span>
+          </div>
+          <div class="showcase-stats">
+            <span class="stat">⭐ 203</span>
+            <span class="stat">🔀 57</span>
+          </div>
+          <div class="showcase-updated">
+            <span class="pulse-dot"></span>
+            Updated 5 min ago
+          </div>
+          <div class="showcase-actions">
+            <button class="btn btn-primary">Open</button>
+            <button class="btn btn-secondary">Fork</button>
+          </div>
+        </div>
+        <div class="app-window">
+          <div class="window-titlebar">
+            <div class="window-dot red"></div>
+            <div class="window-dot yellow"></div>
+            <div class="window-dot green"></div>
+            <span class="title">Narrative Radar — Weekly Heatmap</span>
+          </div>
+          <div class="live-badge"><span class="pulse-dot"></span> LIVE</div>
+          <div class="window-content mock-narrative">
+            <div class="narrative-grid" id="narrativeGrid"></div>
+            <div style="margin-top:16px;">
+              <div style="font-size:11px;color:var(--text-n3);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">KOL Stance Shift — 7d</div>
+              <div class="stance-row">
+                <span class="stance-label">AI Agents</span>
+                <div class="stance-bar"><div class="stance-fill" style="width:82%;background:var(--main-m3)"></div></div>
+                <span class="stance-val" style="color:var(--main-m3)">+82%</span>
+              </div>
+              <div class="stance-row">
+                <span class="stance-label">ETH L2</span>
+                <div class="stance-bar"><div class="stance-fill" style="width:45%;background:var(--main-m1)"></div></div>
+                <span class="stance-val" style="color:var(--main-m1)">+45%</span>
+              </div>
+              <div class="stance-row">
+                <span class="stance-label">BTC ETF</span>
+                <div class="stance-bar"><div class="stance-fill" style="width:30%;background:var(--main-m5)"></div></div>
+                <span class="stance-val" style="color:var(--main-m5)">+30%</span>
+              </div>
+              <div class="stance-row">
+                <span class="stance-label">DePIN</span>
+                <div class="stance-bar"><div class="stance-fill" style="width:65%;background:var(--main-m4)"></div></div>
+                <span class="stance-val" style="color:var(--main-m4)">+65%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWCASE 4: Factor Momentum -->
+      <div class="showcase-item" data-index="3">
+        <div class="showcase-meta">
+          <div class="showcase-badge">Strategy</div>
+          <h3>Factor Momentum</h3>
+          <p class="desc">Systematic factor-based momentum strategy across top 50 tokens — combines price momentum, volume, and on-chain velocity.</p>
+          <div class="showcase-author">
+            <div class="avatar" style="background:linear-gradient(135deg,#667eea,#764ba2)">Q</div>
+            <span class="handle">@quant_z</span>
+          </div>
+          <div class="showcase-stats">
+            <span class="stat">⭐ 67</span>
+            <span class="stat">🔀 19</span>
+          </div>
+          <div class="showcase-metrics">
+            <div class="metric"><span class="label">Sharpe</span><span class="value">1.8</span></div>
+            <div class="metric"><span class="label">MDD</span><span class="value" style="color:var(--main-m4)">-12.1%</span></div>
+            <div class="metric"><span class="label">Alpha</span><span class="value">4.2%</span></div>
+          </div>
+          <div class="showcase-updated">
+            <span class="pulse-dot"></span>
+            Updated 8 min ago
+          </div>
+          <div class="showcase-actions">
+            <button class="btn btn-primary">Open</button>
+            <button class="btn btn-secondary">Fork</button>
+          </div>
+        </div>
+        <div class="app-window">
+          <div class="window-titlebar">
+            <div class="window-dot red"></div>
+            <div class="window-dot yellow"></div>
+            <div class="window-dot green"></div>
+            <span class="title">Factor Momentum — Performance</span>
+          </div>
+          <div class="live-badge"><span class="pulse-dot"></span> LIVE</div>
+          <div class="window-content mock-factor">
+            <div class="chart-area">
+              <div class="chart-label">Cumulative Returns vs Benchmark</div>
+              <svg viewBox="0 0 400 120" width="100%" height="120" preserveAspectRatio="none">
+                <defs>
+                  <linearGradient id="retGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="var(--main-m3)" stop-opacity="0.25"/>
+                    <stop offset="100%" stop-color="var(--main-m3)" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M0,90 Q40,88 80,82 T160,78 T240,70 T320,65 T400,58" fill="none" stroke="var(--text-n3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <path d="M0,95 Q30,90 60,80 T120,65 T180,55 T240,40 T300,28 T360,18 T400,12" fill="none" stroke="var(--main-m3)" stroke-width="2"/>
+                <path d="M0,95 Q30,90 60,80 T120,65 T180,55 T240,40 T300,28 T360,18 T400,12 V120 H0 Z" fill="url(#retGrad)"/>
+                <line x1="260" y1="8" x2="275" y2="8" stroke="var(--main-m3)" stroke-width="2"/>
+                <text x="279" y="11" fill="var(--text-n5)" font-size="9" font-family="inherit">Strategy</text>
+                <line x1="330" y1="8" x2="345" y2="8" stroke="var(--text-n3)" stroke-width="1.5" stroke-dasharray="4,3"/>
+                <text x="349" y="11" fill="var(--text-n5)" font-size="9" font-family="inherit">BTC</text>
+              </svg>
+            </div>
+            <div style="margin-top:16px">
+              <div class="chart-label">Factor Contribution — 30d</div>
+              <div class="factor-bars" id="factorBars"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHOWCASE 5: Whale Alert Monitor -->
+      <div class="showcase-item" data-index="4">
+        <div class="showcase-meta">
+          <div class="showcase-badge" style="background:rgba(224,83,87,0.08);color:var(--main-m4)">Monitor</div>
+          <h3>Whale Alert Monitor</h3>
+          <p class="desc">Real-time whale transaction tracker — monitors large transfers across chains with entity tagging and flow analysis.</p>
+          <div class="showcase-author">
+            <div class="avatar" style="background:linear-gradient(135deg,var(--main-m4),var(--main-m5))">O</div>
+            <span class="handle">@onchain_dev</span>
+          </div>
+          <div class="showcase-stats">
+            <span class="stat">⭐ 156</span>
+            <span class="stat">🔀 41</span>
+          </div>
+          <div class="showcase-updated">
+            <span class="pulse-dot"></span>
+            Updated just now
+          </div>
+          <div class="showcase-actions">
+            <button class="btn btn-primary">Open</button>
+            <button class="btn btn-secondary">Fork</button>
+          </div>
+        </div>
+        <div class="app-window">
+          <div class="window-titlebar">
+            <div class="window-dot red"></div>
+            <div class="window-dot yellow"></div>
+            <div class="window-dot green"></div>
+            <span class="title">Whale Alert — Live Feed</span>
+          </div>
+          <div class="live-badge"><span class="pulse-dot"></span> LIVE</div>
+          <div class="window-content mock-whale">
+            <div class="whale-feed">
+              <div class="whale-tx">
+                <div class="tx-icon btc">₿</div>
+                <div class="tx-body">
+                  <div class="tx-amount">2,400 BTC ($240.5M)</div>
+                  <div class="tx-route">Coinbase Prime → Unknown Wallet</div>
+                </div>
+                <div class="tx-time"><span class="pulse-dot"></span> 2 min ago</div>
+              </div>
+              <div class="whale-tx">
+                <div class="tx-icon eth">Ξ</div>
+                <div class="tx-body">
+                  <div class="tx-amount">45,000 ETH ($162.0M)</div>
+                  <div class="tx-route">Jump Trading → Aave V3</div>
+                </div>
+                <div class="tx-time">8 min ago</div>
+              </div>
+              <div class="whale-tx">
+                <div class="tx-icon usdt">₮</div>
+                <div class="tx-body">
+                  <div class="tx-amount">180M USDT</div>
+                  <div class="tx-route">Tether Treasury → Binance</div>
+                </div>
+                <div class="tx-time">14 min ago</div>
+              </div>
+              <div class="whale-tx">
+                <div class="tx-icon btc">₿</div>
+                <div class="tx-body">
+                  <div class="tx-amount">1,100 BTC ($110.2M)</div>
+                  <div class="tx-route">Unknown → Kraken</div>
+                </div>
+                <div class="tx-time">21 min ago</div>
+              </div>
+              <div class="whale-tx">
+                <div class="tx-icon eth">Ξ</div>
+                <div class="tx-body">
+                  <div class="tx-amount">28,500 ETH ($102.6M)</div>
+                  <div class="tx-route">Paradigm → Lido</div>
+                </div>
+                <div class="tx-time">35 min ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="showcase-dots" id="showcaseDots">
+      <button class="active" data-index="0"></button>
+      <button data-index="1"></button>
+      <button data-index="2"></button>
+      <button data-index="3"></button>
+      <button data-index="4"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 3: BEFORE → AFTER ═══ -->
+<section class="transform-section" id="transform">
+  <div class="section-header">
+    <h2>From prompt to production</h2>
+    <p>Describe what you need. Alva builds it, runs it, and keeps it updated.</p>
+  </div>
+
+  <div class="transform-row">
+    <div class="transform-prompt">
+      <div class="prompt-label">You say</div>
+      <div class="prompt-text">每天早上给我 AI 行业简报</div>
+    </div>
+    <div class="transform-arrow">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="transform-output">
+      <div class="mini-card">
+        <div style="font-size:11px;color:var(--text-n3);margin-bottom:8px;">AI DAILY DIGEST — TODAY</div>
+        <div class="mini-digest-item"><span class="num">1</span> Anthropic launches Claude 4.6 with agent capabilities</div>
+        <div class="mini-digest-item"><span class="num">2</span> DeepMind achieves protein-drug modeling breakthrough</div>
+        <div class="mini-digest-item"><span class="num">3</span> OpenAI in talks for $30B secondary round</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="transform-row">
+    <div class="transform-prompt">
+      <div class="prompt-label">You say</div>
+      <div class="prompt-text">Track when BTC enters a new macro regime</div>
+    </div>
+    <div class="transform-arrow">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="transform-output">
+      <div class="mini-card">
+        <div class="mini-signal">
+          <div class="pill"><span class="pulse-dot"></span> RISK-ON</div>
+          <div class="conf">87%</div>
+        </div>
+        <div style="margin-top:10px;">
+          <svg viewBox="0 0 200 40" width="100%" height="40">
+            <path d="M0,35 Q25,32 50,28 T100,20 T150,12 T200,8" fill="none" stroke="var(--main-m3)" stroke-width="1.5"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="transform-row">
+    <div class="transform-prompt">
+      <div class="prompt-label">You say</div>
+      <div class="prompt-text">帮我找市场共识和实际数据之间的 gap</div>
+    </div>
+    <div class="transform-arrow">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="transform-output">
+      <div class="mini-card">
+        <div style="font-size:11px;color:var(--text-n3);margin-bottom:8px;">NARRATIVE HEATMAP</div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;" id="miniHeatmap"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="transform-row">
+    <div class="transform-prompt">
+      <div class="prompt-label">You say</div>
+      <div class="prompt-text">Backtest momentum on top 20 altcoins</div>
+    </div>
+    <div class="transform-arrow">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </div>
+    <div class="transform-output">
+      <div class="mini-card">
+        <div style="font-size:11px;color:var(--text-n3);margin-bottom:8px;">EQUITY CURVE</div>
+        <svg viewBox="0 0 200 60" width="100%" height="60">
+          <defs>
+            <linearGradient id="miniRetGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--main-m3)" stop-opacity="0.2"/>
+              <stop offset="100%" stop-color="var(--main-m3)" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path d="M0,50 Q20,48 40,42 T80,35 T120,25 T160,15 T200,8" fill="none" stroke="var(--main-m3)" stroke-width="1.5"/>
+          <path d="M0,50 Q20,48 40,42 T80,35 T120,25 T160,15 T200,8 V60 H0 Z" fill="url(#miniRetGrad)"/>
+        </svg>
+        <div style="display:flex;gap:16px;margin-top:6px;">
+          <span style="font-size:12px;color:var(--main-m3);font-weight:500;">Sharpe 1.8</span>
+          <span style="font-size:12px;color:var(--text-n3);">Alpha 4.2%</span>
+          <span style="font-size:12px;color:var(--main-m4);">MDD -12.1%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SECTION 4: EXPLORE GRID ═══ -->
+<section class="explore-section" id="explore">
+  <div class="section-header">
+    <h2>Explore what creators are building</h2>
+  </div>
+
+  <div class="filter-pills">
+    <button class="active">All</button>
+    <button>Research</button>
+    <button>Strategy</button>
+    <button>Monitor</button>
+    <button>Signal</button>
+    <button>Dashboard</button>
+  </div>
+
+  <div class="explore-grid" id="exploreGrid"></div>
+
+  <div class="explore-footer">
+    <div class="stats-line">
+      <span class="pulse-dot"></span>
+      <span>287 Playbooks · 1.2k forks · running now</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="site-footer">
+  <div class="footer-logo">alva</div>
+  <p>&copy; 2026 Alva AI. Research smarter. Trade with conviction.</p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════
+   TYPEWRITER
+   ═══════════════════════════════════════════ */
+const prompts = [
+  "Build me a BTC macro regime detector...",
+  "每天早上给我 AI 行业简报和播客...",
+  "Track narrative shifts across crypto Twitter KOLs...",
+  "Backtest RSI + EMA crossover on ETH, 2024-2025..."
+];
+
+const typewriterEl = document.getElementById('typewriter');
+let promptIdx = 0;
+let charIdx = 0;
+let isDeleting = false;
+
+function typewrite() {
+  const current = prompts[promptIdx];
+  if (!isDeleting) {
+    charIdx++;
+    if (charIdx > current.length) {
+      setTimeout(() => { isDeleting = true; typewrite(); }, 3000);
+      render();
+      return;
+    }
+  } else {
+    charIdx--;
+    if (charIdx < 0) {
+      charIdx = 0;
+      isDeleting = false;
+      promptIdx = (promptIdx + 1) % prompts.length;
+      goToShowcase(promptIdx);
+      setTimeout(typewrite, 400);
+      return;
+    }
+  }
+  render();
+  setTimeout(typewrite, isDeleting ? 20 : 50);
+}
+
+function render() {
+  const text = prompts[promptIdx].slice(0, charIdx);
+  typewriterEl.innerHTML = text + '<span class="cursor"></span>';
+}
+
+typewrite();
+
+/* ═══════════════════════════════════════════
+   SHOWCASE CAROUSEL
+   ═══════════════════════════════════════════ */
+const track = document.getElementById('showcaseTrack');
+const items = document.querySelectorAll('.showcase-item');
+const dots = document.querySelectorAll('#showcaseDots button');
+let currentShowcase = 0;
+let autoTimer;
+let isPaused = false;
+
+function goToShowcase(idx) {
+  idx = ((idx % items.length) + items.length) % items.length;
+  currentShowcase = idx;
+  track.style.transform = 'translateX(-' + (idx * 100) + '%)';
+  items.forEach(function(item, i) { item.classList.toggle('active', i === idx); });
+  dots.forEach(function(dot, i) { dot.classList.toggle('active', i === idx); });
+  resetAutoAdvance();
+}
+
+function resetAutoAdvance() {
+  clearInterval(autoTimer);
+  if (!isPaused) {
+    autoTimer = setInterval(function() { goToShowcase(currentShowcase + 1); }, 8000);
+  }
+}
+
+dots.forEach(function(dot) {
+  dot.addEventListener('click', function() { goToShowcase(+dot.dataset.index); });
+});
+
+var carousel = document.querySelector('.showcase-carousel');
+carousel.addEventListener('mouseenter', function() { isPaused = true; clearInterval(autoTimer); });
+carousel.addEventListener('mouseleave', function() { isPaused = false; resetAutoAdvance(); });
+
+resetAutoAdvance();
+
+/* ═══════════════════════════════════════════
+   NAV SCROLL
+   ═══════════════════════════════════════════ */
+var navbar = document.getElementById('navbar');
+window.addEventListener('scroll', function() {
+  navbar.classList.toggle('scrolled', window.scrollY > 40);
+}, { passive: true });
+
+/* ═══════════════════════════════════════════
+   INTERSECTION OBSERVER — TRANSFORM ROWS
+   ═══════════════════════════════════════════ */
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.2 });
+
+document.querySelectorAll('.transform-row').forEach(function(row) { observer.observe(row); });
+
+/* ═══════════════════════════════════════════
+   GENERATE: Waveform bars
+   ═══════════════════════════════════════════ */
+var wf = document.getElementById('waveform1');
+if (wf) {
+  for (var i = 0; i < 50; i++) {
+    var bar = document.createElement('div');
+    bar.className = 'bar';
+    var h = 4 + Math.random() * 16;
+    bar.style.height = h + 'px';
+    if (i < 18) bar.style.opacity = '0.8';
+    wf.appendChild(bar);
+  }
+}
+
+/* ═══════════════════════════════════════════
+   GENERATE: Narrative heat grid
+   ═══════════════════════════════════════════ */
+var narratives = [
+  { name: 'AI Agents', heat: 0.9 },
+  { name: 'ETH L2', heat: 0.6 },
+  { name: 'BTC ETF', heat: 0.5 },
+  { name: 'DePIN', heat: 0.75 },
+  { name: 'RWA', heat: 0.65 },
+  { name: 'Modular', heat: 0.4 },
+  { name: 'Gaming', heat: 0.35 },
+  { name: 'Solana DeFi', heat: 0.7 },
+  { name: 'ZK Proofs', heat: 0.55 },
+  { name: 'Memecoins', heat: 0.8 },
+  { name: 'Restaking', heat: 0.45 },
+  { name: 'Intent', heat: 0.5 },
+  { name: 'AI x DeFi', heat: 0.85 },
+  { name: 'Data Avail.', heat: 0.3 },
+  { name: 'Perp DEX', heat: 0.6 },
+  { name: 'SocialFi', heat: 0.42 }
+];
+
+function heatColor(v) {
+  if (v > 0.75) return 'rgba(42,155,125,' + (0.6 + v * 0.4) + ')';
+  if (v > 0.5) return 'rgba(73,163,166,' + (0.5 + v * 0.4) + ')';
+  if (v > 0.35) return 'rgba(230,169,26,' + (0.4 + v * 0.4) + ')';
+  return 'rgba(0,0,0,' + (0.08 + v * 0.15) + ')';
+}
+
+var grid = document.getElementById('narrativeGrid');
+if (grid) {
+  narratives.forEach(function(n) {
+    var cell = document.createElement('div');
+    cell.className = 'narrative-cell';
+    cell.style.background = heatColor(n.heat);
+    cell.style.color = n.heat > 0.35 ? '#fff' : 'var(--text-n5)';
+    cell.innerHTML = '<span>' + n.name + '</span><span class="cell-label">' + Math.round(n.heat * 100) + '%</span>';
+    grid.appendChild(cell);
+  });
+}
+
+/* Mini heatmap for transform section */
+var miniHm = document.getElementById('miniHeatmap');
+if (miniHm) {
+  var miniData = [
+    { name: 'AI Agents', v: 0.9 }, { name: 'ETH L2', v: 0.6 },
+    { name: 'BTC ETF', v: 0.5 }, { name: 'DePIN', v: 0.75 },
+    { name: 'RWA', v: 0.65 }, { name: 'Solana', v: 0.7 },
+    { name: 'Gaming', v: 0.35 }, { name: 'Memes', v: 0.8 }
+  ];
+  miniData.forEach(function(d) {
+    var cell = document.createElement('div');
+    cell.style.cssText = 'border-radius:4px;padding:6px;text-align:center;font-size:9px;color:#fff;background:' + heatColor(d.v);
+    cell.textContent = d.name;
+    miniHm.appendChild(cell);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   GENERATE: Factor bars
+   ═══════════════════════════════════════════ */
+var factors = [
+  { name: 'Price Mom.', val: 72, color: 'var(--main-m3)' },
+  { name: 'Volume', val: 55, color: 'var(--main-m1)' },
+  { name: 'On-chain', val: 48, color: 'var(--main-m5)' },
+  { name: 'Sentiment', val: 38, color: 'var(--main-m4)' },
+  { name: 'Volatility', val: 62, color: 'var(--main-m3)' },
+  { name: 'Liquidity', val: 44, color: 'var(--main-m1)' }
+];
+var fb = document.getElementById('factorBars');
+if (fb) {
+  factors.forEach(function(f) {
+    var item = document.createElement('div');
+    item.className = 'factor-bar-item';
+    item.innerHTML = '<div class="bar" style="height:' + f.val + 'px;background:' + f.color + ';opacity:0.7"></div><div class="label">' + f.name + '</div>';
+    fb.appendChild(item);
+  });
+}
+
+/* ═══════════════════════════════════════════
+   GENERATE: Explore grid cards
+   ═══════════════════════════════════════════ */
+var exploreCards = [
+  { type: 'Research', title: 'AI Daily Digest', author: '@leoz', stars: 142, forks: 38, grad: 'linear-gradient(135deg, #49a3a6 0%, #2a9b7d 100%)' },
+  { type: 'Strategy', title: 'BTC Macro Regime Detector', author: '@trader_x', stars: 89, forks: 24, grad: 'linear-gradient(135deg, #e6a91a 0%, #e05357 100%)' },
+  { type: 'Research', title: 'Narrative Radar', author: '@leoz', stars: 203, forks: 57, grad: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+  { type: 'Strategy', title: 'Factor Momentum Alpha', author: '@quant_z', stars: 67, forks: 19, grad: 'linear-gradient(135deg, #2a9b7d 0%, #49a3a6 100%)' },
+  { type: 'Monitor', title: 'Whale Alert Monitor', author: '@onchain_dev', stars: 156, forks: 41, grad: 'linear-gradient(135deg, #e05357 0%, #e6a91a 100%)' },
+  { type: 'Signal', title: 'Funding Rate Arbitrage', author: '@arb_master', stars: 94, forks: 32, grad: 'linear-gradient(135deg, #49a3a6 0%, #667eea 100%)' },
+  { type: 'Dashboard', title: 'DeFi Yield Tracker', author: '@yield_farm', stars: 78, forks: 22, grad: 'linear-gradient(135deg, #2a9b7d 0%, #e6a91a 100%)' },
+  { type: 'Research', title: 'Earnings Alpha Scanner', author: '@macro_paul', stars: 112, forks: 35, grad: 'linear-gradient(135deg, #764ba2 0%, #e05357 100%)' }
+];
+
+var exploreGrid = document.getElementById('exploreGrid');
+exploreCards.forEach(function(c) {
+  var card = document.createElement('div');
+  card.className = 'explore-card';
+  card.innerHTML =
+    '<div class="card-thumb" style="background:' + c.grad + '"></div>' +
+    '<div class="card-body">' +
+      '<div class="card-type">' + c.type + '</div>' +
+      '<div class="card-title">' + c.title + '</div>' +
+      '<div class="card-footer">' +
+        '<span class="card-author">' + c.author + '</span>' +
+        '<span class="card-stats"><span>⭐' + c.stars + '</span><span>🔀' + c.forks + '</span></span>' +
+      '</div>' +
+    '</div>';
+  exploreGrid.appendChild(card);
+});
+
+/* ═══════════════════════════════════════════
+   FILTER PILLS
+   ═══════════════════════════════════════════ */
+document.querySelectorAll('.filter-pills button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.filter-pills button').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+
+/* ═══════════════════════════════════════════
+   COMMAND PILLS
+   ═══════════════════════════════════════════ */
+document.querySelectorAll('.command-pills button').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.command-pills button').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+{
+  "date": "2026-03-24",
+  "items": [
+    {
+      "title": "Flash-MoE: 在笔记本上跑 397B 参数模型",
+      "url": "https://github.com/danveloper/flash-moe",
+      "source": "Hacker News",
+      "tldr": "纯 C/Metal 推理引擎，无需 Python 框架，在 48GB MacBook Pro 上以 4.4 tok/s 跑 Qwen3.5-397B MoE 模型。209GB 模型权重从 SSD 按需流式加载，结合 FMA 优化的 4-bit 反量化内核，实现了生产级工具调用质量。",
+      "summary": "Flash-MoE 是一个纯 C 和 Metal 实现的推理引擎，能在 Apple M3 Max MacBook Pro（48GB 内存）上运行 Qwen3.5-397B-A17B——一个 397B 参数的 MoE 模型。该引擎利用 NVMe SSD 流式加载专家权重（每层 512 个专家中仅激活 4 个），借鉴 Apple「LLM in a Flash」论文的思路，通过 OS 页缓存管理替代自定义缓存。核心优化包括 FMA 重排的 4-bit 反量化内核（提速 12%）和 GCD 并行 pread。在 4-bit 配置下达到 4.36 tok/s 并支持完整工具调用；2-bit 可达 5.74 tok/s 但 JSON 输出不稳定。项目号称由 AI 和人类在 24 小时内协作完成，附带完整论文。这是端侧大模型推理的又一里程碑。",
+      "tags": [
+        "端侧推理",
+        "MoE",
+        "开源",
+        "Apple Silicon",
+        "量化"
+      ]
+    },
+    {
+      "title": "iPhone 17 Pro 演示运行 400B LLM",
+      "url": "https://news.ycombinator.com/item?id=47490070",
+      "source": "Hacker News / @anemll",
+      "tldr": "开发者在 iPhone 17 Pro 上成功运行了 400B 参数的大语言模型，展示了移动端 AI 推理能力的惊人进步。HN 热度 476 分、238 条讨论。",
+      "summary": "Twitter 用户 @anemll 展示了在 iPhone 17 Pro 上运行 400B 参数 LLM 的演示，引发 Hacker News 社区热烈讨论（476 分、238 评论）。这与 Flash-MoE 项目形成呼应——端侧大模型推理正从笔记本扩展到手机。Apple Silicon 的统一内存架构和高带宽 SSD 是关键推动力。移动端运行百亿甚至千亿参数模型，意味着隐私计算、离线推理、个人 AI 助手等场景即将迎来质变。这对教育场景尤其有意义：未来学生可能在手机上运行个人化的辅导模型。",
+      "tags": [
+        "移动端AI",
+        "iPhone",
+        "端侧推理",
+        "Apple Silicon"
+      ]
+    },
+    {
+      "title": "Karpathy 自曝：AI Agent 编程方法论，80% 代码交给 Agent",
+      "url": "https://36kr.com/p/3735473836015625",
+      "source": "36氪 / 智东西",
+      "tldr": "OpenAI 联合创始人 Karpathy 分享 AI 编程一线体感：几乎不再亲手写代码，80%+ 交给 Agent。他认为 Agent 做不好多半是 Skill 问题而非模型能力问题。",
+      "summary": "在最新播客中，Karpathy 系统梳理了 AI 编程 Agent 浪潮中的方法论。他坦言自己「几乎一行代码都没再亲自写过」，软件工程工作流已被 Agent 彻底改写——人用自然语言调度智能体完成系统级任务。他还打造了家庭 Agent「多比」，自动接管智能家居设备、建立控制面板、在陌生人接近时预警。关键洞察：Agent 瓶颈不在模型能力而在 Skill 设计；许多 App 应该是 Agent 可调用的 API。这对产品设计和教育科技都有启发——未来的教育产品可能本质上是一组 Agent Skills。",
+      "tags": [
+        "AI Agent",
+        "Karpathy",
+        "编程范式",
+        "OpenAI",
+        "产品设计"
+      ]
+    },
+    {
+      "title": "Designing AI for Disruptive Science",
+      "url": "https://www.asimov.press/p/ai-science",
+      "source": "Asimov Press",
+      "tldr": "当前 AI 擅长在既有框架内做预测，但科学范式突破需要用更简洁的原理替代复杂的补丁。文章以麦克斯韦方程组和伦敦地铁图为喻，探讨 AI 与颠覆性科学的关系。",
+      "summary": "Asimov Press 发表深度长文，以博尔赫斯「1:1 地图」寓言开篇：AI 正在构建知识的超大规模地图（如 AlphaFold、LLM），但科学范式突破并非增加细节，而是像 Harry Beck 重绘伦敦地铁图那样——用全新的抽象替代地理精确性。文章指出，麦克斯韦用四个方程统一了电磁学的补丁法则，并由此预言了无线电波，这种「简化产生新发现」的模式是当前 AI 系统尚不具备的。AI 在现有范式内的预测能力极强，但范式转换要求的是替换框架而非优化框架。这对 AI 辅助科研（包括教育科研）的定位有重要启示。",
+      "tags": [
+        "AI科研",
+        "科学哲学",
+        "范式突破",
+        "深度思考"
+      ]
+    },
+    {
+      "title": "Reasoning as Compression: 用信息瓶颈统一 Budget Forcing",
+      "url": "https://arxiv.org/abs/2603.08462",
+      "source": "arXiv (HF Papers 热榜)",
+      "tldr": "将 CoT 推理重构为有损压缩问题：推理链应只包含从 prompt 中无法直接获取的信息。提出基于条件信息瓶颈（CIB）的 RL 目标，统一了各种 token 节省启发式方法。",
+      "summary": "这篇论文（HF Papers 热度最高，13 upvotes）提出了一个优雅的理论框架：Chain-of-Thought 推理本质上是对「prompt 到回答之间信息差」的有损压缩。现有的 Budget Forcing 方法（如长度惩罚）是粗暴的，会同时压制有效推理和冗余填充。作者发现朴素信息瓶颈（IB）无法直接用于 Transformer——因为注意力机制破坏了 prompt→推理链→回答之间的马尔可夫性。他们引入条件信息瓶颈（CIB），让推理链 Z 只充当「桥梁」，承载从 prompt X 无法直接推导出的信息。由此得到的 RL 目标统一了常见启发式方法，并引入基于语言模型先验的语义压缩度量。实验显示：CIB 能在保持准确率的同时大幅压缩推理 token，或在激进压缩下仅有最小精度损失。",
+      "tags": [
+        "LLM推理",
+        "CoT",
+        "信息论",
+        "RL",
+        "效率优化"
+      ]
+    },
+    {
+      "title": "cq: Mozilla AI 推出「Agent 版 Stack Overflow」",
+      "url": "https://blog.mozilla.ai/cq-stack-overflow-for-agents/",
+      "source": "Mozilla AI Blog",
+      "tldr": "AI Agent 反复遇到相同问题却无法共享经验。Mozilla AI 推出 cq——让 Agent 像开发者用 Stack Overflow 一样查询和贡献解决方案的知识共享平台。",
+      "summary": "Mozilla AI 发布 cq 项目，直面一个尴尬现实：LLM 杀死了 Stack Overflow（月提问量从 20 万降至不足 4000），但 Agent 自身却陷入了同样的困境——孤立地重复踩同样的坑，浪费 token 和能源。cq 的定位是「Agent 的 Stack Overflow」：让编程 Agent 能查询已知解决方案、贡献新发现。文章回顾了技术轮回的讽刺——LLM 训练于 SO 语料，Agent 又消灭了 SO，现在 Agent 需要自己的 SO。这对 AI 辅助教育开发同样适用：教学 Agent 也需要类似的知识共享机制来避免重复犯错。",
+      "tags": [
+        "AI Agent",
+        "Mozilla",
+        "知识管理",
+        "开发工具",
+        "开源"
+      ]
+    },
+    {
+      "title": "AI 智能体正在改写科研知识生产方式",
+      "url": "https://36kr.com/p/3735198219698434",
+      "source": "36氪",
+      "tldr": "科研七步流水线（检索→筛选→阅读→整理→假设→实验→验证）中大量是「确定性劳动」。AI 学术智能体「切问学术」尝试将整体流程交给 Agent 执行。",
+      "summary": "36氪深度报道了 AI 如何重塑学术科研流程。传统科研是一场「七步马拉松」：文献检索、筛选、阅读、整理、假设、实验、验证——前四步本质上是确定性劳动，消耗了最宝贵的认知资源。过去十年 AI 在科研中更多停留在边缘（找论文、翻译、写综述），但新一代 AI 学术智能体「切问学术」提出了更激进的命题：将科研流程整体交给智能体执行。这直接关联教育科技——高校和研究机构的教学科研一体化场景，正是 AI Agent 的重要落地方向。学生和研究者的知识生产效率可能因此发生质变。",
+      "tags": [
+        "AI科研",
+        "教育科技",
+        "学术Agent",
+        "知识生产"
+      ]
+    },
+    {
+      "title": "AI 视频全民创作：「雪山救狐狸」引爆 AI UGC 浪潮",
+      "url": "https://36kr.com/p/3735632152674308",
+      "source": "36氪",
+      "tldr": "邵氏风格 AI 反转短片「雪山救狐狸」系列风靡全网，抖音/B站/小红书涌现大量高热作品。AI 视频工具正推倒内容创作围墙，开启「全民制作人」时代。",
+      "summary": "一场由 AI 点燃的创作风潮正席卷中文互联网。「雪山救狐狸」系列 AI 短片以邵氏武侠风格搭配荒诞反转剧情（樵夫救狐狸→酱板鸭复仇），迅速成为 3 月最吸睛的互联网文化现象。从最初的单一短片到全民接力创作，品牌和官方账号也纷纷下场。核心趋势：AI 视频生成工具大幅降低了内容创作门槛，使得普通用户也能制作电影级视觉效果的短片。这对教育内容创作有直接启示——教师和学生可以用 AI 工具快速制作高质量的教学视频和演示内容，内容生产正在民主化。",
+      "tags": [
+        "AI视频",
+        "UGC",
+        "内容创作",
+        "教育内容",
+        "创作工具"
+      ]
+    }
+  ]
+}

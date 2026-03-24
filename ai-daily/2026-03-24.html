@@ -231,6 +231,39 @@
 <div class="container">
   <div class="summary">今天两件事在同时发生:硬件端,iPhone 17 Pro 跑起了 400B 参数大模型,消费电子设备开始承接此前只有数据中心才能运行的工作负载；软件端,RL 训练的「能力天花板」问题终于有了理论突破。Anthropic CEO 放出豪言「6-12 个月内 Claude 能做大多数软件工程工作」,不管信不信,这句话已经让整个行业开始重新计算。</div>
   
+  <div class="podcast-player" id="podcast-widget">
+    <div class="podcast-header">
+      <button class="play-btn" id="pod-play" aria-label="播放">
+        <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+      <div>
+        <div class="podcast-title"><a href="https://listenhub.ai/zh/app/episode/69c1dbe060ee6b4bac60e00d" target="_blank" rel="noopener" style="color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,0.3)">2026年3月24日AI:手机跑400B大模型,本地推理打破认知</a></div>
+        <div class="podcast-sub">🎙️ uma · via ListenHub <button class="speed-btn" id="pod-speed">1x</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+      <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+    </div>
+    <audio id="pod-audio" preload="none" src="https://assets.listenhub.ai/listenhub-public-prod/podcast/69c1dbe060ee6b4bac60e00b.mp3"></audio>
+  </div>
+  <script>
+  (function(){
+    const a=document.getElementById('pod-audio'),b=document.getElementById('pod-play'),
+      i=document.getElementById('pod-icon'),f=document.getElementById('pod-fill'),
+      bar=document.getElementById('pod-progress'),c=document.getElementById('pod-cur'),
+      d=document.getElementById('pod-dur');
+    if(!a||!b)return;
+    const fmt=s=>{const m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0')};
+    b.onclick=()=>{if(a.paused){a.play();i.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';}else{a.pause();i.innerHTML='<polygon points="6,3 20,12 6,21"/>';}};
+    a.ontimeupdate=()=>{if(!a.duration)return;f.style.width=(a.currentTime/a.duration*100)+'%';c.textContent=fmt(a.currentTime);};
+    a.onloadedmetadata=()=>{d.textContent=fmt(a.duration)};
+    a.onended=()=>{i.innerHTML='<polygon points="6,3 20,12 6,21"/>';f.style.width='0%';c.textContent='0:00';};
+    bar.onclick=e=>{if(!a.duration)return;a.currentTime=(e.offsetX/bar.offsetWidth)*a.duration;};
+    const speeds=[1,1.25,1.5,1.75,2,0.75];let si=0;const sb=document.getElementById('pod-speed');
+    sb.onclick=()=>{si=(si+1)%speeds.length;a.playbackRate=speeds[si];sb.textContent=speeds[si]+'x';};
+  })();
+  </script>
   
   <div class="article">
     <div class="article-num">01</div>

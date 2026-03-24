@@ -8,7 +8,11 @@
       "url": "https://twitter.com/anemll/status/2035901335984611412",
       "source": "Hacker News",
       "tldr": "研究者演示了在 iPhone 17 Pro 上运行 400B 参数 LLM，HN 461 分热议。这标志着端侧推理进入全新量级，消费级设备的算力边界正在被快速重写。关键技术是激进的量化加分层卸载，虽然速度不及云端，但能跑本身就是里程碑。",
-      "tags": ["端侧推理", "iPhone", "硬件"]
+      "tags": [
+        "端侧推理",
+        "iPhone",
+        "硬件"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,11 @@
       "url": "https://github.com/danveloper/flash-moe",
       "source": "Hacker News / GitHub",
       "tldr": "开源项目 Flash-MoE 实现了在普通笔记本上运行近 400B 参数 MoE 模型，HN 389 分。核心思路是 MoE 的稀疏激活特性让实际计算量远低于参数量，配合智能内存管理实现了不可能的事。本地部署超大模型的门槛正在快速下降。",
-      "tags": ["MoE", "本地推理", "开源"]
+      "tags": [
+        "MoE",
+        "本地推理",
+        "开源"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +32,11 @@
       "url": "https://x.com/cgtwts/status/2036059032524566573",
       "source": "Twitter",
       "tldr": "Dario Amodei 公开表示距离 Claude 端到端完成「大多数甚至全部」软件工程任务仅剩 6-12 个月。这不是技术预测而是产品路线图式的表态，配合 Claude Remote Worker 同期发布，Anthropic 正在把 Agent 能力商业化提速。",
-      "tags": ["Anthropic", "Claude", "Agent"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "Agent"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +44,11 @@
       "url": "https://huggingface.co/papers/2603.19987",
       "source": "HuggingFace Papers",
       "tldr": "论文指出 LLM RL 训练面临「能力天花板」——模型只是在提炼预训练中已有的模式，而非发现新策略。根本原因是缺乏经典 RL 中的紧凑 Markov 状态表示。提出重新引入状态表示的方法，实验显示可突破现有 post-training 上限。",
-      "tags": ["RL", "后训练", "论文"]
+      "tags": [
+        "RL",
+        "后训练",
+        "论文"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +56,11 @@
       "url": "https://huggingface.co/papers/2603.08462",
       "source": "HuggingFace Papers",
       "tldr": "HF Papers 本周最高分（13赞）。论文将 Chain-of-Thought 重新建模为信息瓶颈下的有损压缩问题，统一了各种 Budget Forcing 方法。关键发现：现有长度惩罚法同时压缩了有用推理和无用填充，新方法能精准区分两者，在降低 token 消耗的同时保留推理质量。",
-      "tags": ["CoT", "推理效率", "论文"]
+      "tags": [
+        "CoT",
+        "推理效率",
+        "论文"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +68,11 @@
       "url": "https://x.com/theo/status/2035805626086109678",
       "source": "Twitter / Theo",
       "tldr": "前端 KOL Theo（30万粉）直言：GPT-5.4 在纯编程任务上非常出色，但前端设计和 UI 生成能力比竞品落后一代，而 OpenAI 把这个差距定性为「用户技能问题」。产品定位与社区感知的落差值得持续关注。",
-      "tags": ["GPT-5.4", "OpenAI", "评测"]
+      "tags": [
+        "GPT-5.4",
+        "OpenAI",
+        "评测"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +80,11 @@
       "url": "https://nikomatsakis.github.io/rust-project-perspectives-on-ai/feb27-summary.html",
       "source": "Hacker News",
       "tldr": "Rust 核心贡献者调研汇总，HN 150 分讨论。这批以安全和正确性为信仰的工程师对 AI 工具的接受度和顾虑都更有代表性：既有人认为 AI 提高了生产力，也有人担忧 AI 生成代码侵蚀了对系统深层理解的需求。",
-      "tags": ["Rust", "社区", "AI工具"]
+      "tags": [
+        "Rust",
+        "社区",
+        "AI工具"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +92,11 @@
       "url": "https://www.interconnects.ai/p/lossy-self-improvement",
       "source": "interconnects.ai",
       "tldr": "Nathan Lambert 论证 LLM 自我改进确实存在但本质上是有损的——每次迭代都会丢失一些原始能力分布。这个「有损」特性是结构性的，不是 bug，意味着递归自我改进不会无限加速，给超对齐讨论提供了更清醒的技术框架。",
-      "tags": ["对齐", "自我改进", "AI安全"]
+      "tags": [
+        "对齐",
+        "自我改进",
+        "AI安全"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +104,11 @@
       "url": "https://finance.sina.com.cn/jjxw/2026-03-23/doc-inhrxrmv5425819.shtml",
       "source": "新浪财经",
       "tldr": "OpenRouter 数据：截至 3 月 15 日，中国模型周调用量达 4.69 万亿 Token，连续第二周超越美国，全球前三全是国产。摩根大通预测中国 AI 推理消耗量 5 年增长 370 倍。算力产业链有望进入「全链通胀」周期。",
-      "tags": ["中国AI", "算力", "产业"]
+      "tags": [
+        "中国AI",
+        "算力",
+        "产业"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +116,15 @@
       "url": "https://www.itsthatlady.dev/blog/building-an-ai-receptionist-for-my-brother/",
       "source": "Hacker News",
       "tldr": "HN 203 分、225 条评论的热帖。作者用 AI 给家族汽修小店搭建了全自动电话接待系统：接听客户问询、安排预约、处理常见问题，整个系统低成本运行。评论区有大量关于小企业 AI 落地的实操讨论，是真实 use case 的活案例。",
-      "tags": ["AI落地", "小企业", "Agent"]
+      "tags": [
+        "AI落地",
+        "小企业",
+        "Agent"
+      ]
     }
-  ]
+  ],
+  "podcastUrl": "https://assets.listenhub.ai/listenhub-public-prod/podcast/69c1dbe060ee6b4bac60e00b.mp3",
+  "podcastLink": "https://listenhub.ai/zh/app/episode/69c1dbe060ee6b4bac60e00d",
+  "podcastTitle": "2026年3月24日AI：手机跑400B大模型，本地推理打破认知",
+  "podcastVoice": "uma"
 }

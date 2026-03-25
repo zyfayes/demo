@@ -1,0 +1,133 @@
+{
+  "date": "2026-03-25",
+  "items": [
+    {
+      "title": "GPT-5.4 Pro 解决 Ramsey 超图前沿数学开放问题",
+      "url": "https://epoch.ai/frontiermath/open-problems/ramsey-hypergraphs",
+      "source": "Epoch AI / HN",
+      "tldr": "GPT-5.4 Pro 首次解出 FrontierMath 中一道关于 Ramsey 超图的开放数学问题，随后 Opus 4.6 和 Gemini 3.1 Pro 也成功解出。这标志着 LLM 在前沿数学推理上的重大突破。",
+      "summary": "Epoch AI 确认 GPT-5.4 Pro 解决了 FrontierMath 中一道由数学家 Will Brian 提出的 Ramsey 超图开放问题。该问题涉及改进超图分区值序列的下界，此前无人解出。GPT-5.4 Pro 的方案消除了已有下界构造中的低效之处，与上界构造的精巧度相匹配。Brian 评价解法 '令人兴奋'，计划撰写论文发表。随后 Epoch 的通用测试脚手架证实 Opus 4.6 (max)、Gemini 3.1 Pro、GPT-5.4 (xhigh) 也能独立解出。这是 AI 解决真正开放数学问题的又一里程碑，显示 frontier 模型已具备超越刷题的原创数学研究潜力。",
+      "tags": [
+        "LLM",
+        "数学推理",
+        "GPT-5.4",
+        "FrontierMath",
+        "突破"
+      ]
+    },
+    {
+      "title": "Anthropic 发布 Claude Dispatch + Computer Use：AI 接管你的 Mac",
+      "url": "https://claude.com/blog/dispatch-and-computer-use",
+      "source": "Anthropic Blog",
+      "tldr": "Claude 现在可以在 Cowork 和 Claude Code 中直接操控你的电脑——点击、滚动、打开浏览器、运行开发工具，无需额外配置。Dispatch 功能让你从手机分配任务，桌面端自动执行。",
+      "summary": "Anthropic 推出 Computer Use 研究预览版，面向 Claude Pro 和 Max 用户。当 Claude 缺少所需工具时，它会自动接管屏幕，通过鼠标、键盘和浏览器完成任务。系统优先使用 Slack、Google Calendar 等精确连接器，退而求其次才操控 GUI。安全方面，模型激活层会自动扫描 prompt injection，部分应用默认禁止访问，用户可随时中断。配合 Dispatch 功能，用户可在手机端发起任务，Claude 在桌面端异步完成。这将 AI 助手从'文本对话'推向'真正的计算机操作员'，但 Anthropic 也坦承该功能仍属早期，建议避免处理敏感数据。",
+      "tags": [
+        "Claude",
+        "Computer Use",
+        "Anthropic",
+        "桌面自动化",
+        "Agent"
+      ]
+    },
+    {
+      "title": "OpenAI 计划推出桌面 \"超级应用\"，整合 ChatGPT、Codex 和浏览器",
+      "url": "https://www.wsj.com/tech/openai-plans-launch-of-desktop-superapp-to-refocus-simplify-user-experience-9e19931d",
+      "source": "WSJ",
+      "tldr": "OpenAI 正计划将 ChatGPT、Codex 编码平台和浏览器合并为桌面端'超级应用'，由应用负责人 Fidji Simo 主导，聚焦企业客户。",
+      "summary": "据华尔街日报报道，OpenAI 正在开发一款桌面'超级应用'，将 ChatGPT 对话、Codex 编码平台和内置浏览器统一在一个界面下。该项目由 Chief of Applications Fidji Simo 负责，目标是简化用户体验并加强对企业和工程客户的营销。总裁 Greg Brockman 目前领导公司的算力战略。此举反映出 AI 公司正从单一聊天界面向集成化工作平台演进——与 Anthropic 的 Cowork/Dispatch 策略形成直接竞争。对开发者而言，这意味着 AI 编码助手将更深度嵌入日常工作流。",
+      "tags": [
+        "OpenAI",
+        "ChatGPT",
+        "Codex",
+        "超级应用",
+        "产品战略"
+      ]
+    },
+    {
+      "title": "iPhone 17 Pro 演示运行 400B 参数 LLM",
+      "url": "https://news.ycombinator.com/item?id=47490070",
+      "source": "HN (697 points)",
+      "tldr": "有开发者在 iPhone 17 Pro 上成功运行了 400B 参数的大语言模型，展示了移动端 AI 推理能力的巨大进步。端侧大模型正在从实验走向现实。",
+      "summary": "一段演示视频显示 iPhone 17 Pro 成功运行了一个 400B 参数的 LLM，在 Hacker News 引发热议（697 分、320 条评论）。这得益于 Apple Silicon 的统一内存架构和持续优化的量化技术。虽然推理速度远不及云端，但意义在于证明了端侧运行超大模型的可行性。结合同期 Hypura 等项目在 Mac 上的存储分层推理方案，整个 Apple 生态正在成为本地 AI 推理的重要平台。对隐私敏感场景（教育、医疗、企业）而言，这意味着无需上云即可使用强力模型。",
+      "tags": [
+        "Apple",
+        "端侧推理",
+        "iPhone",
+        "LLM",
+        "硬件"
+      ]
+    },
+    {
+      "title": "Hypura：让超出内存的大模型在 Mac 上跑起来",
+      "url": "https://github.com/t8/hypura",
+      "source": "GitHub / HN (191 points)",
+      "tldr": "Hypura 是一个存储分层感知的 LLM 推理调度器，可在 32GB Mac Mini 上以 2.2 tok/s 跑 31GB 的 Mixtral 8x7B，而 llama.cpp 会直接崩溃。",
+      "summary": "Hypura 针对 Apple Silicon 设计，将模型张量智能分配到 GPU、RAM 和 NVMe 三个存储层级。它读取 GGUF 文件后自动 profiling 硬件，求解最优放置策略：注意力层和 norms 固定在 GPU，MoE 路由器拦截仅加载被激活的 2/8 专家（减少 75% I/O），密集 FFN 从 NVMe 流式加载并自动预取。对 MoE 模型，神经元缓存实现 99.5% 命中率。实测在 32GB Mac Mini 上跑 Mixtral 8x7B 达 2.2 tok/s，40GB Llama 70B 达 0.3 tok/s——这两个模型在原生 llama.cpp 下会 OOM 崩溃。项目开源，对本地部署大模型的开发者极具价值。",
+      "tags": [
+        "Apple Silicon",
+        "本地推理",
+        "开源",
+        "MoE",
+        "基础设施"
+      ]
+    },
+    {
+      "title": "Mozilla AI 发布 Cq：AI 编码 Agent 的 Stack Overflow",
+      "url": "https://blog.mozilla.ai/cq-stack-overflow-for-agents/",
+      "source": "Mozilla AI Blog / HN (202 points)",
+      "tldr": "Mozilla AI 推出 Cq，让 AI 编码 Agent 共享和检索解决方案，避免反复踩同样的坑。本质上是为 Agent 构建的集体知识库。",
+      "summary": "Stack Overflow 月提问量从 2014 年高峰的 20 万降至 2025 年底的不到 4000——LLM '杀死'了它。但讽刺的是，AI Agent 现在面临同样的问题：每个 Agent 孤立地反复遭遇相同错误，浪费 token 和算力。Cq 的思路是为 Agent 构建共享知识库：Agent 遇到的问题和解决方案可以被记录、检索和复用。这是一个深刻的循环——LLM 训练于 Stack Overflow 数据，Agent 消灭了 Stack Overflow，现在 Agent 自己需要 Stack Overflow。对教育场景中的编程教学 Agent 尤其有意义，可显著降低重复错误和 token 消耗。",
+      "tags": [
+        "Agent",
+        "开发工具",
+        "Mozilla",
+        "知识共享",
+        "编程教育"
+      ]
+    },
+    {
+      "title": "SentrySearch：利用 Gemini 原生视频嵌入实现亚秒级视频语义搜索",
+      "url": "https://github.com/ssrajadh/sentrysearch",
+      "source": "GitHub / HN (249 points)",
+      "tldr": "基于 Gemini Embedding 2 的原生视频嵌入能力，SentrySearch 将视频分块后直接嵌入向量空间，实现'用自然语言搜视频内容'。",
+      "summary": "SentrySearch 利用 Google Gemini Embedding 模型首次支持的原生视频嵌入能力，将行车记录仪视频切分为带重叠的片段，直接以视频形式（非抽帧）嵌入向量空间并存入 ChromaDB。搜索时，文本查询被嵌入同一向量空间进行匹配，命中片段自动裁剪保存。这意味着多模态搜索正在从'图片+文本'扩展到'视频+文本'。对教育场景中的课堂录像检索、教学视频定位等需求，这种原生视频语义搜索能力可能带来变革性的效率提升。",
+      "tags": [
+        "Gemini",
+        "视频搜索",
+        "多模态",
+        "嵌入",
+        "教育应用潜力"
+      ]
+    },
+    {
+      "title": "OpenResearcher：完全开源的深度研究 Agent 训练管线",
+      "url": "https://huggingface.co/papers/2603.20278",
+      "source": "HuggingFace Papers (53 upvotes)",
+      "tldr": "来自 TIGER Lab 的 OpenResearcher 提供完全离线、可复现的深度研究 Agent 训练管线，在 BrowseComp-Plus 上比基础模型提升 34 个百分点。",
+      "summary": "OpenResearcher 解决了训练深度研究 Agent 的关键瓶颈：现有方案依赖昂贵且不稳定的在线 API。它将语料构建与轨迹合成解耦，基于 1500 万文档语料库完全离线运行三种浏览器原语（search/open/find）。使用 GPT-OSS-120B 作为教师模型合成了 9.7 万条轨迹（含 100+ 工具调用的长程尾部），在 30B-A3B 骨干上微调后达 54.8% BrowseComp-Plus 准确率。全部代码、数据、模型开源。对教育研究者而言，这套管线可直接用于训练面向学术文献综述的专业 Agent。",
+      "tags": [
+        "深度研究",
+        "Agent训练",
+        "开源",
+        "论文",
+        "教育研究"
+      ]
+    },
+    {
+      "title": "京东首次开源通用基础大模型 JoyAI-LLM Flash",
+      "url": "https://36kr.com/p/3737137603707143",
+      "source": "36氪",
+      "tldr": "京东开源 48B 参数（激活 3B）的 JoyAI-LLM Flash 通用大模型，性能超越 GLM-4.7 Flash。同步发布数字人框架 JoyAvatar 和'龙虾'系列产品。",
+      "summary": "京东技术团队公布'龙虾天团'产品矩阵，核心包括：1）首次开源通用基础大模型 JoyAI-LLM Flash（48B 参数/激活 3B），Instruct 版在多项测试中超越 GLM-4.7 Flash；2）基于 JoyAI 的 OpenClaw 一键部署产品，上线一周 token 调用量环比增长 455%；3）自研 JoyAvatar 数字人视频生成框架，通过双教师 DMD 后训练等三大技术解决文本控制弱和长视频生成问题。京东以电商场景数据优势切入大模型赛道，开源策略有助于生态构建。",
+      "tags": [
+        "京东",
+        "开源",
+        "大模型",
+        "JoyAI",
+        "数字人"
+      ]
+    }
+  ],
+  "summary": "今日 AI 领域亮点集中在三个方向：1）模型能力突破——GPT-5.4 Pro 解决了前沿数学开放问题，端侧推理方面 iPhone 17 Pro 运行 400B 模型、Hypura 让超大模型在 Mac 上可用；2）AI 产品形态演进——Anthropic 和 OpenAI 分别推出 Computer Use 和桌面超级应用，AI 从对话框走向全面计算机操控；3）Agent 基础设施成熟——Mozilla 的 Cq 为 Agent 构建知识共享、OpenResearcher 开源深度研究 Agent 训练管线。教育科技直接相关新闻较少，但视频语义搜索（SentrySearch）、Agent 知识共享（Cq）和研究 Agent 训练（OpenResearcher）均有显著教育应用潜力。",
+  "eduNote": "今日教育科技直接相关新闻不足 4 条。上述条目中 Cq（编程教学 Agent 知识共享）、SentrySearch（教学视频检索）、OpenResearcher（学术研究 Agent）具有教育应用潜力，已在摘要中标注。"
+}

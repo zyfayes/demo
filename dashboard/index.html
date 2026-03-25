@@ -342,82 +342,8 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-03-25T13:05:11.658Z",
+  "generated": "2026-03-25T16:01:38.328Z",
   "cronJobs": [
-    {
-      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
-      "agentId": "main",
-      "name": "Polymarket Scanner",
-      "enabled": true,
-      "createdAtMs": 1771231556226,
-      "updatedAtMs": 1774400760417,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,13 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n3. 🐋 跑鲸鱼追踪：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/scanner.mjs 2>/dev/null\n```\n解析 JSON 输出中的 `strategies.whaleTracker`，提取 `whales`（按 totalUsd 排序的大户）和 `watchlistAlerts`（watchlist 钱包的新动作）。\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n### 🐋 鲸鱼动态（新板块，放在最后）\n从 scanner.mjs 输出提取，格式：\n```\n🐋 鲸鱼动态（过去4h）\n\n[鲸鱼名] | 历史利润 $XXk | 胜率 XX% | N场\n→ $XXk [BUY/SELL] [YES/NO] [市场标题](url) @ $0.XX\n\n[如有 watchlist alerts]\n👀 Watchlist 追踪：\n- [鲸鱼名] [BUY/SELL] $XXX [市场标题]\n```\n\n只展示 totalUsd ≥ $5k 的鲸鱼，或有 watchlist alerts 的。如果鲸鱼数据为空或全部 < $5k，省略此板块。\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选且无鲸鱼动态 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个 | 🐋 鲸鱼N条 watchlist M条`",
-        "timeoutSeconds": 720,
-        "model": "anthropic/claude-sonnet-4-6"
-      },
-      "state": {
-        "nextRunAtMs": 1774443600000,
-        "lastRunAtMs": 1774400400010,
-        "lastStatus": "ok",
-        "lastDurationMs": 360407,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true,
-        "runningAtMs": 1774443600014
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1479010527446569012",
-      "name": "Dashboard Refresh",
-      "enabled": true,
-      "createdAtMs": 1772711342198,
-      "updatedAtMs": 1774400767332,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 9,21 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
-        "model": "anthropic/claude-sonnet-4-6",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1774443600000,
-        "lastRunAtMs": 1774400760417,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 6915,
-        "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1774443897713
-      }
-    },
     {
       "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
       "agentId": "main",
@@ -451,7 +377,8 @@ window.__DASHBOARD_DATA__ = {
         "lastDurationMs": 37201,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false
+        "lastDelivered": false,
+        "runningAtMs": 1774454451029
       }
     },
     {
@@ -828,7 +755,7 @@ window.__DASHBOARD_DATA__ = {
       "wakeMode": "now",
       "payload": {
         "kind": "agentTurn",
-        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [AI Daily Digest] started | YYYY-MM-DD HH:MM UTC`\n\nAI Daily Digest。严格按以下步骤执行，不要跳步。\n\n## Step 1: 抓取原始数据\n```bash\nnode /Users/leo/.openclaw/workspace/skills/ai-digest/fetch.mjs\n```\n等待完成，确认 /tmp/ai-digest-raw.json 已生成。\n\n## Step 2: 补充搜索\n用以下工具补充 fetch.mjs 未覆盖的源：\n- MiniMax Search 搜中文 AI 新闻：\n  `bash /Users/leo/.openclaw/workspace/skills/web-search/scripts/minimax-search.sh \"AI 大模型 最新进展 2026\"`\n- Brave Search 搜英文热点：\n  `web_search(query=\"AI model release breakthrough this week\", freshness=\"pd\", count=5)`\n\n## Step 3: 筛选 + TLDR\n读取 /tmp/ai-digest-raw.json + Step 2 的补充结果，筛选出 10 条最值得关注的内容。\n\n筛选标准：\n- ✅ 原创观点、技术深度、实操经验、新模型发布、开源项目、benchmark 突破\n- ✅ 活人味：个人博客、长推、深度访谈、引发社区讨论的争议\n- ❌ 发布会复读、融资新闻、空洞预测、SEO 垃圾、纯新闻报道\n\n为每条写 2-3 句中文干货 TLDR，标题带原始链接。\n\n## Step 4: 写 JSON\n将筛选结果写入 /tmp/ai-digest-data.json，严格使用以下格式：\n```json\n{\n  \"date\": \"YYYY-MM-DD\",\n  \"summary\": \"今日概览 2-3 句话（要有态度和洞察，不是干巴巴列清单）\",\n  \"articles\": [\n    {\n      \"num\": 1,\n      \"title\": \"标题\",\n      \"url\": \"https://...\",\n      \"source\": \"来源\",\n      \"tldr\": \"TLDR 文字（2-3句干货）\",\n      \"tags\": [\"标签1\", \"标签2\"]\n    }\n  ]\n}\n```\n\n⚠️ JSON 注意事项：\n- 所有引号必须用英文双引号，绝对不要用中文引号\n- 所有逗号用英文，不要用中文\n- tldr 中如果需要引用，用单引号或「」代替双引号\n- 写完后用 exec 运行 `node -e \"JSON.parse(require('fs').readFileSync('/tmp/ai-digest-data.json','utf8')); console.log('JSON OK')\"` 验证\n\n## Step 5: 生成 HTML + 推送 GitHub\n```bash\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n## Step 6: 输出完整摘要（Discord announce 会自动投递）\n严格使用以下 Markdown 格式输出：\n\n🤖 AI 日报 YYYY-MM-DD\n\n✉️ [2-3句有态度的编辑摘要]\n\n1. [标题1](url1)\n💡 TLDR\n\n...\n\n10. [标题10](url10)\n💡 TLDR\n\n🔗 [完整阅读版](https://zyfayes.github.io/demo/ai-daily/?date=YYYY-MM-DD)\n\n#AIDigest #Daily\n\n## Step 7: Telegram 通知\n用 message tool 发送精华版到 Telegram（不是一句话通知，要有干货）：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：日报标题 + 编辑摘要 + 最值得关注的 3 条（标题+一句话 insight）+ 完整阅读版链接。控制在 15 行以内。\n\n\n\n## Step 8: 生成播客音频（ListenHub）\n读取 /tmp/ai-digest-data.json，基于日报内容生成一份稍详细的播客文稿，然后调用 ListenHub 生成播客。\n\n### 8.1 准备播客文稿\n基于 ai-digest-data.json 的 summary + 全部 10 条 articles，写一份 **播客版文稿**（比日报正文稍详细）：\n- 开场：今天 AI 圈最值得关注的事情是什么（2-3句，口语化）\n- 逐条讲解 10 条内容：每条用口语化的方式展开 3-5 句（是什么 → 为什么重要 → 关键细节）\n- 结尾：今天最值得做的 1-2 件事 + 收尾语\n- 全文 1500-2500 字，口语风格，不要书面腔\n- 将文稿写入 /tmp/ai-digest-podcast-script.txt\n\n### 8.2 调用 ListenHub 生成播客\n```bash\nbash /Users/leo/.openclaw/workspace/skills/listenhub/scripts/create-podcast.sh \\\n  --query \"$(cat /tmp/ai-digest-podcast-script.txt)\" \\\n  --language zh \\\n  --mode quick \\\n  --speakers \"voice-clone-694d11313a777d73b1efeae0\"\n```\n记录返回的 episodeId。\n\n### 8.3 等待生成完成并写入日报\n```bash\nbash /Users/leo/.openclaw/workspace/skills/listenhub/scripts/check-status.sh \\\n  --episode <episodeId> --type podcast --wait --timeout 300\n```\n等待完成，从返回 JSON 中提取 audioUrl 和 title。\n\n然后用 exec 把播客信息写入 ai-digest-data.json 并重新生成 HTML：\n```bash\n# 用 node 往 JSON 里追加 podcastUrl 字段\nnode -e \"\nconst fs = require('fs');\nconst d = JSON.parse(fs.readFileSync('/tmp/ai-digest-data.json','utf8'));\nd.podcastUrl = '<audioUrl>';\nd.podcastLink = 'https://listenhub.ai/zh/app/episode/<episodeId>';\nd.podcastTitle = '<title from API>';\nd.podcastVoice = 'uma';\nfs.writeFileSync('/tmp/ai-digest-data.json', JSON.stringify(d, null, 2));\nconsole.log('podcast info added');\n\"\n\n# 重新生成 HTML 并推送\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n### 8.4 发送播客链接\n用 message tool 发送到 Discord #ai-daily-digest 频道：\n- action: send\n- channel: discord\n- target: 1475150686843830505\n内容：`🎙️ AI 日报播客版 YYYY-MM-DD\\n收听：<audioUrl>\\n音色：uma`\n\n同时发到 Telegram：\n- action: send\n- channel: telegram  \n- target: 422039053\n内容：`🎙️ AI 日报播客版\\n<audioUrl>`\n\n⚠️ 如果播客生成失败或超时，不要阻塞整个任务，跳过并在 heartbeat 记录中注明。\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。\n\n## 标题语言规则（强制）\n最终输出里 1-10 条的标题必须优先中文表达：\n- 格式固定：`[中文标题（可保留关键英文术语）](url)`\n- 禁止直接照抄纯英文原标题；若原文只有英文，必须翻译成自然中文再输出\n- 每条 TLDR 继续保持 2-3 句中文干货\n",
+        "message": "## 开始即报到（必做）\n任务开始后立刻用 message tool 发执行开始记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`🚀 [AI Daily Digest] started | YYYY-MM-DD HH:MM UTC`\n\nAI Daily Digest。严格按以下步骤执行，不要跳步。\n\n## Step 1: 抓取原始数据\n```bash\nnode /Users/leo/.openclaw/workspace/skills/ai-digest/fetch.mjs\n```\n等待完成，确认 /tmp/ai-digest-raw.json 已生成。\n\n## Step 2: 补充搜索\n用以下工具补充 fetch.mjs 未覆盖的源：\n- MiniMax Search 搜中文 AI 新闻：\n  `bash /Users/leo/.openclaw/workspace/skills/web-search/scripts/minimax-search.sh \"AI 大模型 最新进展 2026\"`\n- Brave Search 搜英文热点：\n  `web_search(query=\"AI model release breakthrough this week\", freshness=\"pd\", count=5)`\n\n## Step 3: 筛选 + TLDR\n读取 /tmp/ai-digest-raw.json + Step 2 的补充结果，筛选出 10 条最值得关注的内容。\n\n筛选标准：\n- ✅ 原创观点、技术深度、实操经验、新模型发布、开源项目、benchmark 突破\n- ✅ 活人味：个人博客、长推、深度访谈、引发社区讨论的争议\n- ❌ 发布会复读、融资新闻、空洞预测、SEO 垃圾、纯新闻报道\n\n为每条写 2-3 句中文干货 TLDR，标题带原始链接。\n\n## Step 4: 写 JSON\n将筛选结果写入 /tmp/ai-digest-data.json，严格使用以下格式：\n```json\n{\n  \"date\": \"YYYY-MM-DD\",\n  \"summary\": \"今日概览 2-3 句话（要有态度和洞察，不是干巴巴列清单）\",\n  \"articles\": [\n    {\n      \"num\": 1,\n      \"title\": \"标题\",\n      \"url\": \"https://...\",\n      \"source\": \"来源\",\n      \"tldr\": \"TLDR 文字（2-3句干货）\",\n      \"tags\": [\"标签1\", \"标签2\"]\n    }\n  ]\n}\n```\n\n⚠️ JSON 注意事项：\n- 所有引号必须用英文双引号，绝对不要用中文引号\n- 所有逗号用英文，不要用中文\n- tldr 中如果需要引用，用单引号或「」代替双引号\n- 写完后用 exec 运行 `node -e \"JSON.parse(require('fs').readFileSync('/tmp/ai-digest-data.json','utf8')); console.log('JSON OK')\"` 验证\n\n## Step 5: 生成 HTML + 推送 GitHub\n```bash\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n\n## Step 6: 输出完整摘要（Discord announce 会自动投递）\n严格使用以下 Markdown 格式输出：\n\n🤖 AI 日报 YYYY-MM-DD\n\n✉️ [2-3句有态度的编辑摘要]\n\n1. [标题1](url1)\n💡 TLDR\n\n...\n\n10. [标题10](url10)\n💡 TLDR\n\n🔗 [完整阅读版](https://zyfayes.github.io/demo/ai-daily/?date=YYYY-MM-DD)\n\n#AIDigest #Daily\n\n## Step 7: Telegram 通知\n用 message tool 发送精华版到 Telegram（不是一句话通知，要有干货）：\n- action: send\n- channel: telegram\n- target: 422039053\n内容：日报标题 + 编辑摘要 + 最值得关注的 3 条（标题+一句话 insight）+ 完整阅读版链接。控制在 15 行以内。\n\n\n\n## Step 8: 生成播客音频（MiniMax TTS）\n读取 /tmp/ai-digest-data.json，基于日报内容生成一份稍详细的播客文稿，然后调用 MiniMax TTS 生成音频。\n\n### 8.1 准备播客文稿\n基于 ai-digest-data.json 的 summary + 全部 10 条 articles，写一份 **播客版文稿**（比日报正文稍详细）：\n- 开场：今天 AI 圈最值得关注的事情是什么（2-3句，口语化）\n- 逐条讲解 10 条内容：每条用口语化的方式展开 3-5 句（是什么 → 为什么重要 → 关键细节）\n- 结尾：今天最值得做的 1-2 件事 + 收尾语\n- 全文 1500-2500 字，口语风格，不要书面腔\n- 将文稿写入 /tmp/ai-digest-podcast-script.txt\n\n### 8.2 调用 MiniMax TTS 生成音频\n```bash\nmkdir -p /Users/leo/.openclaw/workspace/minimax-output\nbash /Users/leo/.openclaw/workspace/skills/minimax-multimodal/scripts/tts/generate_voice.sh   tts \"$(cat /tmp/ai-digest-podcast-script.txt)\"   -v female-shaonv   -o /Users/leo/.openclaw/workspace/minimax-output/ai-digest-$(date -u -d '+8 hours' +%Y-%m-%d 2>/dev/null || date -u -v+8H +%Y-%m-%d).mp3\n```\n如果失败，不要阻塞整个任务，跳过并在 heartbeat 记录中注明。\n\n### 8.3 写入日报并重新推送\n用 exec 把播客信息写入 ai-digest-data.json：\n```bash\nnode -e \"\nconst fs = require('fs');\nconst d = JSON.parse(fs.readFileSync('/tmp/ai-digest-data.json','utf8'));\nconst date = d.date || new Date().toISOString().slice(0,10);\nconst localFile = `/Users/leo/.openclaw/workspace/minimax-output/ai-digest-${date}.mp3`;\nd.podcastLocalFile = localFile;\nd.podcastTitle = `AI 日报播客版 ${date}`;\nd.podcastVoice = 'female-shaonv';\nd.podcastProvider = 'MiniMax';\nd.podcastLink = '';\nfs.writeFileSync('/tmp/ai-digest-data.json', JSON.stringify(d, null, 2));\nconsole.log('podcast info added');\n\"\n\nbash /Users/leo/.openclaw/workspace/skills/ai-digest/push-github.sh /tmp/ai-digest-data.json\n```\n`push-github.sh` 会自动把 `podcastLocalFile` 上传到 GitHub Pages，并把 `podcastUrl` 改成线上可访问链接。\n\n### 8.4 发送播客链接\n重新读取 `/tmp/ai-digest-data.json` 或发布后的 GitHub Pages 地址，向 Discord/Telegram 发送播客版链接：\n- Discord: `🎙️ AI 日报播客版 YYYY-MM-DD\n收听：<podcastUrl>\n音色：female-shaonv`\n- Telegram: `🎙️ AI 日报播客版\n<podcastUrl>`\n\n⚠️ 如果播客生成失败或超时，不要阻塞整个任务，跳过并在 heartbeat 记录中注明。\n\n\n## 执行记录（必做）\n执行完毕后用 message tool 发送一条简短执行记录到 Discord heartbeat 频道：\n- action: send\n- channel: discord\n- target: 1475143247067087139\n格式：`⏱️ [任务名] 执行完毕 | YYYY-MM-DD HH:MM UTC | [一句话结果摘要]`\n一行即可。\n\n## 标题语言规则（强制）\n最终输出里 1-10 条的标题必须优先中文表达：\n- 格式固定：`[中文标题（可保留关键英文术语）](url)`\n- 禁止直接照抄纯英文原标题；若原文只有英文，必须翻译成自然中文再输出\n- 每条 TLDR 继续保持 2-3 句中文干货\n",
         "timeoutSeconds": 720,
         "model": "anthropic/claude-sonnet-4-6"
       },
@@ -847,6 +774,78 @@ window.__DASHBOARD_DATA__ = {
         "channel": "discord",
         "to": "channel:1475150686843830505",
         "bestEffort": true
+      }
+    },
+    {
+      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
+      "agentId": "main",
+      "name": "Polymarket Scanner",
+      "enabled": true,
+      "createdAtMs": 1771231556226,
+      "updatedAtMs": 1774443897713,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,13 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n3. 🐋 跑鲸鱼追踪：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/scanner.mjs 2>/dev/null\n```\n解析 JSON 输出中的 `strategies.whaleTracker`，提取 `whales`（按 totalUsd 排序的大户）和 `watchlistAlerts`（watchlist 钱包的新动作）。\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n### 🐋 鲸鱼动态（新板块，放在最后）\n从 scanner.mjs 输出提取，格式：\n```\n🐋 鲸鱼动态（过去4h）\n\n[鲸鱼名] | 历史利润 $XXk | 胜率 XX% | N场\n→ $XXk [BUY/SELL] [YES/NO] [市场标题](url) @ $0.XX\n\n[如有 watchlist alerts]\n👀 Watchlist 追踪：\n- [鲸鱼名] [BUY/SELL] $XXX [市场标题]\n```\n\n只展示 totalUsd ≥ $5k 的鲸鱼，或有 watchlist alerts 的。如果鲸鱼数据为空或全部 < $5k，省略此板块。\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选且无鲸鱼动态 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个 | 🐋 鲸鱼N条 watchlist M条`",
+        "timeoutSeconds": 720,
+        "model": "anthropic/claude-sonnet-4-6"
+      },
+      "state": {
+        "nextRunAtMs": 1774486800000,
+        "lastRunAtMs": 1774443600014,
+        "lastStatus": "ok",
+        "lastDurationMs": 297699,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711342198,
+      "updatedAtMs": 1774443916661,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9,21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
+        "model": "anthropic/claude-sonnet-4-6",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1774486800000,
+        "lastRunAtMs": 1774443897713,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 18948,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
       }
     },
     {

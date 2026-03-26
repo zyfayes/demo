@@ -231,6 +231,39 @@
 <div class="container">
   <div class="summary">本周 AI 圈两件事最值得反复咀嚼:一是 GPT-5.4 Pro 解出了一道真正意义上的前沿数学开放问题,AI 的智力边界又往外推了一截；二是 Claude 正式拿到你电脑的鼠标键盘,computer use 落地到普通用户。与此同时,LiteLLM 供应链攻击和 OpenAI 关闭 Sora 提醒我们:这个行业正在快速清洗泡沫,能留下来的才算数。</div>
   
+  <div class="podcast-player" id="podcast-widget">
+    <div class="podcast-header">
+      <button class="play-btn" id="pod-play" aria-label="播放">
+        <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+      <div>
+        <div class="podcast-title">AI 日报播客版 2026-03-26</div>
+        <div class="podcast-sub">🎙️ female-shaonv · via MiniMax <button class="speed-btn" id="pod-speed">1x</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+      <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+    </div>
+    <audio id="pod-audio" preload="none" src="https://zyfayes.github.io/demo/ai-daily/audio/2026-03-26.mp3"></audio>
+  </div>
+  <script>
+  (function(){
+    const a=document.getElementById('pod-audio'),b=document.getElementById('pod-play'),
+      i=document.getElementById('pod-icon'),f=document.getElementById('pod-fill'),
+      bar=document.getElementById('pod-progress'),c=document.getElementById('pod-cur'),
+      d=document.getElementById('pod-dur');
+    if(!a||!b)return;
+    const fmt=s=>{const m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0')};
+    b.onclick=()=>{if(a.paused){a.play();i.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';}else{a.pause();i.innerHTML='<polygon points="6,3 20,12 6,21"/>';}};
+    a.ontimeupdate=()=>{if(!a.duration)return;f.style.width=(a.currentTime/a.duration*100)+'%';c.textContent=fmt(a.currentTime);};
+    a.onloadedmetadata=()=>{d.textContent=fmt(a.duration)};
+    a.onended=()=>{i.innerHTML='<polygon points="6,3 20,12 6,21"/>';f.style.width='0%';c.textContent='0:00';};
+    bar.onclick=e=>{if(!a.duration)return;a.currentTime=(e.offsetX/bar.offsetWidth)*a.duration;};
+    const speeds=[1,1.25,1.5,1.75,2,0.75];let si=0;const sb=document.getElementById('pod-speed');
+    sb.onclick=()=>{si=(si+1)%speeds.length;a.playbackRate=speeds[si];sb.textContent=speeds[si]+'x';};
+  })();
+  </script>
   
   <div class="article">
     <div class="article-num">01</div>

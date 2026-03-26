@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-26",
+  "summary": "本周 AI 圈两件事最值得反复咀嚼：一是 GPT-5.4 Pro 解出了一道真正意义上的前沿数学开放问题，AI 的智力边界又往外推了一截；二是 Claude 正式拿到你电脑的鼠标键盘，computer use 落地到普通用户。与此同时，LiteLLM 供应链攻击和 OpenAI 关闭 Sora 提醒我们：这个行业正在快速清洗泡沫，能留下来的才算数。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "GPT-5.4 Pro 解出前沿数学开放问题，Epoch AI 官方确认",
+      "url": "https://epoch.ai/frontiermath/open-problems/ramsey-hypergraphs",
+      "source": "Epoch AI / Hacker News",
+      "tldr": "Epoch AI 的 FrontierMath 基准中有一道关于 Ramsey 超图的真实开放数学问题，GPT-5.4 Pro 给出了正确解答。这不是竞赛题，是数学家认为极难的研究级问题。HN 上 689 条讨论说明社区正在认真对待这件事的含义。",
+      "tags": ["数学推理", "GPT-5.4", "benchmark", "里程碑"]
+    },
+    {
+      "num": 2,
+      "title": "Claude 现在可以接管你的 Mac——computer use 向普通用户开放",
+      "url": "https://claude.com/blog/dispatch-and-computer-use",
+      "source": "Anthropic Blog",
+      "tldr": "Anthropic 在 Claude Cowork 和 Claude Code 中推出 computer use，Claude Pro/Max 用户即可启用，无需额外配置。Claude 会自动点击、导航、运行开发工具，搭配 Dispatch 任务分配功能使用效果最佳。这是 computer use 从研究预览真正走向主流用户的关键一步。",
+      "tags": ["computer use", "Claude", "Anthropic", "Agent"]
+    },
+    {
+      "num": 3,
+      "title": "Claude Code Auto Mode：比 --dangerously-skip-permissions 更安全的自动化方式",
+      "url": "https://claude.com/blog/auto-mode",
+      "source": "Anthropic Blog",
+      "tldr": "Claude Code 推出 auto mode，用分类器替代人工确认权限，在全自动和手动审批之间找到中间地带。Anthropic 同期发布了工程博客详解设计思路，以及 multi-agent 用于前端设计的实践案例。Claude Code 2.1.83 同步更新，新增 managed-settings.d/ 策略目录，支持团队级别合并部署。",
+      "tags": ["Claude Code", "安全", "自动化", "Anthropic"]
+    },
+    {
+      "num": 4,
+      "title": "LiteLLM 1.82.8 供应链攻击：装包即中招，4.7 万次下载受影响",
+      "url": "https://simonwillison.net/2026/Mar/24/malicious-litellm/#atom-everything",
+      "source": "Simon Willison",
+      "tldr": "LiteLLM v1.82.8 被植入凭证窃取代码，藏在 litellm_init.pth 文件里用 base64 混淆，连 import 都不用执行就会触发。BigQuery PyPI 数据分析显示约 4.7 万次下载受影响。如果你的项目依赖 LiteLLM，立刻检查版本并轮换所有 API Key。",
+      "tags": ["安全", "供应链攻击", "LiteLLM", "PyPI"]
+    },
+    {
+      "num": 5,
+      "title": "OpenAI 宣布关闭 Sora——视频生成的第一次大退潮",
+      "url": "https://x.com/soraofficialapp/status/2036546752535470382",
+      "source": "Sora Official / Daring Fireball",
+      "tldr": "OpenAI 正式关闭 Sora 应用，将保留用户作品但停止服务。John Gruber 的评论一针见血：'没有人用 Sora 做的任何东西真的重要过。'这可能是 AI 视频生成第一轮泡沫破裂的标志，OpenAI 正集中资源推进桌面 Superapp 战略。",
+      "tags": ["OpenAI", "Sora", "视频生成", "产品关停"]
+    },
+    {
+      "num": 6,
+      "title": "AI 自动化科研登上 Nature：Sakana AI Scientist 正式发表",
+      "url": "https://x.com/SakanaAILabs/status/2036840833690071450",
+      "source": "Sakana AI Labs",
+      "tldr": "Sakana AI 的 'The AI Scientist' 论文正式发表于 Nature，这是 AI 全流程自动化科研（提出假设→实验→写论文）进入顶刊的里程碑。它的意义不在于当下能做什么，而在于这条路已经被主流科学界正式承认了。",
+      "tags": ["AI科研", "Sakana", "Nature", "自动化"]
+    },
+    {
+      "num": 7,
+      "title": "TurboQuant：Google 用极致压缩重新定义推理效率",
+      "url": "https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/",
+      "source": "Google Research / Hacker News",
+      "tldr": "Google Research 发布 TurboQuant，在极端量化压缩下保持模型性能，HN 以 485 分高居榜首。核心思路是用非均匀量化感知层级结构，让小模型跑出大模型的效果。对部署成本敏感的工程师值得重点看。",
+      "tags": ["量化", "推理效率", "Google", "开源"]
+    },
+    {
+      "num": 8,
+      "title": "AI Agent 用 4 小时'开车'把诈骗犯耗到崩溃",
+      "url": "https://x.com/om_patel5/status/2036642279050367111",
+      "source": "Twitter / @om_patel5",
+      "tldr": "有人让 AI Agent 接管诈骗短信一周，当骗子要求买 500 美元礼品卡时，Agent 开始发'正在开车去 Target'的进度更新，附带'路上看到一只很帅的松鼠，你觉得它结婚了吗'。一周浪费骗子 14 小时。这条推 1.5 万赞，是目前 AI Agent 实用案例里最欢乐的一个。",
+      "tags": ["AI Agent", "反诈骗", "有趣应用"]
+    },
+    {
+      "num": 9,
+      "title": "AI 在哪？Answer.AI：应用层滞后不是能力问题，是认知问题",
+      "url": "https://www.answer.ai/posts/2026-03-12-so-where-are-all-the-ai-apps.html",
+      "source": "Answer.AI / Hacker News",
+      "tldr": "Answer.AI 发文探讨为什么 AI 能力已经很强但杀手级应用还没出现，HN 435 分 404 条评论激烈讨论。核心论点：大多数创业者在用 AI 做旧有 SaaS 的替代品，而不是重新设计工作流。这篇值得认真读，反驳意见也同样有料。",
+      "tags": ["AI应用", "产品思考", "创业", "深度分析"]
+    },
+    {
+      "num": 10,
+      "title": "苹果正与谷歌合作，用 Gemini 蒸馏更小的端侧 AI 模型",
+      "url": "https://www.macrumors.com/2026/03/25/apple-google-gemini-distill-models/",
+      "source": "MacRumors / Hacker News",
+      "tldr": "报道称苹果正在用 Google Gemini 作为教师模型，蒸馏出更小的端侧模型部署在 Apple Silicon 设备上。这意味着 Apple Intelligence 的未来可能不是自研大模型，而是借助 Google 的能力做小模型落地。两家在 AI 领域从竞争走向合作，值得关注走向。",
+      "tags": ["Apple", "Google Gemini", "模型蒸馏", "端侧AI"]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-27",
+  "summary": "今天有两条互相打脸的新闻值得放在一起看：一边是 OpenAI 把部门改名「AGI Deployment」、Jensen 说 AGI「已在房间里」；另一边 ARC-AGI-3 发布，前沿模型全部在 0.25-0.37% 徘徊，Grok 直接 0%。与此同时，Claude Code 在云端直接给 PR 自动修 CI 报错，Anthropic 打赢了对五角大楼的禁令申请——AI 公司正在同时经历技术天花板的质疑和政治压力的洗礼。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "ARC-AGI-3 发布：前沿模型全线崩溃，Grok 得 0%",
+      "url": "https://x.com/d4m1n/status/2037145312259723547",
+      "source": "Twitter / @d4m1n",
+      "tldr": "ARC-AGI-3 基准刚发布，GPT-5.4 得 0.26%，Gemini Pro 0.37%，Claude Opus 4.6 仅 0.25%，Grok 字面意义上的 0%。OpenAI 把部门命名为「AGI Deployment」，Jensen 刚说 AGI「已在房间里」——现实给了一记响亮的耳光。ARC 系列之所以重要，恰恰是因为它专门设计来抵抗死记硬背，这些分数说明当前架构距离通用智能还有结构性缺口。",
+      "tags": ["benchmark", "AGI", "ARC-AGI"]
+    },
+    {
+      "num": 2,
+      "title": "Claude Code 史上最大更新：云端自动修 PR 的 CI 报错",
+      "url": "https://www.latent.space/p/ainews-the-biggest-claude-launch",
+      "source": "Latent Space / AINews",
+      "tldr": "Anthropic 推出 Claude Code 云端 auto-fix：PR 推上去之后 CI 挂了，Claude 会在后台自动修 bug 再推一个 commit，开发者不需要手动看日志。Latent Space 直接称之为「史上最大的 Claude 发布」，这不是功能迭代，而是把 coding agent 嵌入到 Git 工作流本身。对 agentic coding 的实际落地意义远大于任何 benchmark 分数。",
+      "tags": ["Claude Code", "Anthropic", "coding agent", "agentic"]
+    },
+    {
+      "num": 3,
+      "title": "LiteLLM 供应链恶意软件攻击：逐分钟实录",
+      "url": "https://futuresearch.ai/blog/litellm-attack-transcript/",
+      "source": "FutureSearch Blog",
+      "tldr": "LiteLLM 遭遇真实供应链攻击，攻击者在 PyPI 包里植入恶意代码。研究员 Callum McMahon 发布了他使用 Claude 逐步确认漏洞、决策上报路径的完整对话记录——这是一个「AI 辅助安全响应」的真实案例，不是演示。供应链攻击配合 AI 工具的速度优势，意味着未来安全事件的处置窗口会越来越短。",
+      "tags": ["security", "supply chain", "LiteLLM", "malware"]
+    },
+    {
+      "num": 4,
+      "title": "TurboQuant：Google 用极致量化重新定义 AI 推理效率",
+      "url": "https://research.google/blog/turboquant-redefining-ai-efficiency-with-extreme-compression/",
+      "source": "Google Research Blog",
+      "tldr": "Google Research 发布 TurboQuant，在极端低比特量化下（2-3bit）大幅保留模型能力，直接冲击「量化必然损失精度」的传统认知。HN 538 票，讨论聚焦于这是否意味着端侧大模型的临界点即将到来。结合 Sam Rose 同日发布的交互式量化原理长文（见第 8 条），这一天堪称「量化日」。",
+      "tags": ["quantization", "Google", "efficiency", "inference"]
+    },
+    {
+      "num": 5,
+      "title": "Gemini 3.1 Pro：ARC-AGI-2 得 77.1%，把 GPT-5.2 和 Claude 4.6 都甩开了",
+      "url": "https://www.toutiao.com/w/1857994985969737/",
+      "source": "头条 / AI 领域进展综述",
+      "tldr": "Gemini 3.1 Pro 在 ARC-AGI-2 上得分 77.1%，比上代翻倍，超越 GPT-5.2 和 Claude 4.6，还能一次性生成完整 Win11 WebOS 和 3D 沙盒项目。同期智谱 GLM-5（744B 总参/40B 激活）SWE-bench 达 77.4，DeepSeek V4 支持 128k 上下文+实时工具调用。大模型军备竞赛在 2026 年 Q1 集中引爆。",
+      "tags": ["Gemini", "Google", "benchmark", "Chinese AI", "GLM"]
+    },
+    {
+      "num": 6,
+      "title": "Anthropic 打赢五角大楼：法院颁令阻止「供应链风险」标签",
+      "url": "https://www.cnn.com/2026/03/26/business/anthropic-pentagon-injunction-supply-chain-risk",
+      "source": "CNN",
+      "tldr": "美国联邦法院颁布初步禁令，阻止五角大楼将 Anthropic 列为「供应链风险」。法官 Rita Lin 在庭审中措辞尖锐，直指此举是政治打压而非安全审查。这是 AI 公司与政府关系的标志性事件——Anthropic 敢起诉「战争部」本身就已经很说明问题，而且赢了。",
+      "tags": ["Anthropic", "Pentagon", "policy", "legal"]
+    },
+    {
+      "num": 7,
+      "title": "OpenAI 关闭 Sora，迪士尼撤资 10 亿美元",
+      "url": "https://variety.com/2026/digital/news/openai-shutting-down-sora-video-disney-1236698277/",
+      "source": "Variety",
+      "tldr": "OpenAI 宣布退出视频生成业务，关闭 Sora，迪士尼随即放弃原定的 10 亿美元战略投资。Sora 从发布到关闭不到两年，Business Insider 的 Katie Notopoulos 写了篇悼文称它「太美也太蠢了」——新奇感消退后用户留存是 0。这对所有 AI 视频创业公司都是个警示：技术惊艳不等于产品留存。",
+      "tags": ["OpenAI", "Sora", "video generation", "Disney"]
+    },
+    {
+      "num": 8,
+      "title": "模型坍塌正在发生，我们只是假装没看见",
+      "url": "https://cacm.acm.org/blogcacm/model-collapse-is-already-happening-we-just-pretend-it-isnt/",
+      "source": "CACM Blog",
+      "tldr": "CACM 发文直指：随着互联网内容越来越多由 AI 生成，用 AI 内容训练 AI 的「模型坍塌」已经在悄悄发生，只是没人愿意承认。这篇文章不是预测，是现象描述——当前 benchmark 分数的虚高可能部分来自于训练集污染。配合 ARC-AGI-3 的 0% 数据，画面相当讽刺。",
+      "tags": ["model collapse", "training data", "AI safety"]
+    },
+    {
+      "num": 9,
+      "title": "Apple 可以蒸馏谷歌 Gemini：战略意义被严重低估",
+      "url": "https://www.theinformation.com/newsletters/ai-agenda/apple-can-distill-googles-big-gemini-model?rc=jfy0lk",
+      "source": "The Information",
+      "tldr": "The Information 报道 Apple 和 Google 的合同远超「微调」：Apple 在自己的数据中心完整部署了 Gemini 大模型，可以随意蒸馏出小模型用于特定任务。这意味着 Apple 可以在不依赖 Google API 的情况下，把 Gemini 能力内化到设备端——这是 on-device AI 军备竞赛里最低调却最有杀伤力的一步棋。",
+      "tags": ["Apple", "Google", "Gemini", "on-device AI", "distillation"]
+    },
+    {
+      "num": 10,
+      "title": "关于「他妈的慢下来」的思考：agentic 工程的纪律危机",
+      "url": "https://simonwillison.net/2026/Mar/25/thoughts-on-slowing-the-fuck-down/#atom-everything",
+      "source": "Simon Willison (linking to Mario Zechner)",
+      "tldr": "Pi agent 框架作者 Mario Zechner 发文说：我们已经把所有工程纪律和主体性，换成了某种成瘾式的生产力幻觉。Simon Willison 认为这值得重视，因为 Zechner 本人就是 agentic 工具的建造者。核心论点是：AI 加速开发并不意味着可以放弃对系统的理解——那只是在用更快的速度堆技术债。",
+      "tags": ["agentic", "engineering", "opinion", "technical debt"]
+    }
+  ]
+}

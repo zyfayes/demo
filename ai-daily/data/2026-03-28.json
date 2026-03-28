@@ -8,7 +8,13 @@
       "url": "https://x.com/kimmonismus/status/2037458313831395430",
       "source": "Twitter / @kimmonismus",
       "tldr": "多个 Twitter 账号流出信息称 Anthropic 内部正在测试代号 'Mythos' 的新模型层级，在编程、学术推理和网络安全领域的表现被描述为 'dramatically' 超越现有 Opus 4.6。消息引发网络安全板块集体大跌：CRWD -7%、PANW -5%，市场担忧 AI 可能直接替代传统安全工具。目前 Anthropic 未官方确认，但多位知情者措辞一致，可信度较高。",
-      "tags": ["Anthropic", "Claude", "模型发布", "Mythos", "网络安全"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "模型发布",
+        "Mythos",
+        "网络安全"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +22,13 @@
       "url": "https://github.com/itigges22/ATLAS",
       "source": "HackerNews / GitHub ATLAS",
       "tldr": "ATLAS 项目展示了一块 500 美元消费级 GPU 在编程 benchmark 上超越 Claude Sonnet 的结果，HN 评分 460 引发大量讨论。核心论点是：本地小模型在特定任务上通过精细 prompt 工程和推理优化，成本效益远超闭源大模型。这不是 '本地模型打败 frontier' 的泛泛之谈，而是有具体 benchmark 数据支撑的实测案例，值得关注。",
-      "tags": ["benchmark", "本地模型", "编程", "成本效益", "开源"]
+      "tags": [
+        "benchmark",
+        "本地模型",
+        "编程",
+        "成本效益",
+        "开源"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +36,13 @@
       "url": "https://futuresearch.ai/blog/litellm-attack-transcript/",
       "source": "futuresearch.ai / HackerNews",
       "tldr": "FutureSearch 的 Callum McMahon 详细记录了自己发现 LiteLLM PyPI 包被植入恶意软件后的分钟级响应过程，包括如何用 Claude 帮助确认漏洞、决策上报路径，最终联系 PyPI 安全团队下架。这是一个真实的 AI 辅助应急响应案例：Claude 不仅帮助分析代码，甚至主动建议了 PyPI 安全联系地址。AI 工具链的供应链攻击正在成为真实威胁。",
-      "tags": ["安全", "供应链攻击", "LiteLLM", "PyPI", "Claude"]
+      "tags": [
+        "安全",
+        "供应链攻击",
+        "LiteLLM",
+        "PyPI",
+        "Claude"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +50,13 @@
       "url": "https://blog.dailydoseofds.com/p/anatomy-of-the-claude-folder",
       "source": "Daily Dose of DS / HackerNews",
       "tldr": ".claude/ 目录是 Claude Code 的'大脑外置'——存储记忆、工具配置、项目上下文和对话历史。这篇文章逐层剖析其结构，揭示 Claude Code 如何通过这个文件夹实现跨会话记忆持久化和工具调用管理。HN 评分 354、182 条评论，对深度使用 Claude Code 的开发者有很高参考价值。",
-      "tags": ["Claude Code", "工具链", "开发者工具", "架构", "实操"]
+      "tags": [
+        "Claude Code",
+        "工具链",
+        "开发者工具",
+        "架构",
+        "实操"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +64,13 @@
       "url": "https://x.com/Zai_org/status/2037490078126084514",
       "source": "Twitter / @Zai_org (智谱 AI)",
       "tldr": "智谱 AI 宣布 GLM-5.1 向全体 GLM Coding Plan 用户开放，获得 4374 点赞、449 转推，是本周中文 AI 圈互动最高的消息。GLM-5.1 是上代 GLM-5（744B 总参/40B 激活）的迭代版本，SWE-bench Verified 此前已达 77.4 分。国产编程模型正在快速追赶甚至局部超越 Claude/GPT，值得开发者测试对比。",
-      "tags": ["GLM-5.1", "智谱AI", "编程模型", "中国AI", "开源"]
+      "tags": [
+        "GLM-5.1",
+        "智谱AI",
+        "编程模型",
+        "中国AI",
+        "开源"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +78,13 @@
       "url": "https://thezvi.substack.com/p/anthropic-vs-dow-6-the-court-rules",
       "source": "The Zvi / Substack",
       "tldr": "法院向 Anthropic 授予了初步禁令，并附带 7 天暂缓执行期。Zvi 的分析认为这是 Anthropic 在 AI 安全相关诉讼中的阶段性胜利，但 7 天暂缓意味着局势仍在动态发展中。这场诉讼的走向对 AI 公司如何面对监管合规压力具有标志性意义。",
-      "tags": ["Anthropic", "法律", "AI监管", "安全", "诉讼"]
+      "tags": [
+        "Anthropic",
+        "法律",
+        "AI监管",
+        "安全",
+        "诉讼"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +92,13 @@
       "url": "https://variety.com/2026/digital/news/openai-shutting-down-sora-video-disney-1236698277/",
       "source": "Variety / Daring Fireball",
       "tldr": "OpenAI 宣布退出视频生成业务、关闭 Sora，迪士尼随即终止双方合作并取消原定 10 亿美元入股计划。这意味着 OpenAI 正在做战略收缩，把资源集中到更核心的语言/推理模型方向。Sora 上线不到两年就关停，视频生成赛道的竞争格局可能重新洗牌。",
-      "tags": ["OpenAI", "Sora", "视频生成", "迪士尼", "战略"]
+      "tags": [
+        "OpenAI",
+        "Sora",
+        "视频生成",
+        "迪士尼",
+        "战略"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +106,13 @@
       "url": "https://www.theregister.com/2026/03/26/greg_kroahhartman_ai_kernel/",
       "source": "The Register / HackerNews",
       "tldr": "Linux 内核维护者 Greg Kroah-Hartman 表示，AI 提交的 bug 报告质量出现了显著提升，从之前'大多是垃圾'变成了'合法可用'。这是一个重要的实践信号：AI 辅助开源贡献已经越过了某个质量阈值，开始被顶级项目的守门人认可。这一转变背后是 coding agent 能力的整体跃升。",
-      "tags": ["Linux", "开源", "bug报告", "AI质量", "coding agent"]
+      "tags": [
+        "Linux",
+        "开源",
+        "bug报告",
+        "AI质量",
+        "coding agent"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +120,13 @@
       "url": "https://georgelarson.me/writing/2026-03-23-nullclaw-doorman/",
       "source": "georgelarson.me / HackerNews",
       "tldr": "开发者 George Larson 展示了一个极简 AI Agent 部署方案：$7/月的 VPS、用 IRC 作为消息传输层，实现了一个持续运行的个人 AI 助手。HN 评分 319 说明极简部署思路很受认可。这个项目的价值不在于功能有多强，而在于证明了 AI Agent 的运行门槛可以低到什么程度。",
-      "tags": ["AI Agent", "部署", "IRC", "Show HN", "极简架构"]
+      "tags": [
+        "AI Agent",
+        "部署",
+        "IRC",
+        "Show HN",
+        "极简架构"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +134,19 @@
       "url": "https://johnjwang.com/post/2026/03/27/why-are-executives-enabled-with-ai-but-ics-arent/",
       "source": "johnjwang.com / HackerNews",
       "tldr": "这篇文章剖析了一个真实的职场现象：为什么 CXO 们对 AI 充满热情，而实际写代码的工程师却普遍抵触？核心论点是：高管用 AI 处理的是低精度、高模糊度的任务（战略分析、文档摘要），而工程师面对的是高精度、低容错的生产任务，AI 当前的错误率在这类场景下是真实的成本。78 条评论、观点多元，是难得的组织内 AI 采纳摩擦的深度讨论。",
-      "tags": ["AI采纳", "组织管理", "工程师文化", "生产力", "观点"]
+      "tags": [
+        "AI采纳",
+        "组织管理",
+        "工程师文化",
+        "生产力",
+        "观点"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "",
+  "podcastTitle": "AI 日报播客版 2026-03-28",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastLink": "",
+  "podcastNote": "TTS quota exceeded, skipped"
 }

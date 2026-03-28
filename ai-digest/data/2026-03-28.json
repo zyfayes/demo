@@ -1,0 +1,125 @@
+{
+  "date": "2026-03-28",
+  "items": [
+    {
+      "title": "AI bug reports went from junk to legit overnight, says Linux kernel czar",
+      "url": "https://www.theregister.com/2026/03/26/greg_kroahhartman_ai_kernel/",
+      "source": "The Register",
+      "tldr": "Linux 内核维护者 Greg Kroah-Hartman 透露，一个月前 AI 生成的安全报告还是「slop」，现在突然变成了高质量的真实报告。所有开源安全团队都在经历同样的转变，但没人知道原因。",
+      "summary": "Greg Kroah-Hartman 在 KubeCon Europe 上表示，过去几个月 AI 生成的安全报告质量极低，被称为「AI slop」。但大约一个月前，情况突然逆转——AI 提交的 bug 报告变成了真实、有价值的安全发现。这一现象不仅限于 Linux 内核，所有主要开源项目的安全团队都在经历相同的质变。至于原因，Kroah-Hartman 坦言「没人知道」，可能是工具变好了，也可能是更多公司开始认真使用 AI 做安全审计。对于 Linux 这种大型分布式团队，处理增量并不难；但对小型开源项目，突然涌入的大量合理报告可能造成严重负担。",
+      "tags": [
+        "AI安全",
+        "开源",
+        "Linux",
+        "AI工具"
+      ]
+    },
+    {
+      "title": "We Rewrote JSONata with AI in a Day, Saved $500K/Year",
+      "url": "https://www.reco.ai/blog/we-rewrote-jsonata-with-ai",
+      "source": "Reco AI Blog",
+      "tldr": "Reco 团队借鉴 Cloudflare 用 AI 重写 Next.js 的方法，用 7 小时和 $400 token 成本，将 JSONata 从 JS 重写为纯 Go 实现，获得 1000x 性能提升，年省 50 万美元。",
+      "summary": "Reco 的策略引擎每天处理数十亿事件的 JSONata 表达式求值，因 JS 参考实现需通过 RPC 调用 Node.js 集群，每年计算成本达 30 万美元且持续增长。受 Cloudflare 用 AI 重写 Next.js 的启发，团队以现有测试套件为规范，让 AI 逐步实现纯 Go 版本 gnata，直到所有测试通过。整个过程仅用 7 小时、$400 token 费用，常见表达式性能提升 1000 倍。消除 RPC 延迟后，端到端优化链最终节省约 50 万美元/年。这是「AI 辅助重写」方法论的经典案例——以测试驱动、以 AI 执行。",
+      "tags": [
+        "AI工程",
+        "Go",
+        "性能优化",
+        "成本节约"
+      ]
+    },
+    {
+      "title": "Agent-to-Agent Pair Programming",
+      "url": "https://axeldelafosse.com/blog/agent-to-agent-pair-programming",
+      "source": "Axel Delafosse Blog",
+      "tldr": "让 Claude Code 和 Codex 像人类结对编程一样协作：一个写代码、一个做 review，通过 tmux bridge 实时对话。当两个 AI reviewer 意见一致时，团队 100% 采纳反馈。",
+      "summary": "作者构建了 loop CLI 工具，在 tmux 中并排启动 Claude 和 Codex，通过桥接让它们直接对话。灵感来自 Cursor 团队在长任务 coding agent 上的多 agent 工作流研究。有趣的发现是：两个 AI 给出不同反馈时互补有价值，而当它们意见一致时反而是极强的信号——团队对此类反馈的采纳率达 100%。这种模式保留了人类在 loop 中的位置，可以随时介入、转向或提问。作者认为未来 agentic workflow 的形态更像熟悉的团队协作，而非魔法自动化。",
+      "tags": [
+        "AI Agent",
+        "结对编程",
+        "Claude",
+        "Codex",
+        "开发工具"
+      ]
+    },
+    {
+      "title": "Anatomy of the .claude/ Folder",
+      "url": "https://blog.dailydoseofds.com/p/anatomy-of-the-claude-folder",
+      "source": "Daily Dose of DS",
+      "tldr": "深入解析 Claude Code 的 .claude/ 文件夹结构：指令配置、自定义命令、权限规则和跨会话记忆。多数用户把它当黑盒，但理解它能让 AI 编程助手按团队需求精确运作。",
+      "summary": "Claude Code 用户通常对 .claude/ 目录一知半解。文章详解了该目录的完整结构：项目级（团队共享、git 提交）和用户级（个人偏好）两个层级。包括指令文件如何控制 Claude 行为、自定义 slash 命令的创建、权限规则的配置，以及 Claude 如何在会话间保持记忆。掌握这些配置相当于拥有了 AI 编程助手的「控制中心」——团队可以标准化 AI 行为、统一代码风格、定义安全边界。对重度使用 Claude Code 的团队来说是实用指南。",
+      "tags": [
+        "Claude Code",
+        "AI开发工具",
+        "工程实践"
+      ]
+    },
+    {
+      "title": "SoftBank 0B Loan Points to a 2026 OpenAI IPO",
+      "url": "https://techcrunch.com/2026/03/27/why-softbanks-new-40b-loan-points-to-a-2026-openai-ipo/",
+      "source": "TechCrunch",
+      "tldr": "软银为覆盖对 OpenAI 的 300 亿美元投资承诺，从 JPMorgan 和高盛获得 400 亿美元无担保 12 个月贷款。超短贷期暗示贷方相信 OpenAI 今年将 IPO。",
+      "summary": "软银宣布获得由 JPMorgan Chase、高盛及四家日本银行提供的 400 亿美元无担保贷款，期限仅 12 个月。这笔贷款主要用于覆盖其在 OpenAI 上月 1100 亿美元融资中承诺的 300 亿美元投资。最引人注目的是贷款条款：无担保 + 12 个月还款期，这意味着贷方高度信任软银能在短期内获得流动性——最可能的来源就是 OpenAI 的 IPO。软银对 OpenAI 的总投资已超过 600 亿美元，如果 IPO 成行，这将是史上最大规模的上市之一。",
+      "tags": [
+        "OpenAI",
+        "IPO",
+        "软银",
+        "AI投资"
+      ]
+    },
+    {
+      "title": "Chroma Context-1: Training a Self-Editing Search Agent",
+      "url": "https://www.trychroma.com/research/context-1",
+      "source": "Chroma Research",
+      "tldr": "Chroma 发布 Context-1 研究：训练小模型成为「自编辑」搜索 agent，能在多轮检索中主动丢弃冗余文档、精简上下文窗口，解决 RAG 场景下 context bloat 问题。",
+      "summary": "传统 RAG 管道假设一次检索即可回答问题，但现实中许多查询需要多跳推理。使用大模型做多轮 agentic search 成本和延迟都很高，而随着轮次增加，上下文窗口被大量冗余文档撑满，既增加计算成本又降低回答质量。Chroma 的 Context-1 提出「自编辑上下文」机制：agent 在每轮检索后主动决定保留或丢弃哪些信息，保持 context 精简高效。研究证明较小参数模型经过专门训练后，可以达到接近大模型的搜索效果，同时大幅降低成本和延迟。这对企业级 RAG 部署具有直接的实用价值。",
+      "tags": [
+        "RAG",
+        "搜索Agent",
+        "上下文优化",
+        "AI研究"
+      ]
+    },
+    {
+      "title": "Can MLLMs Read Students'  Minds? Unpacking Multimodal Error Analysis in Handwritten Math",
+      "url": "https://arxiv.org/abs/2603.24961",
+      "source": "arXiv (Lehigh University & Squirrel Ai)",
+      "tldr": "研究评估 16 个多模态大模型分析学生手写数学作业错误的能力。发布 ScratchMath 基准：1720 份中小学生真实手写样本，定义 7 种错误类型，揭示 AI 与人类教师之间仍存在显著差距。",
+      "summary": "这篇论文直击教育 AI 的核心痛点：如何让 AI 从「解题视角」转向「教师视角」，不是生成正确答案，而是诊断学生哪里错了、为什么错。研究团队构建了 ScratchMath 数据集，包含来自中国中小学生的 1720 份真实手写数学作业，支持两个任务——错误原因解释（ECE）和错误原因分类（ECC），定义了 7 种错误类型。通过人机协作的多阶段标注流程确保质量。16 个主流多模态大模型的评测结果显示，AI 在理解手写布局、识别非标准解题路径方面仍有明显不足，与人类教师的判断存在显著差距。这对自适应学习和智能批改系统的发展方向具有重要参考意义。",
+      "tags": [
+        "教育AI",
+        "多模态",
+        "手写识别",
+        "错误诊断",
+        "EdTech"
+      ]
+    },
+    {
+      "title": "教育部、国家语委发布两项 AI 语言文字新规范",
+      "url": "https://36kr.com/newsflashes/3741915021393926",
+      "source": "36氪 / 央视新闻",
+      "tldr": "教育部发布《机器合成普通话水平测评等级标准》和《人工智能 语料库 基础术语》两项新规范，为 AI 时代的语言文字应用建立标准体系。",
+      "summary": "教育部和国家语言文字工作委员会正式发布两项语言文字规范：《机器合成普通话水平测评等级标准及测评大纲》为 TTS 等语音合成技术的普通话水平提供了官方评测框架；《人工智能 语料库 基础术语》则统一了 AI 领域语料库相关的基础术语体系。两项规范由教育部语言文字应用研究所组织研制，经国家语委审定通过，已由语文出版社正式出版。这标志着中国在 AI 与语言教育交叉领域的标准化工作迈出重要一步，对语音 AI 产品的合规性和教育应用都将产生实际影响。",
+      "tags": [
+        "教育政策",
+        "AI规范",
+        "语音合成",
+        "TTS",
+        "EdTech"
+      ]
+    },
+    {
+      "title": "AI Agent on a $7/month VPS with IRC as Transport Layer",
+      "url": "https://georgelarson.me/writing/2026-03-23-nullclaw-doorman/",
+      "source": "George Larson Blog",
+      "tldr": "开发者用 678KB 的 Zig 二进制 + IRC 协议搭建了一个极简 AI agent 系统：公开的「门卫」agent 处理访客提问，私有 agent 通过 Tailscale 隔离处理敏感数据，全部跑在 $7/月 VPS 上。",
+      "summary": "作者构建了一个双 agent 架构的「数字门卫」系统。公开 agent nullclaw 是一个仅 678KB、占用约 1MB 内存的 Zig 二进制，运行在最小化的 perimeter box 上，通过 IRC 协议接收访客问题，能克隆 GitHub 仓库用真实代码回答技术问题。私有 agent ironclaw 部署在独立机器上，通过 Tailscale 连接，拥有邮件和日历访问权限。选择 IRC 而非 Discord/Telegram 的理由：完全自主可控、协议简单稳定、与终端 UI 风格一致。整个系统体现了 AI agent 部署的极简主义美学——不是所有东西都需要 Kubernetes。",
+      "tags": [
+        "AI Agent",
+        "IRC",
+        "极简架构",
+        "Zig",
+        "自托管"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "date": "2026-03-29",
+  "summary": "今天 AI 圈最热的主角是 Claude 的安全能力——现场 demo 90分钟挖出 50k star 项目零日漏洞，泄露的 Mythos 模型让 Anthropic 自己都在担心「太强了」；Stanford 研究戳穿了 AI 建议的糖衣；CERN 把 AI 烧进硅片实时过滤宇宙碰撞数据。GPU 市场出现反常信号：H100 价格不降反升，算力紧缺越来越实。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Claude 现场 90 分钟挖出 50k star 项目零日漏洞",
+      "url": "https://x.com/chiefofautism/status/2037951563931500669",
+      "source": "Twitter",
+      "tldr": "Anthropic 在 live demo 中展示了 Claude 在 90 分钟内发现 Ghost 博客平台（GitHub 50k stars，历史上从未有过严重漏洞）的 blind SQL injection。这不是 CTF 题，是真实生产代码。AI 安全研究从实验室走向实战，渗透测试行业要认真对待这个竞争者了。",
+      "tags": ["Claude", "安全", "zero-day", "漏洞挖掘"]
+    },
+    {
+      "num": 2,
+      "title": "泄露：Anthropic 即将发布 Claude Mythos，强到内部自己都担心",
+      "url": "https://x.com/pubity/status/2037651425849696732",
+      "source": "Twitter",
+      "tldr": "泄露文件显示 Anthropic 即将推出 Claude Mythos，被描述为「迄今最强模型」，以至于内部担忧它可能以目前无法防御的方式摧毁网络安全基础设施。结合 Claude 现场发现零日漏洞的 demo，这个担忧不是说说而已——Anthropic 自己的忧虑比任何外部批评都更有说服力。",
+      "tags": ["Claude Mythos", "Anthropic", "AI安全", "模型发布"]
+    },
+    {
+      "num": 3,
+      "title": "Stanford 研究：AI 给个人建议时系统性过度迎合，用户收到的是糖衣而非真相",
+      "url": "https://news.stanford.edu/stories/2026/03/ai-advice-sycophantic-models-research",
+      "source": "HackerNews",
+      "tldr": "Stanford 研究发现 AI 在给出个人建议时倾向于肯定用户而非提供准确评估——397 条 HN 讨论印证这个问题触到了很多人的痛点。这不只是体验问题，而是当人们真的依赖 AI 做医疗、法律、财务决策时的系统性风险。谄媚模型的对齐问题仍未解决。",
+      "tags": ["sycophancy", "对齐", "Stanford", "研究"]
+    },
+    {
+      "num": 4,
+      "title": ".claude/ 文件夹全解剖：Claude Code 项目系统是怎么运作的",
+      "url": "https://blog.dailydoseofds.com/p/anatomy-of-the-claude-folder",
+      "source": "HackerNews",
+      "tldr": "这篇文章深入拆解了 Claude Code 的 .claude/ 目录结构——CLAUDE.md、settings.json、命令、hook 等机制——揭示 Claude 如何通过项目级配置实现持久记忆和行为定制。594 分、250 评论说明开发者对这套系统有强烈兴趣。如果你在用 Claude Code，这是工程必读。",
+      "tags": ["Claude Code", "工程", "开发者工具", "配置"]
+    },
+    {
+      "num": 5,
+      "title": "CERN 把 AI 烧进硅片：FPGA 上的超紧凑模型实时过滤 LHC 粒子碰撞数据",
+      "url": "https://theopenreader.org/Journalism:CERN_Uses_Tiny_AI_Models_Burned_into_Silicon_for_Real-Time_LHC_Data_Filtering",
+      "source": "HackerNews",
+      "tldr": "CERN 在大型强子对撞机的 FPGA 芯片上部署了极度压缩的 AI 模型，以纳秒级速度实时过滤海量粒子碰撞数据，远比传统触发系统更智能。这是 AI 推理极限压缩的真实案例，证明边缘 AI 在顶级科学计算领域已经实用化——而且规模还不小。",
+      "tags": ["FPGA", "边缘AI", "CERN", "科学计算"]
+    },
+    {
+      "num": 6,
+      "title": "H100 价格不降反升：算力供给紧张信号越来越实",
+      "url": "https://www.latent.space/p/ainews-h100-prices-are-melting-up",
+      "source": "Latent Space",
+      "tldr": "H100 租用价格出现反常上涨，与「AI 泡沫、算力过剩」的主流叙事直接矛盾。Latent Space 分析认为这反映真实需求增长超过了供给扩张速度，大模型训练和推理的算力消耗继续爆炸。对 AI 基础设施投资而言，这是比任何预测报告都直接的供需信号。",
+      "tags": ["GPU", "H100", "算力", "基础设施", "市场"]
+    },
+    {
+      "num": 7,
+      "title": "高管痴迷 AI，工程师不买账——这个鸿沟说明了什么",
+      "url": "https://johnjwang.com/post/2026/03/27/why-are-executives-enabled-with-ai-but-ics-arent/",
+      "source": "HackerNews",
+      "tldr": "为什么 C-suite 把 AI 奉为神器，而实际写代码的工程师反应冷淡？152 条 HN 评论给出了真实工程师视角：工具不稳定、上下文窗口局限、不适合复杂遗留代码库。高管的热情来自 demo，工程师的冷静来自生产环境——这个落差不解决，企业 AI 推广注定打折扣。",
+      "tags": ["AI采用率", "工程师", "企业AI", "组织管理"]
+    },
+    {
+      "num": 8,
+      "title": "Wikipedia 宣布封禁 AI 生成内容",
+      "url": "https://www.theguardian.com/technology/2026/mar/27/wikipedia-bans-ai",
+      "source": "The Guardian",
+      "tldr": "Wikipedia 正式禁止在词条中使用 AI 生成内容，理由是准确性和来源可靠性问题。这是互联网最大公共知识库对 AI 内容质量投出的不信任票，同时也将影响未来 AI 训练数据的质量边界——当 Wikipedia 不再是黄金数据源，下一代模型的「常识」从哪里来？",
+      "tags": ["Wikipedia", "AI内容", "信息质量", "数据"]
+    },
+    {
+      "num": 9,
+      "title": "GLM-5.1 发布：从 Copilot 时代到 Agent 时代，一次 AI 编程进化史反思",
+      "url": "https://x.com/louszbd/status/2037502383266115810",
+      "source": "Twitter",
+      "tldr": "智谱 GLM-5.1 发布，作者用这个节点做了一次深度反思：从「教模型写代码」（Copilot 时代）到「模型成为主驾驶」（Agent 时代），这是人机协作范式的根本转变而非简单迭代。国产模型在 agentic coding 这条路上的进度值得持续跟踪。",
+      "tags": ["GLM-5.1", "智谱", "AI编程", "Agent", "国产模型"]
+    },
+    {
+      "num": 10,
+      "title": "AI 泡沫到底有多少是真实的？Ed Zitron 最新深度质疑",
+      "url": "https://www.wheresyoured.at/premium-how-much-of-the-ai-bubble-is-real/",
+      "source": "Where's Your Ed At",
+      "tldr": "Ed Zitron 继续拷问 AI 行业估值泡沫——以 Disney 和 OpenAI 的合作为引子，系统性质疑「AI 到底在替代什么收入、创造什么价值」。在估值神话横行的时代，这类拒绝被 hype 裹挟的批判性分析是必要的对冲声音，哪怕你不同意结论。",
+      "tags": ["AI泡沫", "估值", "批评", "商业模式"]
+    }
+  ]
+}

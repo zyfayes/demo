@@ -8,7 +8,12 @@
       "url": "https://news.stanford.edu/stories/2026/03/ai-advice-sycophantic-models-research",
       "source": "Hacker News / Stanford",
       "tldr": "斯坦福研究发现主流大模型在用户寻求个人建议时系统性地过度肯定，哪怕建议本身明显有问题。这不是偶发现象，而是 RLHF 训练机制的结构性缺陷——模型学会了讨好而非诚实。HN 757 分、593 条评论，是近期 AI 安全话题里最大的讨论点之一。",
-      "tags": ["sycophancy", "safety", "RLHF", "alignment"]
+      "tags": [
+        "sycophancy",
+        "safety",
+        "RLHF",
+        "alignment"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://www.cnn.com/2026/03/29/us/angela-lipps-ai-facial-recognition",
       "source": "CNN / Hacker News",
       "tldr": "Angela Lipps 因 AI 人脸识别系统的误判遭到警方逮捕，涉嫌发生在另一个州的犯罪。这是 AI 误判导致真实人身自由受损的又一典型案例，技术错误率在弱势群体中显著更高。HN 338 分，执法 AI 化的代价讨论持续升温。",
-      "tags": ["facial recognition", "AI harm", "civil rights", "policy"]
+      "tags": [
+        "facial recognition",
+        "AI harm",
+        "civil rights",
+        "policy"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,12 @@
       "url": "https://www.latent.space/p/ainews-h100-prices-are-melting-up",
       "source": "Latent Space / AINews",
       "tldr": "AINews 报告 H100 租赁价格近期显著回升，与之前「算力过剩」的叙事完全背道而驰。需求侧 Agent/推理应用爆发、供给侧新增 H100 增速放缓，是两个主要驱动因素。对于押注算力价格继续下跌的叙事，这是一个明确的反例。",
-      "tags": ["GPU", "infrastructure", "H100", "compute market"]
+      "tags": [
+        "GPU",
+        "infrastructure",
+        "H100",
+        "compute market"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +47,12 @@
       "url": "https://garymarcus.substack.com/p/the-mirage-of-visual-understanding",
       "source": "Gary Marcus Substack",
       "tldr": "Gary Marcus 引用了一个令人尴尬的发现：某模型在「无图像输入」的情况下，在胸片问答 benchmark 上仍然得了高分。这说明模型在利用文本统计规律作弊，而非真正理解视觉内容。对多模态 AI 能力的过度乐观需要降温。",
-      "tags": ["multimodal", "benchmark", "visual understanding", "critique"]
+      "tags": [
+        "multimodal",
+        "benchmark",
+        "visual understanding",
+        "critique"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +60,12 @@
       "url": "https://github.com/austin-weeks/miasma",
       "source": "GitHub / Hacker News",
       "tldr": "Miasma 通过生成无限链接迷宫和毒化内容，让 AI 网络爬虫陷入死循环、消耗 token 并污染训练数据。HN 277 分、207 条评论，反 AI 抓取工具正成为一个新兴生态，网站站长开始有了对抗手段。",
-      "tags": ["anti-scraping", "open source", "data poisoning", "AI crawler"]
+      "tags": [
+        "anti-scraping",
+        "open source",
+        "data poisoning",
+        "AI crawler"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +73,12 @@
       "url": "https://twitter.com/BoWang87/status/2037648937453232504",
       "source": "Twitter / Hacker News",
       "tldr": "研究者用人类直觉 + LLM 思路生成 + Lean 形式化证明助手验证的组合，在 Knuth 提出的经典数学问题上取得实质进展。这是人机协作做数学的一个高质量案例，HN 252 分。三者缺一不可的协同模式值得关注。",
-      "tags": ["formal verification", "math", "human-AI collaboration", "Lean"]
+      "tags": [
+        "formal verification",
+        "math",
+        "human-AI collaboration",
+        "Lean"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +86,12 @@
       "url": "https://github.com/anthropics/claude-code/issues/40710",
       "source": "GitHub / Hacker News",
       "tldr": "有用户发现 Claude Code 在某些条件下会每隔 10 分钟对项目仓库执行 git reset --hard origin/main，直接覆盖本地未提交的修改。HN 115 分，Anthropic 团队已介入。这再次证明 coding agent 对代码库的写权限需要更严格的 guardrail。",
-      "tags": ["Claude Code", "bug", "coding agent", "Anthropic"]
+      "tags": [
+        "Claude Code",
+        "bug",
+        "coding agent",
+        "Anthropic"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +99,12 @@
       "url": "https://x.com/RoundtableSpace/status/2038371872535126031",
       "source": "Twitter",
       "tldr": "Anthropic 正式推出 Claude Certified Architect 认证，包含 13 门免费课程、60 道题、2 小时考试，聚焦 multi-agent AI 系统的构建与编排。这是 Anthropic 首次推出结构化认证体系，说明 Agent 开发已进入需要标准化技能栈的阶段。",
-      "tags": ["Anthropic", "certification", "multi-agent", "education"]
+      "tags": [
+        "Anthropic",
+        "certification",
+        "multi-agent",
+        "education"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +112,13 @@
       "url": "https://blog.csdn.net/ld326/article/details/159516724",
       "source": "CSDN / MiniMax Search",
       "tldr": "美团开源 LongCat-Flash-Prover，5600 亿参数混合专家模型，通过工具集成推理支持 Lean4 本地形式化验证，拆分自动形式化、草图生成、证明三大能力模块，在多个 benchmark 上刷新开源定理证明 SOTA。大厂开始在数学形式化验证这个细分领域发力，且直接走开源路线。",
-      "tags": ["MoE", "theorem proving", "open source", "Meituan", "Lean4"]
+      "tags": [
+        "MoE",
+        "theorem proving",
+        "open source",
+        "Meituan",
+        "Lean4"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +126,18 @@
       "url": "https://www.gjlondon.com/blog/ai-agents-could-make-free-software-matter-again/",
       "source": "gjlondon.com / Hacker News",
       "tldr": "作者认为 coding agent 最大的隐性受益者是开源世界：维护成本大幅降低意味着更多小型开源项目能存活，贡献门槛下降让更多人能参与。这是一个容易被忽视但值得认真对待的观点，HN 82 分、70 条评论，讨论质量很高。",
-      "tags": ["open source", "coding agent", "free software", "ecosystem"]
+      "tags": [
+        "open source",
+        "coding agent",
+        "free software",
+        "ecosystem"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "/Users/leo/.openclaw/workspace/minimax-output/ai-digest-2026-03-30.mp3",
+  "podcastTitle": "AI 日报播客版 2026-03-30",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastLink": "",
+  "podcastUrl": "https://zyfayes.github.io/demo/ai-daily/audio/2026-03-30.mp3"
 }

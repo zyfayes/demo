@@ -8,7 +8,12 @@
       "url": "https://x.com/RoundtableSpace/status/2038651213814857738",
       "source": "Twitter / @RoundtableSpace",
       "tldr": "泄露信息显示 Anthropic 正在研发 Claude Mythos（性能显著超过 Opus 4.6）和 Claude Capybara（网络安全专用，能力强到只对早期访问用户开放）。Capybara 被描述为「可以主动利用软件漏洞」，这个定位极其罕见。目前属于未经官方证实的泄露，但细节丰富，值得持续关注。",
-      "tags": ["Anthropic", "Claude", "新模型", "网络安全"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "新模型",
+        "网络安全"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +21,12 @@
       "url": "https://www.cnn.com/2026/03/29/us/angela-lipps-ai-facial-recognition",
       "source": "CNN / HackerNews #1",
       "tldr": "田纳西州女性 Angela Lipps 因 AI 人脸识别误判，被错误指控跨州犯罪并遭逮捕。这是近年来 AI 误识别导致无辜者被捕的又一起典型案例，HN 431 分热议，核心问题在于执法部门对 AI 结果缺乏有效的人工复核机制。在 AI 扩权速度远超监管的当下，这类事故会越来越多。",
-      "tags": ["AI伦理", "人脸识别", "执法", "风险"]
+      "tags": [
+        "AI伦理",
+        "人脸识别",
+        "执法",
+        "风险"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +34,13 @@
       "url": "https://www.latent.space/p/voxtral",
       "source": "Latent Space / swyx.io",
       "tldr": "Mistral 推出 Voxtral TTS，正式进军语音合成模态，这是其「开放前沿智能覆盖全模态」战略的关键一步。访谈中还透露了轻量化模型 Leanstral 和下一代 Mistral 4 的方向。Mistral 在欧洲开源旗帜下稳步推进多模态布局，值得关注其与 Meta/OpenAI 的分化策略。",
-      "tags": ["Mistral", "TTS", "语音", "开源", "多模态"]
+      "tags": [
+        "Mistral",
+        "TTS",
+        "语音",
+        "开源",
+        "多模态"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +48,12 @@
       "url": "https://huggingface.co/papers/2603.25730",
       "source": "HuggingFace Papers",
       "tldr": "PackForcing 提出三分区 KV-cache 策略（Sink tokens + 关键帧 + 滑动窗口），让自回归视频扩散模型在不需要长视频训练数据的情况下就能生成长视频，同时解决了时序重复和误差累积问题。38 upvotes，技术含量扎实，对视频生成领域是实质性进展。",
-      "tags": ["视频生成", "扩散模型", "KV-cache", "研究论文"]
+      "tags": [
+        "视频生成",
+        "扩散模型",
+        "KV-cache",
+        "研究论文"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +61,12 @@
       "url": "https://huggingface.co/papers/2603.22582",
       "source": "HuggingFace Papers / arXiv",
       "tldr": "这篇论文系统评估了开源生态下多个推理模型的 CoT 忠实度——即模型「思考」的过程是否真实反映其决策依据。此前数据显示 Claude 3.7 Sonnet 承认率仅 25%，DeepSeek-R1 为 39%，意味着大部分「推理」是事后合理化而非真实逻辑。这对 AI 透明度和安全关键场景部署有根本性影响。",
-      "tags": ["CoT", "可解释性", "推理模型", "AI安全"]
+      "tags": [
+        "CoT",
+        "可解释性",
+        "推理模型",
+        "AI安全"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +74,12 @@
       "url": "https://www.wsj.com/tech/ai/the-sudden-fall-of-openais-most-hyped-product-since-chatgpt-64c730c9",
       "source": "WSJ / HackerNews",
       "tldr": "WSJ 深度报道 Sora 从万众期待到边缘化的全过程。原因是多方面的：内部优先级调整、竞争者追上（Kling、Vidu、Runway），以及产品本身在创作者实际工作流中难以落地。这个故事的教训是：技术 demo 和产品 PMF 之间的鸿沟，在视频生成赛道尤其深。",
-      "tags": ["OpenAI", "Sora", "视频生成", "产品"]
+      "tags": [
+        "OpenAI",
+        "Sora",
+        "视频生成",
+        "产品"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +87,12 @@
       "url": "https://negroniventurestudios.com/2026/03/19/the-ladder-is-missing-rungs/",
       "source": "HackerNews",
       "tldr": "AI 让初级工程师的任务可以被直接跳过，但「从初级到高级」的成长路径依赖的恰恰是这些任务。文章论证：AI 在提升效率的同时，正在悄悄抽走培养下一代高级工程师的土壤。这不是「AI 会取代程序员」的老问题，而是一个关于行业长期人才结构的新问题。",
-      "tags": ["工程师", "职业发展", "AI影响", "人才"]
+      "tags": [
+        "工程师",
+        "职业发展",
+        "AI影响",
+        "人才"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +100,12 @@
       "url": "https://x.com/dr_cintas/status/2038660653410320556",
       "source": "Twitter / @dr_cintas",
       "tldr": "Anthropic 黑客松冠军将其打磨 10 个月的 Claude Code 完整系统开源，包含 27 个 Agent、64 个技能和 33 条自定义命令，覆盖计划、审查、修复等完整开发流程。2665 点赞，是目前社区见过最系统化的 Claude Code 工程实践，coding agent 方向的从业者值得精读。",
-      "tags": ["Claude Code", "开源", "Agent框架", "工程实践"]
+      "tags": [
+        "Claude Code",
+        "开源",
+        "Agent框架",
+        "工程实践"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +113,13 @@
       "url": "https://www.interconnects.ai/p/latest-open-artifacts-20-new-orgs",
       "source": "interconnects.ai",
       "tldr": "Nathan Lambert 的「开源周报第 20 期」追踪了本周涌现的新模型：NVIDIA Nemotron Super（超参数高效的超网络）、印度开源模型 Sarvam、Cohere 推出的 Transcribe 语音转录模型。新进入者和新模态类型同时出现，开源生态的多样性正在加速扩张，不只是 Meta 一家的游戏。",
-      "tags": ["开源", "Nemotron", "Cohere", "语音识别", "新模型"]
+      "tags": [
+        "开源",
+        "Nemotron",
+        "Cohere",
+        "语音识别",
+        "新模型"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +127,18 @@
       "url": "https://www.joanwestenberg.com/the-worlds-first-bullshit/",
       "source": "Joan Westenberg",
       "tldr": "Joan Westenberg 一篇犀利短文：当早上打开 Twitter，三家创业公司同时宣称自己是「世界上第一个 AI CMO / 自主营销 Agent / 有品味的设计 Agent」——她为此关掉笔记本电脑整整 10 分钟。这是活人味写作的好样本，也是对当前 AI 营销叙事泡沫的精准刺穿。",
-      "tags": ["AI营销", "批评", "文化观察", "创业"]
+      "tags": [
+        "AI营销",
+        "批评",
+        "文化观察",
+        "创业"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "/Users/leo/.openclaw/workspace/minimax-output/ai-digest-2026-03-31.mp3",
+  "podcastTitle": "AI 日报播客版 2026-03-31",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastLink": "",
+  "podcastUrl": "https://zyfayes.github.io/demo/ai-daily/audio/2026-03-31.mp3"
 }

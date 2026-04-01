@@ -1,0 +1,123 @@
+{
+  "date": "2026-04-01",
+  "title": "AI 日报 2026-04-01",
+  "articles": [
+    {
+      "title": "OpenAI 关停 Sora，迪士尼 10 亿美元合作破裂",
+      "url": "https://www.latimes.com/business/story/2026-03-30/disney-sora-fiasco-shows-limits-of-the-ai-craze-in-hollywood-and-everywhere-else",
+      "tldr": "OpenAI 于 3 月 24 日关停了上线仅半年的视频生成平台 Sora，日亏损高达 100 万美元。迪士尼在公告前不到一小时才被告知，10 亿美元投资合作随即崩塌。释放的算力被转向代号「Spud」的编程/企业模型，以应对 Anthropic 的竞争。",
+      "summary": "WSJ 调查揭示了 Sora 关停的幕后细节：Sora 每日烧钱约 100 万美元，用户量在峰值后下降 50%，单条视频生成成本 1.3 美元。Disney 此前已在测试 Sora 企业版用于营销和 VFX，春季即将上线却被突然叫停。Iger 在去年 12 月曾高调宣布合作，称其为「里程碑式协议」，允许用户生成米老鼠等迪士尼角色视频。此次事件暴露了 AI 视频生成的成本困境——即便是 OpenAI 这样的巨头也无法承受持续亏损。Sora 3 的训练计划也被砍掉，算力转给了更具商业价值的编程模型。这一事件可能重塑好莱坞对 AI 生成内容的期望和投资策略。",
+      "tags": [
+        "OpenAI",
+        "Sora",
+        "Disney",
+        "AI视频",
+        "商业模式"
+      ]
+    },
+    {
+      "title": "Nvidia 20 亿美元投资 Marvell，深化 AI 芯片生态",
+      "url": "https://www.reuters.com/technology/nvidia-invests-2-billion-marvell-launches-ai-partnership-2026-03-31/",
+      "tldr": "Nvidia 向 Marvell Technology 投资 20 亿美元，让客户更容易在 Nvidia 网络基础设施上使用 Marvell 的定制 AI 芯片。Marvell 股价应声大涨 13%，Nvidia 涨 3%。",
+      "summary": "这笔投资旨在降低客户在 Nvidia 数据中心架构中整合定制芯片的摩擦。Marvell 将贡献兼容 NVLink Fusion 的定制芯片和网络方案，双方还将联合开发基于硅光子学的先进光互连技术，实现高速、低能耗的数据传输。分析师指出，这让 Nvidia 获得了 Marvell 的半定制硅片和光学互连能力，帮助扩展数据中心级 AI 系统的带宽和能效瓶颈。在越来越多企业选择定制芯片而非 Nvidia 高价 GPU 的背景下，这一布局有助于 Nvidia 巩固其在 AI 基础设施中的核心地位——不是独占市场，而是成为不可绕开的枢纽。",
+      "tags": [
+        "Nvidia",
+        "Marvell",
+        "AI芯片",
+        "硅光子",
+        "基础设施"
+      ]
+    },
+    {
+      "title": "Apple 蒸馏 Google Gemini，推进端侧 AI",
+      "url": "https://www.tuaw.com/2026/03/30/apple-shrinks-google-gemini-for-faster-on-device-ai",
+      "tldr": "Apple 正将 Google Gemini 大模型蒸馏为可在 iPhone 本地运行的小模型，优先隐私和速度。这标志着 Apple 从依赖云端 AI 向端侧智能的战略转型。",
+      "summary": "Apple 通过与 Google 的深度合作获得 Gemini 模型的完整访问权限，采用知识蒸馏技术让小模型从大模型「学习」。蒸馏后的模型能在手机上直接运行，减少对数据中心的依赖、降低成本、加快响应速度，同时最大限度保护用户隐私。目前 Gemini 完整版仍为 Siri 提供部分服务，但 Apple 正逐步构建自有能力，减少对外部 AI 系统的依赖。这一策略暗示了端侧 AI 的未来方向：用更小的模型在设备上完成更多任务，而非事事上云。对教育场景尤其有意义——更快的响应和更强的隐私保护对学生设备至关重要。",
+      "tags": [
+        "Apple",
+        "Gemini",
+        "模型蒸馏",
+        "端侧AI",
+        "隐私"
+      ]
+    },
+    {
+      "title": "宾大教授用 Claude 12 小时复刻硕士课程，直指大学商业模式",
+      "url": "https://www.businessinsider.com/ai-helped-professor-replicate-course-masters-learning-faster-cheaper-2026-3",
+      "tldr": "宾大经济学教授用 Anthropic Claude 在 12 小时内自学完成一门通常需要一周的硕士课程内容，并认为 AI 辅导质量可媲美大多数教授。他警告这将威胁大学的商业模式。",
+      "summary": "Fernández-Villaverde 教授分三步完成实验：先让 Claude 根据其已有知识生成定制教学大纲和阅读清单，然后阅读原著，最后与 Claude 进行深度讨论。他认为 Claude 在策划学习路径、提供实时反馈方面可能优于大多数大学教授。他强调，当边际成本趋近于零时，高质量个性化教育的可获得性将发生根本性变化。这并不意味着大学会消失，但纯知识传授型课程的价值将大幅缩水，大学需要在研究、社交网络和体验价值上重新定义自身。这对教育科技行业是一个重要信号。",
+      "tags": [
+        "AI教育",
+        "Claude",
+        "个性化学习",
+        "高等教育",
+        "商业模式"
+      ]
+    },
+    {
+      "title": "美国学区拥抱 AI：JCPS 用 Google AI 工具个性化课堂教学",
+      "url": "https://www.wdrb.com/news/education/jcps-teachers-using-ai-to-build-lesson-plans-as-district-says-it-wants-to-embrace/article_d9c3965c-10e2-476f-9005-7eeb8d400493.html",
+      "tldr": "肯塔基州最大学区 JCPS 正在用嵌入 Google Classroom 的 AI 工具帮助教师生成课程计划、测验和个性化教学内容。教师可输入州课标和学生特殊需求，AI 自动适配。",
+      "summary": "JCPS 的做法代表了美国 K-12 教育整合 AI 的务实路线：不替代教师，而是让 AI 承担备课、出题等耗时工作。教师可以指定学生的视力障碍等特殊需求，AI 据此调整教学方案。关键的是这些工具嵌入在师生每天使用的 Google Classroom 中，无需额外成本或切换平台。学区还成立了生成式 AI 工作组，并作为 Google 顾问委员会成员影响产品开发。CIO 强调「保持人类在环路中」——AI 是工具而非替代者。这一案例展示了 AI 在 K-12 教育中落地的现实路径。",
+      "tags": [
+        "K12教育",
+        "Google Classroom",
+        "AI教学",
+        "个性化",
+        "教师工具"
+      ]
+    },
+    {
+      "title": "ECEDHA 2026：工程教育如何教 AI 而不丢基本功",
+      "url": "https://shawnhymel.com/3246/ai-in-engineering-education-lessons-from-ecedha-2026/",
+      "tldr": "在 ECEDHA 2026 大会上，多位教授分享了将 AI（尤其是边缘 AI）融入电气/计算机工程课程的实战经验——核心矛盾是如何在引入 AI 工具的同时保持工程基本功。",
+      "summary": "宾大的 Deliwala 教授采用「先上手后理论」策略，让大一学生用树莓派做 AI 项目，当遇到性能瓶颈时自然理解硬件优化的必要性。Boise State 的 Hassan 教授指出学生普遍缺乏 AI 在硬件层面如何运行的理解。会议共识是：AI 已经不是 ECE 学生的可选项，但如何平衡理论与实践、何时引入 AI 工具仍在摸索中。在 AI 可以轻松生成代码和报告的时代，动手实验、团队项目和实操评估变得更加重要。这些讨论对所有 STEM 教育者都有参考价值。",
+      "tags": [
+        "AI教育",
+        "工程教育",
+        "边缘AI",
+        "课程设计",
+        "ECEDHA"
+      ]
+    },
+    {
+      "title": "研究：高校 IT 教师采用 AI 的真正障碍不是技能，而是信任",
+      "url": "https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2026.1804254/full",
+      "tldr": "Frontiers in Education 新研究发现，IT 学科教师的 AI 技能自评很高（M=3.86），但采纳率仍低。真正的阻碍是学术诚信风险、缺乏正版软件和数据隐私担忧——这是一场「制度信任危机」。",
+      "summary": "这项在哈萨克斯坦三所大学进行的定量研究（N=105）打破了「数字素养不足」的传统假设。IT 教师认为 AI 有用（M=4.19），也自认具备技能，但能力与采纳意愿之间竟然零相关（ρ=0.010）。真正的瓶颈是外部条件：学术不端风险（M=3.89）、缺乏正版软件（M=3.78）、数据隐私（M=3.41）以及对 AI 幻觉的担忧（M=3.70）。论文称之为「能力悖论」——技术上准备就绪但制度上缺乏安全生态。建议高校应从基础数字素养培训转向构建基础设施和伦理政策。",
+      "tags": [
+        "AI教育研究",
+        "高等教育",
+        "教师采纳",
+        "信任",
+        "学术诚信"
+      ]
+    },
+    {
+      "title": "AI 基因组学：用 Transformer 模型「阅读」植物 DNA",
+      "url": "https://www.azworldnews.com/ai-models-trained-on-dna-are-changing-plant-biology/",
+      "tldr": "Living Models 等公司正在用 Transformer 架构训练 DNA/RNA 序列模型，将基因组视为一种「自然编程语言」，目标是理解基因调控而非仅仅关联统计。植物是首选实验场。",
+      "summary": "传统基因组学依赖相关性分析——将基因标记与性状关联，但不理解因果。新方法用 Transformer 模型学习序列内部的结构和关系，能识别远距离调控模式和此前不可见的功能连接。植物被选为首要目标有三个原因：数据公开可用、实验周期短（一个生长季而非数年）、气候变化创造了开发抗旱抗热作物的迫切需求。这些模型可帮助育种者更快找到增强抗逆性的基因变体，将传统需要数年的育种周期大幅缩短。这是 AI 在生命科学中 Transformer 架构迁移应用的典型案例。",
+      "tags": [
+        "AI生物学",
+        "基因组学",
+        "Transformer",
+        "植物育种",
+        "气候变化"
+      ]
+    },
+    {
+      "title": "Keymakr 发布 LLM Agent 训练数据套件",
+      "url": "https://www.openpr.com/news/4448597/keymakr-launches-new-llm-suite-with-agent-training-data",
+      "tldr": "AI 训练数据公司 Keymakr 推出专为 LLM Agent 设计的数据工具套件，包括多轮对话标注、RLHF 工作流和 Agent 行为评估管线，瞄准自主 AI 助手的可靠性痛点。",
+      "summary": "随着自主 AI 助手、编程 Copilot 和多模态系统的爆发式增长，企业对高质量领域特定数据集和人类反馈管线的需求激增。Keymakr 的新套件提供专家验证的训练数据、RLHF 和安全评估工作流。其 Keylabs 平台新增了可扩展的多轮对话标注、偏好排序和结构化评估管线。CRO Anna Sovjak 指出了一个根本性差距：LLM Agent 现在能做日常事务（建网站、下单），但模型的可靠性取决于训练数据的质量。这反映了行业正从「训练更大的模型」转向「构建更好的数据基础设施」。",
+      "tags": [
+        "LLM Agent",
+        "训练数据",
+        "RLHF",
+        "数据标注",
+        "Keymakr"
+      ]
+    }
+  ]
+}

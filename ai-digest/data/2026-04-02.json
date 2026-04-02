@@ -1,0 +1,123 @@
+{
+  "date": "2026-04-02",
+  "summary": "本周AI领域最大新闻是Anthropic Claude Mythos泄露——超Opus新模型曝光，网络安全能力引发行业警惕。Google发布3月AI大更新，Gemini获深度个性化能力。Agent安全形势严峻：93%框架存在身份与权限缺陷。教育科技方面，70%美国学校已部署AI个性化学习工具，高校加速平台化，AI伦理与无障碍合规成为刚需。",
+  "items": [
+    {
+      "id": 1,
+      "title": "Anthropic Claude Mythos 泄露：下一代超 Opus 模型曝光，网络安全能力引发警惕",
+      "url": "https://renovateqr.com/blog/ai-models-april-2026",
+      "tldr": "3月26日Anthropic内部数据泄露，曝光代号Capybara的新模型Claude Mythos，定位超越Opus系列。官方确认该模型在编程和网络安全漏洞发现方面远超现有所有模型，正谨慎分阶段发布。",
+      "summary": "安全研究员发现Anthropic基础设施上错误配置的数据存储，泄露近3000份内部文件。Claude Mythos定位为比Opus更高级别的全新模型层级。Anthropic确认在推理、编码和网络安全方面有重大突破。泄露文档警告该模型在网络能力上远超其他AI模型。同期Gemini 3.1 Pro领跑13/16基准、GPT-5.4发布、Grok 4.20引入多智能体架构、Llama 4让开源追平商业前沿。",
+      "tags": [
+        "模型发布",
+        "Anthropic",
+        "安全",
+        "前沿模型"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Google 3月AI大更新：Gemini深度个性化、Search Live全球扩展",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/google-ai-updates-march-2026/",
+      "tldr": "Google发布3月AI回顾：Gemini获上下文理解升级，能主动感知用户旅行计划和工作项目。Search Live全球扩展，Workspace全线AI升级，Maps加入对话式导航。",
+      "summary": "Google 3月更新聚焦AI融入日常。Gemini新增个人上下文理解能力，将设备变为主动式助手。Search Live全球扩展支持实时对话搜索。Google Workspace全线升级AI功能。Maps引入Gemini驱动的对话式帮助。新增工具帮助用户从其他AI应用迁移至Gemini。此外Google在医疗健康领域扩展AI角色。",
+      "tags": [
+        "Google",
+        "Gemini",
+        "产品更新",
+        "个性化"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Agentic AI安全月报：93%框架依赖无作用域API Key，内存投毒成功率超90%",
+      "url": "https://adversa.ai/blog/top-agentic-ai-security-resources-april-2026/",
+      "tldr": "Adversa AI发布4月安全资源汇总。30个主流Agent框架中93%使用无作用域API Key，0%有独立身份，97%缺乏用户同意机制。内存投毒攻击对GPT-5 mini和Claude Sonnet 4.5成功率超90%。",
+      "summary": "本月Agentic AI安全讨论由RSA大会推动，焦点从理论风险转向基础设施级威胁。Unit 42发现22种间接提示注入技术已在野外被武器化。30个框架审计结果：93%无作用域API Key、0%每Agent独立身份、97%缺乏同意机制。TrinityGuard发现多智能体系统平均安全通过率仅7.1%。OpenClaw沙箱逃逸防御率仅17%，加入HITL后提升至91.5%。",
+      "tags": [
+        "安全",
+        "Agent",
+        "漏洞",
+        "研究"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Superpowers：基于可组合技能的智能Agent开发框架开源",
+      "url": "https://aitoolly.com/ai-news/article/2026-04-02-superpowers-a-practical-framework-and-methodology-for-developing-intelligent-agent-skills",
+      "tldr": "GitHub开源项目Superpowers提出基于可组合Skill的Agent开发方法论，将离散功能单元组装为复杂Agent行为，降低AI Agent开发门槛。",
+      "summary": "Superpowers框架在GitHub开源，提供完整的智能Agent开发工作流。核心是将Agent能力拆解为可组合的技能模块。不仅是工具集合，更是完整的软件开发方法论，从初始配置到复杂行为实现提供结构化引导。模块化方法与微服务趋势一致，将成熟软件工程原则应用于AI Agent领域。",
+      "tags": [
+        "开源",
+        "Agent框架",
+        "开发工具",
+        "方法论"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "El Camino College部署Nectir AI：为残障学生打造课程定制AI助教",
+      "url": "https://eccunion.com/news/2026/04/01/new-ai-technology-coming-to-ecc-to-meet-federal-deadline/",
+      "tldr": "El Camino College为满足4月24日联邦无障碍标准，部署Nectir AI平台。教师可基于课程大纲训练定制AI助手，为残障学生提供个性化辅导。同时制定AP3775行政程序规范全校AI使用。",
+      "summary": "为满足联邦无障碍标准，El Camino College启动AI技术部署。Nectir AI允许教师基于课程大纲构建定制AI助手，为残障学生提供个性化导师。AP3775行政程序规范全区AI使用。各院系规则不同：STEM中早期工具难处理方程；人文排除AI保护学术诚信；艺术系更开放。学校正开发AI素养培训课程。",
+      "tags": [
+        "教育科技",
+        "无障碍",
+        "AI助教",
+        "高等教育"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "2026年AI个性化学习工具全景：70%美国学校已部署，留存率提升25%",
+      "url": "https://successknocks.com/ai-tools-for-personalized-learning/",
+      "tldr": "EdSurge调查显示2026年70%美国学校已部署AI个性化学习工具。RAND研究表明试点学区学生留存率提升25%。DreamBox、Duolingo for Schools、Century Tech等平台各有特色。",
+      "summary": "AI个性化学习工具正颠覆传统课堂。核心技术包括自适应测验实时调整难度、AI即时识别阅读差距。DreamBox自适应数学覆盖1500+学区参与度提升30%；Duolingo for Schools游戏化语言学习留存率翻倍；Century Tech全学科AI导师可预测成绩；Carnegie Learning MATHia以认知导师模拟人类教学。文章也指出数据隐私、算法偏见和过度依赖等风险。",
+      "tags": [
+        "教育科技",
+        "个性化学习",
+        "自适应",
+        "K12"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "AI教育伦理2026：40% K-12评分由AI处理，偏见与隐私成头号挑战",
+      "url": "https://successknocks.com/future-of-ai-ethics-in-education-and-learning/",
+      "tldr": "EdWeek报告显示2026年AI处理40%美国K-12评分。偏见算法导致少数族裔学生不公频发，加州强制EdTech AI审计，联邦将资金与伦理合规挂钩。",
+      "summary": "2026年AI教育伦理进入关键节点。五大支柱：偏见检测——IBM AI Fairness 360等工具可预部署审计；隐私保护——FERPA升级锁定学生数据；人类监督——教师保留否决权；透明度——每个AI决策可解释；公平推进——为资金不足学校提供免费AI。德州学区因AI泄露特教记录赔偿200万美元。NIST发布框架，UNESCO推动全球标准。",
+      "tags": [
+        "教育科技",
+        "AI伦理",
+        "隐私",
+        "政策"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "ASU-GSV峰会：高校如何从AI试点走向企业级平台",
+      "url": "https://www.morningstar.com/news/pr-newswire/20260401da25011/robots-pencils-brings-enterprise-ai-platform-expertise-to-asu-gsv-summit-panel",
+      "tldr": "Robots & Pencils CEO将在ASU-GSV峰会分享高校AI平台化经验。面板聚焦如何将AI从分散试点整合为连接SIS/LMS/CRM的企业级平台，兼顾治理与快速实验。",
+      "summary": "ASU-GSV峰会4月14日举办重磅面板，讨论高校企业级AI策略。成员包括ASU副CIO、盖茨基金会数据主管、Axim CEO和北卡大学首席AI官。议题涵盖跨系统AI连接、治理模型、赋能非技术用户、Agentic AI增强机构韧性。Robots & Pencils自2019年与ASU合作云原生架构和AI平台现代化，强调从碎片化用例走向统一平台。",
+      "tags": [
+        "教育科技",
+        "高等教育",
+        "AI平台",
+        "企业级"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Insilico Medicine将在AACR 2026展示四款AI发现的新型癌症抑制剂",
+      "url": "https://www.eurekalert.org/news-releases/1122346",
+      "tldr": "Insilico Medicine四篇摘要被AACR 2026年会接受，将展示Pharma.AI平台发现的四款新型癌症抑制剂，包括首个口服泛KRAS(ON/OFF)抑制剂ISM6166。",
+      "summary": "Insilico Medicine连续第四年参加AACR，展示四个前沿肿瘤项目。核心亮点ISM6166是口服泛KRAS(ON/OFF)抑制剂，选择性靶向所有主要KRAS变体的活性和非活性构象，不影响HRAS和NRAS。Pharma.AI平台整合数万亿数据点和数百万分子片段，将生成式生物学与化学结合加速药物发现。",
+      "tags": [
+        "AI+医药",
+        "药物发现",
+        "癌症",
+        "生成式AI"
+      ]
+    }
+  ]
+}

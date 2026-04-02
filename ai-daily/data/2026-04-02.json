@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-02",
+  "summary": "Claude Code 源码泄露成了本周最大事件：512,000行代码意外随npm包发出，frustration regex、undercover模式、fake tools一一曝光，社区疯狂分析。与此同时，Claude还独立完成了FreeBSD内核RCE exploit，AI写安全漏洞利用代码的能力已到达新水位。Google和Z.AI各发新模型，AI就业焦虑讨论持续升温。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Claude Code 源码泄露内幕：fake tools、情绪检测正则、undercover 模式全曝光",
+      "url": "https://alex000kim.com/posts/2026-03-31-claude-code-source-leak/",
+      "source": "HN / alex000kim.com",
+      "tldr": "Anthropic 因遗漏 .npmignore，意外将 512,000 行 Claude Code 源码发布到 npm。源码揭露了三件大事：1) frustration regex 默默检测用户骂人（wtf/ffs/piece of shit），静默记录 is_negative:true 到分析后台；2) undercover.ts 专门在非内部仓库中隐藏 Anthropic 内部信息；3) 部分工具调用是'假工具'，用于测试模型行为。泄露后被 fork 到 GitHub，24小时内冲上 110k+ stars，Anthropic 发 DMCA 删了一堆 fork。",
+      "tags": ["Anthropic", "Claude Code", "源码泄露", "安全"]
+    },
+    {
+      "num": 2,
+      "title": "Claude 独立完成 FreeBSD 内核远程 RCE exploit：CVE-2026-4747 全流程 4 小时搞定",
+      "url": "https://github.com/califio/publications/blob/main/MADBugs/CVE-2026-4747/write-up.md",
+      "source": "HN / califio",
+      "tldr": "研究员 Nicholas Carlini 用 Claude 发现并利用了 FreeBSD RPCSEC_GSS 认证模块的栈溢出漏洞（CVE-2026-4747），全程 4 小时：从漏洞发现到 ROP chain 构造，再到获取 root shell 反弹。安全社区普遍认为，AI 自主完成内核级 RCE exploit 是一个能力里程碑——以前认为这是机器无法独立做到的事情。漏洞已于 3 月 26 日修复。",
+      "tags": ["安全漏洞", "Claude", "exploit", "FreeBSD"]
+    },
+    {
+      "num": 3,
+      "title": "OpenAI 完成新一轮融资，估值升至 8520 亿美元",
+      "url": "https://www.cnbc.com/2026/03/31/openai-funding-round-ipo.html",
+      "source": "HN / CNBC",
+      "tldr": "OpenAI 正式完成新一轮融资，估值达 $852B，较去年翻了近一倍。与此同时，Forbes 整理了 OpenAI graveyard 清单：大量曾经宣布过的产品和合作至今未落地。估值数字很漂亮，但'OpenAI 坟场'里躺着的 promise 同样不少。",
+      "tags": ["OpenAI", "融资", "估值"]
+    },
+    {
+      "num": 4,
+      "title": "Google 发布 TimesFM-2.5：200M 参数时序预测基础模型，零样本 GIFT-Eval 第一",
+      "url": "https://github.com/google-research/timesfm",
+      "source": "HN / Google Research",
+      "tldr": "Google Research 发布 TimesFM-2.5，200M 参数、16k 上下文窗口，在 GIFT-Eval 零样本时序预测基准上拿到第一。模型体积只有前代的一半，但上下文更长、预测精度更高。BigQuery ML 已集成 AI.DETECT_ANOMALIES 函数，可直接调用 TimesFM 做异常检测。对做量化/FinTech 的人来说，开箱即用的零样本时序模型很值得关注。",
+      "tags": ["时序预测", "Google", "开源模型", "FinTech"]
+    },
+    {
+      "num": 5,
+      "title": "Google Veo 3.1 Lite 上线 Gemini API：低成本高速视频生成，开发者付费预览开放",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/veo-3-1-lite/",
+      "source": "Google Blog",
+      "tldr": "Google 发布 Veo 3.1 Lite，定位开发者版低成本视频生成模型，已在 Gemini API 和 Google AI Studio 开放付费预览。相比 Veo 3，Lite 版速度更快、价格更低，适合高频场景集成。同期 Google 还发布了 Gemini 3.1 Flash-Lite 和 Lyria 音乐生成 API，三月一口气发了一堆小模型。",
+      "tags": ["Google", "视频生成", "Veo", "Gemini API"]
+    },
+    {
+      "num": 6,
+      "title": "GLM-5V-Turbo 发布：Z.AI 首个原生多模态 Agent 基础模型，对标 Claude Opus 编程能力",
+      "url": "https://openrouter.ai/z-ai/glm-5v-turbo",
+      "source": "Twitter / @Zai_org",
+      "tldr": "智谱 Z.AI 发布 GLM-5V-Turbo，202k token 上下文、131k 最大输出，原生支持图像/视频/设计稿/文档布局理解，专门为 coding 和 Agent 场景优化。底座 744B 规模，宣称实际编程体验接近 Claude Opus。价格 $1.20/M input、$4/M output，在 OpenRouter 已上线，开发者可直接测试。",
+      "tags": ["GLM", "Z.AI", "多模态", "Agent模型"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic RSP v3 深度解析：从硬承诺到信任关系，安全政策范式转变",
+      "url": "https://thezvi.substack.com/p/anthropic-responsible-scaling-policy",
+      "source": "thezvi.substack.com",
+      "tldr": "Anthropic 更新 Responsible Scaling Policy 到 v3，Zvi 给出了深度批评性分析。核心变化：v1 是'硬阈值触发硬措施'，v3 更多依赖组织判断和信任关系，而非可量化的能力门槛。Zvi 认为原来那套'精确阈值'本身就是伪命题，在2026年的AI生态里反而产生误导；但他也担心软承诺带来的可问责性下降。这篇值得想清楚 AI 安全政策设计的人细读。",
+      "tags": ["Anthropic", "AI安全", "RSP", "政策"]
+    },
+    {
+      "num": 8,
+      "title": "Gary Marcus：AI 在伊朗战争中帮了战术，但战略层面还是人类在搞砸",
+      "url": "https://garymarcus.substack.com/p/in-the-iran-war-it-looks-like-ai",
+      "source": "Gary Marcus / Substack",
+      "tldr": "Gary Marcus 引用一位资深外交官的观察：美国低估了伊朗韧性，高估了政权更迭可能性，预判失误连连——尽管全程使用了 AI 辅助决策。Marcus 的结论：AI 在战术层面（操作执行、情报处理）有用，但战略判断仍是人类主导，且人类搞砸的方式换成 AI 辅助后并没有根本改变。这是一个关于'AI 改善了什么，改善不了什么'的清醒案例研究。",
+      "tags": ["AI政策", "军事AI", "Gary Marcus", "战略"]
+    },
+    {
+      "num": 9,
+      "title": "AI 就业焦虑：Fortune 给出9条'不用现在恐慌'的理由，但明说了'之后可能会'",
+      "url": "https://fortune.com/2026/04/01/ai-layoffs-automation-productivity-finance-employment-investors-ceos/",
+      "source": "Fortune",
+      "tldr": "Fortune 4/5月刊封面故事：9个理由说明 AI 短期内不会大规模取代工作。关键论点：监管摩擦、技能转换成本、组织惰性、模型幻觉依然存在（Gary Marcus 参与撰写）。但文章也明确说是'yet'——目前的缓冲期不代表长期安全。Klarna 冻结招聘但没有裁员是核心案例，AI 提效正在以'不补人'的方式悄悄压缩就业容量。",
+      "tags": ["AI就业", "经济影响", "Gary Marcus"]
+    },
+    {
+      "num": 10,
+      "title": "The AI Marketing BS Index：一份对 AI 营销话术的量化嘲讽指数",
+      "url": "https://bastian.rieck.me/blog/2026/bs/",
+      "source": "bastian.rieck.me",
+      "tldr": "Bastian Rieck（机器学习研究员）发布了一个'AI 营销废话指数'，量化追踪各公司/产品博客中 buzzword 密度：'革命性'、'前所未有'、'重新定义'等词的出现频率。这是一篇有学术功底的娱乐性批评，但指向了一个真实问题：当所有人都宣称'突破'，benchmark 和 PR 稿之间的信噪比在系统性下降。适合在下次看到'AGI 临近'新闻时当解毒剂读。",
+      "tags": ["AI批评", "营销泡沫", "研究观点"]
+    }
+  ]
+}

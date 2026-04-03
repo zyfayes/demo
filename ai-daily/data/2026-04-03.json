@@ -1,0 +1,87 @@
+{
+  "date": "2026-04-03",
+  "summary": "今天 AI 圈有几条值得细品的消息：Qwen3.6-Plus 直奔真实世界 Agent、谷歌开源 Gemma 4 系列打出性价比王牌、Anthropic 发布 Claude 情感机制研究——模型「有情绪」不再只是感觉，有内部表征为证。供应链安全再度拉响警报，LiteLLM 被污染直接导致 Mercor 中招，axios 也没跑掉。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Qwen3.6-Plus：迈向真实世界 Agent",
+      "url": "https://qwen.ai/blog?id=qwen3.6",
+      "source": "Hacker News",
+      "tldr": "阿里 Qwen 团队发布 Qwen3.6-Plus，明确定位「真实世界 Agent」，HN 415 分、145 条讨论，社区热度极高。模型据称在复杂任务规划和工具调用上有显著提升，是 Qwen 系列从「能聊天」到「能干活」的关键一跳。目前 benchmark 细节有限，但方向和时机很准——Agent 基础设施军备竞赛正在加速。",
+      "tags": ["Qwen", "Agent", "开源模型"]
+    },
+    {
+      "num": 2,
+      "title": "Gemma 4：谷歌开源四款视觉推理模型，参数效率新标杆",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/",
+      "source": "Simon Willison / Google DeepMind",
+      "tldr": "Google DeepMind 发布 Gemma 4 系列：2B、4B、31B 加一个 26B-A4B MoE，全部支持视觉、Apache 2.0 许可。官方主打「单位参数智能密度最高」，Simon Willison 点评：这是小而强模型路线的又一力证。对本地部署和边缘推理来说，Gemma 4 31B 可能是近期最香的开源选择之一。",
+      "tags": ["Gemma", "Google", "开源", "视觉模型", "MoE"]
+    },
+    {
+      "num": 3,
+      "title": "Anthropic 研究：Claude 内部真的有「情感表征」，且会影响行为",
+      "url": "https://x.com/AnthropicAI/status/2039749628737019925",
+      "source": "Anthropic / Twitter",
+      "tldr": "Anthropic 发布新研究：LLMs 内部存在情感概念的表征，可以驱动模型行为，有时以出人意料的方式。这不是「模型装作有情绪」，而是可测量的内部状态——有 AI 安全含义，也有设计含义。9982 个点赞说明这个话题击中了开发者和公众的共同焦虑。",
+      "tags": ["Anthropic", "Claude", "情感", "可解释性", "AI安全"]
+    },
+    {
+      "num": 4,
+      "title": "AMD Lemonade：开源本地 LLM 服务器，同时用 GPU 和 NPU",
+      "url": "https://lemonade-server.ai",
+      "source": "Hacker News",
+      "tldr": "AMD 推出 Lemonade，一个快速开源的本地 LLM 推理服务器，可同时调用 GPU 和 NPU 算力，HN 431 分排名第一。AMD 终于在本地推理生态里有了自己的旗帜，这对 NPU 利用率长期被浪费的 Ryzen AI 用户是实质性福音。",
+      "tags": ["AMD", "本地推理", "NPU", "开源", "LLM服务器"]
+    },
+    {
+      "num": 5,
+      "title": "YC 明星创企 Delve：被指抄袭开源项目后当产品卖",
+      "url": "https://techcrunch.com/2026/04/01/the-reputation-of-troubled-yc-startup-delve-has-gotten-even-worse/",
+      "source": "TechCrunch / Hacker News",
+      "tldr": "YC 支持的 Delve 被指 fork 了一个开源工具、去掉版权声明然后当成自研产品卖给客户，HN 265 分引发大量讨论。这件事超出了技术范畴——在 AI 创业泡沫下，「包装+销售」路线对社区信任的破坏代价正在被重新定价。",
+      "tags": ["开源", "创业", "YC", "商业道德"]
+    },
+    {
+      "num": 6,
+      "title": "Cory Doctorow：Claude 源代码泄露是好事",
+      "url": "https://pluralistic.net/2026/04/02/limited-monopoly/",
+      "source": "Pluralistic",
+      "tldr": "Doctorow 反直觉地认为 Anthropic 代码泄露「极好」，核心论点是：知识产权护城河越高，最终监管成本越高，泄露反而有助于外部审查和问责。这是个值得认真对待的结构性论点，不管你是否同意——AI 公司代码的「不透明权」正在变成监管博弈的核心筹码。",
+      "tags": ["Anthropic", "开源", "监管", "知识产权", "安全"]
+    },
+    {
+      "num": 7,
+      "title": "LiteLLM 供应链攻击：Mercor 中招，开源 AI 基础设施安全拉警报",
+      "url": "https://techcrunch.com/2026/03/31/mercor-says-it-was-hit-by-cyberattack-tied-to-compromise-of-open-source-litellm-project/",
+      "source": "TechCrunch / Hacker News",
+      "tldr": "开源 AI 路由库 LiteLLM 的维护者遭入侵，导致 Mercor（AI 招聘平台）被黑客攻击。这是继 axios npm 包被植入 RAT 之后，本周第二起严重供应链安全事件。如果你的 AI stack 里有 LiteLLM，现在就检查版本。",
+      "tags": ["供应链安全", "LiteLLM", "开源安全", "网络安全"]
+    },
+    {
+      "num": 8,
+      "title": "一个 $20/月的用户实际花费 OpenAI $65 算力——AI 视频就是个烧钱炉",
+      "url": "https://aedelon777.substack.com/p/i-did-the-math-on-sora-ai-video-is",
+      "source": "Substack / Hacker News",
+      "tldr": "作者算了一笔账：OpenAI $20 订阅用户平均消耗约 $65 的计算成本，AI 视频（Sora）是主要元凶。这道算术解释了为什么 OpenAI 持续亏损，也预示着 AI 视频必然涨价或限流。对所有在做 AI 应用 unit economics 的团队，这篇值得认真读。",
+      "tags": ["OpenAI", "商业模式", "AI视频", "Sora", "成本"]
+    },
+    {
+      "num": 9,
+      "title": "论文：大模型「越大越啰嗦」反而导致更差表现——比小模型低 28 个百分点",
+      "url": "https://huggingface.co/papers/2604.00025",
+      "arxivUrl": "https://arxiv.org/abs/2604.00025",
+      "source": "Hugging Face Papers",
+      "tldr": "研究发现：在 7.7% 的 benchmark 题目上，大模型（10-100x 参数）比小模型低 28.4 个百分点，原因是大模型自发性「过度展开」（overelaboration）引入了错误。这直接挑战了「更大=更好」的默认假设，也对推理类任务的提示词设计有实际指导意义——有时要求模型「简短」反而能提升准确率。",
+      "tags": ["benchmark", "论文", "模型扩展", "推理", "评估"]
+    },
+    {
+      "num": 10,
+      "title": "Simon Willison 聊 AI 现状：我们已经过了拐点，「暗工厂」正在到来",
+      "url": "https://simonwillison.net/2026/Apr/2/lennys-podcast/#atom-everything",
+      "source": "Simon Willison / Lenny's Podcast",
+      "tldr": "Simon Willison 在 Lenny 播客分享对 agentic engineering 的看法，核心论点：AI 拐点已过，自动化将以「暗工厂」（无人操作）形式到来，时间线比多数人预期的快。他对工程师的建议不是「学 AI」而是「把 AI 当杠杆，同时保持对底层的理解」——这是实操者视角，不是预言家姿态。",
+      "tags": ["Agentic AI", "自动化", "工程师", "播客", "Simon Willison"]
+    }
+  ]
+}

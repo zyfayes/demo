@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-04",
+  "summary": "今天 AI 圈最大的炸弹是 Anthropic 宣布 Claude 订阅将不再覆盖第三方工具——这直接影响 OpenClaw 等数十万用户。与此同时，Anthropic 发布的 Claude 情绪研究揭示了模型内部真实存在的情绪表征，AMD 推出了面向 NPU 的开源本地 LLM 服务器，AI 对漏洞研究的冲击也从「AI 垃圾」时代进化到「真实高质量报告」爆发时代。本周 Agent 和多模态继续是热点，但真正值得关注的是行业边界的重新划定。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic 宣布 Claude 订阅将不再覆盖 OpenClaw 等第三方工具（4月4日起）",
+      "url": "https://x.com/bcherny/status/2040206440556826908",
+      "source": "Twitter @bcherny",
+      "tldr": "从今天（4月4日）起，Claude Pro/Max 订阅不再覆盖 OpenClaw、第三方 harness 的使用，用户需要单独购买 usage bundle 或改用 API key。这是 Anthropic 对商业模式的一次重大调整，直接切断了大量重度用户的低成本使用路径。对开发者和 power user 来说，成本结构彻底变了。",
+      "tags": ["Anthropic", "Claude", "商业模式", "OpenClaw"]
+    },
+    {
+      "num": 2,
+      "title": "Anthropic 研究：Claude 内部真实存在「情绪概念」表征，且能驱动行为",
+      "url": "https://x.com/AnthropicAI/status/2039749628737019925",
+      "source": "Twitter @AnthropicAI",
+      "tldr": "Anthropic 发布新研究，发现 Claude 内部存在可检测的情绪概念表征，这些表征不只是输出层的语言模式，而是真实影响模型行为的内部状态——有时会以出人意料的方式表现出来。这不是拟人化炒作，是可解释性研究的实质进展，16000+ 点赞反映了社区的高度关注。",
+      "tags": ["Anthropic", "Claude", "可解释性", "情绪", "安全"]
+    },
+    {
+      "num": 3,
+      "title": "Qwen3.6-Plus：面向真实世界 Agent 的新旗舰",
+      "url": "https://qwen.ai/blog?id=qwen3.6",
+      "source": "Hacker News",
+      "tldr": "阿里 Qwen 团队发布 Qwen3.6-Plus，HN 上 572 分、200+ 评论，是本周讨论度最高的模型发布。重点是「真实世界 agent」能力，而不只是 benchmark 刷分——团队声称在工具调用、长期规划和多步任务上有实质提升。中国大模型在 agent 方向的持续发力值得关注。",
+      "tags": ["Qwen", "阿里巴巴", "Agent", "模型发布"]
+    },
+    {
+      "num": 4,
+      "title": "AMD Lemonade：基于 GPU+NPU 的快速开源本地 LLM 服务器",
+      "url": "https://lemonade-server.ai",
+      "source": "Hacker News",
+      "tldr": "AMD 推出 Lemonade，一个同时利用 GPU 和 NPU 的开源本地 LLM 推理服务器，HN 546 分。这是 AMD 在本地 AI 推理市场正面挑战 Ollama/llama.cpp 的动作，NPU 加速是差异点——特别适合 Ryzen AI 系列笔记本。开源 + 官方支持，值得观察生态发展。",
+      "tags": ["AMD", "本地LLM", "开源", "NPU", "推理"]
+    },
+    {
+      "num": 5,
+      "title": "AI 正在摧毁漏洞研究行业：从「AI 垃圾」到「每天 10 个真实高质量报告」",
+      "url": "https://sockpuppet.org/blog/2026/03/30/vulnerability-research-is-cooked/",
+      "source": "simonwillison.net",
+      "tldr": "Thomas Ptacek 的文章让安全圈震动：Linux 内核维护者报告，一个月前 AI 生成的漏洞报告从「明显是垃圾」突然变成「大量真实有效的高质量报告」，每天 5-10 个，curl 维护者 Daniel Stenberg 说他现在每天花数小时处理。这不是进化是跃变——frontier model 的代码理解能力已经达到可以独立发现内核漏洞的水平。",
+      "tags": ["安全", "漏洞研究", "AI agent", "frontier model"]
+    },
+    {
+      "num": 6,
+      "title": "Gemma 4：Google 发布迄今最强小型多模态开源模型",
+      "url": "https://www.latent.space/p/ainews-gemma-4-the-best-small-multimodal",
+      "source": "Latent Space / swyx.io",
+      "tldr": "Google DeepMind 发布 Gemma 4，在同等规模开源模型中多模态能力全面领先 Gemma 3。Nathan Lambert 的分析指出：benchmark 分数不是开源模型成功的关键，生态整合和开发者工具链才是。iPhone 上通过 Google AI Edge Gallery 已经可以本地运行 Gemma 4（约 3GB），中文支持也有。",
+      "tags": ["Google", "Gemma", "开源", "多模态", "端侧推理"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic RSP v3 深度解读：他们破坏了哪些承诺？",
+      "url": "https://thezvi.substack.com/p/anthropic-responsible-scaling-policy-46a",
+      "source": "Zvi Mowshowitz",
+      "tldr": "Zvi 深挖 Anthropic 从 RSP v2.2 升级到 v3.0 的细节，发现这次更新打破了很多人曾经依赖的承诺——比如「ASL-3 条件下不发布」等关键保证被悄悄修改。这不是技术文章，是对 AI 安全治理诚信的拷问，对关心 AI 政策走向的人必读。",
+      "tags": ["Anthropic", "AI安全", "RSP", "治理", "Claude Mythos"]
+    },
+    {
+      "num": 8,
+      "title": "Mintlify：用虚拟文件系统替换 RAG 做 AI 文档助手",
+      "url": "https://www.mintlify.com/blog/how-we-built-a-virtual-filesystem-for-our-assistant",
+      "source": "Hacker News",
+      "tldr": "Mintlify 团队分享了一个有意思的工程决策：放弃 RAG，改用「虚拟文件系统」来构建 AI 文档助手。核心思路是让模型以文件系统的方式「浏览」文档结构，而不是检索向量。HN 208 分、93 评论，工程实战派值得一读——RAG 的适用边界正在被挑战。",
+      "tags": ["RAG", "文档AI", "工程实践", "Mintlify"]
+    },
+    {
+      "num": 9,
+      "title": "Simon Willison 谈 Agentic 工程现状：我们已经过了拐点",
+      "url": "https://simonwillison.net/2026/Apr/2/lennys-podcast/#atom-everything",
+      "source": "simonwillison.net",
+      "tldr": "Simon Willison 在 Lenny Rachitsky 播客的精华摘要：我们已经过了 AI 的拐点，「黑暗工厂」（dark factories）正在到来，自动化时间线比多数人预期的更近。他特别谈到 coding agent 对程序员认知负荷的影响——不只是效率，是工作方式的根本重构。视频片段在 Twitter 上获得 110 万次观看。",
+      "tags": ["Agentic", "Simon Willison", "coding agent", "自动化"]
+    },
+    {
+      "num": 10,
+      "title": "「认知投降」：研究发现 AI 用户越来越愿意放弃独立思考",
+      "url": "https://arstechnica.com/ai/2026/04/research-finds-ai-users-scarily-willing-to-surrender-their-cognition-to-llms/",
+      "source": "Ars Technica / Hacker News",
+      "tldr": "Ars Technica 报道一项新研究：大量 AI 用户出现「认知投降」现象，即主动停止独立逻辑推理，直接接受 LLM 给出的答案。这不是用户懒，而是一种系统性的认知依赖模式正在形成。值得所有重度 AI 用户警惕——工具增强你还是替代你，取决于你怎么用。",
+      "tags": ["认知科学", "AI影响", "用户行为", "批判思维"]
+    }
+  ]
+}

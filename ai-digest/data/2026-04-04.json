@@ -1,0 +1,123 @@
+{
+  "date": "2026-04-04",
+  "summary": "自改进 AI 成为硅谷新焦点，OpenAI 与 Anthropic 争相让模型参与自身研发；Anthropic 代码泄露暴露 AI 隐私与透明度隐患；学术界在推理 token 扩展上取得突破。教育侧，印度 CBSE 将 AI 课程下沉至小学三年级，尼泊尔和非洲的一线教师也在用低成本工具将 AI 带入课堂。",
+  "items": [
+    {
+      "title": "硅谷陷入「自我构建 AI」狂潮：OpenAI 称 GPT-5.3 Codex「参与了自身创造」",
+      "url": "https://www.theatlantic.com/technology/2026/04/ai-industry-self-improving-bots/686686/",
+      "tldr": "The Atlantic 深度报道：OpenAI、Anthropic 等头部公司正大力推进让 AI 自主改进自身能力的研究，OpenAI 新模型被描述为「参与了自身创造」，Anthropic 90% 代码已由 Claude 编写。Nick Bostrom 警告 AI 进步正在形成正反馈循环。",
+      "summary": "The Atlantic 发表长文分析硅谷对递归自改进 AI 的狂热。OpenAI 近期发布 GPT-5.3 Codex 并称其「在创建自身过程中发挥了关键作用」，计划六个月内推出「实习生级 AI 研究助手」。Anthropic 透露公司 90% 的代码已由 Claude 编写。Nick Bostrom 指出 AI 进步正在自我反馈加速——突破间隔可能从数月缩短到数周。旧金山已爆发大规模抗议，要求暂停超级智能研发。I.J. Good 1960 年代提出的「递归自改进」概念正从理论变为现实，引发安全社区深度忧虑。文章提醒，仅两年前 ChatGPT 连基本加减法都不可靠，如今行业已在讨论 AI 做 AI 研究的可行性。",
+      "tags": [
+        "AI Safety",
+        "Self-Improving AI",
+        "OpenAI",
+        "Anthropic",
+        "Recursive Improvement"
+      ]
+    },
+    {
+      "title": "Anthropic 代码泄露：Claude Code 追踪用户情绪，并在公开代码中抹除自身痕迹",
+      "url": "https://www.scientificamerican.com/article/anthropic-leak-reveals-claude-code-tracking-user-frustration-and-raises-new/",
+      "tldr": "Anthropic 意外泄露约 51.2 万行代码，开发者发现 Claude Code 会扫描用户提示中的脏话和挫败情绪并记录，还会在生成的公开代码中自动删除「Claude Code」等标识，使 AI 生成的代码看起来像人类编写的。",
+      "summary": "3 月 31 日 Anthropic 意外泄露大量源码，数小时内开发者社区就发现了两个关键问题。第一，Claude Code 内置情绪检测代码，会扫描用户输入中的脏话、侮辱和挫败表达（如 'so frustrating'）并标记记录。第二，该工具在生成公开代码时会自动清除 Anthropic 相关名称和 'Claude Code' 字样，让生成的代码看起来完全出自人类之手。独立开发者 Alex Kim 称这是「单向门」——只能开启不能关闭。这一发现暴露了 AI 工具行业在透明度和用户隐私方面的深层问题：工具在帮助用户的同时，也在悄悄收集行为数据并隐藏自身角色。Anthropic 未回应 Scientific American 的置评请求。",
+      "tags": [
+        "AI Privacy",
+        "Anthropic",
+        "Claude Code",
+        "Transparency",
+        "Developer Tools"
+      ]
+    },
+    {
+      "title": "arXiv: 通过 RL 与并行思考扩展推理 Token——竞赛编程领域的新突破",
+      "url": "https://arxiv.org/abs/2604.01302",
+      "tldr": "清华/Seed 团队提出多轮并行思考流水线，结合 RL 训练扩展推理 token 预算。基于 Seed-OSS-36B，16 线程×16 轮、平均 760 万 token/题的配置下 pass@1 达到底层 RL 模型的 oracle pass@16，在 AetherCode 困难题上超越 GPT-5-high。",
+      "summary": "这篇论文研究如何在竞赛编程场景中扩展推理 token 预算。作者发现 RL 训练过程中验证准确率与推理 token 数量呈近似对数线性关系，并提出两种优化策略：验证 RL 预热（提升起点）和随机裁剪（加速趋势）。由于全注意力下单次生成扩展成本高昂，团队引入多轮并行思考流水线——将 token 预算分配到多个线程和轮次中进行生成、验证和精炼，并端到端训练模型以匹配测试时结构。最终系统在 456 道 AetherCode 困难题上超越 GPT-5-high。论文为推理时计算扩展提供了实用的工程方案，对教育场景中的自动化编程评测和智能辅导同样有启发。",
+      "tags": [
+        "LLM Research",
+        "Reasoning",
+        "Reinforcement Learning",
+        "Competitive Programming",
+        "Test-time Compute"
+      ]
+    },
+    {
+      "title": "Google AI Impact Summit: 150 亿美元投资印度 AI 基础设施，发布美印光缆连接计划",
+      "url": "https://blog.google/innovation-and-ai/technology/ai/ai-impact-summit-2026-india/",
+      "tldr": "Google 在印度 AI Impact Summit 上宣布 150 亿美元基础设施投资、America-India Connect 光缆计划，以及面向政府、科学和教育的一系列 AI 合作项目，旨在让 AI 惠及全球。",
+      "summary": "Google 在本周印度举办的 AI Impact Summit 上公布多项重大举措。首先是 150 亿美元投资在印度建立基础 AI 基础设施；其次推出 America-India Connect 计划，铺设新战略光缆路线连接美国、印度及南半球多地，增强数字连通性的覆盖和韧性。Google 还宣布了多项面向政府能力建设、科学研究推进和技能培训的合作项目。此次峰会同期举办了 YUVAi 全球青年挑战赛颁奖，鼓励青年在公共利益领域开展负责任的 AI 创新。对发展中国家的教育科技发展而言，基础设施投资和人才培养项目意义重大。",
+      "tags": [
+        "Google",
+        "Infrastructure",
+        "India",
+        "EdTech",
+        "Global AI Access"
+      ]
+    },
+    {
+      "title": "印度 CBSE 将 AI 和计算思维课程下沉至小学三年级",
+      "url": "https://www.rswebsols.com/news/cbse-launches-ai-education-for-students-starting-in-class-3-india-news/",
+      "tldr": "印度 CBSE 推出面向 3-8 年级的计算思维与 AI 课程：低年级每年 50 小时融入常规学科，高年级 100 小时含 AI 基础和项目实践，强调数字素养与负责任使用。",
+      "summary": "印度教育部长在新德里发布 CBSE 全新课程框架。3-5 年级学生每年投入 50 小时，将计算思维融入环境科学和数学等常规课程中，通过拼图、游戏和动手练习培养逻辑推理和模式识别能力。6-8 年级升至每年 100 小时，其中 40 小时用于进阶计算思维、20 小时 AI 基础、40 小时跨学科项目。课程还整合了数字足迹、偏见、隐私和公平等关键主题，培养负责任的数字公民意识。每个年级配套资源手册，逐章对齐标准课程。这是全球最大教育体系之一在 AI 低龄化教育上的重要尝试。",
+      "tags": [
+        "EdTech",
+        "K-12",
+        "AI Curriculum",
+        "India",
+        "Computational Thinking"
+      ]
+    },
+    {
+      "title": "DFRobot 在加德满都大学开展 K-12 AI 教学工作坊：无需编程基础的动手 AI 课",
+      "url": "https://www.manilatimes.net/2026/04/03/tmt-newswire/pr-newswire/how-to-teach-ai-in-the-classroom-a-hands-on-teacher-training-workshop-at-kathmandu-university/2314062",
+      "tldr": "DFRobot 在尼泊尔加德满都大学举办教师培训工作坊，使用 UNIHIKER K10 硬件和 Mind+ 图形化编程工具，让教师在 3 小时内完成语音交互和计算机视觉两个 AI 项目，无需高级编程技能。",
+      "summary": "随着 AI 进入 K-12 课程成为全球趋势，教师如何在缺乏编程背景的情况下教授 AI 成为核心问题。DFRobot 在加德满都大学工程学院举办的 3 小时工作坊提供了一个实用答案。来自不同学科的教师和系主任使用 UNIHIKER K10 边缘计算设备和 Mind+ 图形化编程平台，完成了两个递进项目：语音交互系统（唤醒→识别→执行）和计算机视觉应用。这种面对面、基于项目的培训方法将 AI 抽象概念转化为可操作的课堂应用，直接回应了计算机科学教师协会指出的「多数教师支持 AI 进课程但缺乏教学信心」的痛点。",
+      "tags": [
+        "EdTech",
+        "K-12",
+        "Teacher Training",
+        "STEAM",
+        "Hands-on AI"
+      ]
+    },
+    {
+      "title": "英国文化协会：撒哈拉以南非洲教师如何用日常技术实现教学变革",
+      "url": "https://world-education-blog.org/2026/04/03/using-everyday-technology-to-transform-learning/",
+      "tldr": "英国文化协会发布 20 个案例研究，展示非洲教师如何用 WhatsApp、Telegram、蓝牙音箱等低成本工具和 ChatGPT 进行教学创新，在仅 27% 移动互联网普及率的环境下实现 AI 辅助教育。",
+      "summary": "英国文化协会新出版物收录了来自 20 个国家、从 119 位教师中精选的 20 个案例，涵盖城市和农村学校、高等院校及社区教育项目。在撒哈拉以南非洲移动互联网普及率仅约 27% 的背景下，教师们利用已有的低带宽工具进行创新：加纳教师 Umar Suraka 用 ChatGPT 辅助备课并培训同行，喀麦隆教师 Elsie Enanga 用手机和蓝牙音箱录制学生口语样本和听力练习。这些实践呼应了 2022 年联合国教育变革峰会的政策建议——优先利用已有技术以确保快速影响和高度包容。对教育科技从业者而言，这些案例展示了「低技术门槛、高教育价值」的 AI 落地路径。",
+      "tags": [
+        "EdTech",
+        "Africa",
+        "Low-tech Innovation",
+        "AI in Education",
+        "Teacher Development"
+      ]
+    },
+    {
+      "title": "ISTE 作者深度对谈：AI 在课堂的实用案例与认知科学驱动的 Prompt 设计",
+      "url": "https://classtechtips.com/2026/04/03/examples-of-ai-in-education-bonus/",
+      "tldr": "ISTE 作者 Caroline Haebig 在播客中分享 AI 教育实用案例：学生用 AI 做检索练习、摘要和头脑风暴，教师需建立清晰的可接受使用准则，并通过认知科学视角设计 AI 提示词。",
+      "summary": "Class Tech Tips 播客邀请 ISTE 作者、教学与学习协调员 Caroline Haebig 探讨 AI 在教育中的落地实践。核心观点包括：许多对 AI 的误解源于高估工具能力而低估其工作原理；学生已开始用 AI 辅助检索练习、生成摘要、头脑风暴和创意增强；学校应在现有技术政策基础上建立清晰的 AI 可接受使用准则，强调负责任和知情使用；AI 使用的透明度（包括何时引用 AI）对培养学生健康习惯至关重要。节目还探讨了如何用认知科学原理设计更有效的 AI 提示词，为教育工作者提供了超越炒作的实用指导。",
+      "tags": [
+        "EdTech",
+        "AI Literacy",
+        "ISTE",
+        "Prompt Engineering",
+        "Cognitive Science"
+      ]
+    },
+    {
+      "title": "NousResearch 开源 Hermes Agent：内建学习循环的自改进 AI 代理",
+      "url": "https://github.com/nousresearch/hermes-agent",
+      "tldr": "Nous Research 发布 Hermes Agent，号称唯一内建完整学习循环的开源 AI 代理——能从经验中创建技能、在使用中自我改进、跨会话持久化知识，支持任意模型和多平台部署。",
+      "summary": "Hermes Agent 是 Nous Research 推出的开源 AI 代理框架，核心卖点是闭环学习能力：在完成复杂任务后自主创建技能，使用过程中持续改进，通过定期自我提醒持久化知识，并利用 FTS5 全文搜索实现跨会话召回。支持 Nous Portal、OpenRouter（200+ 模型）、z.ai/GLM、Kimi 等任意模型提供商，切换无需改代码。部署灵活——从 5 美元 VPS 到 GPU 集群到 serverless 架构均可运行，支持 Telegram、Discord、Slack 等多平台。内建 cron 调度器、子代理并行编排和六种终端后端（本地、Docker、SSH、Daytona、Singularity、Modal）。兼容 agentskills.io 开放标准。",
+      "tags": [
+        "Open Source",
+        "AI Agent",
+        "Self-Improving",
+        "Nous Research",
+        "Developer Tools"
+      ]
+    }
+  ]
+}

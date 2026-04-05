@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-05",
+  "summary": "Anthropic 突然切断 OpenClaw 的 Claude 订阅报销通道，$200/mo 的 Max 套利正式终结——这不是什么「系统过载」，是闭源厂商对生态渗透的本能收紧。与此同时 Google Gemma 4 31b 本地跑通、DeepSeek V4 传闻联手华为芯片，本地优先和国产替代两股力量正在同时加速。GPT-Image-2 在 Arena 泄露评测表现炸裂，Stitch 的 DESIGN.md 解决了一个真实痛点——AI 理解设计系统的标准化问题终于有了工程解法。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic 切断 OpenClaw 订阅报销，Claude Max 套利终结",
+      "url": "https://x.com/Polymarket/status/2040267176892866634",
+      "source": "Polymarket/X",
+      "tldr": "Anthropic 4月4日宣布 Claude 订阅不再覆盖第三方工具（如 OpenClaw）的用量，理由是「对系统造成过大压力」。$200/月的 Max 订阅报销路径被堵死，所有用户被迫转向更贵的 API 付费模式。这是闭源厂商对订阅制生态渗透的典型收紧动作——先给糖，再断供。OpenClaw 用户需重新评估成本结构，本地模型或更性价比的方案（Gemini、Gemma）吸引力上升。",
+      "tags": ["AI生态", "Claude", "Anthropic", "OpenClaw"]
+    },
+    {
+      "num": 2,
+      "title": "Google Gemma 4 发布：本地 Mac 可跑，31B 参数开源模型",
+      "url": "https://www.interconnects.ai/p/gemma-4-and-what-makes-an-open-model",
+      "source": "Interconnects",
+      "tldr": "Google 4月2日发布 Gemma 4，主打推理和 Agent 工作流优化。有开发者已在 Mac Studio（Apple Silicon）上跑通 Gemma 4 31b，Token 费用为零。Gemma 系列作为开源模型持续逼近闭源旗舰的能力边界，且支持本地部署，对在意成本和安全性的团队是实质利好。本周国内 llama.cpp 等推理优化社区也在密集适配，Gemma 4 的本地运行体验值得关注。",
+      "tags": ["Google", "Gemma", "开源模型", "本地部署"]
+    },
+    {
+      "num": 3,
+      "title": "Claude Code 发现了隐藏 23 年的 Linux 内核漏洞",
+      "url": "https://mtlynch.io/claude-code-found-linux-vulnerability/",
+      "source": "Michael Lynch",
+      "tldr": "独立开发者 Michael Lynch 分享了他用 Claude Code 做漏洞审计的经历——AI 在审查一段 23 年未动的内核驱动代码时，发现了一个长期存在的 bug。AI 做代码审计的独特价值在于「没有先入为主的信任」，不会因为代码年代久远、没人报过 bug 就跳过审查。这个案例比那些花哨的 benchmark 更有说服力：AI 辅助安全审计已经从概念进入实用阶段。",
+      "tags": ["Claude Code", "安全", "漏洞审计", "LLM应用"]
+    },
+    {
+      "num": 4,
+      "title": "Google Stitch 发布 DESIGN.md：让 AI 编码 agent 读懂你的设计系统",
+      "url": "https://x.com/dr_cintas/status/2040142054211117218",
+      "source": "Twitter/dr_cintas",
+      "tldr": "Google Stitch 团队发布了一个 DESIGN.md 规范——用一份 Markdown 文件描述整个设计系统（颜色、字体、间距、组件行为），AI agent 无需 Figma API 或截图就能理解并执行设计意图。这是设计工程化的一个新思路：把设计系统翻译成 AI 能消费的协议，比之前的 Midjourney/Screenshot 方案更精确、更可维护。如果设计工具跟进，这个格式有可能成为事实标准。",
+      "tags": ["AI Agent", "设计系统", "Google Stitch", "工具链"]
+    },
+    {
+      "num": 5,
+      "title": "DeepSeek V4 传将支持华为芯片，国产算力自主又进一步",
+      "url": "https://influencermagazine.uk/2026/04/deepseek-v4-ai-model-set-to-run-on-huawei-chips-amid-chinas-push-for-tech-independence/",
+      "source": "Influencer Magazine",
+      "tldr": "据多方消息，DeepSeek V4 将在数周内发布，并将首次支持华为昇腾芯片运行。这不是简单的适配工作——反映的是中国 AI 行业在美系芯片限制下构建自主栈的决心。DeepSeek 本身以高效推理著称（V3 用很少参数达到接近 GPT-4 效果），如果 V4 在华为芯片上实现生产级性能，将是国产 AI 算力生态的重要里程碑。",
+      "tags": ["DeepSeek", "华为", "国产芯片", "大模型"]
+    },
+    {
+      "num": 6,
+      "title": "Sebastian Raschka 深度解析：Coding Agent 的核心组件",
+      "url": "https://magazine.sebastianraschka.com/p/components-of-a-coding-agent",
+      "source": "Sebastian Raschka",
+      "tldr": "AI 研究者 Raschka 发文拆解 coding agent 的技术栈：工具调用（function calling）、长期记忆（RAG/向量数据库）、任务规划（CoT/ReAct）、上下文窗口管理。他指出了一个被忽视的问题——大多数 coding agent 演示都是 cherry-picking，真实场景下失败模式主要是「上下文溢出」和「工具调用循环」。文章给出了具体架构建议和评估方法，是近期最有实操价值的 agent 工程文献。",
+      "tags": ["AI Agent", "Coding Agent", "架构", "Sebastian Raschka"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic 发布新研究：LLM 内部如何表征情感概念",
+      "url": "https://www.anthropic.com/research/emotion-concepts-function",
+      "source": "Anthropic Research",
+      "tldr": "Anthropic 官方博客发布新研究，探索 Claude 内部如何表征和推理「愤怒」「恐惧」「爱」等情感概念。结论是 LLM 对情感词汇有相当复杂的内部表征，不只是标签匹配——模型能区分「感受到愤怒」和「表现出愤怒」，且这种能力部分来自训练数据中的语义结构。这是理解 LLM 内部推理机制的有趣窗口，也暗示未来 AI 人格化讨论需要更精确的概念框架。",
+      "tags": ["Anthropic", "LLM可解释性", "情感推理"]
+    },
+    {
+      "num": 8,
+      "title": "GPT-Image-2 在 LMSYS Arena 泄露评测：文字渲染能力炸裂",
+      "url": "https://x.com/minchoi/status/2040419534507516306",
+      "source": "Twitter/minchoi",
+      "tldr": "OpenAI GPT-Image-2 模型在 LMSYS Chatbot Arena 被泄露评测，用户反馈文字渲染（text rendering）能力大幅超越现有模型——这曾是 DALL-E 和 Stable Diffusion 的软肋。从泄露的 Arena 示例看，文字已经可以精确嵌入图像且拼写正确，这在实际应用（海报、信息图、产品原型）中有巨大价值。结合 GPT-4o 的端到端图像生成架构，OpenAI 在多模态上的领先优势正在扩大。",
+      "tags": ["OpenAI", "GPT-Image", "多模态", "文生图"]
+    },
+    {
+      "num": 9,
+      "title": "Simon Willison：AI 编程工具对开发者认知的影响",
+      "url": "https://simonwillison.net/2026/Apr/3/cognitive-cost/",
+      "source": "Simon Willison",
+      "tldr": "Willison 结合自己和多位开发者的经验，讨论 coding agent 对认知负荷的影响。核心观察：AI 补全降低了「知识诅咒」——当你对某个领域不熟时，AI 能快速帮你完成任务；但也带来「认知卸载」风险——频繁使用 AI 的人对代码的理解深度可能下降，长期看会影响系统设计能力。他的结论不是反对 AI 编程，而是强调要有意识地保留「手写」练习来维持深度理解。",
+      "tags": ["AI编程", "认知科学", "Simon Willison", "开发者体验"]
+    },
+    {
+      "num": 10,
+      "title": "Giles Thomas：从零构建 LLM 第 32h 篇——神经网络干预：Float32",
+      "url": "https://www.gilesthomas.com/2026/04/llm-from-scratch-32h-interventions-full-fat-float32",
+      "source": "Giles Thomas",
+      "tldr": "Giles Thomas 继续他的「从零手写 LLM」系列，第 32h 篇深入讲解神经网络干预（interventions）机制和 Float32 精度取舍。他用代码展示了为何残差连接和注意力头的内部激活需要高精度，以及 float16/BF16 在训练和推理中的实际取舍。这系列是真正工程导向的 LLM 理解资源，比大多数博客的宏观描述更底层。",
+      "tags": ["LLM工程", "从零构建", "神经网络", "精度优化"]
+    }
+  ]
+}

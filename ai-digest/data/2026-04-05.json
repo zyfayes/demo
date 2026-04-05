@@ -1,0 +1,112 @@
+{
+  "date": "2026-04-05",
+  "title": "AI 日报 2026-04-05",
+  "summary": "本周 Google 发布 Gemma 4 开源模型家族，在参数效率上创下新标杆；Anthropic Mythos 泄露事件引发网络安全「分水岭」讨论；教育领域多条重磅：CNN 报道 AI 正侵蚀大学课堂的原创思维，NPR 探讨负责任的教育 AI 框架，Kaggle 启动含教育赛道的 Gemma 4 Good Hackathon。OpenAI 收购播客 TBPN 布局媒体，OpenRouter 数据揭示模型竞争中的「水晶鞋效应」。",
+  "items": [
+    {
+      "id": 1,
+      "title": "Google 发布 Gemma 4：参数效率最强开源模型家族",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/",
+      "tldr": "Google DeepMind 发布 Gemma 4 系列开源模型（E2B/E4B/26B MoE/31B Dense），基于 Gemini 3 技术，Apache 2.0 许可。31B 模型在 Arena AI 排名开源第三，支持原生 function calling、JSON 输出和多模态，专为 agentic 工作流设计。",
+      "summary": "Google 推出 Gemma 4 开源模型家族，涵盖四个尺寸，从手机端 E2B 到工作站级 31B Dense。模型基于 Gemini 3 同源研究，在推理、代码生成和 agent 工作流方面实现突破。31B Dense 模型在 Arena AI 文本排行榜排名开源第三，击败 20 倍参数量的竞品。全系列支持原生 function calling、结构化 JSON 输出和视觉/音频多模态。采用 Apache 2.0 许可证，累计下载量已超 4 亿次，社区衍生模型超 10 万个。Kaggle 同步启动 Gemma 4 Good Hackathon，设有教育和全球公平赛道。",
+      "tags": [
+        "开源模型",
+        "Google",
+        "agentic AI",
+        "多模态",
+        "教育科技"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Anthropic Mythos 泄露引发网络安全「分水岭」警告",
+      "url": "https://www.wlfi.com/news/anthropic-s-next-model-could-be-a-watershed-moment-for-cybersecurity-experts-say-that-could/article_541678fe-ae55-50e4-a0d4-7b832471adc1.html",
+      "tldr": "Anthropic 即将发布的 Mythos 模型在网络安全能力上远超现有模型，泄露的博文警告 AI agent 可自主扫描和利用漏洞。安全专家称这是网络安全史上的「分水岭事件」。",
+      "summary": "Anthropic 未发布的博文意外泄露，揭示其下一代模型 Mythos 在网络攻击能力上「远超任何现有 AI 模型」。公司正私下向政府官员发出警告，并允许特定组织提前测试以加固防御。Cato Networks CEO 称 AI agent 自主攻击能力是「网络安全史上的分水岭」——单个 AI agent 扫描和利用漏洞的速度可超过数百名人类黑客。已有实际案例：一名俄罗斯黑客用 Claude 和 DeepSeek 入侵了 55 个国家超 600 台防火墙设备。专家指出这是一把双刃剑：同样的能力也可用于自动化威胁检测和补丁部署。",
+      "tags": [
+        "网络安全",
+        "Anthropic",
+        "AI Agent",
+        "风险治理"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "CNN：AI 正在改变大学课堂讨论方式和考核模式",
+      "url": "https://us.cnn.com/2026/04/04/health/ai-impact-college-student-thinking-wellness",
+      "tldr": "耶鲁学生发现同学在课堂上实时用 ChatBot 生成发言要点，导致讨论同质化——「所有人听起来都一样了」。教育者警告 AI 正在侵蚀学生的原创思维能力。",
+      "summary": "CNN 深度报道揭示 AI 对高等教育课堂的隐性冲击。耶鲁大学多名学生匿名反映，同学在研讨课上直接将教授的问题输入 AI 聊天机器人，然后复述生成内容作为课堂发言。一名大四学生观察到，大一时研讨课上每个人都有独特视角，而现在「所有人听起来都一样了」。这不仅影响课堂互动质量，更引发教育界对批判性思维退化的深层担忧。教授们开始调整考核方式以应对 AI 依赖，但如何在利用 AI 辅助学习与保护独立思考之间找到平衡，仍是未解难题。",
+      "tags": [
+        "教育科技",
+        "高等教育",
+        "AI素养",
+        "批判性思维"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "NPR TED Radio Hour：构建帮助师生共同成长的 AI",
+      "url": "https://www.npr.org/2026/04/03/nx-s1-5759947/building-ai-that-helps-students-and-teachers-thrive",
+      "tldr": "CENTURY Tech 创始人 Priya Lakhani 在 TED Radio Hour 讨论如何负责任地将 AI 引入教育，强调 AI 可以变革教育但前提是「不把学习交给机器人」。",
+      "summary": "NPR TED Radio Hour 节目「Could AI help us, not replace us?」专题中，英国 AI 教育公司 CENTURY Tech 创始人兼 CEO Priya Lakhani 分享了对 AI 与教育融合的深度思考。Lakhani 同时担任英国政府 AI 委员会成员和首相科技委员会委员，她在 2018 年联合创立了教育 AI 伦理研究所。节目探讨了 AI 如何在不替代教师角色的前提下提升教学效果——关键在于建立负责任的 AI 教育框架，让技术增强而非取代人类的学习过程。",
+      "tags": [
+        "教育科技",
+        "AI伦理",
+        "教师赋能",
+        "负责任AI"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Kaggle 启动 Gemma 4 Good Hackathon，设教育与数字公平赛道",
+      "url": "https://www.kaggle.com/competitions/gemma-4-good-hackathon",
+      "tldr": "Google 联合 Kaggle 启动 Gemma 4 Good Hackathon，鼓励开发者用开源 Gemma 4 模型解决全球问题，赛道包括健康科学、全球韧性、教育未来和数字公平。",
+      "summary": "伴随 Gemma 4 发布，Google 在 Kaggle 平台同步启动「Gemma 4 Good Hackathon」。竞赛聚焦社会影响力场景，要求参赛者利用 Gemma 4 的本地推理、原生 function calling 和多模态能力解决实际问题。四大赛道中「教育未来」和「数字公平」直接面向教育科技领域——鼓励开发者为网络不稳定的教室构建边缘端 AI 方案，或为隐私敏感社区设计本地化智能应用。竞赛强调「真正的创新发生在最需要它的地方」。",
+      "tags": [
+        "教育科技",
+        "开源",
+        "Hackathon",
+        "数字公平",
+        "边缘计算"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "OpenAI 收购科技播客 TBPN，布局媒体版图",
+      "url": "https://www.cnbc.com/2026/04/02/openai-acquires-tech-podcast-tbpn.html",
+      "tldr": "OpenAI 收购日播科技播客 TBPN，后者 2025 年广告收入 500 万美元、2026 年有望突破 3000 万。TBPN 将保持编辑独立，Altman 称「不期望他们对我们手下留情」。",
+      "summary": "OpenAI 宣布收购由 John Coogan 和 Jordi Hays 主持的日播科技节目 TBPN。该节目虽 2025 年才创办、YouTube 仅 5.8 万订阅，但已采访过 Zuckerberg、Nadella、Altman 等科技领袖。据华尔街日报报道，TBPN 2025 年广告收入约 500 万美元，2026 年有望超 3000 万。OpenAI AGI 部署 CEO Fidji Simo 表示此举旨在建立「关于 AI 变革的建设性对话空间」。Altman 在 X 上写道：「我不期望他们对我们手下留情，我确信自己偶尔的蠢决定会给他们提供充足素材。」",
+      "tags": [
+        "OpenAI",
+        "媒体战略",
+        "行业动态"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "OpenRouter 数据揭示「灰姑娘水晶鞋效应」：模型的先发优势不在于发布最早",
+      "url": "https://radicaldatascience.wordpress.com/2026/04/03/ai-news-briefs-bulletin-board-for-april-2026/",
+      "tldr": "OpenRouter 用户留存数据显示，AI 模型的真正先发优势不在于发布最早，而在于「第一个解决特定问题」。一旦工作流围绕某个模型构建，切换成本急剧上升。",
+      "summary": "Radical Data Science 援引 OpenRouter 留存数据，提出「灰姑娘水晶鞋效应」概念。每个前沿模型发布后都会被用户「试穿」来解决积压的未解问题——大多数不合适，用户很快转向下一个。但当某个模型首次攻克了之前不可能的任务，用户会迅速锁定。数据显示 Gemini 2.5 Pro 和 Claude 4 Sonnet 的早期队列在第 5 个月仍保持约 40% 留存率，远高于后续队列。一旦管道、提示词和产品围绕某个模型构建，切换成本飙升。这对模型厂商和应用开发者都有重要战略启示。",
+      "tags": [
+        "模型生态",
+        "用户留存",
+        "产品策略",
+        "数据分析"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "MLPerf Inference v6.0 发布：24 家机构参与创历史新高",
+      "url": "https://mlcommons.org/2026/04/mlperf-inference-v6-0-results/",
+      "tldr": "ML Commons 发布 MLPerf Inference v6.0 基准测试结果，创下 24 家参与机构的历史新高，新增 5 款模型和 5 款新处理器，是 2026 年首个重大基准发布。",
+      "summary": "ML Commons 发布 2026 年首个重大基准测试 MLPerf Inference v6.0。本轮创下多项纪录：24 家提交机构（历史新高）、5 款新模型、5 款新处理器，以及多个来自工业界和学术界的新参与者。基准测试新增了低延迟场景并更新了一个模型。MLPerf 作为 AI 推理性能的「通用语言」，帮助开发者和部署方在不同硬件和模型组合间进行标准化比较。在 AI 推理成本和延迟成为产品竞争力关键指标的当下，这一基准的持续演进具有基础设施级别的意义。",
+      "tags": [
+        "基准测试",
+        "推理性能",
+        "硬件生态",
+        "MLPerf"
+      ]
+    }
+  ]
+}

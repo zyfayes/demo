@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-04-07T16:01:15.173Z",
+  "generated": "2026-04-07T22:01:13.797Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -424,7 +424,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1775563398978,
+      "updatedAtMs": 1775592157579,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -440,10 +440,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775577704426,
-        "lastRunAtMs": 1775563304433,
+        "nextRunAtMs": 1775606504426,
+        "lastRunAtMs": 1775592146415,
         "lastStatus": "ok",
-        "lastDurationMs": 94545,
+        "lastDurationMs": 11164,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -499,7 +499,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1775559707885,
+      "updatedAtMs": 1775581292968,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -514,10 +514,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775581200000,
-        "lastRunAtMs": 1775559600009,
+        "nextRunAtMs": 1775602800000,
+        "lastRunAtMs": 1775581200010,
         "lastStatus": "ok",
-        "lastDurationMs": 107876,
+        "lastDurationMs": 92958,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -536,7 +536,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Idea Pipeline Researcher",
       "enabled": true,
       "createdAtMs": 1771231571634,
-      "updatedAtMs": 1775511143854,
+      "updatedAtMs": 1775597522303,
       "schedule": {
         "kind": "cron",
         "expr": "30 21 * * *",
@@ -557,10 +557,10 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1775597400000,
-        "lastRunAtMs": 1775511002123,
+        "nextRunAtMs": 1775683800000,
+        "lastRunAtMs": 1775597400010,
         "lastStatus": "ok",
-        "lastDurationMs": 141731,
+        "lastDurationMs": 122293,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -573,7 +573,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Daily Session Reset",
       "enabled": true,
       "createdAtMs": 1771231578667,
-      "updatedAtMs": 1775509315541,
+      "updatedAtMs": 1775595720020,
       "schedule": {
         "kind": "cron",
         "expr": "0 21 * * *",
@@ -591,14 +591,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775595600000,
-        "lastRunAtMs": 1775509200009,
-        "lastStatus": "ok",
-        "lastDurationMs": 115532,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "not-delivered",
-        "lastDelivered": false
+        "nextRunAtMs": 1775682000000,
+        "lastRunAtMs": 1775595600008,
+        "lastStatus": "error",
+        "lastDurationMs": 120012,
+        "consecutiveErrors": 1,
+        "lastRunStatus": "error",
+        "lastDeliveryStatus": "not-requested",
+        "lastError": "cron: job execution timed out",
+        "lastErrorReason": "timeout"
       }
     },
     {
@@ -644,7 +645,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Goal Agent Night Run",
       "enabled": true,
       "createdAtMs": 1771352603715,
-      "updatedAtMs": 1775503825020,
+      "updatedAtMs": 1775590218039,
       "schedule": {
         "kind": "cron",
         "expr": "30 3 * * *",
@@ -657,10 +658,10 @@ window.__DASHBOARD_DATA__ = {
         "text": "运行 Goal Agent 夜间执行。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json\n2) 找到 status=pending 的任务，按 priority 排序\n3) 执行第一个任务（调研类用 web_search，数据抓取类用 web_fetch）\n4) 更新 tasks.json 状态，写入 result 和 reflection\n5) 如果遇到需要 Leo 确认的分支，设置 status=waiting_confirmation\n6) 输出任务执行摘要（完成/进行中/需确认）\n\n如有 waiting_confirmation，末尾加：#Goal #NeedConfirmation"
       },
       "state": {
-        "nextRunAtMs": 1775590200000,
-        "lastRunAtMs": 1775503800008,
+        "nextRunAtMs": 1775676600000,
+        "lastRunAtMs": 1775590200006,
         "lastStatus": "ok",
-        "lastDurationMs": 25012,
+        "lastDurationMs": 18033,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-requested"
@@ -701,7 +702,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "BJ Daily Fiction",
       "enabled": true,
       "createdAtMs": 1771793957328,
-      "updatedAtMs": 1775505619489,
+      "updatedAtMs": 1775592144174,
       "schedule": {
         "kind": "cron",
         "expr": "0 20 * * *",
@@ -722,15 +723,14 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1775592000000,
-        "lastRunAtMs": 1775505600009,
-        "lastStatus": "error",
-        "lastDurationMs": 19480,
-        "consecutiveErrors": 1,
-        "lastRunStatus": "error",
+        "nextRunAtMs": 1775678400000,
+        "lastRunAtMs": 1775592000005,
+        "lastStatus": "ok",
+        "lastDurationMs": 144169,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
-        "lastDelivered": true,
-        "lastError": "AppChatReverse: Chat failed, Failed to perform, curl: (35) TLS connect error: error:00000000:invalid library (0):OPENSSL_internal:invalid library (0). See https://curl.se/libcurl/c/libcurl-errors.html first for more details."
+        "lastDelivered": true
       }
     },
     {
@@ -959,7 +959,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "知识星球日报",
       "enabled": true,
       "createdAtMs": 1772515117326,
-      "updatedAtMs": 1775500311327,
+      "updatedAtMs": 1775586699483,
       "schedule": {
         "kind": "cron",
         "expr": "30 2 * * *",
@@ -978,11 +978,11 @@ window.__DASHBOARD_DATA__ = {
         "channel": "1475153843707707412"
       },
       "state": {
-        "nextRunAtMs": 1775586600000,
-        "lastRunAtMs": 1775500200011,
+        "nextRunAtMs": 1775673000000,
+        "lastRunAtMs": 1775586600009,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 111316,
+        "lastDurationMs": 99474,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -994,7 +994,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Max Daily Reflection",
       "enabled": true,
       "createdAtMs": 1772671200000,
-      "updatedAtMs": 1775502428439,
+      "updatedAtMs": 1775588757214,
       "schedule": {
         "kind": "cron",
         "expr": "5 3 * * *",
@@ -1014,11 +1014,11 @@ window.__DASHBOARD_DATA__ = {
         "to": "422039053"
       },
       "state": {
-        "nextRunAtMs": 1775588700000,
-        "lastRunAtMs": 1775502300010,
+        "nextRunAtMs": 1775675100000,
+        "lastRunAtMs": 1775588700010,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 128429,
+        "lastDurationMs": 57204,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -1031,7 +1031,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1775556111039,
+      "updatedAtMs": 1775577711038,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1050,15 +1050,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775577651018,
-        "lastRunAtMs": 1775556051026,
+        "nextRunAtMs": 1775599251018,
+        "lastRunAtMs": 1775577651028,
         "lastRunStatus": "error",
         "lastStatus": "error",
-        "lastDurationMs": 60013,
+        "lastDurationMs": 60010,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 2,
+        "consecutiveErrors": 3,
         "lastErrorReason": "timeout",
-        "runningAtMs": 1775577651022
+        "runningAtMs": 1775599251020
       }
     },
     {
@@ -1103,7 +1103,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "BJ Daily Fiction - 配图",
       "enabled": true,
       "createdAtMs": 1773242692391,
-      "updatedAtMs": 1775506071238,
+      "updatedAtMs": 1775592449658,
       "schedule": {
         "kind": "cron",
         "expr": "5 20 * * *",
@@ -1121,11 +1121,11 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775592300000,
-        "lastRunAtMs": 1775505900008,
+        "nextRunAtMs": 1775678700000,
+        "lastRunAtMs": 1775592300011,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 171230,
+        "lastDurationMs": 149647,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
         "lastDelivered": false
@@ -1600,22 +1600,6 @@ window.__DASHBOARD_DATA__ = {
     },
     {
       "id": "mem-0",
-      "title": "待跟进",
-      "status": "open",
-      "rawStatus": "open",
-      "priority": "normal",
-      "type": "memo",
-      "source": "memory",
-      "owner": "moss",
-      "tags": [
-        "memory"
-      ],
-      "created": "2026-03-22",
-      "file": "/Users/leo/.openclaw/workspace/memory/2026-03-22.md",
-      "line": 49
-    },
-    {
-      "id": "mem-1",
       "title": "待办：**",
       "status": "open",
       "rawStatus": "open",
@@ -1629,6 +1613,22 @@ window.__DASHBOARD_DATA__ = {
       "created": "2026-03-03",
       "file": "/Users/leo/.openclaw/workspace/memory/2026-03-03.md",
       "line": 22
+    },
+    {
+      "id": "mem-1",
+      "title": "待跟进",
+      "status": "open",
+      "rawStatus": "open",
+      "priority": "normal",
+      "type": "memo",
+      "source": "memory",
+      "owner": "moss",
+      "tags": [
+        "memory"
+      ],
+      "created": "2026-04-08",
+      "file": "/Users/leo/.openclaw/workspace/memory/2026-04-08.md",
+      "line": 12
     },
     {
       "id": "mem-2",

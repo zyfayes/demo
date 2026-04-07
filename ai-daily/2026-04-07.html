@@ -231,6 +231,39 @@
 <div class="container">
   <div class="summary">今天最值得看的,不是又有谁喊出下一个 AGI 口号,而是 AI 正在从云上巨兽同时往两个方向分叉: 一头扎进手机和笔记本本地运行,另一头开始暴露代理系统在真实世界里的脆弱面。更有意思的是,社区这边已经不再满足于‘模型更强’,而是在追问工作流是否可靠、文档是否可读、视觉理解到底是不是在装懂。</div>
   
+  <div class="podcast-player" id="podcast-widget">
+    <div class="podcast-header">
+      <button class="play-btn" id="pod-play" aria-label="播放">
+        <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+      <div>
+        <div class="podcast-title">AI 日报播客版 2026-04-07</div>
+        <div class="podcast-sub">🎙️ female-shaonv · via MiniMax <button class="speed-btn" id="pod-speed">1x</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+      <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+    </div>
+    <audio id="pod-audio" preload="none" src="https://zyfayes.github.io/demo/ai-daily/audio/2026-04-07.mp3"></audio>
+  </div>
+  <script>
+  (function(){
+    const a=document.getElementById('pod-audio'),b=document.getElementById('pod-play'),
+      i=document.getElementById('pod-icon'),f=document.getElementById('pod-fill'),
+      bar=document.getElementById('pod-progress'),c=document.getElementById('pod-cur'),
+      d=document.getElementById('pod-dur');
+    if(!a||!b)return;
+    const fmt=s=>{const m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0')};
+    b.onclick=()=>{if(a.paused){a.play();i.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';}else{a.pause();i.innerHTML='<polygon points="6,3 20,12 6,21"/>';}};
+    a.ontimeupdate=()=>{if(!a.duration)return;f.style.width=(a.currentTime/a.duration*100)+'%';c.textContent=fmt(a.currentTime);};
+    a.onloadedmetadata=()=>{d.textContent=fmt(a.duration)};
+    a.onended=()=>{i.innerHTML='<polygon points="6,3 20,12 6,21"/>';f.style.width='0%';c.textContent='0:00';};
+    bar.onclick=e=>{if(!a.duration)return;a.currentTime=(e.offsetX/bar.offsetWidth)*a.duration;};
+    const speeds=[1,1.25,1.5,1.75,2,0.75];let si=0;const sb=document.getElementById('pod-speed');
+    sb.onclick=()=>{si=(si+1)%speeds.length;a.playbackRate=speeds[si];sb.textContent=speeds[si]+'x';};
+  })();
+  </script>
   
   <div class="article">
     <div class="article-num">01</div>

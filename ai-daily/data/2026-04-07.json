@@ -122,5 +122,11 @@
         "风险研究"
       ]
     }
-  ]
+  ],
+  "podcastLocalFile": "/Users/leo/.openclaw/workspace/minimax-output/ai-digest-2026-04-07.mp3",
+  "podcastTitle": "AI 日报播客版 2026-04-07",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastLink": "",
+  "podcastUrl": "https://zyfayes.github.io/demo/ai-daily/audio/2026-04-07.mp3"
 }

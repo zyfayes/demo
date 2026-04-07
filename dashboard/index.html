@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-04-07T01:03:55.421Z",
+  "generated": "2026-04-07T10:01:15.334Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -387,7 +387,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Morning Poem",
       "enabled": true,
       "createdAtMs": 1771231543733,
-      "updatedAtMs": 1775450230152,
+      "updatedAtMs": 1775525973181,
       "schedule": {
         "kind": "cron",
         "expr": "35 1 * * *",
@@ -402,15 +402,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775525700000,
-        "lastRunAtMs": 1775450229241,
-        "lastStatus": "error",
-        "lastDurationMs": 911,
-        "consecutiveErrors": 1,
-        "lastRunStatus": "error",
-        "lastDeliveryStatus": "unknown",
-        "lastError": "Error: All models failed (2): minimax-portal/MiniMax-M2.7: Provider minimax-portal is in cooldown (all profiles unavailable) (rate_limit) | openai-codex/gpt-5.4: OAuth token refresh failed for openai-codex: Failed to refresh OAuth token for openai-codex. Please try again or re-authenticate. (auth)",
-        "lastErrorReason": "rate_limit"
+        "nextRunAtMs": 1775612100000,
+        "lastRunAtMs": 1775525700007,
+        "lastStatus": "ok",
+        "lastDurationMs": 273174,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -425,7 +424,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1775520185441,
+      "updatedAtMs": 1775548994867,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -441,10 +440,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775534504426,
-        "lastRunAtMs": 1775520104433,
+        "nextRunAtMs": 1775563304426,
+        "lastRunAtMs": 1775548904434,
         "lastStatus": "ok",
-        "lastDurationMs": 81008,
+        "lastDurationMs": 90433,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -463,7 +462,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Scanner",
       "enabled": true,
       "createdAtMs": 1771231556226,
-      "updatedAtMs": 1775489619915,
+      "updatedAtMs": 1775523801837,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,13 * * *",
@@ -478,15 +477,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775523600000,
-        "lastRunAtMs": 1775489591283,
-        "lastStatus": "error",
-        "lastDurationMs": 28632,
-        "consecutiveErrors": 3,
-        "lastRunStatus": "error",
-        "lastDeliveryStatus": "unknown",
-        "lastErrorReason": "rate_limit",
-        "runningAtMs": 1775523600003
+        "nextRunAtMs": 1775566800000,
+        "lastRunAtMs": 1775523600009,
+        "lastStatus": "ok",
+        "lastDurationMs": 201828,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -501,7 +499,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1775516488794,
+      "updatedAtMs": 1775538098484,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -516,10 +514,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775538000000,
-        "lastRunAtMs": 1775516400011,
+        "nextRunAtMs": 1775559600000,
+        "lastRunAtMs": 1775538000007,
         "lastStatus": "ok",
-        "lastDurationMs": 88783,
+        "lastDurationMs": 98477,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -674,7 +672,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Goal Agent Morning Report",
       "enabled": true,
       "createdAtMs": 1771352624528,
-      "updatedAtMs": 1775450229241,
+      "updatedAtMs": 1775525435178,
       "schedule": {
         "kind": "cron",
         "expr": "30 9 * * *",
@@ -687,10 +685,10 @@ window.__DASHBOARD_DATA__ = {
         "text": "运行 Goal Agent 早间汇报。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/goal.md（目标）\n2) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json（进度）\n3) 生成简洁的中文进度汇报：\n   - 目标是什么\n   - 进度百分比\n   - 最近完成的任务 + 学到的关键点\n   - 下一步要做什么\n   - 是否有需要 Leo 确认的事项（如果有，列出选项）\n4) 发送给 Leo\n\n输出格式示例：\n## 🎯 目标进度汇报\n**目标**: ...\n**进度**: 3/8 完成\n\n### ✅ 最近完成\n- 任务A - 学到了...\n\n### 🔜 下一步\n- 任务B\n\n### ⚠️ 待确认\n- 问题描述\n  选项: A / B / C\n\n#Goal #Progress"
       },
       "state": {
-        "nextRunAtMs": 1775525400000,
-        "lastRunAtMs": 1775450227652,
+        "nextRunAtMs": 1775611800000,
+        "lastRunAtMs": 1775525400009,
         "lastStatus": "ok",
-        "lastDurationMs": 1589,
+        "lastDurationMs": 35169,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-requested"
@@ -741,7 +739,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Podcast Daily Digest",
       "enabled": true,
       "createdAtMs": 1771868190908,
-      "updatedAtMs": 1775498691459,
+      "updatedAtMs": 1775527313653,
       "schedule": {
         "kind": "cron",
         "expr": "0 10 * * *",
@@ -762,11 +760,11 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1775527200000,
-        "lastRunAtMs": 1775498644306,
+        "nextRunAtMs": 1775613600000,
+        "lastRunAtMs": 1775527200008,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 47153,
+        "lastDurationMs": 113645,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -779,7 +777,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "OpenClaw X & AI Daily",
       "enabled": true,
       "createdAtMs": 1771996842470,
-      "updatedAtMs": 1775450302150,
+      "updatedAtMs": 1775528131771,
       "schedule": {
         "kind": "cron",
         "expr": "10 10 * * *",
@@ -800,15 +798,14 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1775527800000,
-        "lastRunAtMs": 1775450275772,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 26378,
-        "lastDeliveryStatus": "unknown",
-        "consecutiveErrors": 1,
-        "lastError": "Error: All models failed (2): minimax-portal/MiniMax-M2.7: ⚠️ API rate limit reached. Please try again later. (rate_limit) | openai-codex/gpt-5.4: OAuth token refresh failed for openai-codex: Failed to refresh OAuth token for openai-codex. Please try again or re-authenticate. (auth)",
-        "lastErrorReason": "rate_limit"
+        "nextRunAtMs": 1775614200000,
+        "lastRunAtMs": 1775527800007,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 331764,
+        "lastDeliveryStatus": "delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": true
       }
     },
     {
@@ -1034,7 +1031,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1775512883895,
+      "updatedAtMs": 1775534511041,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1053,14 +1050,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775534451018,
-        "lastRunAtMs": 1775512851025,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 32870,
-        "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": false
+        "nextRunAtMs": 1775556051018,
+        "lastRunAtMs": 1775534451026,
+        "lastRunStatus": "error",
+        "lastStatus": "error",
+        "lastDurationMs": 60015,
+        "lastDeliveryStatus": "not-requested",
+        "consecutiveErrors": 1,
+        "lastErrorReason": "timeout",
+        "runningAtMs": 1775556051023
       }
     },
     {
@@ -1070,7 +1068,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711342198,
-      "updatedAtMs": 1775489621368,
+      "updatedAtMs": 1775523844402,
       "schedule": {
         "kind": "cron",
         "expr": "0 9,21 * * *",
@@ -1088,15 +1086,14 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775523600000,
-        "lastRunAtMs": 1775489619915,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 1453,
-        "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 2,
-        "lastErrorReason": "rate_limit",
-        "runningAtMs": 1775523600003
+        "nextRunAtMs": 1775566800000,
+        "lastRunAtMs": 1775523801837,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 42565,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
       }
     },
     {
@@ -1603,22 +1600,6 @@ window.__DASHBOARD_DATA__ = {
     },
     {
       "id": "mem-0",
-      "title": "待跟进（继承自 MEMORY.md）",
-      "status": "open",
-      "rawStatus": "open",
-      "priority": "normal",
-      "type": "memo",
-      "source": "memory",
-      "owner": "moss",
-      "tags": [
-        "memory"
-      ],
-      "created": "2026-03-16",
-      "file": "/Users/leo/.openclaw/workspace/memory/2026-03-16.md",
-      "line": 18
-    },
-    {
-      "id": "mem-1",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1634,7 +1615,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 49
     },
     {
-      "id": "mem-2",
+      "id": "mem-1",
       "title": "待办：**",
       "status": "open",
       "rawStatus": "open",
@@ -1650,7 +1631,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 22
     },
     {
-      "id": "mem-3",
+      "id": "mem-2",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1666,7 +1647,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 22
     },
     {
-      "id": "mem-4",
+      "id": "mem-3",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1682,7 +1663,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 19
     },
     {
-      "id": "mem-5",
+      "id": "mem-4",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1698,7 +1679,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 17
     },
     {
-      "id": "mem-6",
+      "id": "mem-5",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1714,7 +1695,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 12
     },
     {
-      "id": "mem-7",
+      "id": "mem-6",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1730,7 +1711,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 25
     },
     {
-      "id": "mem-8",
+      "id": "mem-7",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1746,7 +1727,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 19
     },
     {
-      "id": "mem-9",
+      "id": "mem-8",
       "title": "Still TODO",
       "status": "open",
       "rawStatus": "open",
@@ -1762,7 +1743,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 38
     },
     {
-      "id": "mem-10",
+      "id": "mem-9",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1778,7 +1759,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 31
     },
     {
-      "id": "mem-11",
+      "id": "mem-10",
       "title": "💡 待办：尽快更新到 2026.2.24，检查 Heartbeat 投递配置是否受 breaking change 影响。",
       "status": "open",
       "rawStatus": "open",
@@ -1794,7 +1775,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 97
     },
     {
-      "id": "mem-12",
+      "id": "mem-11",
       "title": "待办**: 等 cron idea researcher 完成该 idea 的独立研究后，与 migration plan 整合，统一考虑",
       "status": "open",
       "rawStatus": "open",
@@ -1810,7 +1791,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 41
     },
     {
-      "id": "mem-13",
+      "id": "mem-12",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1826,7 +1807,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 22
     },
     {
-      "id": "mem-14",
+      "id": "mem-13",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1842,7 +1823,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 16
     },
     {
-      "id": "mem-15",
+      "id": "mem-14",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1858,7 +1839,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 24
     },
     {
-      "id": "mem-16",
+      "id": "mem-15",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1874,7 +1855,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 24
     },
     {
-      "id": "mem-17",
+      "id": "mem-16",
       "title": "待跟进",
       "status": "open",
       "rawStatus": "open",
@@ -1890,7 +1871,7 @@ window.__DASHBOARD_DATA__ = {
       "line": 12
     },
     {
-      "id": "mem-18",
+      "id": "mem-17",
       "title": "TODO",
       "status": "open",
       "rawStatus": "open",
@@ -1904,6 +1885,21 @@ window.__DASHBOARD_DATA__ = {
       "created": "2026-03-05",
       "file": "/Users/leo/.openclaw/workspace/memory/2026-03-05.md",
       "line": 45
+    },
+    {
+      "id": "mem-18",
+      "title": "\"snippet\": \"# 2026-04-07 对话摘要 ## 关键事项 - 知识星球日报任务确认不是“今日无更新”，而是抓取脚本返回 `HTTP 401`，当前判断为 `secrets/zsxq.json` 中 `access_toke",
+      "status": "open",
+      "rawStatus": "open",
+      "priority": "normal",
+      "type": "memo",
+      "source": "memory",
+      "owner": "moss",
+      "tags": [
+        "memory"
+      ],
+      "file": "/Users/leo/.openclaw/workspace/memory/.dreams/short-term-recall.json",
+      "line": 41
     },
     {
       "id": "mem-19",

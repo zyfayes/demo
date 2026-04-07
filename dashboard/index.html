@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-04-06T22:01:16.599Z",
+  "generated": "2026-04-07T01:03:55.421Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -350,7 +350,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "AI Daily Digest",
       "enabled": true,
       "createdAtMs": 1771231536391,
-      "updatedAtMs": 1775450226532,
+      "updatedAtMs": 1775522172194,
       "schedule": {
         "kind": "cron",
         "expr": "30 0 * * *",
@@ -365,15 +365,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775521800000,
-        "lastRunAtMs": 1775450199691,
-        "lastStatus": "error",
-        "lastDurationMs": 26841,
-        "consecutiveErrors": 1,
-        "lastRunStatus": "error",
-        "lastDeliveryStatus": "unknown",
-        "lastError": "Error: All models failed (2): minimax-portal/MiniMax-M2.7: ⚠️ API rate limit reached. Please try again later. (rate_limit) | openai-codex/gpt-5.4: OAuth token refresh failed for openai-codex: Failed to refresh OAuth token for openai-codex. Please try again or re-authenticate. (auth)",
-        "lastErrorReason": "rate_limit"
+        "nextRunAtMs": 1775608200000,
+        "lastRunAtMs": 1775521800007,
+        "lastStatus": "ok",
+        "lastDurationMs": 372187,
+        "consecutiveErrors": 0,
+        "lastRunStatus": "ok",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -426,7 +425,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1775505787463,
+      "updatedAtMs": 1775520185441,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -442,10 +441,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775520104426,
-        "lastRunAtMs": 1775505704436,
+        "nextRunAtMs": 1775534504426,
+        "lastRunAtMs": 1775520104433,
         "lastStatus": "ok",
-        "lastDurationMs": 83027,
+        "lastDurationMs": 81008,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -487,7 +486,7 @@ window.__DASHBOARD_DATA__ = {
         "lastRunStatus": "error",
         "lastDeliveryStatus": "unknown",
         "lastErrorReason": "rate_limit",
-        "lastError": "Error: All models failed (2): minimax-portal/MiniMax-M2.7: ⚠️ API rate limit reached. Please try again later. (rate_limit) | openai-codex/gpt-5.4: OAuth token refresh failed for openai-codex: Failed to refresh OAuth token for openai-codex. Please try again or re-authenticate. (auth)"
+        "runningAtMs": 1775523600003
       },
       "delivery": {
         "mode": "announce",
@@ -502,7 +501,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1775498602208,
+      "updatedAtMs": 1775516488794,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -517,10 +516,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775516400000,
-        "lastRunAtMs": 1775498473377,
+        "nextRunAtMs": 1775538000000,
+        "lastRunAtMs": 1775516400011,
         "lastStatus": "ok",
-        "lastDurationMs": 128831,
+        "lastDurationMs": 88783,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -855,7 +854,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "早间播报",
       "enabled": true,
       "createdAtMs": 1772110778813,
-      "updatedAtMs": 1775498644306,
+      "updatedAtMs": 1775516610279,
       "schedule": {
         "expr": "0 7 * * *",
         "kind": "cron",
@@ -873,11 +872,11 @@ window.__DASHBOARD_DATA__ = {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1775516400000,
-        "lastRunAtMs": 1775498602208,
+        "nextRunAtMs": 1775602800000,
+        "lastRunAtMs": 1775516488794,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 42098,
+        "lastDurationMs": 121485,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -1035,7 +1034,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1775496562312,
+      "updatedAtMs": 1775512883895,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1054,15 +1053,14 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775512851018,
-        "lastRunAtMs": 1775496502293,
-        "lastRunStatus": "error",
-        "lastStatus": "error",
-        "lastDurationMs": 60019,
-        "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 20,
-        "lastErrorReason": "timeout",
-        "runningAtMs": 1775512851021
+        "nextRunAtMs": 1775534451018,
+        "lastRunAtMs": 1775512851025,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 32870,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
       }
     },
     {
@@ -1098,7 +1096,7 @@ window.__DASHBOARD_DATA__ = {
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 2,
         "lastErrorReason": "rate_limit",
-        "lastError": "Error: All models failed (2): minimax-portal/MiniMax-M2.7: Provider minimax-portal is in cooldown (all profiles unavailable) (rate_limit) | openai-codex/gpt-5.4: OAuth token refresh failed for openai-codex: Failed to refresh OAuth token for openai-codex. Please try again or re-authenticate. (auth)"
+        "runningAtMs": 1775523600003
       }
     },
     {

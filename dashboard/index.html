@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-04-08T01:04:58.691Z",
+  "generated": "2026-04-08T04:01:21.209Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -387,7 +387,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Morning Poem",
       "enabled": true,
       "createdAtMs": 1771231543733,
-      "updatedAtMs": 1775525973181,
+      "updatedAtMs": 1775612400023,
       "schedule": {
         "kind": "cron",
         "expr": "35 1 * * *",
@@ -402,14 +402,15 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775612100000,
-        "lastRunAtMs": 1775525700007,
-        "lastStatus": "ok",
-        "lastDurationMs": 273174,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
+        "nextRunAtMs": 1775698500000,
+        "lastRunAtMs": 1775612100009,
+        "lastStatus": "error",
+        "lastDurationMs": 300014,
+        "consecutiveErrors": 1,
+        "lastRunStatus": "error",
+        "lastDeliveryStatus": "unknown",
+        "lastError": "cron: job execution timed out",
+        "lastErrorReason": "timeout"
       },
       "delivery": {
         "mode": "announce",
@@ -462,7 +463,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Scanner",
       "enabled": true,
       "createdAtMs": 1771231556226,
-      "updatedAtMs": 1775567033013,
+      "updatedAtMs": 1775610273024,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,13 * * *",
@@ -477,15 +478,14 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775610000000,
-        "lastRunAtMs": 1775566800007,
+        "nextRunAtMs": 1775653200000,
+        "lastRunAtMs": 1775610000006,
         "lastStatus": "ok",
-        "lastDurationMs": 233006,
+        "lastDurationMs": 273018,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
-        "lastDelivered": true,
-        "runningAtMs": 1775610000001
+        "lastDelivered": true
       },
       "delivery": {
         "mode": "announce",
@@ -674,7 +674,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Goal Agent Morning Report",
       "enabled": true,
       "createdAtMs": 1771352624528,
-      "updatedAtMs": 1775525435178,
+      "updatedAtMs": 1775611825800,
       "schedule": {
         "kind": "cron",
         "expr": "30 9 * * *",
@@ -687,10 +687,10 @@ window.__DASHBOARD_DATA__ = {
         "text": "运行 Goal Agent 早间汇报。\n\n步骤：\n1) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/goal.md（目标）\n2) 读取 /Users/leo/.openclaw/workspace/skills/goal-agent/tasks.json（进度）\n3) 生成简洁的中文进度汇报：\n   - 目标是什么\n   - 进度百分比\n   - 最近完成的任务 + 学到的关键点\n   - 下一步要做什么\n   - 是否有需要 Leo 确认的事项（如果有，列出选项）\n4) 发送给 Leo\n\n输出格式示例：\n## 🎯 目标进度汇报\n**目标**: ...\n**进度**: 3/8 完成\n\n### ✅ 最近完成\n- 任务A - 学到了...\n\n### 🔜 下一步\n- 任务B\n\n### ⚠️ 待确认\n- 问题描述\n  选项: A / B / C\n\n#Goal #Progress"
       },
       "state": {
-        "nextRunAtMs": 1775611800000,
-        "lastRunAtMs": 1775525400009,
+        "nextRunAtMs": 1775698200000,
+        "lastRunAtMs": 1775611800009,
         "lastStatus": "ok",
-        "lastDurationMs": 35169,
+        "lastDurationMs": 25791,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "not-requested"
@@ -740,7 +740,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Podcast Daily Digest",
       "enabled": true,
       "createdAtMs": 1771868190908,
-      "updatedAtMs": 1775527313653,
+      "updatedAtMs": 1775613756459,
       "schedule": {
         "kind": "cron",
         "expr": "0 10 * * *",
@@ -761,11 +761,11 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1775613600000,
-        "lastRunAtMs": 1775527200008,
+        "nextRunAtMs": 1775700000000,
+        "lastRunAtMs": 1775613600007,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 113645,
+        "lastDurationMs": 156452,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -778,7 +778,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "OpenClaw X & AI Daily",
       "enabled": true,
       "createdAtMs": 1771996842470,
-      "updatedAtMs": 1775528131771,
+      "updatedAtMs": 1775614506632,
       "schedule": {
         "kind": "cron",
         "expr": "10 10 * * *",
@@ -799,11 +799,11 @@ window.__DASHBOARD_DATA__ = {
         "bestEffort": true
       },
       "state": {
-        "nextRunAtMs": 1775614200000,
-        "lastRunAtMs": 1775527800007,
+        "nextRunAtMs": 1775700600000,
+        "lastRunAtMs": 1775614200006,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 331764,
+        "lastDurationMs": 306626,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -1059,7 +1059,7 @@ window.__DASHBOARD_DATA__ = {
         "lastDeliveryStatus": "not-requested",
         "consecutiveErrors": 4,
         "lastErrorReason": "timeout",
-        "lastError": "cron: job execution timed out"
+        "runningAtMs": 1775620851023
       }
     },
     {
@@ -1069,7 +1069,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711342198,
-      "updatedAtMs": 1775567068849,
+      "updatedAtMs": 1775610303693,
       "schedule": {
         "kind": "cron",
         "expr": "0 9,21 * * *",
@@ -1087,15 +1087,14 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775610000000,
-        "lastRunAtMs": 1775567033013,
+        "nextRunAtMs": 1775653200000,
+        "lastRunAtMs": 1775610273024,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 35836,
+        "lastDurationMs": 30669,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1775610000001
+        "lastDelivered": false
       }
     },
     {

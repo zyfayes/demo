@@ -342,7 +342,7 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-04-07T22:01:13.797Z",
+  "generated": "2026-04-08T01:04:58.691Z",
   "cronJobs": [
     {
       "id": "27b15583-8108-4db8-b5d6-6399b31d078c",
@@ -350,7 +350,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "AI Daily Digest",
       "enabled": true,
       "createdAtMs": 1771231536391,
-      "updatedAtMs": 1775522172194,
+      "updatedAtMs": 1775608573375,
       "schedule": {
         "kind": "cron",
         "expr": "30 0 * * *",
@@ -365,10 +365,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775608200000,
-        "lastRunAtMs": 1775521800007,
+        "nextRunAtMs": 1775694600000,
+        "lastRunAtMs": 1775608200008,
         "lastStatus": "ok",
-        "lastDurationMs": 372187,
+        "lastDurationMs": 373367,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -424,7 +424,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Alva Signal Bridge",
       "enabled": true,
       "createdAtMs": 1771231548569,
-      "updatedAtMs": 1775592157579,
+      "updatedAtMs": 1775606588736,
       "schedule": {
         "kind": "cron",
         "expr": "0 */4 * * *",
@@ -440,10 +440,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775606504426,
-        "lastRunAtMs": 1775592146415,
+        "nextRunAtMs": 1775620904426,
+        "lastRunAtMs": 1775606504432,
         "lastStatus": "ok",
-        "lastDurationMs": 11164,
+        "lastDurationMs": 84304,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -484,7 +484,8 @@ window.__DASHBOARD_DATA__ = {
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
-        "lastDelivered": true
+        "lastDelivered": true,
+        "runningAtMs": 1775610000001
       },
       "delivery": {
         "mode": "announce",
@@ -499,7 +500,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Polymarket Position Monitor",
       "enabled": true,
       "createdAtMs": 1771231563664,
-      "updatedAtMs": 1775581292968,
+      "updatedAtMs": 1775602897654,
       "schedule": {
         "kind": "cron",
         "expr": "0 1,7,13,19 * * *",
@@ -514,10 +515,10 @@ window.__DASHBOARD_DATA__ = {
         "model": "minimax-portal/MiniMax-M2.7"
       },
       "state": {
-        "nextRunAtMs": 1775602800000,
-        "lastRunAtMs": 1775581200010,
+        "nextRunAtMs": 1775624400000,
+        "lastRunAtMs": 1775602800008,
         "lastStatus": "ok",
-        "lastDurationMs": 92958,
+        "lastDurationMs": 97646,
         "consecutiveErrors": 0,
         "lastRunStatus": "ok",
         "lastDeliveryStatus": "delivered",
@@ -851,7 +852,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "早间播报",
       "enabled": true,
       "createdAtMs": 1772110778813,
-      "updatedAtMs": 1775516610279,
+      "updatedAtMs": 1775602989258,
       "schedule": {
         "expr": "0 7 * * *",
         "kind": "cron",
@@ -869,11 +870,11 @@ window.__DASHBOARD_DATA__ = {
         "mode": "announce"
       },
       "state": {
-        "nextRunAtMs": 1775602800000,
-        "lastRunAtMs": 1775516488794,
+        "nextRunAtMs": 1775689200000,
+        "lastRunAtMs": 1775602897654,
         "lastRunStatus": "ok",
         "lastStatus": "ok",
-        "lastDurationMs": 121485,
+        "lastDurationMs": 91604,
         "lastDeliveryStatus": "delivered",
         "consecutiveErrors": 0,
         "lastDelivered": true
@@ -1031,7 +1032,7 @@ window.__DASHBOARD_DATA__ = {
       "name": "Dashboard Refresh",
       "enabled": true,
       "createdAtMs": 1772711341137,
-      "updatedAtMs": 1775577711038,
+      "updatedAtMs": 1775599311034,
       "schedule": {
         "kind": "cron",
         "expr": "0 */6 * * *",
@@ -1050,15 +1051,15 @@ window.__DASHBOARD_DATA__ = {
         "mode": "none"
       },
       "state": {
-        "nextRunAtMs": 1775599251018,
-        "lastRunAtMs": 1775577651028,
+        "nextRunAtMs": 1775620851018,
+        "lastRunAtMs": 1775599251024,
         "lastRunStatus": "error",
         "lastStatus": "error",
         "lastDurationMs": 60010,
         "lastDeliveryStatus": "not-requested",
-        "consecutiveErrors": 3,
+        "consecutiveErrors": 4,
         "lastErrorReason": "timeout",
-        "runningAtMs": 1775599251020
+        "lastError": "cron: job execution timed out"
       }
     },
     {
@@ -1093,7 +1094,8 @@ window.__DASHBOARD_DATA__ = {
         "lastDurationMs": 35836,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false
+        "lastDelivered": false,
+        "runningAtMs": 1775610000001
       }
     },
     {

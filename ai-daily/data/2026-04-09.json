@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-09",
+  "summary": "本周 AI 圈迎来真正的大新闻——Anthropic 的 Claude Mythos 强到不敢发，直接带动了整个安全 AI 的讨论热潮；Meta 终于出了 Muse Spark，OpenAI 的 Harness Engineering 论文罕见地被传阅；国产GLM-5.1 以 MIT 许可证正面硬刚闭源旗舰。这不是「AI 又有新模型」的发版复读，而是安全、能力边界、Agent 基础设施三条主线同时拉响警报的一周。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic Claude Mythos：强到不敢发，Project Glasswing 开启安全 AI 新范式",
+      "url": "https://www.anthropic.com/glasswing",
+      "source": "Anthropic / HN",
+      "tldr": "Claude Mythos 在漏洞发现任务上超过了绝大多数人类安全研究员，强到 Anthropic 决定不公开发布，转而启动 Project Glasswing——联合 40 家公司，让防御方先打补丁。这 GPT-2 以来首个因安全理由被捂住的模型，Gary Marcus 称之为「possibly terrifying」。本质问题是：安全能力和通用能力越来越难分开，强 AI 安全研究本身就可能成为攻击工具。",
+      "tags": ["安全", "AI管控", "Anthropic", "零日漏洞"]
+    },
+    {
+      "num": 2,
+      "title": "GLM-5.1 开源：7540 亿参数、20 万上下文、MIT 许可证，正面碾压闭源旗舰",
+      "url": "https://venturebeat.com/technology/ai-joins-the-8-hour-work-day-as-glm-ships-5-1-open-source-llm-beating-opus-4",
+      "source": "VentureBeat / HN",
+      "tldr": "智谱 GLM-5.1 在 SWE-Bench Pro 上击败了 Claude Opus 4.6 和 GPT-5.4，20 万 token 上下文窗口且没有 plateau 效应。更重要的是 MIT 许可证——任何人可用、可修改、可商用。Simon Willison 评价这是目前最大的开源可商用模型之一，挑战了「闭源能力护城河」的叙事。",
+      "tags": ["开源", "GLM", "编程", "长上下文", "benchmark"]
+    },
+    {
+      "num": 3,
+      "title": "Muse Spark：Meta 超级智能实验室首作，专注个人超级智能",
+      "url": "https://ai.meta.com/blog/introducing-muse-spark-msl/",
+      "source": "Meta / HN",
+      "tldr": "Meta 终于从 Llama 4 跳出来，Muse Spark 是其超级智能实验室的首个发布——定位「个人超级智能」，非开源走 API 路线，目前仅限 private preview，可在 meta.ai 体验。评测显示整体能力强于 Meta 此前所有模型，但编程能力仍落后于竞争对手。Simon Willison 指出这是 Meta 时隔一年才发的新模型，策略明显转向托管式 AI 而非开源权重。",
+      "tags": ["Meta", "Muse Spark", "闭源API", "个人AI"]
+    },
+    {
+      "num": 4,
+      "title": "Claude Managed Agents 公测：Anthropic 亲自下场做 Agent 基础设施",
+      "url": "https://claude.com/blog/claude-managed-agents",
+      "source": "Anthropic / Twitter",
+      "tldr": "Anthropic 发布 Claude Managed Agents，把沙箱、状态管理、权限、链路追踪等基础设施全部封装好，开发者直接调用 API 构建生产级 Agent，不需要再花几个月搭基建。中文 Twitter 博主 @dotey 评价：「以前搭一个生产级 Agent，光基础设施就要几个月，现在全交给 Anthropic」。这是继 OpenAI 之后，又一家亲自下场做 Agent 托管的 Big Tech。",
+      "tags": ["Agent", "Anthropic", "基础设施", "API"]
+    },
+    {
+      "num": 5,
+      "title": "OpenAI 首次披露 Harness Engineering：千亿 Token 训练基础设施内幕",
+      "url": "https://www.latent.space/p/harness-eng",
+      "source": "Latent Space / HN",
+      "tldr": "OpenAI Frontier 工程师 Ryan Lopopolo 首次披露了 OpenAI 的 Dark Factory 训练模式——每天消耗 10 亿 Token、100 万行代码全部由 AI 生成、零人类代码审核。核心概念 Harness Engineering 不追求模型性能，而是让驾驭模型的系统环境更专业，本质是工程化的 AI 训练方法论。这与中科院白硕教授提到的 Harness Engineering 是 2026 年大模型重要方向完全吻合。",
+      "tags": ["OpenAI", "训练", "Harness Engineering", "基础设施"]
+    },
+    {
+      "num": 6,
+      "title": "RAGEN-2：Agent 强化学习中的「模板坍缩」——比 Loss 崩溃更隐蔽的失败",
+      "url": "https://huggingface.co/papers/2604.06268",
+      "source": "HuggingFace Papers",
+      "tldr": "RAGEN-2 揭示了 Agent 强化学习训练中一个此前被忽视的失败模式：即使熵稳定、Loss 不崩，模型也可能依赖「固定模板」——输出看起来多样化但实际对任何输入都无关。这种「模板坍缩」在传统指标里完全不可见，但会导致 Agent 在真实任务中完全失效。20  upvotes，Agent 训练必读。",
+      "tags": ["Agent", "强化学习", "论文", "推理"]
+    },
+    {
+      "num": 7,
+      "title": "LLM 推理的「深度天花板」：为什么 Chain-of-Thought 监控越来越不可靠",
+      "url": "https://huggingface.co/papers/2604.06427",
+      "source": "HuggingFace Papers",
+      "tldr": "这篇论文测试了 LLM 在单次前向传播中完成多步隐式规划的能力极限——即 Chain-of-Thought 监控的有效性前提。结论反直觉：模型越来越强，隐式推理能力也越来越强，基于「模型无法在隐表示中有效推理」的安全假设正在被动摇。非常值得安全研究者和对齐研究者细读。",
+      "tags": ["LLM", "推理", "对齐", "安全", "论文"]
+    },
+    {
+      "num": 8,
+      "title": "AI Agent 包装的安全陷阱：Packages all the way down, agents all the way up",
+      "url": "https://nesbitt.io/2026/04/08/package-security-problems-for-ai-agents.html",
+      "source": "NESBITT.IO",
+      "tldr": "开发者 Nesbitt 发出警告：当前 AI Agent 依赖的 npm/pypi 包层层嵌套，任何一层被污染都可以劫持 Agent 行为。更可怕的是，Agent 运行时权限远大于传统软件（访问邮箱、日历、GitHub），被攻击后影响面远超普通应用。这篇博客简短但直击要害，是本周最被低估的安全阅读。",
+      "tags": ["安全", "Agent", "供应链", "npm"]
+    },
+    {
+      "num": 9,
+      "title": "国产大模型加速 Agent 化：DeepSeek 专家模式上线，Qwen 3.6-Plus 发布",
+      "url": "http://finance.eastmoney.com/a/202604083698396863.html",
+      "source": "每日经济新闻",
+      "tldr": "阿里 Qwen 3.6-Plus 本月初发布，DeepSeek 4月8日上线「专家模式」——首次在产品端引入模式分层设计。IDC 中国研究总监指出，2026 年 Agent 对 Token 的消耗正以百倍、千倍速度狂飙，国产大模型的主战场已从「刷榜」全面转向 Agent 能力。Harness Engineering 概念在国内也开始被关注。",
+      "tags": ["国产AI", "DeepSeek", "Qwen", "Agent"]
+    },
+    {
+      "num": 10,
+      "title": "OpenClaw 2026.4.9：记忆梦境（Dreaming）功能加入，REM backfill + 日记时间线 UI",
+      "url": "https://x.com/openclaw/status/2042072722902077938",
+      "source": "OpenClaw / Twitter",
+      "tldr": "OpenClaw 刚发布 2026.4.9，最大亮点是「Dreaming」功能——Agent 在非活跃时间会自动回填 REM 记忆并生成日记时间线 UI，配合 SSRF 和 node exec injection 的安全加固，以及 Android pairing 大改版。pmarca 发推说当前前沿模型体验成本每天 300-1000 美元，未来目标是每月 20 美元——OpenClaw 正在往这个方向做基础设施层。",
+      "tags": ["OpenClaw", "Agent框架", "记忆系统", "基础设施"]
+    }
+  ]
+}

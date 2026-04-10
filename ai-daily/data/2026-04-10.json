@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-10",
+  "summary": "Meta 终于出手了——Muse Spark 炸场，被华尔街称为「Zuckerberg 等了多年的模型」；Anthropic ARR 冲到 300 亿美元反超 OpenAI，但 Claude Mythos 因「太会找漏洞」直接不对公众开放——这比任何 benchmark 都有说服力。另一边，Qwen 核心技术负责人出走，国产大模型格局出现裂缝。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Meta 超级智能实验室发布 Muse Spark，剑指个人超级智能",
+      "url": "https://ai.meta.com/blog/introducing-muse-spark-msl/",
+      "source": "Meta AI Blog",
+      "tldr": "Meta 全新超级智能实验室发布了 Muse Spark，是 Meta 继 Llama 4 之后首个真正意义上的新一代模型。定位「个人超级智能」，将在 WhatsApp、Instagram、Facebook 和 Meta AI 眼镜全面铺开。华尔街分析师用「Zuckerberg 等了多年的模型」来形容它的影响力——这是目前最值得亲自上手测的模型之一。",
+      "tags": ["模型发布", "Meta", "多模态"]
+    },
+    {
+      "num": 2,
+      "title": "Anthropic ARR 突破 300 亿美元，4 个月翻 3 倍反超 OpenAI",
+      "url": "https://www.toutiao.com/w/1861949427462154/",
+      "source": "AI 科技日报",
+      "tldr": "Anthropic 年化收入从 90 亿美元飙至 300 亿美元，仅用 4 个月。与此同时估值达 3800 亿美元，与谷歌、博通签署了 3.5GW TPU 算力大单，2027 年起陆续上线。Claude 系列商业化速度已经超过所有人的预期。",
+      "tags": ["商业化", "Anthropic", "行业格局"]
+    },
+    {
+      "num": 3,
+      "title": "Claude Mythos 太擅长找漏洞，Anthropic 决定不对公众开放",
+      "url": "https://red.anthropic.com/2026/mythos-preview/",
+      "source": "Anthropic Frontier Red Team",
+      "tldr": "Anthropic 的 Claude Mythos 在红队测试中展现出异常强大的漏洞发现与利用能力，以至于他们决定不公开发布，转而启动 Project Glasswing，用它来帮助保护全球最关键的软件基础设施。Gary Marcus 连发两篇文章质疑这个决策——但无论如何，这个信号本身就说明 Mythos 的能力已经超出当前安全框架的容错范围。",
+      "tags": ["安全", "Anthropic", "前沿模型"]
+    },
+    {
+      "num": 4,
+      "title": "Qwen 核心技术负责人林俊旸等核心成员同日宣布离职",
+      "url": "https://www.toutiao.com/w/1861949427462154/",
+      "source": "AI 科技日报",
+      "tldr": "阿里 Qwen 团队震荡：技术负责人林俊旸等核心成员同日宣布离职，垂直整合团队面临拆分调整。这是国产大模型阵营目前为止最重量级的一次人才流失，Qwen 接下来的技术路线和开源节奏都可能受影响。",
+      "tags": ["国产大模型", "人才", "阿里"]
+    },
+    {
+      "num": 5,
+      "title": "EverMind 团队实现 1 亿 Token 记忆能力，性能衰减不足 9%",
+      "url": "https://www.toutiao.com/w/1861949427462154/",
+      "source": "AI 科技日报",
+      "tldr": "长程记忆的铁三角困境（容量越大衰减越严重）被打破：EverMind 团队实现了 1 亿 Token 的记忆能力，且性能衰减控制在 9% 以内。这是 context window 竞赛之后，下一代记忆架构的重要方向。",
+      "tags": ["记忆架构", "长上下文", "技术突破"]
+    },
+    {
+      "num": 6,
+      "title": "OpenClaw 2026.4.9：REM backfill + 记忆时间线 UI，Agent 现在会「做梦」",
+      "url": "https://x.com/openclaw/status/2042072722902077938",
+      "source": "OpenClaw Twitter",
+      "tldr": "OpenClaw 发布了 2026.4.9 版本，新增 REM backfill + diary timeline UI，Agent 现在会「做梦」——把对话历史结构化成记忆网络。同时增加了 SSRF + node exec injection 硬化，安全性大幅提升。NVIDIA 也官方宣布在 Jetson 平台上支持 OpenClaw 部署到边缘设备。",
+      "tags": ["OpenClaw", "Agent", "记忆系统"]
+    },
+    {
+      "num": 7,
+      "title": "Vercel 插件在 Claude Code 里要读取你的所有 Prompt",
+      "url": "https://akshaychugh.xyz/writings/png/vercel-plugin-telemetry",
+      "source": "Hacker News",
+      "tldr": "Vercel 官方 Claude Code 插件被发现会收集用户的完整 prompt 内容——包括你正在写的代码、你让它做的事。HN 上 252 分，102 条评论。开发者社区反应强烈，这是 AI 编程工具里又一次典型的「增值功能」vs「隐私」的正面冲突。如果你在用这个插件，立刻检查权限设置。",
+      "tags": ["隐私", "Claude Code", "安全"]
+    },
+    {
+      "num": 8,
+      "title": "Google 推出 Google Skills：免费 AI 编程学习平台，含证书",
+      "url": "https://x.com/TheAIColony/status/2041900205033787865",
+      "source": "Twitter/TheAIColony",
+      "tldr": "Google 正式推出 Google Skills，面向零基础用户，提供 AI、编程和技术类课程并颁发证书。瞄准的是 Coursera/udemy 的市场，用免费 + 证书降低 AI 学习门槛。内容质量待验证，但 Google 的分发能力不可小觑。",
+      "tags": ["AI教育", "Google", "学习平台"]
+    },
+    {
+      "num": 9,
+      "title": "推理模型「过度思考」问题：CoT 剪枝研究揭示根源",
+      "url": "https://huggingface.co/papers/2604.05643",
+      "source": "HuggingFace Papers",
+      "tldr": "通过 RL 扩展 CoT 能提升推理能力，但也会产生「过度思考」——模型生成大量冗余中间内容。来自图结构的新分析框架指出：核心问题是 Indiscriminate Reflection（无差别反射）和 Targeted Blindspots（定向盲区）。这篇 paper 给出了一个清晰诊断，值得在做推理优化的团队关注。",
+      "tags": ["推理优化", "RL", "CoT"]
+    },
+    {
+      "num": 10,
+      "title": "Qualixar OS：首个通用 AI Agent 编排操作系统",
+      "url": "https://huggingface.co/papers/2604.06392",
+      "source": "HuggingFace Papers",
+      "tldr": "Qualixar OS 是首个应用层操作系统，支持 10 个 LLM 提供商、8+ Agent 框架、7 种传输协议。它定义了 12 种多 Agent 拓扑（grid、forest、mesh、maker 等），并用 LLM 驱动的 Forge 引擎自动设计团队组合。这代表了多 Agent 系统从「工具拼装」到「操作系统级编排」的范式转移。",
+      "tags": ["Agent框架", "多Agent", "基础设施"]
+    }
+  ]
+}

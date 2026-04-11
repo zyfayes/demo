@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-11",
+  "summary": "本周最值得关注的是阿里巴巴「Happy Horse」视频生成模型空降全球榜首——又一次中国AI的突然袭击，同时 Claude Mythos 的发布在技术圈引发了一场关于「未发布模型」是否构成实质性突破的热烈争论。Anthropic 正从纯模型公司向平台公司迁移，Claude for Word 和 Managed Agents 的组合拳预示着 AI 原生化的大趋势。开源社区也没闲着：有人逆向了 Google 的 SynthID 水印，有人把 AI 写入了 Linux 内核开发规范——这些才是真正有意思的动静。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "阿里「Happy Horse」视频生成模型空降全球榜首",
+      "url": "https://www.bloomberg.com/news/articles/2026-04-10/stealth-alibaba-video-ai-model-tops-global-ranking-on-debut",
+      "source": "Bloomberg",
+      "tldr": "阿里巴巴本周低调发布了一款名为「Happy Horse」的视频生成模型，上线即登顶全球排行榜，在中文 AI 社区引发病毒式传播。该模型的训练数据、参数量和技术细节均未公开，但实测效果已在多个 benchmark 上碾压同期竞品。这再次证明：中国 AI 团队的工程化速度和「静默发布」策略正在重塑全球 AI 竞争节奏。",
+      "tags": ["视频生成", "中国AI", "开源模型"]
+    },
+    {
+      "num": 2,
+      "title": "为什么我仍然选择 MCP 而不是 Skills",
+      "url": "https://david.coffee/i-still-prefer-mcp-over-skills/",
+      "source": "david.coffee",
+      "tldr": "一篇来自一线 AI 工程师的深度对比，MCP（Model Context Protocol）的可组合性、可调试性和生态广度在实际生产中仍明显优于各平台自推的 Skills 方案。作者用具体案例说明：当你在一个项目里需要同时对接 10+ 工具时，Skills 的碎片化和版本管理会让你痛不欲生。这篇文章在 HN 上引发了大量实战讨论，不是空谈，是真刀真枪的经验。",
+      "tags": ["MCP", "AI工程实践", "开发者工具"]
+    },
+    {
+      "num": 3,
+      "title": "Claude Mythos 系统卡深度解读",
+      "url": "https://thezvi.substack.com/p/claude-mythos-2-cybersecurity-and",
+      "source": "The Zvi Substack",
+      "tldr": "Anthropic 发布的 Claude Mythos 不是传统意义上的「模型发布」，而是一套能力开放策略。The Zvi 的第二篇深度解读聚焦在它对网络安全格局的潜在冲击：一个可以自主扫描漏洞、自动生成补丁的 AI 系统，直接威胁传统安全公司的商业模式。Gary Marcus 随后发文反驳，认为这种「未发布模型」的过度炒作损害了行业透明度。两篇合在一起看才是完整图景。",
+      "tags": ["Claude", "Anthropic", "AI安全", "争议讨论"]
+    },
+    {
+      "num": 4,
+      "title": "AI 参与 Linux 内核开发规范正式写入文档",
+      "url": "https://github.com/torvalds/linux/blob/master/Documentation/process/coding-assistants.rst",
+      "source": "Linux kernel GitHub",
+      "tldr": "Linus Torvalds 本人亲自推动，将 AI 编程助手的使用规范正式写入了 Linux 内核开发文档。这是开源世界最高权威对 AI 辅助代码审查的正式认可——不是用不用的问题，而是怎么用、谁能用、出了问题谁负责的问题。对于所有大型开源项目的治理模式来说，这是一个标志性事件。",
+      "tags": ["Linux", "开源", "AI工程实践"]
+    },
+    {
+      "num": 5,
+      "title": "Instant 1.0：面向 AI 编程应用的后端框架",
+      "url": "https://www.instantdb.com/essays/architecture",
+      "source": "InstantDB",
+      "tldr": "InstantDB 发布 1.0 版本，定位是「AI 编程应用的专用后端」。它的核心理念是：传统的数据库抽象层对 AI agent 的动态工具调用模式过于僵硬，Instant 1.0 通过 schema 无关的数据访问层和即时权限模型，让 AI agent 在运行时自主探索和操作数据。这代表了 AI Native 后端基础设施的一个新兴方向。",
+      "tags": ["AI Infra", "开发者工具", "数据库"]
+    },
+    {
+      "num": 6,
+      "title": "逆向 Gemini SynthID 水印：一次精彩的攻防演示",
+      "url": "https://github.com/aloshdenny/reverse-SynthID",
+      "source": "GitHub/aloshdenny",
+      "tldr": "一位工程师公开了对 Google Gemini SynthID 音频水印系统的完整逆向工程，包括检测逻辑、嵌入算法和绕过方法。这不是恶搞——这是对 AI 版权保护机制的一次严肃安全审计。在 AI 生成内容泛滥的当下，水印技术的脆弱性意味着平台方需要重新思考「可验证真实性」的实现路径。代码和论文一并公开，值得细读。",
+      "tags": ["AI安全", "水印技术", "开源研究"]
+    },
+    {
+      "num": 7,
+      "title": "Anthropic 工程博客：Claude Managed Agents 实践",
+      "url": "https://www.anthropic.com/news/managed-agents-launch",
+      "source": "Anthropic",
+      "tldr": "Anthropic 发布了关于 Claude Managed Agents 的工程博客，详细披露了他们在生产环境中运行 AI agent 的工具链设计、容错机制和成本优化策略。作者是亲历过真实规模部署的工程师，文章避开了常见的营销语言，直接讲他们踩过哪些坑、做了哪些 trade-off。对正在构建企业级 AI agent 的人来说，这是本周最有价值的参考资料之一。",
+      "tags": ["Claude", "Agent", "Anthropic", "工程实践"]
+    },
+    {
+      "num": 8,
+      "title": "Perplexity Computer 接入银行和信用卡",
+      "url": "https://x.com/AITechEchoes/status/2042598920581452141",
+      "source": "Twitter/X",
+      "tldr": "Perplexity Computer 在其桌面 agent 产品中新增了完整的银行账户和信用卡管理功能。这意味着 AI agent 的能力边界正在从「信息获取」向「财务执行」跃迁。整合券商、搞定银行账户，下一步是直接替用户下单交易——AI 个人理财助理的雏形已经清晰可见。当然，隐私和安全问题也随之放大十倍。",
+      "tags": ["Perplexity", "AI Agent", "金融科技"]
+    },
+    {
+      "num": 9,
+      "title": "2026：AI 世界模型与持续学习原型突破之年",
+      "url": "https://www.nextbigfuture.com/2026/04/2026-is-breakthrough-year-for-reliable-ai-world-models-and-continual-learning-prototypes.html",
+      "source": "NextBigFuture",
+      "tldr": "这篇分析指出 2026 年将成为 AI 世界模型（World Models）和持续学习（Continual Learning）从研究走向原型的关键节点。具身智能和实时物理仿真正在融合，Genie 类系统开始进入机器人训练流程。与传统的预训练+微调范式相比，持续学习允许模型在不遗忘旧知识的前提下学习新任务，这对边缘部署场景意义重大。",
+      "tags": ["世界模型", "具身智能", "技术趋势"]
+    },
+    {
+      "num": 10,
+      "title": "为什么我们沉迷于讲述 AI 恐怖故事",
+      "url": "https://www.quantamagazine.org/why-do-we-tell-ourselves-scary-stories-about-ai-20260410/",
+      "source": "Quanta Magazine",
+      "tldr": "Quanta Magazine 约稿多位认知科学家和 AI 研究者，从心理学和文化角度剖析为什么人类总是倾向于用末日叙事理解 AI 进步。这不是一篇反 AI 或支持 AI 的文章，而是认真分析「恐惧叙事」背后的认知偏见——它如何被媒体放大，如何影响政策制定，以及为什么技术社区自身的「AI 加速 vs AI 减速」争论本质上是同一恐惧的不同出口。",
+      "tags": ["AI哲学", "认知科学", "人文观察"]
+    }
+  ]
+}

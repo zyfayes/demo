@@ -8,7 +8,11 @@
       "url": "https://aisle.com/blog/ai-cybersecurity-after-mythos-the-jagged-frontier",
       "source": "Hacker News",
       "tldr": "Mythos 被曝发现史诗级漏洞后，研究者验证发现 Phi-4、Llama-3.2 等小模型同样能检测出相同漏洞，只是 prompting 方式不同。这对「只有顶级模型才能做安全研究」的叙事是当头一棒，也意味着 AI 网络安全工具的门槛远比想象中低。关键是任务分配：适合小模型的活就别浪费大模型配额。",
-      "tags": ["AI安全", "小模型", "网络安全"]
+      "tags": [
+        "AI安全",
+        "小模型",
+        "网络安全"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,12 @@
       "url": "https://twitter.com/cb_doge/status/2043353392853221811",
       "source": "Twitter / BridgeMind AI",
       "tldr": "BridgeMind AI 的 BridgeBench 测试显示，Claude Opus 4.6 编码任务准确率在数天内从 83.3% 跌至 68.3%，幻觉率飙升。整个 Reddit r/ClaudeAI 和 Twitter 圈都在讨论：Anthropic 是否主动压低了模型能力以控制成本？Peterg Gelzen 质问为何 Anthropic 要 nerf 自家模型，引发 190K 粉丝围观。这是闭源模型透明度问题的又一次集中爆发。",
-      "tags": ["Anthropic", "Claude", "模型质量", "透明度"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "模型质量",
+        "透明度"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +33,12 @@
       "url": "https://github.com/anthropics/claude-code/issues/45756",
       "source": "GitHub Issues",
       "tldr": "用户普遍反映 Claude Code 最新版在普通编程用量下，Pro Max 的 5 倍积分制配额在 1.5 小时内全部耗尽，而不是预期的整月额度。紧接着 Anthropic 悄悄将 cache TTL 从 1 小时缩短，大量用户发现 Claude Code 使用成本一夜之间暴涨。这是继缓存策略调整之后，又一次让开发者感受到成本不可预期的隐性变更。",
-      "tags": ["Claude Code", "Anthropic", "开发者体验", "成本"]
+      "tags": [
+        "Claude Code",
+        "Anthropic",
+        "开发者体验",
+        "成本"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +46,12 @@
       "url": "https://rdi.berkeley.edu/blog/trustworthy-benchmarks-cont/",
       "source": "Berkeley RDI",
       "tldr": "UC Berkeley 研究指出，当前主流 AI Agent 评测基准（GAIA、APPS 等）存在系统性利用漏洞：测试集泄露、benchmark overfitting、数据污染等问题导致模型跑分与真实任务表现严重脱节。更严峻的是，这种「作弊」在 paper 中不易被察觉，但在实际部署中会直接暴露。建议 Agent 开发者在评估时自建内部测试集，而非依赖公开榜单。",
-      "tags": ["AI Agent", "基准评测", "AI安全", "研究"]
+      "tags": [
+        "AI Agent",
+        "基准评测",
+        "AI安全",
+        "研究"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +59,11 @@
       "url": "https://247wallst.com/investing/2026/04/12/meta-platforms-finally-releases-muse-spark-is-the-ai-model-worth-the-wait/",
       "source": "247 Wall St",
       "tldr": "Meta 终于发布了 Muse Spark，这是其 Meta Superintelligence Lab 成立一年多以来的首款产品，也是 Meta 一年多来首次发布重大 AI 模型。业界普遍认为这是 Meta 正面挑战 GPT-5 和 Gemini 的信号，具体能力评测尚未完全公开，但从发布时间节点和内部定位来看，这不会是又一个平庸之作。",
-      "tags": ["Meta", "开源模型", "大模型发布"]
+      "tags": [
+        "Meta",
+        "开源模型",
+        "大模型发布"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +71,11 @@
       "url": "https://garymarcus.substack.com/p/the-biggest-advance-in-ai-since-the",
       "source": "Gary Marcus Substack",
       "tldr": "神经符号 AI 的老将 Gary Marcus 罕见地给出了积极评价，认为 Claude Code 代表了自 LLM 以来 AI 领域最重要的进展。他指出 Claude Code 真正将 AI 融入了真实工作流，而不是停留在 demo 层面。Marcus 还预告了第二篇文章，专门讨论为什么 neurosymbolic AI 终于有了更多正面证据。",
-      "tags": ["Claude Code", "AI Agent", "观点"]
+      "tags": [
+        "Claude Code",
+        "AI Agent",
+        "观点"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +83,11 @@
       "url": "https://x.com/openclaw/status/2043132528094036332",
       "source": "Twitter",
       "tldr": "OpenClaw 本周连发两个版本：4.10 加入 Active Memory 插件、MLX 本地 Talk 模式、Codex app-server harness；4.11 则专注稳定性，修复了 safer provider transport/routing、subagent 可靠性、Slack/WhatsApp/Telegram/Matrix 大量 bug。两个版本合计解决了大量技术债，值得立即升级。",
-      "tags": ["OpenClaw", "AI工具", "版本更新"]
+      "tags": [
+        "OpenClaw",
+        "AI工具",
+        "版本更新"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +95,11 @@
       "url": "https://huggingface.co/papers/2604.08523",
       "source": "HuggingFace Papers",
       "tldr": "该论文推出 ClawBench 评测框架，包含 153 项覆盖 144 个真实平台的日常任务（购物、预约、投简历等），专门测试 AI Agent 在真实互联网环境中的可用性。242 个 upvotes 反映社区对这类「接地气」评测的强烈需求。当前主流 Agent 在该基准上表现远未饱和，是今年 Agent 能力的重要参照系。",
-      "tags": ["AI Agent", "评测基准", "研究"]
+      "tags": [
+        "AI Agent",
+        "评测基准",
+        "研究"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +107,11 @@
       "url": "https://x.com/const_reborn/status/2043254173651579264",
       "source": "Twitter",
       "tldr": "一名独立研究者用 AI Agent 从零构建了专用子网络，仅用 2 周时间训练，就在任务表现上超越了参数量相近的 SOTA 4B 模型，并顺手把方法和结果写成论文发了出去。这印证了一个趋势：AI 驱动的 AI 研究迭代速度正在指数级提升，「一个人+AI Agent」做出可发表成果的案例会越来越常见。",
-      "tags": ["AI Agent", "开源", "研究突破"]
+      "tags": [
+        "AI Agent",
+        "开源",
+        "研究突破"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +119,18 @@
       "url": "https://simonwillison.net/2026/Apr/11/sqlite/#atom-everything",
       "source": "Simon Willison",
       "tldr": "SQLite 3.53.0 是一个重大版本，包含了大量累积改进。最值得关注的是 ALTER TABLE 现在可以直接添加和删除 NOT NULL 和 CHECK 约束，而无需重建整张表。Simon Willison 还同步发布了 SQLite Query Result Formatter 在线演示工具，用 WASM 在浏览器里格式化 SQL 结果。这个改进让 SQLite 在 schema 演进上终于接近现代数据库的体验。",
-      "tags": ["SQLite", "开发者工具", "开源"]
+      "tags": [
+        "SQLite",
+        "开发者工具",
+        "开源"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "",
+  "podcastTitle": "AI 日报播客版 2026-04-13",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastUrl": "",
+  "podcastFailed": true,
+  "podcastError": "MiniMax TTS usage limit exceeded"
 }

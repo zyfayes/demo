@@ -342,82 +342,8 @@ function cronAction(id, action) {
 
 // ─── Init ───
 window.__DASHBOARD_DATA__ = {
-  "generated": "2026-04-13T13:06:12.255Z",
+  "generated": "2026-04-13T16:01:14.111Z",
   "cronJobs": [
-    {
-      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
-      "agentId": "main",
-      "name": "Polymarket Scanner",
-      "enabled": true,
-      "createdAtMs": 1771231556226,
-      "updatedAtMs": 1776042424586,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 1,13 * * *",
-        "tz": "UTC"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n3. 🐋 跑鲸鱼追踪：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/scanner.mjs 2>/dev/null\n```\n解析 JSON 输出中的 `strategies.whaleTracker`，提取 `whales`（按 totalUsd 排序的大户）和 `watchlistAlerts`（watchlist 钱包的新动作）。\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n### 🐋 鲸鱼动态（新板块，放在最后）\n从 scanner.mjs 输出提取，格式：\n```\n🐋 鲸鱼动态（过去4h）\n\n[鲸鱼名] | 历史利润 $XXk | 胜率 XX% | N场\n→ $XXk [BUY/SELL] [YES/NO] [市场标题](url) @ $0.XX\n\n[如有 watchlist alerts]\n👀 Watchlist 追踪：\n- [鲸鱼名] [BUY/SELL] $XXX [市场标题]\n```\n\n只展示 totalUsd ≥ $5k 的鲸鱼，或有 watchlist alerts 的。如果鲸鱼数据为空或全部 < $5k，省略此板块。\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选且无鲸鱼动态 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个 | 🐋 鲸鱼N条 watchlist M条`",
-        "timeoutSeconds": 720,
-        "model": "minimax-portal/MiniMax-M2.7"
-      },
-      "state": {
-        "nextRunAtMs": 1776085200000,
-        "lastRunAtMs": 1776042000006,
-        "lastStatus": "ok",
-        "lastDurationMs": 424580,
-        "consecutiveErrors": 0,
-        "lastRunStatus": "ok",
-        "lastDeliveryStatus": "delivered",
-        "lastDelivered": true,
-        "runningAtMs": 1776085200008
-      },
-      "delivery": {
-        "mode": "announce",
-        "channel": "discord",
-        "to": "channel:1475153843707707412",
-        "bestEffort": true
-      }
-    },
-    {
-      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
-      "agentId": "main",
-      "sessionKey": "agent:main:discord:channel:1479010527446569012",
-      "name": "Dashboard Refresh",
-      "enabled": true,
-      "createdAtMs": 1772711342198,
-      "updatedAtMs": 1776042457771,
-      "schedule": {
-        "kind": "cron",
-        "expr": "0 9,21 * * *",
-        "tz": "Asia/Shanghai"
-      },
-      "sessionTarget": "isolated",
-      "wakeMode": "now",
-      "payload": {
-        "kind": "agentTurn",
-        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
-        "model": "minimax-portal/MiniMax-M2.7",
-        "timeoutSeconds": 60
-      },
-      "delivery": {
-        "mode": "none"
-      },
-      "state": {
-        "nextRunAtMs": 1776085200000,
-        "lastRunAtMs": 1776042424586,
-        "lastRunStatus": "ok",
-        "lastStatus": "ok",
-        "lastDurationMs": 33185,
-        "lastDeliveryStatus": "not-delivered",
-        "consecutiveErrors": 0,
-        "lastDelivered": false,
-        "runningAtMs": 1776085537978
-      }
-    },
     {
       "id": "10f55d04-6e56-4a08-a1a9-6329a47a100f",
       "agentId": "main",
@@ -451,7 +377,8 @@ window.__DASHBOARD_DATA__ = {
         "lastDurationMs": 30099,
         "lastDeliveryStatus": "not-delivered",
         "consecutiveErrors": 0,
-        "lastDelivered": false
+        "lastDelivered": false,
+        "runningAtMs": 1776096051030
       }
     },
     {
@@ -846,6 +773,79 @@ window.__DASHBOARD_DATA__ = {
         "channel": "discord",
         "to": "channel:1475150686843830505",
         "bestEffort": true
+      }
+    },
+    {
+      "id": "63241a70-30ac-4090-94bb-5f6cc7a1c056",
+      "agentId": "main",
+      "name": "Polymarket Scanner",
+      "enabled": true,
+      "createdAtMs": 1771231556226,
+      "updatedAtMs": 1776085537978,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 1,13 * * *",
+        "tz": "UTC"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "## 开始即报到\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`🚀 [Polymarket Scanner] started | YYYY-MM-DD HH:MM UTC`\n\n## 去重状态\n读取 `/tmp/polymarket-scanner-state.json`（如不存在则视为空 `{}`）。格式：\n```json\n{ \"<slug>\": { \"price\": 0.XX, \"pushedAt\": \"ISO timestamp\" } }\n```\n\n## 执行\n1. 跑扫描：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/evaluate.mjs --scan --top 10\n```\n\n2. 跑 radar 捕捉异常波动：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/radar.mjs --top 5\n```\n\n3. 🐋 跑鲸鱼追踪：\n```\nHTTPS_PROXY=http://127.0.0.1:7897 node skills/polymarket-arb/scanner.mjs 2>/dev/null\n```\n解析 JSON 输出中的 `strategies.whaleTracker`，提取 `whales`（按 totalUsd 排序的大户）和 `watchlistAlerts`（watchlist 钱包的新动作）。\n\n## 去重 + Delta 逻辑\n从 scan + radar 结果中挑 top 5 最值得关注的市场。对每个候选：\n\n1. 检查 state.json 中是否已有该 slug\n2. **新面孔**（state 中不存在）→ 全量分析（完整 insight）\n3. **重复市场**（state 中已存在且 pushedAt < 24h）：\n   - 价格变动 >15% → 用 **delta 格式**输出（见下文）\n   - 价格变动 ≤15% → **跳过，不推送**\n4. **重复但超过 24h** → 当作新面孔处理\n\n优先展示新面孔，重复市场的 delta 放在末尾。\n\n## 输出格式\n\n### 新面孔（全量）\n```\n📊 Polymarket 候选 — YYYY/MM/DD\n\n1. [市场问题](url) — YES $0.XX | Xd | $XXK vol\n   💬 [研究支撑的 insight]\n```\n\n### 重复市场（delta 格式）\n```\n📈 已跟踪市场更新：\n- [市场问题](url) — YES $0.16→$0.22 (+37.5%) | 变化原因一句话\n```\n\n### 🐋 鲸鱼动态（新板块，放在最后）\n从 scanner.mjs 输出提取，格式：\n```\n🐋 鲸鱼动态（过去4h）\n\n[鲸鱼名] | 历史利润 $XXk | 胜率 XX% | N场\n→ $XXk [BUY/SELL] [YES/NO] [市场标题](url) @ $0.XX\n\n[如有 watchlist alerts]\n👀 Watchlist 追踪：\n- [鲸鱼名] [BUY/SELL] $XXX [市场标题]\n```\n\n只展示 totalUsd ≥ $5k 的鲸鱼，或有 watchlist alerts 的。如果鲸鱼数据为空或全部 < $5k，省略此板块。\n\n## 研究要求（仅对新面孔）\n对新面孔逐条做快速研究：\n1. web_search 查最新相关新闻/数据\n2. X/Twitter 搜索：`bash /Users/leo/.openclaw/workspace/skills/6551-twitter/search.sh keyword \"<关键词>\" --top --limit 10 --min-likes 10`\n3. Reddit：`web_search(query=\"site:reddit.com <关键词>\", freshness=\"pw\")`\n4. 如有高价值线索，web_fetch 拉原文确认\ninsight 必须引用具体事实，不要凭空判断。搜不到有价值信息就诚实说。\n\n**不做精确概率估计，不做 Kelly 计算。** 给定性判断 + 事实依据。\n\n## 更新状态\n推送完成后，将本次所有候选（包括新面孔和 delta）的 slug + 当前价格 + 时间戳写入 `/tmp/polymarket-scanner-state.json`。清除超过 72h 的旧条目。\n\n无候选且无鲸鱼动态 → NO_REPLY。\n\n## 执行记录\n用 message tool 发到 Discord heartbeat 频道 1475143247067087139：\n`⏱️ [Polymarket Scanner] 完毕 | YYYY-MM-DD HH:MM UTC | 新X个 delta Y个 跳过Z个 | 🐋 鲸鱼N条 watchlist M条`",
+        "timeoutSeconds": 720,
+        "model": "minimax-portal/MiniMax-M2.7"
+      },
+      "state": {
+        "nextRunAtMs": 1776128400000,
+        "lastRunAtMs": 1776085200008,
+        "lastStatus": "error",
+        "lastDurationMs": 337970,
+        "consecutiveErrors": 1,
+        "lastRunStatus": "error",
+        "lastDeliveryStatus": "delivered",
+        "lastDelivered": true,
+        "lastError": "⚠️ ✉️ Message: `1475143247067087139` failed"
+      },
+      "delivery": {
+        "mode": "announce",
+        "channel": "discord",
+        "to": "channel:1475153843707707412",
+        "bestEffort": true
+      }
+    },
+    {
+      "id": "e40e2159-4de6-4405-8837-3368580e9c7e",
+      "agentId": "main",
+      "sessionKey": "agent:main:discord:channel:1479010527446569012",
+      "name": "Dashboard Refresh",
+      "enabled": true,
+      "createdAtMs": 1772711342198,
+      "updatedAtMs": 1776085592280,
+      "schedule": {
+        "kind": "cron",
+        "expr": "0 9,21 * * *",
+        "tz": "Asia/Shanghai"
+      },
+      "sessionTarget": "isolated",
+      "wakeMode": "now",
+      "payload": {
+        "kind": "agentTurn",
+        "message": "执行 dashboard 数据刷新：\n```bash\nbash /Users/leo/.openclaw/workspace/dashboard/push.sh\n```\n完成后 NO_REPLY。",
+        "model": "minimax-portal/MiniMax-M2.7",
+        "timeoutSeconds": 60
+      },
+      "delivery": {
+        "mode": "none"
+      },
+      "state": {
+        "nextRunAtMs": 1776128400000,
+        "lastRunAtMs": 1776085537978,
+        "lastRunStatus": "ok",
+        "lastStatus": "ok",
+        "lastDurationMs": 54302,
+        "lastDeliveryStatus": "not-delivered",
+        "consecutiveErrors": 0,
+        "lastDelivered": false
       }
     },
     {
@@ -1518,7 +1518,7 @@ window.__DASHBOARD_DATA__ = {
       ],
       "created": "2026-04-13",
       "file": "/Users/leo/.openclaw/workspace/memory/2026-04-13.md",
-      "line": 50
+      "line": 57
     },
     {
       "id": "mem-1",
@@ -1534,7 +1534,7 @@ window.__DASHBOARD_DATA__ = {
       ],
       "created": "2026-04-13",
       "file": "/Users/leo/.openclaw/workspace/memory/2026-04-13.md",
-      "line": 57
+      "line": 63
     },
     {
       "id": "mem-2",

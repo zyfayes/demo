@@ -231,6 +231,39 @@
 <div class="container">
   <div class="summary">本周 AI 圈的主题是「暗流涌动」——Anthropic 被扒悄悄下调 Claude Code 思考难度引发社区不满,而 Claude Opus 4.6 基准分数据说大幅下滑,给这场「最安全模型」叙事打上问号；与此同时,阿里「乐马」视频模型突然病毒式传播,Gemini 3.1 Pro 在复杂任务上继续扩大优势,中国大模型 API 周调用量已连续三周超越美国。表面平静的水面下,模型的真实能力、企业级使用体验与基准神话之间的落差,正在被开发者社区一点点揭开。</div>
   
+  <div class="podcast-player" id="podcast-widget">
+    <div class="podcast-header">
+      <button class="play-btn" id="pod-play" aria-label="播放">
+        <svg viewBox="0 0 24 24" id="pod-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      </button>
+      <div>
+        <div class="podcast-title">AI 日报播客版 2026-04-14</div>
+        <div class="podcast-sub">🎙️ female-shaonv · via MiniMax <button class="speed-btn" id="pod-speed">1x</button></div>
+      </div>
+    </div>
+    <div>
+      <div class="progress-bar" id="pod-progress"><div class="fill" id="pod-fill"></div></div>
+      <div class="time-row"><span id="pod-cur">0:00</span><span id="pod-dur">--:--</span></div>
+    </div>
+    <audio id="pod-audio" preload="none" src="https://zyfayes.github.io/demo/ai-daily/audio/2026-04-14.mp3"></audio>
+  </div>
+  <script>
+  (function(){
+    const a=document.getElementById('pod-audio'),b=document.getElementById('pod-play'),
+      i=document.getElementById('pod-icon'),f=document.getElementById('pod-fill'),
+      bar=document.getElementById('pod-progress'),c=document.getElementById('pod-cur'),
+      d=document.getElementById('pod-dur');
+    if(!a||!b)return;
+    const fmt=s=>{const m=Math.floor(s/60);return m+':'+String(Math.floor(s%60)).padStart(2,'0')};
+    b.onclick=()=>{if(a.paused){a.play();i.innerHTML='<rect x="5" y="3" width="4" height="18"/><rect x="15" y="3" width="4" height="18"/>';}else{a.pause();i.innerHTML='<polygon points="6,3 20,12 6,21"/>';}};
+    a.ontimeupdate=()=>{if(!a.duration)return;f.style.width=(a.currentTime/a.duration*100)+'%';c.textContent=fmt(a.currentTime);};
+    a.onloadedmetadata=()=>{d.textContent=fmt(a.duration)};
+    a.onended=()=>{i.innerHTML='<polygon points="6,3 20,12 6,21"/>';f.style.width='0%';c.textContent='0:00';};
+    bar.onclick=e=>{if(!a.duration)return;a.currentTime=(e.offsetX/bar.offsetWidth)*a.duration;};
+    const speeds=[1,1.25,1.5,1.75,2,0.75];let si=0;const sb=document.getElementById('pod-speed');
+    sb.onclick=()=>{si=(si+1)%speeds.length;a.playbackRate=speeds[si];sb.textContent=speeds[si]+'x';};
+  })();
+  </script>
   
   <div class="article">
     <div class="article-num">01</div>

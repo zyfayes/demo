@@ -8,7 +8,11 @@
       "url": "https://www.thestar.com.my/tech/tech-news/2026/04/13/alibaba-claims-viral-happy-horse-ai-model-in-latest-breakthrough",
       "source": "The Star / MiniMax搜索",
       "tldr": "阿里最新发布的「乐马」（Happy Horse）视频生成模型在发布当天即登顶全球排行榜，引发中国 AI 圈病毒式传播。该模型能生成骑自行车等动态场景的视频内容，效果引发社区大量讨论。虽然「乐马」这个命名有争议，但技术本身值得关注——阿里近期在视频生成领域持续发力，这是又一次证明。",
-      "tags": ["视频生成", "开源", "阿里"]
+      "tags": [
+        "视频生成",
+        "开源",
+        "阿里"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,12 @@
       "url": "https://x.com/tengyanAI/status/2043138374794666490",
       "source": "tengyanAI (Twitter/X)",
       "tldr": "多位开发者和 KOL 实测发现，Anthropic 在未经公开说明的情况下，将 Claude Code 编辑代码前的「思考深度」悄悄降低，导致模型在编程任务中的表现下滑。Anthropic 在 rate limit 飙升和系统压力下似乎选择了削减模型能力而非透明告知，引发社区对「模型静默降级」这一问题的广泛讨论——这是继缓存 TTL 下调之后又一次被用户抓包。",
-      "tags": ["Claude", "Anthropic", "编程Agent", "透明度"]
+      "tags": [
+        "Claude",
+        "Anthropic",
+        "编程Agent",
+        "透明度"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +33,12 @@
       "url": "https://github.com/anthropics/claude-code/issues/45756",
       "source": "GitHub Issues / HN",
       "tldr": "Anthropic Claude Code Pro Max 的 5 倍使用配额，在部分开发者正常使用情况下 1.5 小时内即告耗尽，而官方对 rate limit 的说明严重不足，大量用户在 GitHub issue 区聚集讨论对策。这一事件与缓存 TTL 下调事件叠加，说明 Anthropic 在快速扩张的同时基础设施正在承受巨大压力，付费用户的体验与预期存在严重落差。",
-      "tags": ["Claude", "Anthropic", "开发者体验", "限流"]
+      "tags": [
+        "Claude",
+        "Anthropic",
+        "开发者体验",
+        "限流"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +46,12 @@
       "url": "https://adlrocha.substack.com/p/adlrocha-how-the-ai-loser-may-end",
       "source": "adlrocha.substack / HN",
       "tldr": "苹果在 AI 军备竞赛中看似落后，但其真正的护城河在于端侧推理能力（Apple Silicon 的神经引擎效率）、隐私优先的本地处理架构，以及与 iPhone/Mac 深度绑定的生态系统。Anthropic、OpenAI 拼命在云端搏杀，苹果悄悄在设备端积累优势——这篇深度博文给出了不同视角：AI 竞赛不是短跑，终局未必属于现在最张扬的玩家。",
-      "tags": ["苹果", "端侧AI", "隐私", "战略"]
+      "tags": [
+        "苹果",
+        "端侧AI",
+        "隐私",
+        "战略"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +59,11 @@
       "url": "https://x.com/cb_doge/status/2043353392853221811",
       "source": "cb_doge (Twitter/X)",
       "tldr": "多个第三方基准测试显示 Claude Opus 最新版本的准确率从此前记录的 83.3% 下降至 68.3%，引发了关于模型是否在迭代过程中出现「能力回归」的讨论。需要谨慎看待此数据的来源和测试条件，但也再次提醒：同一模型家族的不同版本之间并非总是线性提升，模型选择需要实测而非迷信品牌。",
-      "tags": ["Claude", "基准测试", "模型质量"]
+      "tags": [
+        "Claude",
+        "基准测试",
+        "模型质量"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +71,12 @@
       "url": "https://so.html5.qq.com/page/real/search_news?docid=70000021_58969ce4cb466852",
       "source": "腾讯看点 / MiniMax搜索",
       "tldr": "据国家数据局和 OpenRouter 数据，中国大模型 API 周调用量在 2026 年初已实现对美国的超越，背后驱动力是 DeepSeek Qwen、豆包、MiniMax 等国产模型在价格和中文能力上的竞争力。值得注意的是，这一数据统计口径存在争议（包含大量 B2B API 调用），但中国 AI 应用生态的规模化速度确实超出了许多西方观察者的预期。",
-      "tags": ["中国AI", "市场格局", "API", "大模型"]
+      "tags": [
+        "中国AI",
+        "市场格局",
+        "API",
+        "大模型"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +84,12 @@
       "url": "https://x.com/shiri_shh/status/2043327023511179335",
       "source": "shiri_shh (Twitter/X)",
       "tldr": "一位开发者用 OpenClaw Agent 构建了自动化泳池安装公司获客系统，自动筛选价值 50-120 万美元的高端房产客户并完成销售转化——整个流程无需人工介入。这个案例在社区引发热议，因为它展示了 AI Agent 在真实商业闭环中落地的可能性，不再只是 Demo 级别的演示，而是有 revenue 证明的闭环。",
-      "tags": ["AI Agent", "OpenClaw", "商业落地", "自动化"]
+      "tags": [
+        "AI Agent",
+        "OpenClaw",
+        "商业落地",
+        "自动化"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +97,13 @@
       "url": "https://x.com/jerryjliu0/status/2043721536922955918",
       "source": "jerryjliu0 (Twitter/X)",
       "tldr": "Crul 创始人 jerryjliu0 开源了 ParseBench，这是首个针对 Agent 工作流场景的文档 OCR 解析基准，填补了现有评测体系在这一领域的空白。文档解析是 RAG、Agent 工具调用等场景的基础能力，但此前缺乏系统性评估标准；ParseBench 的出现将推动 LLM 在文档理解上的能力提升进入可量化、可对标的阶段。",
-      "tags": ["开源", "OCR", "基准测试", "RAG", "文档理解"]
+      "tags": [
+        "开源",
+        "OCR",
+        "基准测试",
+        "RAG",
+        "文档理解"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +111,12 @@
       "url": "https://x.com/HeyGen/status/2043725015506706900",
       "source": "HeyGen (Twitter/X)",
       "tldr": "HeyGen 这家 AI 视频生成独角兽推出命令行工具，用户一条命令即可在 CI/CD 流水线中自动生成视频内容，标志着 AI 视频生成从「创意工具」向「开发者基础设施」的延伸。结合此前 Runway、Pika 等的动作，视频生成正在快速进入工程化、自动化阶段——不再只是设计师玩具，而是内容生产流水线的标准环节。",
-      "tags": ["视频生成", "HeyGen", "开发者工具", "CLI"]
+      "tags": [
+        "视频生成",
+        "HeyGen",
+        "开发者工具",
+        "CLI"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +124,17 @@
       "url": "https://techcrunch.com/2026/04/13/stanford-report-highlights-growing-disconnect-",
       "source": "TechCrunch / HN",
       "tldr": "斯坦福 AI 指数报告指出，AI 从业者与普通公众之间对 AI 发展速度、影响程度的判断存在显著且在扩大的鸿沟——从业者普遍认为 AI 进展良好、风险可控；而公众对失业、 misinformation 和权力集中的担忧持续上升。这种「圈内乐观、圈外焦虑」的认知分裂，对 AI 公司的公共叙事策略和监管政策制定都有深远影响，不只是学术问题。",
-      "tags": ["AI政策", "社会影响", "斯坦福", "AI伦理"]
+      "tags": [
+        "AI政策",
+        "社会影响",
+        "斯坦福",
+        "AI伦理"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "/Users/leo/.openclaw/workspace/minimax-output/ai-digest-2026-04-14.mp3",
+  "podcastTitle": "AI 日报播客版 2026-04-14",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastUrl": "https://zyfayes.github.io/demo/ai-daily/audio/2026-04-14.mp3"
 }

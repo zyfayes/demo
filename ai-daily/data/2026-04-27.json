@@ -1,0 +1,86 @@
+{
+  "date": "2026-04-27",
+  "summary": "本周 AI 圈最值得关注的事件有两层：一是 OpenAI 公开承认 SWE-bench 已无法衡量前沿编程能力，Claude Opus 4.6 和 GPT-5.5 的编程之战已经进入「超越基准」的境界；二是 DeepSeek-V4 悄然发布，API 大幅降价 75%，LMSYS 上 Day 0 就跑出了亮眼成绩，但 benchmark 评分并未登顶——说明开源模型的进步速度已经让「跑分第一」这件事本身变得没那么重要了。与此同时，Anthropic 官方放出免费 Claude Code 教程，Lee Rob 的观察点出了一个越来越清晰的路径：优秀的编程智能体就是通往通用知识工作智能体的最短路径。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "一个 AI Agent 删掉了我们的生产数据库——当事 Agent 的自白",
+      "url": "https://twitter.com/lifeof_jer/status/2048103471019434248",
+      "source": "Twitter / HN",
+      "tldr": "某工程师让一个 AI Agent 获得了生产数据库的删除权限，Agent 在执行批量清理时把业务数据一并清掉了。事后 Agent 发出的「自白」在 HN 上引发 564 条讨论，核心议题不是「AI 太笨」，而是「人类给的权限太大」——这不是技术失败，是工程流程的失效。教训：给 Agent 提供删除权限时，必须加多层确认闸门，而不是假设它「会判断」。",
+      "tags": ["AI安全", "Agent", "工程实践"]
+    },
+    {
+      "num": 2,
+      "title": "OpenAI 官方论证：为什么 SWE-bench Verified 已无法衡量前沿编程能力",
+      "url": "https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/",
+      "source": "OpenAI Blog",
+      "tldr": "SWE-bench Verified 从 60% 涨到接近 100% 只用了一年，说明这个基准已经被 top 模型「刷穿」了。OpenAI 明确表示将停止在该基准上评估——这不是失败，是进步。真正有意义的问题变成了：如何设计一个能持续区分顶级模型的编程评估体系？这篇文章值得任何做 AI 编程产品的人细读。",
+      "tags": ["基准测试", "编程Agent", "评测体系"]
+    },
+    {
+      "num": 3,
+      "title": "DeepSeek-V4 Pro/Flash 发布：Day 0 就在 SGLang + Miles 上跑出了高效推理",
+      "url": "https://www.lmsys.org/blog/2026-04-25-deepseek-v4/",
+      "source": "LMSYS Blog",
+      "tldr": "DeepSeek-V4-Pro（1.6T 参数，A49B 活跃）和 Flash（284B 参数，A13B 活跃）Day 0 就完成了 SGLang 和 Miles 的集成验证，并支持华为昇腾芯片运行。配合 75% API 折扣（截止 5 月 5 日），DeepSeek 正在用「价格+工程成熟度」组合拳抢占开发者心智——不是最强，但是最便宜+最容易部署的选项。",
+      "tags": ["DeepSeek", "开源模型", "推理部署"]
+    },
+    {
+      "num": 4,
+      "title": "GPT-5.5 官方 prompt 指南：OpenAI 建议的「先规划后执行」模式",
+      "url": "https://simonwillison.net/2026/Apr/25/gpt-5-5-prompting-guide/",
+      "source": "Simon Willison",
+      "tldr": "Simon Willison 整理了 OpenAI 官方的 GPT-5.5 prompt 技巧，其中最值得借鉴的是「先规划后执行」——让模型先输出任务拆解计划，再逐步生成结果，减少反复调试。另一个技巧是针对长时间思考任务，使用专门的推理标记来加速。这个指南比任何第三方课程都权威，而且是免费的。",
+      "tags": ["GPT-5.5", "Prompt工程", "OpenAI"]
+    },
+    {
+      "num": 5,
+      "title": "Anthropic 工程师年薪 57 万美元 vs 用 Claude Code 替代：社区炸锅",
+      "url": "https://x.com/Bhavani_00007/status/2048259021225029772",
+      "source": "Twitter",
+      "tldr": "一条「Anthropic 给工程师开 57 万美元，为什么不直接用 Claude Code」的推文收获 7500+ 赞，评论区争论激烈。赞同者认为 AI 编程工具已经可以覆盖大量中级工程任务，反对者指出架构决策、跨团队协调、危机处理等仍需要人类判断。这场讨论的实质是：AI 替代的到底是「编码」还是「工程师」？这两个不是同一个东西。",
+      "tags": ["Claude", "AI编程", "行业薪资"]
+    },
+    {
+      "num": 6,
+      "title": "Anthropic 团队官方演示：如何正确使用 Claude Code（30 分钟免费 workshop）",
+      "url": "https://x.com/Jouhatsu_ai/status/2048422458965836030",
+      "source": "Twitter",
+      "tldr": "Anthropic 团队亲自下场做了一个 30 分钟的免费 Claude Code workshop，由 Claude Code 的作者主讲，内容覆盖真正发挥 Claude 编程能力的技巧。有意思的是一位 Anthropic 工程师透露自己手骨折后两个月完全靠和 AI 说话让 Agent 写代码提交的体验——这种「活人报告」比任何营销内容都有说服力。",
+      "tags": ["Claude Code", "Anthropic", "AI编程"]
+    },
+    {
+      "num": 7,
+      "title": "HiTSR：面向时间序列推理的分层基准数据集，81  upvotes",
+      "url": "https://huggingface.co/papers/2604.17295",
+      "source": "HuggingFace Papers",
+      "tldr": "HiTSR 提出了时间序列推理的四层认知分类体系（从视觉感知到语义理解），并构建了对应的分层评测数据集，覆盖从简单模式识别到复杂因果推理的任务。现有 LLM 在高层级推理上普遍表现较差，这意味着时间序列推理是下一个模型能力的重要分水岭。",
+      "tags": ["时间序列", "LLM推理", "基准数据集"]
+    },
+    {
+      "num": 8,
+      "title": "GPT-5.5 Codex 统一模型发布：编程和主模型合二为一",
+      "url": "https://simonwillison.net/2026/Apr/25/romain-huet/",
+      "source": "Simon Willison / Romain Huet",
+      "tldr": "Romain Huet（OpenAI 开发者关系）透露：自 GPT-5.4 起，OpenAI 已将 Codex 编程线和主模型统一为一个系统，GPT-5.5 在 Agent 编程、计算机操作、任何需要在电脑上完成的任务上都有显著提升。这不是简单的合并——意味着「会写代码」已经被整合进通用模型的底层能力，而不是一个专用模式。",
+      "tags": ["GPT-5.5", "OpenAI", "编程Agent"]
+    },
+    {
+      "num": 9,
+      "title": "Vista4D：用 4D 点云实现视频视角重拍",
+      "url": "https://huggingface.co/papers/2604.21915",
+      "source": "HuggingFace Papers",
+      "tldr": "Vista4D 的核心能力是给定一段视频后，可以从任意新的相机轨迹和视角「重拍」同一场景，同时保留动态内容外观和精确相机控制。相比传统 NeRF 类方法，它在真实世界动态视频的深度估计上更鲁棒，且不需要重新训练。这对影视预览、AI 生成内容的相机控制等场景有直接价值。",
+      "tags": ["视频生成", "4D点云", "计算机视觉"]
+    },
+    {
+      "num": 10,
+      "title": "Lee Rob：优秀的编程 Agent 就是通往通用知识工作 Agent 的最短路径",
+      "url": "https://x.com/leerob/status/2048513967039910173",
+      "source": "Twitter",
+      "tldr": "Lee Rob（Vercel）回顾一年前的判断：当时并不确定优秀编程 Agent 能成为通用知识工作 Agent 的路径，但现在这变得清晰了。编程任务的特殊性——精确反馈、即时验证、无歧义的任务描述——恰好是训练 AI 可靠性的最佳环境。这解释了为什么 Claude Code 和 GPT-5.5 的编程能力提升，往往会伴随着通用能力的溢出。",
+      "tags": ["AI Agent", "编程工具", "通用智能"]
+    }
+  ]
+}

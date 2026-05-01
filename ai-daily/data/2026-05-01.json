@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-01",
+  "summary": "本周 AI 圈最大的故事，是 Claude Code 开始拒绝处理提及 OpenClaw 的 commits——先是玩笑，随后变成真实的对抗，背后映射的是 AI 编程工具战争正在从功能竞争转向生态锁定。技术层面，DeepSeek-V4 把上下文窗口拉到 100 万 token，Google 实现了 6 倍内存压缩让聊天机器人在手机上跑起来，两个方向都在重新定义「本地部署」的边界。与此同时，Zig 项目公开了史上最严格的反 AI contribution 政策，开源社区的信任裂缝在加速扩大。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Claude Code 开始拒绝处理提及 OpenClaw 的 commits",
+      "url": "https://twitter.com/theo/status/2049645973350363168",
+      "source": "Twitter/HN",
+      "tldr": "Theo 通过一条 commit 消息发现了 Claude Code 的秘密检测机制——凡是 commits 消息中包含「OpenClaw」的内容，要么被拒绝，要么被收取额外费用。这不是 bug，是有意的商业逻辑。HN 热议背后的核心问题是：当 AI 编程工具开始根据开发者的技术栈来差异化定价，这个行业的竞争底线在哪里？",
+      "tags": ["AI编程", "Claude Code", "生态锁定"]
+    },
+    {
+      "num": 2,
+      "title": "DeepSeek-V4 发布：100 万 token 上下文，开源阵营再放大招",
+      "url": "https://k.sina.com.cn/article_7857201856_1d45362c001904v7ss.html",
+      "source": "观察者网",
+      "tldr": "DeepSeek-V4 系列包含 V4-Pro（1.6 万亿总参数）和 V4-Flash（2840 亿总参数），两者均原生支持 100 万 token 上下文——在各家还在为 128K 较劲的时候，DeepSeek 直接把赛道拉高了一个数量级。更值得关注的是技术账本直接开源，这延续了 DeepSeek 一贯的风格：不是闷声发大财，而是把方法论也公开，让社区能复现、能超越。",
+      "tags": ["DeepSeek", "开源大模型", "长上下文"]
+    },
+    {
+      "num": 3,
+      "title": "Google 聊天机器人内存压缩突破：可在手机上本地运行",
+      "url": "https://www.livescience.com/technology/artificial-intelligence/google-ai-breakthrough-means-chatbots-use-six-times-less-memory-during-conversations-without-compromising-performance",
+      "source": "Live Science",
+      "tldr": "Google 的一项新研究实现了推理时 6 倍内存压缩，在不损失性能的前提下，让大语言模型可以在手机等端侧设备上运行而非必须依赖服务器集群。这是端侧 AI 落地的一个关键技术里程碑——意味着未来 AI 助手不需要网络延迟，本地处理还能保护隐私。能源瓶颈是下一步真正的挑战。",
+      "tags": ["Google", "端侧AI", "模型压缩"]
+    },
+    {
+      "num": 4,
+      "title": "Zig 项目公开最严 anti-AI 政策：No LLMs for PRs",
+      "url": "https://simonwillison.net/2026/Apr/30/zig-anti-ai/",
+      "source": "Simon Willison",
+      "tldr": "Zig 语言项目在 Code of Conduct 中明确禁止使用 LLM 撰写 PR 和 issue，并解释了背后的逻辑：人类犯错和 LLM hallucination 有本质区别，有经验的 maintainer 很容易识别。Andrew Kelley（Zig 创始人）更直接指出，来自 agentic coding 世界的提交有一种「数字气味」。这个政策正在引发开源社区激烈争论：是防御性保守，还是先发制人的质量保障？",
+      "tags": ["Zig", "开源治理", "AI政策"]
+    },
+    {
+      "num": 5,
+      "title": "IBM Granite 4.1：80 亿参数比肩 320 亿 MoE 模型",
+      "url": "https://firethering.com/granite-4-1-ibm-open-source-model-family/",
+      "source": "Hacker News",
+      "tldr": "IBM 开源了 Granite 4.1 系列，其中 8B 蒸馏模型在多个 benchmark 上接近甚至达到 32B MoE 模型的性能水平。这代表了模型蒸馏技术的新突破——用更小的参数规模实现等价能力，对企业本地部署意义重大。Granite 系列一直主打企业友好（Apache 2.0），这次在编程和推理任务上的提升值得量化关注。",
+      "tags": ["IBM", "开源模型", "模型蒸馏"]
+    },
+    {
+      "num": 6,
+      "title": "英国 AISI 评估 GPT-5.5 网络安全能力：与 Claude Mythos 持平",
+      "url": "https://simonwillison.net/2026/Apr/30/gpt-55-cyber-capabilities/#atom-everything",
+      "source": "Simon Willison",
+      "tldr": "英国 AI 安全研究院（AISI）发布了 GPT-5.5 的网络安全能力评估报告，结论是其发现安全漏洞的能力与此前评估的 Claude Mythos 处于同一水平。这标志着主要 AI 实验室的网络安全能力正在趋同，而非某一厂商独占。值得注意的背景：这是 AISI 首次系统性地评估闭源模型的攻击性安全能力，方法论本身在行业有标杆意义。",
+      "tags": ["GPT-5.5", "AI安全", "网络安全"]
+    },
+    {
+      "num": 7,
+      "title": "PyTorch Lightning 被植入《沙丘》主题恶意依赖",
+      "url": "https://semgrep.dev/blog/2026/malicious-dependency-in-pytorch-lightning-used-for-ai-training/",
+      "source": "Hacker News",
+      "tldr": "安全公司 Semgrep 发现 PyTorch Lightning AI 训练库中存在植入恶意依赖的攻击，代码中包含《沙丘》主题的签名（Shai-Hulud）。攻击目标是 AI 训练流程中的机器，攻击者可以在训练时窃取模型权重或植入后门。这不是概念验证——而是已经在野的实际攻击，AI 供应链安全正在从理论变成现实威胁。",
+      "tags": ["安全", "AI供应链", "恶意软件"]
+    },
+    {
+      "num": 8,
+      "title": "Codex CLI 0.128.0 新增 /goal 循环：让 AI 自主持续完成任务",
+      "url": "https://simonwillison.net/2026/Apr/30/codex-goals/#atom-everything",
+      "source": "Simon Willison",
+      "tldr": "OpenAI 的 Codex CLI 新增了 /goal 命令，允许用户设定一个目标后让 AI 持续循环执行直到目标达成或 token 预算耗尽——本质上是把 agentic loop 做进了 CLI 工具层。Simon Willison 指出这是对 Ralph loop 的致敬，但集成的深度更高。这代表 AI coding agent 正在从「单次执行」向「持续自主」演进，是今年下半年编程工具竞争的核心方向。",
+      "tags": ["Codex CLI", "AI编程", "Agent"]
+    },
+    {
+      "num": 9,
+      "title": "MagicAtom 发布旗舰人形机器人 + 自研世界模型",
+      "url": "https://finance.sina.com.cn/jjxw/2026-04-29/doc-inhwcvfa8006825.shtml",
+      "source": "新浪财经",
+      "tldr": "魔法原子（MagicAtom）在全球具身智能创新大会（GEIS）发布了旗舰人形机器人 MagicBot X1（身高 180cm，31 个主动自由度）和灵巧手 MagicHand H01（20 个自由度，44 个触觉传感器），同时发布自研世界模型。公司喊出 2036 年 140 亿美元营收目标，在具身智能普遍落地困难的大环境下，这个量级的野心值得跟踪。",
+      "tags": ["具身智能", "人形机器人", "世界模型"]
+    },
+    {
+      "num": 10,
+      "title": "NVIDIA 发布 Ising 开源量子计算模型",
+      "url": "https://www.infoq.com/news/2026/04/nvidia-ising-quantum/",
+      "source": "InfoQ",
+      "tldr": "NVIDIA 发布 Ising 开源模型系列，专攻量子计算领域的 AI 标定和优化。量子计算的门槛极高，而 AI 辅助标定可能是降低量子设备运维成本的关键一步。NVIDIA 的路径不是用 AI 替代量子计算，而是用 AI 让量子设备更容易维护和运行——这个定位务实且精准，对量子生态开发者来说是实质性的工具补充。",
+      "tags": ["NVIDIA", "量子计算", "开源"]
+    }
+  ]
+}

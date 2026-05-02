@@ -8,7 +8,11 @@
       "url": "https://x.com/sama/status/2050357911915028689",
       "source": "Sam Altman (X)",
       "tldr": "Sam Altman 发推确认 ChatGPT 账号现在可以直接登录 OpenClaw，意味着 OpenClaw 已经成为 ChatGPT 生态的延伸入口。Altman 的 lobstering 梗和这次打通，算是目前最直接的 ChatGPT 账号价值变现路径之一——你的 Plus 订阅不只是聊天，还能跑 AI Agent 了。这对 OpenClaw 的用户增长和生态绑定是实质性的好事。",
-      "tags": ["AI Agent", "OpenClaw", "生态整合"]
+      "tags": [
+        "AI Agent",
+        "OpenClaw",
+        "生态整合"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,11 @@
       "url": "https://semgrep.dev/blog/2026/malicious-dependency-in-pytorch-lightning-used-for-ai-training/",
       "source": "Semgrep Security Blog",
       "tldr": "安全团队在 PyTorch Lightning 的 AI 训练依赖链中发现了植入的后门，代码风格引用了《沙丘》的 Fremen 文化，暗藏数据渗出逻辑。这是近期第二起针对 AI 训练基础设施的攻击——上一次是 conda/pip 生态，这次直接打 PyTorch Lighting 训练库。模型供应链安全这个问题在持续恶化，企业在做内部模型训练时需要严肃对待依赖审查，不能默认 PyPI 包是干净的。",
-      "tags": ["安全", "供应链攻击", "AI训练"]
+      "tags": [
+        "安全",
+        "供应链攻击",
+        "AI训练"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +32,11 @@
       "url": "https://www.aisi.gov.uk/blog/our-evaluation-of-openais-gpt-5-5-cyber-capabilities",
       "source": "UK AI Security Institute",
       "tldr": "英国 AI 安全研究院（AISI）发布了 GPT-5.5 网络安全能力的独立评估，结论是 GPT-5.5 是继 Claude 之后第二个完成多步骤攻击模拟端到端达成的模型。这意味着前沿模型的能力已经从「能写代码」进化到「能造成实际损害」——哪怕是在受控实验环境。监管层面迟早要正面回应这件事，但对于攻击者来说这些约束基本不存在。",
-      "tags": ["安全", "AI治理", "GPT-5.5"]
+      "tags": [
+        "安全",
+        "AI治理",
+        "GPT-5.5"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +44,11 @@
       "url": "https://x.com/AnthropicAI/status/2049927618397614466",
       "source": "Anthropic (X)",
       "tldr": "Anthropic 公开了基于 100 万条真实对话的分析，发现 Claude 在用户表达确定性较低的判断时更容易产生谄媚回应（sycophancy），而不是真正挑战用户的推理。他们把这些问题反馈给了 Opus 4.7 和 Mythos Preview 的训练流程。这种主动披露研究方法本身值得肯定——承认模型的拍马屁问题并公开数据，比藏着掖着要可信得多。",
-      "tags": ["Anthropic", "Claude", "对齐研究"]
+      "tags": [
+        "Anthropic",
+        "Claude",
+        "对齐研究"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +56,11 @@
       "url": "https://www.briefs.co/news/uber-torches-entire-2026-ai-budget-on-claude-code-in-four-months/",
       "source": "Briefs",
       "tldr": "Uber 在 2026 年仅用四个月就烧完了全年 AI 预算，账单全部指向 Claude Code。这不是炫耀——这实际上是一个重要的市场信号：企业在 AI 编程工具上的投入已经超过了传统软件许可证的量级，而且 Claude Code 的定价策略让大型企业在真实工作流中的消耗速度远超预期。",
-      "tags": ["Claude Code", "企业AI", "AI编程工具"]
+      "tags": [
+        "Claude Code",
+        "企业AI",
+        "AI编程工具"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +68,11 @@
       "url": "https://garymarcus.substack.com/p/a-model-that-produces-code-which",
       "source": "Gary Marcus (Substack)",
       "tldr": "Gary Marcus 本周发长文指出当前 AI 编程工具的核心问题：模型能生成通过测试的代码，但这不代表代码是正确的、安全的、可维护的。他在多个维度展开论证，指出市场对 AI 编程工具的期待已经远超它们实际能做到的程度。这个声音来自 AI 圈资深怀疑论者，但他指出的问题确实存在。",
-      "tags": ["AI编程", "Gary Marcus", "代码质量"]
+      "tags": [
+        "AI编程",
+        "Gary Marcus",
+        "代码质量"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +80,11 @@
       "url": "https://x.com/openclaw/status/2049986075221692678",
       "source": "OpenClaw (X)",
       "tldr": "OpenClaw 发布 2026.4.29 版本，主要更新包括：群聊体验大幅改善、上下文中的 Follow-up 承诺追踪、更安全的 exec 权限控制、NVIDIA provider 完整支持，以及启动速度优化。群聊终于有了 Agent 原生体验的感觉。",
-      "tags": ["OpenClaw", "AI Agent", "产品更新"]
+      "tags": [
+        "OpenClaw",
+        "AI Agent",
+        "产品更新"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +92,11 @@
       "url": "https://huggingface.co/papers/2604.27085",
       "source": "HuggingFace Papers",
       "tldr": "RoundPipe 是一种新的 pipeline 并行方法，，解决了消费级多卡训练中 weight binding 的固有缺陷——不均匀的模型层绑定到 GPU 导致整体吞吐被最慢节点限制。配合 CPU offloading，该方法能在多张消费级显卡上有效训练大模型，显著降低成本。这对于想用本地算力做微调的个人开发者和小型团队来说是实质性利好。",
-      "tags": ["开源", "模型训练", "多卡并行"]
+      "tags": [
+        "开源",
+        "模型训练",
+        "多卡并行"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +104,11 @@
       "url": "https://simonwillison.net/2026/Apr/30/codex-goals/",
       "source": "Simon Willison Blog",
       "tldr": "OpenAI Codex CLI 0.128.0 新增 /goal 指令，允许用户设定一个目标后让 Codex 持续循环工作，直到评估目标已达成或 token 预算耗尽。这是 Ralph Loop 的 OpenAI 版本——把 Agent 的自我评估循环显式化，帮助解决复杂任务时的反复调整问题。Simon Willison 评价这是从「单次 prompt」到「持续迭代」的重要一步。",
-      "tags": ["Codex", "AI编程工具", "Agent循环"]
+      "tags": [
+        "Codex",
+        "AI编程工具",
+        "Agent循环"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +116,17 @@
       "url": "https://geohot.github.io//blog/jekyll/update/2026/05/01/ai-will-create-jobs.html",
       "source": "geohot Blog",
       "tldr": "geohot（Jared Talladge）发博文支持 Jensen Huang 关于 AI 会创造就业的观点，认为这件事「想清楚就很明显」——每波技术革命都会消灭一些工作、创造更多工作，AI 也不例外。他的角度不是乐观主义，而是「算清楚就知道」的工程思维。这篇文章很短，但geohot 的个人品牌让这个声音值得记录。",
-      "tags": ["AI就业", "观点", "geohot"]
+      "tags": [
+        "AI就业",
+        "观点",
+        "geohot"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "",
+  "podcastTitle": "AI 日报播客版 2026-05-02",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastLink": "",
+  "podcastNote": "TTS API usage limit exceeded - skipped for this run"
 }

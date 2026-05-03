@@ -8,7 +8,11 @@
       "url": "https://simonwillison.net/2026/Apr/24/deepseek-v4/",
       "source": "Simon Willison",
       "tldr": "DeepSeek 一口气放出 V4-Pro 和 V4-Flash，两者都给到 100 万 token 上下文，Pro 还是目前最大级别的开源权重之一。更狠的是定价：Flash 甚至压过 GPT-5.4 Nano，Pro 也比主流 frontier 大模型便宜一截。真正的信号不是‘又一个强模型’，而是开源阵营开始把前沿能力和价格优势同时拿在手里。",
-      "tags": ["开源模型", "价格战", "DeepSeek"]
+      "tags": [
+        "开源模型",
+        "价格战",
+        "DeepSeek"
+      ]
     },
     {
       "num": 2,
@@ -16,7 +20,11 @@
       "url": "https://github.com/nexu-io/open-design",
       "source": "GitHub / nexu-io",
       "tldr": "Open Design 想复刻 Claude Design 的产品体验，但把模型、CLI 和部署权都交还给开发者：本地优先、BYOK、支持 12 种 agent CLI、31 个设计技能和 72 套设计系统。它有意思的地方不在‘AI 会画图’，而在于把 prompt、模板、批评链和 artifact 渲染做成一条可复用生产线。Design tooling 正在被 agent 化，这比单次出图更值钱。",
-      "tags": ["Agent", "设计工具", "开源项目"]
+      "tags": [
+        "Agent",
+        "设计工具",
+        "开源项目"
+      ]
     },
     {
       "num": 3,
@@ -24,7 +32,11 @@
       "url": "https://www.mendral.com/blog/agent-harness-belongs-outside-sandbox",
       "source": "Mendral",
       "tldr": "这篇文章的核心观点很 sharp：真正应该放进 sandbox 的是命令执行环境，不是整个 agent 控制环。这样做能把凭证、数据库访问和 session 状态留在外部，同时让 sandbox 变成可随时销毁和重建的牛马资源。对正在做 agent infra 的人来说，这不是架构洁癖，而是权限边界、恢复能力和多用户协作的根问题。",
-      "tags": ["Agent Infra", "Sandbox", "架构"]
+      "tags": [
+        "Agent Infra",
+        "Sandbox",
+        "架构"
+      ]
     },
     {
       "num": 4,
@@ -32,7 +44,11 @@
       "url": "https://mljar.com/",
       "source": "MLJAR",
       "tldr": "MLJAR Studio 的定位很明确：把‘和数据聊天’这件事落到本地 Python 执行、可审计代码和可复现 notebook 上，而不是一个花哨但不可控的聊天框。它同时覆盖数据探索、AutoML、实验追踪和一键转交互式应用，说明 AI data analyst 正在从 demo 迈向 workflow product。对企业来说，‘不出云’本身就是购买理由。",
-      "tags": ["Data Analyst", "本地AI", "Notebook"]
+      "tags": [
+        "Data Analyst",
+        "本地AI",
+        "Notebook"
+      ]
     },
     {
       "num": 5,
@@ -40,7 +56,11 @@
       "url": "https://huggingface.co/papers/2604.24954",
       "source": "Hugging Face Papers",
       "tldr": "NVIDIA 这篇新作把 Nemotron 系列推进到原生音频输入，统一支持文本、图像、视频和音频，不再只是‘视觉语言模型加外挂语音’。摘要里特别强调 document understanding、长音视频理解和 agentic computer use，说明多模态赛道正在从展示能力转向真实任务表现。开源阵营一旦把音频也做成 first-class citizen，很多语音代理产品会被迫重做技术栈。",
-      "tags": ["多模态", "音频", "开源研究"]
+      "tags": [
+        "多模态",
+        "音频",
+        "开源研究"
+      ]
     },
     {
       "num": 6,
@@ -48,7 +68,11 @@
       "url": "https://huggingface.co/papers/2604.27151",
       "source": "Hugging Face Papers",
       "tldr": "这篇 paper 盯上的不是 benchmark 分数，而是 computer-use agent 的真实成本：现在很多系统几乎每一步都调用大多模态模型，贵也慢。作者主张按步骤动态分配算力，把重模型留给关键节点，其余步骤走更轻的策略。这个方向很对，因为 agent 商业化最后拼的不是 demo 能力，而是单位任务成本。",
-      "tags": ["Computer Use", "推理优化", "Agent"]
+      "tags": [
+        "Computer Use",
+        "推理优化",
+        "Agent"
+      ]
     },
     {
       "num": 7,
@@ -56,7 +80,11 @@
       "url": "https://huggingface.co/papers/2604.28157",
       "source": "Hugging Face Papers",
       "tldr": "Prompt injection 和 knowledge corruption 的测试越来越重要，但现有 red-teaming 往往先把算力烧穿。FlashRT 的价值在于把长上下文安全评测往‘更省算、更省内存’推进，这让持续性安全测试更接近工程现实。安全如果贵到跑不动，就永远只会停在 PPT。",
-      "tags": ["安全", "Red Team", "长上下文"]
+      "tags": [
+        "安全",
+        "Red Team",
+        "长上下文"
+      ]
     },
     {
       "num": 8,
@@ -64,7 +92,11 @@
       "url": "https://huggingface.co/papers/2604.24902",
       "source": "Hugging Face Papers",
       "tldr": "这项研究看了 100 个模型，结论很不客气：基础模型做过安全测评，不代表进了医疗、法律等高风险场景再微调之后还安全。所谓 safety drift，意味着部署方不能只看 base model 的红线表现，而要把下游适配后的安全回归测试当成必选项。很多企业现在还没做到这一步，这很危险。",
-      "tags": ["模型安全", "Fine-tuning", "高风险场景"]
+      "tags": [
+        "模型安全",
+        "Fine-tuning",
+        "高风险场景"
+      ]
     },
     {
       "num": 9,
@@ -72,7 +104,11 @@
       "url": "https://x.com/steipete/status/2050140050168451286",
       "source": "X / @steipete",
       "tldr": "Steipete 发的 Crabbox 很接地气：给 agent 和测试套件准备可复用的远程 Linux 盒子，支持脏工作区同步、warm boxes 和空闲自动释放。它戳中的痛点特别真实——当你同时跑多个 agent、CI 和本地开发时，个人电脑很快就被榨干。2026 年的 agent 工具链，开始认真对待‘算力调度’这件小事了。",
-      "tags": ["开发工具", "远程执行", "Agent Infra"]
+      "tags": [
+        "开发工具",
+        "远程执行",
+        "Agent Infra"
+      ]
     },
     {
       "num": 10,
@@ -80,7 +116,17 @@
       "url": "https://x.com/minchoi/status/2050290896382353432",
       "source": "X / @minchoi",
       "tldr": "泄漏信息里最关键的不是某个单点功能，而是组合：本地 Gemini Nano、屏幕访问、voice match、recall、browser agent、deep research 被放进一个名字叫 COSMO 的系统能力里。要是这条线成真，手机端 AI 的下一阶段就不是 App 里加聊天框，而是 OS 级 agent 开始接管感知、记忆和操作。Android 正在往‘可调用的副驾驶系统’收缩。",
-      "tags": ["Google", "Android", "端侧AI"]
+      "tags": [
+        "Google",
+        "Android",
+        "端侧AI"
+      ]
     }
-  ]
+  ],
+  "podcastLocalFile": "/Users/leo/.openclaw/workspace/minimax-output/ai-digest-2026-05-03.mp3",
+  "podcastTitle": "AI 日报播客版 2026-05-03",
+  "podcastVoice": "female-shaonv",
+  "podcastProvider": "MiniMax",
+  "podcastLink": "",
+  "podcastUrl": "https://zyfayes.github.io/demo/ai-daily/audio/2026-05-03.mp3"
 }

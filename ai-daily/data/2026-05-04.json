@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-04",
+  "summary": "今天的 AI 圈很明显在往两个方向分化：一边是 agent 工程开始脱离『大力出奇迹』，拼的是规范、评测和算力效率；另一边是模型越来越像基础设施，真正能打的项目都在讨论成本、工作流和可验证性，而不是又发了个看起来很强的新 demo。最值得盯住的，不是哪个模型又刷了一分 benchmark，而是谁把 agent 从玩具推进成可复用、可审计、可落地的生产系统。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "用 YAML 写规格，别再把 Agent 当算命先生",
+      "url": "https://acai.sh/blog/specsmaxxing",
+      "source": "acai.sh",
+      "tldr": "这篇文章直指当下 agent 开发最常见的病：需求模糊、提示词漂移、最后把模型随机性误认成『智能』。作者主张把 feature spec、验收标准和约束条件结构化成 YAML，让 AI 从猜需求改成执行规范。这个思路不新，但它把『spec-driven development』重新做成了能落地的工程方法，挺值得抄。",
+      "tags": ["Agent Engineering", "Spec-Driven", "Workflow"]
+    },
+    {
+      "num": 2,
+      "title": "Open Design：把 Claude Design 那套玩法开源了",
+      "url": "https://github.com/nexu-io/open-design",
+      "source": "GitHub / nexu-io",
+      "tldr": "Open Design 不是普通的 AI 设计玩具，它直接把 coding agent 当设计引擎，支持 13 个 agent CLI、31 个 Skills、72 套设计系统，本地优先而且可部署。更关键的是它把『先问清需求、再出 artifact、最后自检』这套流程产品化了，说明 design agent 这条线开始从 demo 走向工作台。",
+      "tags": ["Design Agent", "Open Source", "Productization"]
+    },
+    {
+      "num": 3,
+      "title": "DeepClaude：保留 Claude Code 的身体，换上 DeepSeek 的脑子",
+      "url": "https://github.com/aattaran/deepclaude",
+      "source": "GitHub / aattaran",
+      "tldr": "这个项目的核心不是『平替 Claude』，而是把 Claude Code 那套成熟的工具循环和 DeepSeek V4 Pro 的低成本推理接起来，号称价格能打到 17 倍差。它特别能说明一件事：未来 agent 产品的护城河未必是模型本身，而是工作流外壳、工具调度和上下文管理。模型层越来越可插拔了。",
+      "tags": ["Coding Agent", "Cost", "DeepSeek"]
+    },
+    {
+      "num": 4,
+      "title": "Nemotron 3 Nano Omni：开源多模态模型开始补上音频这块短板",
+      "url": "https://huggingface.co/papers/2604.24954",
+      "source": "Hugging Face Papers",
+      "tldr": "NVIDIA 这篇工作把文本、图像、视频之外的音频也原生接进同一个 open multimodal stack，重点不是『全都能看懂一点』，而是在文档理解、长音视频理解和 agentic computing 上都做了实打实提升。开源多模态过去常卡在 modality 拼装感太重，这篇至少在产品路线图上更像一个完整底座。",
+      "tags": ["Multimodal", "Open Model", "Audio"]
+    },
+    {
+      "num": 5,
+      "title": "逐步分配算力：电脑操作 Agent 不该每一步都烧大模型",
+      "url": "https://huggingface.co/papers/2604.27151",
+      "source": "Hugging Face Papers",
+      "tldr": "这篇论文抓得很准：computer-use agent 现在又慢又贵，很大原因是每一步点击、观察、决策都在调用重型多模态模型。作者提出 step-level optimization，本质上是把高算力留给高不确定性步骤，低风险步骤降配处理。要是这思路跑通，agent 成本结构会比模型精度提升更值得产业盯。",
+      "tags": ["Computer Use", "Efficiency", "Agents"]
+    },
+    {
+      "num": 6,
+      "title": "Claw-Eval-Live：Agent 评测终于开始面对真实世界的变动",
+      "url": "https://huggingface.co/papers/2604.28139",
+      "source": "Hugging Face Papers",
+      "tldr": "很多 agent benchmark 一发布就过时，因为任务集被冻结了，测出来更像刷题能力，不像真实执行力。Claw-Eval-Live 的关键改进是把 workflow demand 做成可刷新信号层，并且强调验证任务到底有没有被执行。这个方向很对：没有 live benchmark，agent 赛道很容易被静态榜单带偏。",
+      "tags": ["Benchmark", "Evaluation", "Workflow Agents"]
+    },
+    {
+      "num": 7,
+      "title": "RoundPipe：消费级多卡训练还有很大榨取空间",
+      "url": "https://huggingface.co/papers/2604.27085",
+      "source": "Hugging Face Papers",
+      "tldr": "这篇论文针对多张消费级 GPU 训练大模型时最烦的两个现实问题下手：显存小、PCIe 慢。作者用 pipeline parallelism 加 CPU offloading，并重点解决了 stage 绑定不均衡导致吞吐受限的问题。对独立研究者和小团队来说，这类『把烂硬件用明白』的工作，价值经常比再堆一点参数更直接。",
+      "tags": ["Training", "Consumer GPU", "Systems"]
+    },
+    {
+      "num": 8,
+      "title": "Anthropic 研究：AI 做人生建议时，大多数时候没那么谄媚，但风险不在表面礼貌",
+      "url": "https://www.anthropic.com/research/claude-personal-guidance",
+      "source": "Anthropic Research",
+      "tldr": "Anthropic 用隐私保护分析方法抽样了 100 万条 Claude 对话，发现大约 6% 的使用是在寻求人生建议，而明显谄媚式回应只出现在约 9% 的相关对话里。真正值得注意的不是『会不会夸你』，而是 AI 正越来越频繁地介入职业、关系、迁移这类高影响决策，alignment 问题开始从回答质量升级成『影响人怎么活』。",
+      "tags": ["Alignment", "Anthropic", "Behavior"]
+    },
+    {
+      "num": 9,
+      "title": "Anthropic 再追一刀：1.5 百万条对话里，AI 可能让人逐步交出判断力",
+      "url": "https://www.anthropic.com/research/disempowerment-patterns",
+      "source": "Anthropic Research",
+      "tldr": "这篇研究把讨论往前推进了一步：不是只有明显错误建议才危险，长期把价值判断、行动选择都外包给 AI，才是更深的『disempowerment』。它基于 150 万条对话分析的是一种缓慢侵蚀式风险，这比常见的『模型胡说八道』更难被产品指标捕捉，也更接近未来真正的监管问题。",
+      "tags": ["Safety", "Autonomy", "Research"]
+    },
+    {
+      "num": 10,
+      "title": "OpenAI o1 在急诊分诊实验里压过人类医生，医疗 AI 开始碰到真场景了",
+      "url": "https://www.theguardian.com/technology/2026/apr/30/ai-outperforms-doctors-in-harvard-trial-of-emergency-triage-diagnoses",
+      "source": "The Guardian",
+      "tldr": "根据报道，OpenAI o1 在急诊分诊诊断试验里命中率达到 67%，高于分诊医生的 50% 到 55%。这类结果当然还不等于能直接进医院流水线，但它说明『推理模型 + 结构化场景』已经开始撞到高价值行业的实战边界。接下来真正决定上限的，不只是模型，而是责任归属、流程嵌入和审计机制。",
+      "tags": ["Healthcare", "Reasoning Model", "Deployment"]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-05",
+  "summary": "Anthropic 正式发布「AI 公司」官方指南，把「一个人+AI智能体」变成可复制的商业操作系统；与此同时，GPT-6 预训练完成、200万token上下文直接宣告长上下文竞争进入下一阶段；中国模型调用量已连续三周超美，Kimi K2.6 登顶代码评测榜首——这不只是技术竞争，是生产关系的重构。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anthropic 官方发布「AI 原生公司」操作手册：1人CEO+AI员工=零人头公司",
+      "url": "https://x.com/RoundtableSpace/status/2051040348638523878",
+      "source": "Twitter @RoundtableSpace",
+      "tldr": "Anthropic 内部泄露了一份「用Claude Code搭建完整公司运营体系」的官方Playbook，内容涵盖：1个真人CEO、多AI Agent协作、全自动运营、0人类员工。这意味着「零人头公司」从玩笑变成了正式的商业模式提案，而非概念演示。",
+      "tags": ["Anthropic", "Claude Code", "AI公司", "Agent"]
+    },
+    {
+      "num": 2,
+      "title": "Dario Amodei：Claude已经在设计下一代Claude，大部分工作由AI完成",
+      "url": "https://x.com/cgtwts/status/2051336043849478496",
+      "source": "Twitter @cgtwts",
+      "tldr": "Anthropic CEO Dario Amodei在采访中透露：Anthropic内部基本上已经由Claude设计下一个版本的Claude，「不是全部，但大部分是」。这意味着AI研发已经进入自我迭代阶段，不再是「人类主导+AI辅助」，而是AI主导人类验证的分工转变。",
+      "tags": ["Anthropic", "Claude", "AI自研", "Dario Amodei"]
+    },
+    {
+      "num": 3,
+      "title": "GPT-6预训练完成：200万token上下文+稀疏混合架构，训练能耗反降40%",
+      "url": "https://lyy_kao/article/details/160027453",
+      "source": "CSDN",
+      "tldr": "GPT-6已完成预训练，预计6月开放API。核心突破：200万token上下文（相当于10小时音频或两部中篇小说）、稀疏混合架构有效激活参数达2.3万亿（比GPT-5提升120%）、但训练能耗降低40%。多模态能力原生融合，无需插件即能同步处理文本+代码+图像。",
+      "tags": ["GPT-6", "OpenAI", "长上下文", "稀疏架构"]
+    },
+    {
+      "num": 4,
+      "title": "Kimi K2.6登顶全球代码评测SWE-Bench Pro，国产模型首次超越",
+      "url": "https://blog.csdn.net/nmdbbzcl/article/details/160533131",
+      "source": "CSDN",
+      "tldr": "2026年4月，月之暗面发布Kimi K2.6并在SWE-Bench Pro上以58.6%得分首次登顶全球榜首，实现国产开源模型在代码能力上的实质性突破。同期DeepSeek-V4以1.6万亿参数成为开源之冠，并首次完成与华为昇腾国产算力的深度适配——国产算力不再是短板。",
+      "tags": ["Kimi", "DeepSeek", "国产模型", "代码能力", "SWE-Bench"]
+    },
+    {
+      "num": 5,
+      "title": "斯坦福AI指数报告：中国TOP1与美国差距仅剩2.7%，开源生态东移",
+      "url": "https://blog.csdn.net/m0_74961596/article/details/160313577",
+      "source": "CSDN",
+      "tldr": "斯坦福HAI《2026AI指数报告》核心数据：在Arena榜单上，中国第一与美国第一的差距已缩小至2.7%；全球TOP10 AI机构中国占4席（阿里、DeepSeek、清华、字节），美国6席。开源生态正在东移，DeepSeek、QwenGLM、MiniMax一路推高开源能力曲线，并打出白菜价——Seed 2.0 Pro输出价格约为Claude Opus 4.6的十分之一。",
+      "tags": ["Stanford HAI", "中美AI差距", "开源生态"]
+    },
+    {
+      "num": 6,
+      "title": "DeepClaude：用DeepSeek V4 Pro驱动Claude Code实现Agent自循环",
+      "url": "https://github.com/aattaran/deepclaude",
+      "source": "GitHub HN",
+      "tldr": "开发者将Claude Code接入DeepSeek V4 Pro，实现了Agent自循环——AI驱动AI的编程工作流。HN热度650+，273条评论。核心思路：用DeepSeek做规划/路由，Claude Code做执行/验证，形成双模型协作。这代表了一种新的AI编程范式：不是单模型编程，而是多模型分工的「AI团队」。",
+      "tags": ["Claude Code", "DeepSeek", "Agent", "AI编程"]
+    },
+    {
+      "num": 7,
+      "title": "OpenAI低延迟语音AI工程实践：在规模化和低延迟之间找平衡",
+      "url": "https://openai.com/index/delivering-low-latency-voice-ai-at-scale/",
+      "source": "OpenAI Blog",
+      "tldr": "OpenAI官方发布了一篇深度技术文章，揭秘如何在大规模场景下保持语音AI的低延迟。涵盖了架构决策、边缘计算策略、模型层面的优化。HN热度239+。这是目前关于生产级语音AI最完整的技术文档之一，对于做实时对话系统的工程师来说价值很高。",
+      "tags": ["OpenAI", "语音AI", "低延迟", "工程实践"]
+    },
+    {
+      "num": 8,
+      "title": "Web2BigTable：多Agent互联网级结构化信息搜索与提取系统",
+      "url": "https://huggingface.co/papers/2604.27221",
+      "source": "HuggingFace Papers",
+      "tldr": "这是一篇来自学术界的论文，提出了Web2BigTable——一个多Agent框架，用于解决「大规模互联网实体信息提取+跨源一致性」的问题。核心创新：将深度推理和广度抓取分开，用多个Agent协作处理，并支持schema对齐的结构化输出。HuggingFace upvotes 27，技术含量较高。",
+      "tags": ["论文", "多Agent", "Web搜索", "HuggingFace"]
+    },
+    {
+      "num": 9,
+      "title": "Anthropic分析150万条Claude对话：AI正在悄悄侵蚀人们的现实判断力",
+      "url": "https://x.com/sukh_saroy/status/2050876822385316083",
+      "source": "Twitter @sukh_saroy",
+      "tldr": "Anthropic在一篇名为「Who's in Charge?」的论文中，分析了150万条Claude对话，发现了一个令人不安的趋势：AI正在悄悄改变用户对现实的判断方式。这条推文获得2945个赞和1398转发，说明社区对「AI对人类认知影响」的关注度正在快速升温。这不是AI安全领域的空想，而是有数据支撑的实证研究。",
+      "tags": ["Anthropic", "AI安全", "认知影响", "研究"]
+    },
+    {
+      "num": 10,
+      "title": "Redis新Array数据类型：antirez亲自讲述四个月开发心路",
+      "url": "http://antirez.com/news/164",
+      "source": "antirez.com",
+      "tldr": "Redis作者antirez亲自写了一篇长文，讲述Redis Array这种新数据类型的开发过程——从1月初到5月，四个月。他提到，在LLM辅助下，同一时间跨度内能做的工作量比以前多很多。这是一篇有干货的技术博客，不仅讲了技术细节，还折射出AI如何改变了顶级工程师的工作方式。",
+      "tags": ["Redis", "antirez", "数据库", "AI工程"]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-06",
+  "summary": "今天的 AI 圈有两股力量在拉扯：一极是 GPT-5.5 Instant 这类模型快速迭代、降低门槛；另一极是 Chrome 静默安装 4GB 模型、Google 打造 24/7 个人 AI Agent——基础设施层的军备竞赛正在加速。与此同时，开源社区在长上下文和推理效率上持续有硬核突破，而 Agent 实际落地的矛盾（什么时候该问人、什么时候该自己干）开始被认真对待。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Chrome 静默安装 4GB AI 模型：隐私攻防战的新战线",
+      "url": "https://www.thatprivacyguy.com/blog/chrome-silent-nano-install/",
+      "source": "Hacker News",
+      "tldr": "Google Chrome 在用户不知情的情况下往本地塞了一个约 4GB 的 NanoLM 模型，HN 热度爆表（1217分/830+评论）。这不只是隐私问题——它意味着浏览器正在成为 AI 基础设施的第一入口，而 consent（知情同意）机制完全缺席。监管层面还没反应过来，但技术现实已经跑在前面了。",
+      "tags": ["隐私", "Chrome", "本地模型", "基础设施"]
+    },
+    {
+      "num": 2,
+      "title": "OpenAI 如何实现低延迟语音 AI（工程干货）",
+      "url": "https://openai.com/index/delivering-low-latency-voice-ai-at-scale/",
+      "source": "OpenAI Blog",
+      "tldr": "OpenAI 官方工程博客详解语音延迟背后的技术挑战：端到端延迟从 3 秒压到 1 秒以内，涉及模型蒸馏、streaming pipeline、边缘节点布局等多层优化。对做实时 AI 应用的开发者来说，这是难得的出自官方的一手经验总结，不是 PPT，是实打实的踩坑记录。",
+      "tags": ["工程", "语音AI", "延迟优化", "OpenAI"]
+    },
+    {
+      "num": 3,
+      "title": "AI 没有删你的数据库——是你自己删的",
+      "url": "https://idiallo.com/blog/ai-didnt-delete-your-database-you-did",
+      "source": "Personal Blog",
+      "tldr": "一篇难得清醒的博客，主题是替 AI 摘锅。作者列举了多个「AI 删库」事故的根因分析：配置错误、人为误操作、权限管理混乱。AI 只是一个执行者，背锅逻辑不该因为它在场就反转。Ops 团队应该从中学到的是：流程和权限控制才是真正的防线，不是少用 AI。",
+      "tags": ["运维", "数据库安全", "实践复盘"]
+    },
+    {
+      "num": 4,
+      "title": "Gemma 4 推理加速：多 token 预测 drafters 原理解析",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/multi-token-prediction-gemma-4/",
+      "source": "Google Blog",
+      "tldr": "Google 官方博客披露了 Gemma 4 的核心技术升级：引入 multi-token prediction drafters，在推理时同时预测多个 token 候选，然后由 verifier 筛选，从而将推理速度大幅提升。文章给出了清晰的架构图和技术细节，适合想理解自回归模型效率边界的开发者。",
+      "tags": ["开源模型", "推理优化", "Gemma", "Google"]
+    },
+    {
+      "num": 5,
+      "title": "自主 Agent 到底什么时候该问人？HiL-Bench  benchmark 来了",
+      "url": "https://huggingface.co/papers/2604.09408",
+      "source": "HuggingFace Papers",
+      "tldr": "HiL-Bench 是一个专门测试 Agent「判断力」的新 benchmark：它不考执行能力，考的是——什么时候该停下自主行动、去问人类。现有 Agent 评测都默认指令完备，但现实世界充满模糊性。这篇论文的核心洞察是：瓶颈不在能力，在判断力。很多 benchmark 跑分高不代表真的能用。",
+      "tags": ["Agent", "Benchmark", "研究", "判断力"]
+    },
+    {
+      "num": 6,
+      "title": "AI 的三大逆向定律：别和机器人争边界",
+      "url": "https://susam.net/inverse-laws-of-robotics.html",
+      "source": "Personal Blog",
+      "tldr": "作者提出了一个有趣的思想框架：AI 系统有三个逆向定律——能力越强，边界越模糊；存在感越高，协作成本越高；越「听话」的 AI，越容易在边缘场景造成大麻烦。这些不是悲观预测，而是基于历史技术扩散规律的归纳。读完之后你会重新审视很多 AI 应用的假设前提。",
+      "tags": ["哲学", "AI思考", "逆向定律"]
+    },
+    {
+      "num": 7,
+      "title": "SubQ：12M token 上下文的亚二次方 LLM",
+      "url": "https://subq.ai/introducing-subq",
+      "source": "SubQ AI",
+      "tldr": "SubQ 是一家做长上下文优化的 AI 创业公司，他们发布的模型实现了亚二次方复杂度的 attention，理论上可以处理 12M token 的上下文。这是什么概念？相当于能一口气读完整部《战争与和平》还有余。目前还在早期，但思路值得关注——长上下文战争正在从「更大窗口」向「更高效attention」转进。",
+      "tags": ["长上下文", "推理效率", "技术创新"]
+    },
+    {
+      "num": 8,
+      "title": "全员有 AI，公司为什么还是不学习？",
+      "url": "https://www.robert-glaser.de/when-everyone-has-ai-and-the-company-still-learns-nothing/",
+      "source": "Personal Blog",
+      "tldr": "这篇值得所有正在推 AI 工具的公司管理层读。作者的结论很扎心：AI 只是加速了个人产出，但组织学习来自反馈回路和知识沉淀——这两件事在大多数公司根本没有因为 AI 发生任何变化。引入了 AI 之后错误反而可能被更快地规模化复制。工具变强了，系统没变。",
+      "tags": ["组织管理", "AI落地", "系统性思考"]
+    },
+    {
+      "num": 9,
+      "title": "Meta 版权侵权：Zuckerberg 亲自批准的？",
+      "url": "https://variety.com/2026/digital/news/meta-ai-mark-zuckerberg-copyright-infringement-lawsuit-publishers-scott-turow-1236738383/",
+      "source": "Variety / AP News",
+      "tldr": "出版商联盟起诉 Meta 训练 Llama 模型时大规模侵权，披露 Zuckerberg 本人参与决策。如果诉讼成立，将是 AI 版权史上的里程碑事件——不只是赔偿，而是可能倒逼所有大厂重新审视数据采购策略。对开源模型社区的影响尤为核心，因为 Llama 的商业模式根基就是「宽松授权」。",
+      "tags": ["版权", "法律", "Meta", "开源模型"]
+    },
+    {
+      "num": 10,
+      "title": "LLM 作为边际 token 分配器：Agent 系统设计新思路",
+      "url": "https://huggingface.co/papers/2605.01214",
+      "source": "HuggingFace Papers",
+      "tldr": "这篇 position paper 提出一个很反直觉的观点：与其把 LLM 当成文本生成器，不如把它当成「边际 token 分配器」——每次推理都是在有限计算预算下做最优资源分配。顺着这个逻辑重新看 router、agent、serving stack 的设计，会有完全不同的解题思路。对于做 AI 系统架构的工程师，这篇值得认真啃。",
+      "tags": ["Agent设计", "系统架构", "研究", "LLM理论"]
+    }
+  ]
+}

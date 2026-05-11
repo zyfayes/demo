@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-11",
+  "summary": "本地 AI 基础设施争夺战悄然开打——HN 上「Local AI needs to be the norm」拿到 1500+ 分数，说明社区情绪已经从「AI 能做什么」转向「AI 应该在哪跑」。与此同时，各大厂商在多模态 Agent 路线上持续内卷：Gemini File Search 升级为 multimodal RAG，Anthropic 给 Claude 加了「做梦」功能，Laravel AI SDK 支持 sub-agent 分解任务。真正有意思的是几个社区自发的信号——PS3 模拟器维护者公开恳求停止投递 AI PR、DeepSeek TUI 在 Terminal 里跑出完整 coding agent——这些才是实操层面的硬核内容，比任何发布会都值得 follow。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "本地 AI 正在成为刚需，而非可选项",
+      "url": "https://unix.foo/posts/local-ai-needs-to-be-norm/",
+      "source": "Hacker News",
+      "tldr": "作者从实际工程经验出发，指出在数据隐私、网络延迟、合规三重压力下，本地部署 LLM 是唯一出路。现在树莓派级别的设备就能跑量化过的 7B 模型，这不是小众极客玩法了，已经是工程团队的正经选项。核心论点是：当 AI 渗透进日常工作流，数据主权和 latency 就不再是优化项，而是基础设施的必选项。",
+      "tags": ["local-ai", "privacy", "infrastructure"]
+    },
+    {
+      "num": 2,
+      "title": "AI 编程工具必须降低维护成本，否则等于零",
+      "url": "https://www.jamesshore.com/v2/blog/2026/you-need-ai-that-reduces-your-maintenance-costs",
+      "source": "James Shore",
+      "tldr": "James Shore 提出了一个硬核标准：AI 编程工具的价值不体现在它写了多少代码，而体现在它降低了多少维护负担。写一堆难以理解的代码然后丢给团队维护，这是净负资产。他的核心框架是把 AI 生成代码的成本和全生命周期维护成本放在同一个账本里看，工具能不能 work 要看 team velocity 而不是代码产量。这个观点在 Cursor/Windsurf 这些工具狂飙突进的时候泼了一盆冷水。",
+      "tags": ["ai-coding", "engineering", "dx"]
+    },
+    {
+      "num": 3,
+      "title": "任务瘫痪：当我们有太多 AI 工具时",
+      "url": "https://g5t.de/articles/20260510-task-paralysis-and-ai/index.html",
+      "source": "g5t.de",
+      "tldr": "一个安静的、但非常真实的反思：当 AI 把任务执行的摩擦降到接近零之后，「选择做什么」反而成了新的瓶颈。作者把这个叫做 task paralysis——不是没能力做，是有能力但不知道该做哪个。比起 AI 能力的讨论，这个心理层面的观察更稀缺。它指向的问题是：工具的民主化并没有同步带来决策的民主化，越来越多的人需要面对「所有事都可以被 AI 加速」的虚无感。",
+      "tags": ["ai-productivity", "psychology", "reflection"]
+    },
+    {
+      "num": 4,
+      "title": "PS3 模拟器维护者恳求：别再投 AI 写的 PR 了",
+      "url": "https://kotaku.com/playstation-3-emulator-devs-politely-ask-that-people-stop-flooding-it-with-ai-code-pull-requests-2000694656",
+      "source": "Kotaku",
+      "tldr": "RPCS3 项目维护者在 GitHub 上公开发帖，请求社区停止提交 AI 生成的代码 PR。原因是这些 PR 代码质量参差不齐，维护者需要花大量时间 review，实际上增加了负担而非减少。这个事件是开源社区对「AI 提效」叙事最诚实的反刍：技术债的债主永远是维护者，不是贡献者。它揭示了一个不对称——提 PR 的人获得了「我 contrib 了」的满足感，但 review 成本由少数人承担。",
+      "tags": ["open-source", "community", "ai-tooling"]
+    },
+    {
+      "num": 5,
+      "title": "Gemini File Search 升级为原生多模态 RAG",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/expanded-gemini-api-file-search-multimodal-rag/",
+      "source": "Google Blog",
+      "tldr": "Google 正式把 Gemini API 的 File Search 扩展为 multimodal RAG 能力，现在可以直接理解 PDF、图片、表格，不需要额外 OCR 或格式转换步骤。这对需要处理合同、财报、研究报告的 AI 应用来说是实打实的工程升级，直接影响 RAG pipeline 的复杂度。技术细节是它用了原生多模态编码而不是拼凑多个单模态模型，这意味着 context 里的图片和文字是同一个 embedding space 里被联合检索的。",
+      "tags": ["gemini", "multimodal", "rag", "google"]
+    },
+    {
+      "num": 6,
+      "title": "Laravel AI SDK 引入 sub-agent 支持",
+      "url": "https://x.com/taylorotwell/status/2053840664631066627",
+      "source": "Taylor Otwell (X)",
+      "tldr": "Laravel AI SDK 刚刚支持了 sub-agent，意味着一个父级 agent 可以在自己的 tools() 里返回另一个 agent，让它去处理专门子任务。这个设计在架构上很优雅：每个 sub-agent 有自己的指令、工具、provider 配置和独立的 context window，父 agent 只负责调度不负责执行。对于 Laravel 生态的 AI 应用来说，这意味着可以构建真正分层的 AI 工作流，而不是把所有逻辑塞进一个 prompt 里。这是 PHP 生态少有的、值得其他框架参考的 AI 架构设计。",
+      "tags": ["laravel", "ai-agent", "architecture", "php"]
+    },
+    {
+      "num": 7,
+      "title": "DeepSeek TUI：Terminal 里跑满血 coding agent",
+      "url": "https://x.com/hasantoxr/status/2053805178428768512",
+      "source": "X (Hasan Toxer)",
+      "tldr": "一个叫 deepseek-tui 的 npm 包，一行命令装好，不需要浏览器、不需要 IDE 插件、不需要订阅，直接在 Terminal 里跑 DeepSeek 的 coding agent。这个工具代表了一个有趣的方向：极简主义开发者体验。用过 Cursor/Cline 的都知道那是 Electron 大礼包，而 TUI 路线轻得多。问题是 DeepSeek API 的代码能力能不能打过 Claude，如果打得过，那 Cursor 的护城河就是 IDE 集成本身而不是模型。",
+      "tags": ["deepseek", "terminal", "coding-agent", "dx"]
+    },
+    {
+      "num": 8,
+      "title": "Gary Marcus：人类对 AI 进展的恐慌用错了方向",
+      "url": "https://garymarcus.substack.com/p/misplaced-panic-over-ai-progress",
+      "source": "Gary Marcus Newsletter",
+      "tldr": "Gary Marcus 拆解了 METR 最新「AI 时间线」图的逻辑问题，指出人们恐慌的那个方向（AI 在 X 年内自动化所有工作）和实际的技术瓶颈之间存在巨大鸿沟。他不是唱衰 AI，而是说人们把注意力放在了错误的地方——比如害怕 AI 替代 X 工作，而不是去理解 AI 真正在做的基础设施变化。Marcus 的观点向来两极，但他的方法论是值得尊重的：拆解数据，而不是贩卖焦虑或者贩卖兴奋。",
+      "tags": ["ai-safety", "analysis", "critique"]
+    },
+    {
+      "num": 9,
+      "title": "论文：为什么 AI 系统不该都是聊天机器人",
+      "url": "https://huggingface.co/papers/2605.07896",
+      "source": "Hugging Face Papers",
+      "tldr": "这篇论文argue说把 AI 做成对话式聊天机器人不是一个中立的界面选择，而是一种「占主导地位的社会技术配置」，它系统性地重塑了社会、经济、法律和环境系统。作者列举了 chatbot 范式的结构性缺陷：它让 AI 在错误方向上变得对社会有用（比如监控式客服而不是增强创造力），并且把交互方式锁死在输入-响应-反馈这个极窄的频谱内。这个反思在 LLM 应用已经过度聊天化的当下显得格外及时，讨论的是 interface design 和权力结构的深层关系。",
+      "tags": ["hugging-face", "research", "interface-design", "llm"]
+    },
+    {
+      "num": 10,
+      "title": "TurboQuant：KV Cache 压缩 6 倍，LLM 推理成本大降",
+      "url": "https://coaio.com",
+      "source": "coai(o) / Google",
+      "tldr": "Google 的 TurboQuant 算法被重新挖掘出来——它能把 LLM 的 Key-Value cache 压缩到原来的 1/6，同时保持推理质量基本不下降。这不是量化（quantization），而是针对 KV cache 的专门压缩。推理侧的成本大头之一就是 memory bandwidth，KV cache 压缩等于直接降低了这个瓶颈。对于部署 LLM 服务的团队来说，如果这个技术能落地，同等硬件能 serve 更多的并发请求。6x 压缩听起来激进了点，但引用来源里说它 re-emerged，意思是 Google 内部其实早就跑着了。",
+      "tags": ["inference", "optimization", "google", "kv-cache"]
+    }
+  ]
+}

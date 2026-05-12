@@ -1,0 +1,86 @@
+{
+  "date": "2026-05-12",
+  "summary": "AI 圈正在从「能做什么」转向「能不能信」——本周 Claude Code 的 /goal 功能让自主 Agent 能跑多天任务不再是宣传文案，GitHub 上已经有人实际用上了；而 AKOOL 的视频推理速度和韩国团队让模型「承认无知」的突破，则在工程和可靠性两个维度同时推进。更值得关注的是，律师圈开始认真对待 AI 笔记工具了，这比任何政策宣示都更能说明 AI 侵入专业场景的深度。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "本地 AI 应该成为常态，而不是例外",
+      "url": "https://unix.foo/posts/local-ai-needs-to-be-norm/",
+      "source": "Hacker News",
+      "tldr": "1754 点热度背后的共识：当你把数据留在本地，模型能力差距会迅速收窄，真正的瓶颈是隐私和延迟而非模型质量。这篇文章的实战价值在于，作者给出了具体场景下本地模型的实测对比，而不是空洞地呼吁「保护隐私」。如果你的工作涉及敏感数据，从今天开始认真评估本地部署。",
+      "tags": ["Local AI", "隐私", "实战"]
+    },
+    {
+      "num": 2,
+      "title": "AI 编程工具的真正考验：它能不能降低你的维护成本",
+      "url": "https://www.jamesshore.com/v2/blog/2026/you-need-ai-that-reduces-your-maintenance-costs",
+      "source": "James Shore",
+      "tldr": "代码写得快三倍，但维护成本没降？那你只是用短期速度换来了永久的负担。这个反直觉但极其重要的观点正在被更多实际项目验证：GitLab 砍团队、Shopify 的 River 在公开频道运行——不是说 AI 写代码不行，而是团队必须重新思考维护成本的归属。选 AI 编程工具时，把「它会不会让我的代码更难维护」放在评估标准的首位。",
+      "tags": ["AI 编程", "工程实践", "成本"]
+    },
+    {
+      "num": 3,
+      "title": "Claude Code 推出 /goal：2026 年最被低估的 AI 功能",
+      "url": "https://x.com/AlexFinn/status/2053976411296452887",
+      "source": "Twitter/AlexFinn",
+      "tldr": "/goal 让 Agent 能完成长达数天的多步骤任务，Claude Code、Codex、OpenClaw 都已支持。这不是功能更新，是工程层面的实质突破——当你可以让一个 Agent 自主工作一整天而不需要人工介入，workflow 的设计逻辑就必须全部重写。现在就试这个 prompt：「Based on [目标]，work until complete」，然后看它怎么拆解任务。",
+      "tags": ["Claude Code", "Agent", "工作流"]
+    },
+    {
+      "num": 4,
+      "title": "Anthropic 开源完整的华尔街工作流：DCF、LBO、股权研究报告",
+      "url": "https://github.com/anthropics/anthropic-external-tools",
+      "source": "Twitter/socialwithaayan",
+      "tldr": "Anthropic 把 DCF 模型、LBO 模型、并购分析、KYC 检查全套开源，接入 Bloomberg、FactSet、S&P Global 等数据源。这意味着金融分析的基础设施正在被标准化——不是取代分析师，而是让分析师能快速调用专业工具。这套工作流对 FinTech 创业者和想用 AI 做投研的人来说是现成的参考架构。",
+      "tags": ["Anthropic", "金融 AI", "开源"]
+    },
+    {
+      "num": 5,
+      "title": "韩国团队让 AI 模型能「承认自己不知道」",
+      "url": "https://www.independent.co.uk/tech/ai-overconfidence-hallucination-research-b2034047.html",
+      "source": "The Independent",
+      "tldr": "首尔研究团队训练模型在不确定时主动说「我不知道」，而不是像现在的模型那样过度自信地编答案。这个突破对自动驾驶和医疗诊断场景意义重大——AI 的幻觉正在从「技术问题」变成「安全问题」，能准确表达不确定性的模型将在监管和合规层面获得显著优势。",
+      "tags": ["AI 可靠性", "安全", "研究"]
+    },
+    {
+      "num": 6,
+      "title": "AKOOL 视频推理速度提升 10-20 倍，生成只需 1-3 秒",
+      "url": "https://www.prnewswire.com/news-releases/akool-launches-breakthrough-ai-video-inference-engine-301473536.html",
+      "source": "PR Newswire",
+      "tldr": "AKOOL 新发布的视频推理引擎把视频生成时间压缩到 1-3 秒，比常规方法快 10-20 倍。做到这个速度意味着实时 AI 视频应用终于从 demo 进入可部署阶段——客服、直播、教育场景的 AI 视频交互不再是基础设施的障碍。但需要注意：PR 稿里写的「10-20x」需要看实际 benchmark 才能确认。",
+      "tags": ["视频生成", "AI 应用", "工程突破"]
+    },
+    {
+      "num": 7,
+      "title": "Interfaze：专为高准确率设计的新模型架构",
+      "url": "https://interfaze.ai/blog/interfaze-a-new-model-architecture-built-for-high-accuracy-at-scale",
+      "source": "Interfaze AI",
+      "tldr": "Interfaze 是一个新模型架构，专门针对大规模高准确率场景设计。目前放出的信息有限，但从 HN 讨论来看已经引起了不少关注。这是需要跟踪的项目——架构创新通常比参数规模更能带来质变，特别是当大家都在比参数量的时候。",
+      "tags": ["模型架构", "技术创新"]
+    },
+    {
+      "num": 8,
+      "title": "AI 笔记工具让律师们坐立不安",
+      "url": "https://www.nytimes.com/2026/05/09/business/dealbook/ai-notetakers-legal-risk.html",
+      "source": "纽约时报",
+      "tldr": "NYT 的深度报道揭示：AI 会议笔记工具已经进入律所真实工作流，但律师们真正担心的是「不知道 AI 记了什么、记了多少」。这和医生对 AI 诊断工具的警惕一模一样——不是怕 AI 犯错，是怕自己丧失对信息的控制权。监管层面这个问题比技术问题更早爆发。",
+      "tags": ["AI 法律", "隐私", "专业场景"]
+    },
+    {
+      "num": 9,
+      "title": "Artificial Analysis 发布编程 Agent 指数，填补评测空白",
+      "url": "https://x.com/ArtificialAnlys/status/2053865095076438427",
+      "source": "Artificial Analysis",
+      "tldr": "终于有人系统性地评测「Agent + 模型的组合效果」了。这个指数覆盖 3 个主流 benchmark、token 用量和成本，让开发者在选型时不再只盯着模型分数。编程 Agent 的实际表现差异巨大，光靠模型榜单根本无法判断哪个组合最适合你的场景。",
+      "tags": ["Benchmark", "AI 编程", "Agent"]
+    },
+    {
+      "num": 10,
+      "title": "Gemini API 文件搜索升级为多模态 RAG",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/expanded-gemini-api-file-search-multimodal-rag/",
+      "source": "Google Blog",
+      "tldr": "Gemini API 的 File Search 现在支持直接处理图像、音频、视频，不再需要你先提取文本再喂给模型。这是 RAG 场景的重要体验升级——多模态文件现在可以原生检索，对构建知识库和文档分析工具的团队来说是直接的工程效率提升。",
+      "tags": ["Gemini", "多模态", "RAG", "开发者工具"]
+    }
+  ]
+}

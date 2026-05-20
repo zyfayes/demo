@@ -1,0 +1,126 @@
+{
+  "date": "2026-05-20",
+  "summary": "今天的 AI 圈很明显在往两个方向狂奔：一边是 Google、OpenAI、Anthropic 继续把模型往可执行、可验证、可接工具的方向推，另一边是开发者社区开始认真抠成本、抠上下文、抠 agent 基建细节。真正值得看的是那些把“更强”翻译成“更能干活”的发布，以及少数敢戳破泡沫、讨论工程现实的文章。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Gemini 3.5 发布：Google 把前沿智能和 Agent 执行力绑在一起",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/",
+      "source": "Google Blog",
+      "tldr": "Google 在 2026 年 5 月 19 日发布 Gemini 3.5，把重点从“更会答题”转向“更会执行复杂工作流”。核心信号不是单纯涨分，而是 Flash 版本直接围绕 agentic tasks、图形理解和多步骤操作来设计，说明大厂现在卷的是可落地的任务闭环，而不是单点 demo。",
+      "tags": [
+        "模型发布",
+        "Google",
+        "Agent"
+      ]
+    },
+    {
+      "num": 2,
+      "title": "Gemini Omni：Google 把多模态从图像扩到可对话式视频编辑",
+      "url": "https://deepmind.google/models/gemini-omni/",
+      "source": "Google DeepMind",
+      "tldr": "Gemini Omni 的关键不是“又一个视频模型”，而是把视频编辑做成了多轮自然语言交互，强调连续编辑、物理一致性和世界知识。它等于在告诉行业，多模态下一阶段不是堆炫技样片，而是让创作过程变成可迭代、可引用、可控的对话。",
+      "tags": [
+        "多模态",
+        "视频生成",
+        "Google DeepMind"
+      ]
+    },
+    {
+      "num": 3,
+      "title": "OpenAI 推内容溯源方案：把 SynthID、C2PA 和公开验证工具揉到一起",
+      "url": "https://openai.com/index/advancing-content-provenance/",
+      "source": "OpenAI",
+      "tldr": "OpenAI 在 2026 年 5 月 19 日宣布为 ChatGPT、Codex 和 API 生成的图片加入更完整的 provenance 体系，包括 C2PA、Google SynthID 以及一个公开验证工具预览。重点不只是“打水印”，而是承认单一方案不够，开始走元数据、隐形水印、公开校验三层并行的工程路线。",
+      "tags": [
+        "OpenAI",
+        "内容溯源",
+        "安全"
+      ]
+    },
+    {
+      "num": 4,
+      "title": "Anthropic 收购 Stainless：Agent 之争开始卷 SDK 和 MCP 连接层",
+      "url": "https://www.anthropic.com/news/anthropic-acquires-stainless",
+      "source": "Anthropic",
+      "tldr": "Anthropic 5 月 18 日收购 Stainless，表面看是并购，实质是在补 agent 连接现实世界的基础设施。Stainless 一直在做 SDK、CLI 和 MCP server 生成，这意味着 Anthropic 已经把“模型能力”往“接口可达性”和“开发者接入效率”上转，战场更像平台层而不是单模型层。",
+      "tags": [
+        "Anthropic",
+        "MCP",
+        "开发者工具"
+      ]
+    },
+    {
+      "num": 5,
+      "title": "Qwen 3.7 Max 预览版突袭上线：国产头部模型进入高频迭代期",
+      "url": "https://www.qbitai.com/2026/05/419822.html",
+      "source": "量子位",
+      "tldr": "量子位 2026 年 5 月 19 日报道，Qwen3.7-Max-Preview 和 Qwen3.7-Plus-Preview 已经出现在 Arena 排名中，文本和视觉榜单都冲到国产第一梯队。更值得注意的是节奏变化：Qwen 从 3.5 到 3.7 几乎按月推进，说明国产模型竞争已经从“大版本发布”切到“持续 preview 迭代”。",
+      "tags": [
+        "Qwen",
+        "中文AI",
+        "模型评测"
+      ]
+    },
+    {
+      "num": 6,
+      "title": "过去六个月 LLM 发生了什么：Simon Willison 用 5 分钟讲透拐点",
+      "url": "https://simonwillison.net/2026/may/19/5-minute-llms/",
+      "source": "Simon Willison",
+      "tldr": "Simon Willison 这篇其实是高密度行业复盘，不是普通演讲稿。他把过去半年真正的拐点归纳成两件事：顶级模型王座频繁易手，以及 coding agents 从“偶尔能用”跨到了“日常可用”，这个判断比大多数新闻稿更接近现实。",
+      "tags": [
+        "行业复盘",
+        "Coding Agents",
+        "观点"
+      ]
+    },
+    {
+      "num": 7,
+      "title": "Forge：用 guardrails 把 8B 本地模型抬到能跑多步 Agent 工作流",
+      "url": "https://github.com/antoinezambelli/forge",
+      "source": "GitHub",
+      "tldr": "这个开源项目的亮点不是又造了个 agent 框架，而是明确把问题定义成“可靠性层”：靠 rescue parsing、retry nudges、step enforcement 和上下文压缩，把 8B 本地模型拉到更可用的工作流水平。README 直接给出 26 个场景的评测成绩，说明社区现在越来越重视 harness 和 guardrails，而不再迷信裸模型参数。",
+      "tags": [
+        "开源项目",
+        "Agent",
+        "Guardrails"
+      ]
+    },
+    {
+      "num": 8,
+      "title": "antirez 提出 EDIT 工具替代方案：给每行加短校验标签，省 token 还更稳",
+      "url": "https://antirez.com/news/166",
+      "source": "antirez",
+      "tldr": "antirez 讨论的是一个很工程、但非常关键的问题：传统 EDIT 工具要求模型把旧文本逐字吐出来做 CAS，太浪费 token，也容易在特殊字符上翻车。她/他提出用 line number + 短 checksum tag 来做编辑校验，本质是在用更轻的冲突检测换更高的本地 agent 编辑效率，这种上下文工程细节才是真正影响产品体验的地方。",
+      "tags": [
+        "上下文工程",
+        "LLM Agent",
+        "编辑工具"
+      ]
+    },
+    {
+      "num": 9,
+      "title": "OSCAR：2-bit KV Cache 量化又往前推了一步",
+      "url": "https://huggingface.co/papers/2605.17757",
+      "source": "Hugging Face Papers",
+      "tldr": "OSCAR 瞄准的是 2-bit KV cache quantization 这个很硬核、但极其实用的方向，目标是进一步压低推理内存占用。对部署侧来说，这类工作比空泛的“更强模型”更值钱，因为它直接决定长上下文和本地推理能不能跑得动。",
+      "tags": [
+        "论文",
+        "推理优化",
+        "量化"
+      ]
+    },
+    {
+      "num": 10,
+      "title": "AI 太贵了：Ed Zitron 正面开喷生成式 AI 的经济学现实",
+      "url": "https://www.wheresyoured.at/ai-is-too-expensive/",
+      "source": "Where's Your Ed At",
+      "tldr": "Ed Zitron 这篇长文的核心论点很直接：现在的 AI 商业模式离健康还远，很多收入增长其实被巨额算力承诺和资本输血撑着。你未必同意他的语气，但这篇值得看，因为它逼着大家把注意力从榜单和 demo 拉回到毛利、推理成本和真实需求。",
+      "tags": [
+        "观点",
+        "AI经济学",
+        "成本"
+      ]
+    }
+  ]
+}

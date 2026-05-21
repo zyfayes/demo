@@ -1,0 +1,126 @@
+{
+  "date": "2026-05-21",
+  "summary": "今天的主线不是又多了几个聊天机器人，而是 AI 正在从“回答问题”变成“带执行环境、带状态、带支付能力的操作层”。真正值得看的是两类东西：一类是 Gemini 3.5 Flash、Managed Agents、Forge 这种把 agent 跑起来的基础设施；另一类是 S-Bus、ThoughtTrace、prompt debt、形式化验证这种给失控复杂度踩刹车的工程化研究。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Gemini 3.5 Flash：Google 把高速模型推成默认 agent 引擎",
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5/",
+      "source": "Google Blog / HN",
+      "tldr": "Google 发布 Gemini 3.5 Flash，并把它放进 Gemini App、AI Mode、Antigravity、Gemini API 和企业 agent 平台。重点不是单项 benchmark，而是它把低延迟、长任务、coding、subagents 绑在一起，说明 Google 想把 Flash 级模型做成默认执行层。值得留意的是，3.5 Pro 还在后面，这次更像是先抢 agent 分发入口。",
+      "tags": [
+        "模型发布",
+        "Agent",
+        "Google"
+      ]
+    },
+    {
+      "num": 2,
+      "title": "OpenAI 模型推翻离散几何核心猜想：AI 开始进入“真研究”区间",
+      "url": "https://openai.com/index/model-disproves-discrete-geometry-conjecture/",
+      "source": "OpenAI / HN",
+      "tldr": "OpenAI 披露其模型推翻了离散几何中的一个核心猜想，这类结果比普通数学题 benchmark 更硬，因为它要求提出反例或证明路径，而不是复述训练语料里的套路。如果细节经同行检验成立，它会成为“AI 辅助科学发现”叙事里更有分量的一块证据。短期看，这也会倒逼评测从考试题转向真实研究贡献。",
+      "tags": [
+        "科学发现",
+        "数学",
+        "Research"
+      ]
+    },
+    {
+      "num": 3,
+      "title": "Forge：用 guardrails 把 8B 模型的 agent 任务从 53% 拉到 99%",
+      "url": "https://github.com/antoinezambelli/forge",
+      "source": "GitHub / HN",
+      "tldr": "Forge 是一个自托管 LLM tool-calling 和多步 agent workflow 框架，最抓人的点是它声称靠 guardrails 让 8B 模型在 agentic tasks 上从 53% 提到 99%。这不是“模型更聪明”的路线，而是 harness engineering：约束、状态、工具调用协议和反馈循环可能比换更大模型更划算。对团队落地 agent 来说，这条线比发布会 demo 更值得抄作业。",
+      "tags": [
+        "开源项目",
+        "Agent工程",
+        "Tool Calling"
+      ]
+    },
+    {
+      "num": 4,
+      "title": "ByteDance Lance：3B active 参数统一处理图像、视频生成、编辑与理解",
+      "url": "https://github.com/bytedance/Lance",
+      "source": "GitHub / AI-TLDR",
+      "tldr": "Lance 把图像/视频生成、编辑和理解塞进一个 3B active 参数的原生统一多模态模型里，方向上很像把视觉工作流从一堆专用模型收敛到单栈。它的价值不只在参数规模，而在产品形态：同一个模型能看、能改、能生成，agent 调用视觉工具时会少很多胶水层。需要继续看开源权重、训练细节和真实编辑质量。",
+      "tags": [
+        "多模态",
+        "开源模型",
+        "视频生成"
+      ]
+    },
+    {
+      "num": 5,
+      "title": "S-Bus：给多 agent 共享状态加“读集追踪”，专治 stale read",
+      "url": "https://arxiv.org/abs/2605.17076",
+      "source": "Hugging Face Papers / arXiv",
+      "tldr": "S-Bus 针对多 agent 共享自然语言状态里的结构性竞态问题：A 读到旧状态、B 改了内容、A 再写回去，污染就开始扩散。论文用 HTTP middleware 和 DeliveryLog 自动重建每个 agent 的 read set，在提交时发现 stale-read 和写冲突。这个方向很实用，因为多 agent 失败经常不是推理不行，而是并发语义一塌糊涂。",
+      "tags": [
+        "多Agent",
+        "状态管理",
+        "论文"
+      ]
+    },
+    {
+      "num": 6,
+      "title": "ThoughtTrace：第一次大规模记录用户“没说出口的想法”",
+      "url": "https://thoughttrace-project.github.io/",
+      "source": "ThoughtTrace / arXiv",
+      "tldr": "ThoughtTrace 收集了 1058 名用户、2155 段真实多轮对话、17058 个 turn 和 10174 条自报告 thought，把“用户为什么这么问、看到回答后怎么想”变成数据。它提醒我们：只看 prompt 和 response 会漏掉大量用户目标、犹豫和反应。对个性化助手、对齐训练和产品研究来说，这比继续堆聊天日志更接近真实需求。",
+      "tags": [
+        "人机交互",
+        "数据集",
+        "对齐"
+      ]
+    },
+    {
+      "num": 7,
+      "title": "Interactive Evaluation Requires a Design Science：agent 评测不能再只看单轮答案",
+      "url": "https://huggingface.co/papers/2605.17829",
+      "source": "Hugging Face Papers",
+      "tldr": "这篇论文指出，LLM 越来越多是在工具、环境、用户和其他 agent 中连续行动，但很多评测仍继承“固定输入、孤立输出、一次判分”的老范式。真正的 interactive eval 需要设计科学：任务环境、交互协议、用户模拟、失败分类都要被系统化。它的信号很清楚：agent 时代的 benchmark 不是多出几个网页任务，而是评测方法本身要重写。",
+      "tags": [
+        "评测",
+        "Agent",
+        "论文"
+      ]
+    },
+    {
+      "num": 8,
+      "title": "Prompts are technical debt too：提示词也是技术债，而且更难管",
+      "url": "https://www.seangoedecke.com/prompts-are-technical-debt-too/",
+      "source": "Sean Goedecke",
+      "tldr": "Sean Goedecke 把 prompts 直接归入技术债：它们增长快、依赖上下文、行为不透明，而且小改动可能造成大幅性能波动。AGENTS.md、CLAUDE.md、skills、tool prompts 一多，系统就会进入没人能完整理解的状态。最有用的建议不是少用提示词，而是像管代码一样管它：版本、测试、评审、边界和删除机制都要有。",
+      "tags": [
+        "工程实践",
+        "Prompt",
+        "技术债"
+      ]
+    },
+    {
+      "num": 9,
+      "title": "Structural Backpressure Beats Smarter Agents：给 AI 编码循环加形式化验证闸门",
+      "url": "https://reubenbrooks.dev/blog/structural-backpressure-beats-smarter-agents/",
+      "source": "Reuben Brooks",
+      "tldr": "这篇文章的观点很硬：生产软件里，结构化反压比单纯等 agent 更聪明更可靠。作者主张把类型检查、属性测试、形式化验证等变成 agent coding loop 的闸门，让失败以机器可读的方式回流，而不是靠人盯 diff。它击中了当前 AI coding 的痛点：模型会越来越强，但没有验证闭环，强模型只是更快地产生不确定性。",
+      "tags": [
+        "AI编程",
+        "形式化验证",
+        "工程实践"
+      ]
+    },
+    {
+      "num": 10,
+      "title": "Gemini Managed Agents：一次 API 调用拿到带 Linux 环境的托管 agent",
+      "url": "https://blog.google/innovation-and-ai/technology/developers-tools/managed-agents-gemini-api/",
+      "source": "Google Blog / Google AI Studio",
+      "tldr": "Google 推出 Gemini API 的 Managed Agents：一次 API 调用即可启动一个 Google 托管的隔离 Linux 环境，让 agent 运行工具、执行代码、按 Markdown 指令工作。这是 agent 平台化的强信号，Google 不只是卖模型，还在卖执行环境和运维抽象。风险也同步变大：一旦 agent 有 shell、网络和长期任务，权限、审计、成本控制会变成第一等问题。",
+      "tags": [
+        "Agent平台",
+        "开发者工具",
+        "Google"
+      ]
+    }
+  ]
+}

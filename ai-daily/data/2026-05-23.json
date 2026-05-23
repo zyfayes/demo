@@ -1,0 +1,126 @@
+{
+  "date": "2026-05-23",
+  "summary": "今天最值得看的不是又一个单点 demo，而是 AI 进入“基础设施重定价”和“代理工程化”的阶段：内存、价格、沙箱、工具调用稳定性都在决定谁能把模型真正用起来。另一条暗线是社区开始反感 AI slop，好的 agent 不只是更会生成，而是更会克制、更会规划、更懂上下文。",
+  "articles": [
+    {
+      "num": 1,
+      "title": "Anna's Archive 写给 LLM 的 llms.txt：开放数据也需要机器可读的礼仪",
+      "url": "https://annas-archive.gl/blog/llms-txt.html",
+      "source": "Anna's Blog / Hacker News",
+      "tldr": "Anna's Archive 把给 LLM 的访问方式、批量下载入口和捐赠诉求写进 llms.txt，本质上是在给“模型如何消费公共知识库”立规矩。重点不是文件格式本身，而是数据提供方开始主动和 AI crawler/agent 谈判：别硬闯 CAPTCHA，走 API、torrent、SFTP 这些可持续路径。",
+      "tags": [
+        "llms.txt",
+        "数据访问",
+        "开放知识"
+      ]
+    },
+    {
+      "num": 2,
+      "title": "No Slop Grenade：社区开始系统性反感 AI 生成的文字墙",
+      "url": "https://noslopgrenade.com/",
+      "source": "Hacker News",
+      "tldr": "这个小工具/网页火起来，是因为它精准戳中了一个痛点：把 AI 生成的长篇废话直接扔进对话，会污染协作而不是提高效率。对产品和 agent 设计的启发很直接：输出质量不只看信息量，也要看是否尊重对话场景、是否能压缩到人真正愿意读。",
+      "tags": [
+        "AI UX",
+        "协作",
+        "反AI垃圾内容"
+      ]
+    },
+    {
+      "num": 3,
+      "title": "AI 正在推高内存价格，廉价消费电子可能要重新定价",
+      "url": "https://davidoks.blog/p/ai-is-killing-the-cheap-smartphone",
+      "source": "David Oks / Simon Willison / Hacker News",
+      "tldr": "这篇文章把 AI 基建热和消费电子涨价连了起来：DRAM/NAND 供应商有限，数据中心抢产能，会把手机、路由器、电脑这类低毛利硬件挤到更贵的位置。它提醒我们，AI 竞争不是只发生在模型榜单上，还会通过供应链把成本传导到普通设备。",
+      "tags": [
+        "AI基础设施",
+        "内存",
+        "供应链"
+      ]
+    },
+    {
+      "num": 4,
+      "title": "Antigravity 2.0 登顶 OpenSCAD 3D 建模基准：编码 agent 正在跨进 CAD",
+      "url": "https://modelrift.com/blog/openscad-llm-benchmark/",
+      "source": "ModelRift / Hacker News",
+      "tldr": "ModelRift 用复杂的万神殿 OpenSCAD 任务比较 Codex、Claude、Antigravity 等工具，Antigravity 2.0 表现突出。这个基准有意思在于它不是普通代码题，而是要求模型同时处理空间结构、约束和可执行几何脚本，说明 coding agent 的战场正在从文本代码扩展到工程设计。",
+      "tags": [
+        "AI Coding",
+        "Benchmark",
+        "CAD"
+      ]
+    },
+    {
+      "num": 5,
+      "title": "DeepSeek V4 Pro 永久降价：模型能力战之外，价格战已经常态化",
+      "url": "https://api-docs.deepseek.com/quick_start/pricing",
+      "source": "DeepSeek API Docs / Hacker News",
+      "tldr": "DeepSeek 把 V4 Pro 折扣变成永久价格，信号很清楚：前沿能力如果不能稳定变成低成本 API，就很难吃下真实工作负载。对开发者来说，这比发布会口号更重要，因为 agent 的成本结构通常被长上下文、工具调用和重试次数放大。",
+      "tags": [
+        "DeepSeek",
+        "模型价格",
+        "API"
+      ]
+    },
+    {
+      "num": 6,
+      "title": "Anthropic Project Glasswing 初步更新：安全研究开始贴近真实 agent 风险",
+      "url": "https://www.anthropic.com/research/glasswing-initial-update",
+      "source": "Anthropic Research / Hacker News",
+      "tldr": "Anthropic 发布 Project Glasswing 的阶段性更新，重点不只是抽象对齐，而是更接近真实部署中的 agent 行为和风险边界。现在的大模型安全问题正在从“模型会不会说错话”转向“模型拿到工具和权限后，会不会在长链路任务里失控”。",
+      "tags": [
+        "Anthropic",
+        "AI Safety",
+        "Agents"
+      ]
+    },
+    {
+      "num": 7,
+      "title": "KanBots：每张看板卡片都能跑并行 Claude Code/Codex agent",
+      "url": "https://www.kanbots.dev/",
+      "source": "KanBots / Hacker News",
+      "tldr": "KanBots 把 agent 编排做成 Kanban：丢一个项目文件夹进去，每张卡片可以派发 Claude Code 或 Codex 并行执行。它代表了一个很实用的方向：多 agent 不一定要做成玄学 swarm，先把任务拆分、状态可视化、人工验收这些工程流程做扎实。",
+      "tags": [
+        "开源项目",
+        "多Agent",
+        "开发工具"
+      ]
+    },
+    {
+      "num": 8,
+      "title": "CODA：把 Transformer Block 重写成 GEMM Epilogue，继续榨推理效率",
+      "url": "https://arxiv.org/abs/2605.19269",
+      "source": "arXiv / Hacker News",
+      "tldr": "CODA 关注的是更底层的推理优化：把 Transformer 中的部分计算改写成 GEMM epilogue 程序，减少额外 kernel 和内存往返。模型越来越大、调用越来越频繁之后，这类系统论文的价值会被放大，因为省下来的不是 benchmark 分数，而是真金白银的吞吐和延迟。",
+      "tags": [
+        "推理优化",
+        "Transformer",
+        "系统论文"
+      ]
+    },
+    {
+      "num": 9,
+      "title": "Datasette Agent 发布：把数据库探索变成可扩展 AI 助手",
+      "url": "https://datasette.io/blog/2026/datasette-agent/",
+      "source": "Datasette / Simon Willison",
+      "tldr": "Simon Willison 发布 Datasette Agent，把他的 LLM Python 库和 Datasette 数据工具正式接起来。重点是可扩展：agent 不只是聊天入口，而是围绕数据浏览、查询、插件和沙箱执行形成一个可审计的工作台。",
+      "tags": [
+        "数据工具",
+        "Agent",
+        "开源"
+      ]
+    },
+    {
+      "num": 10,
+      "title": "高效 Agentic Reasoning：让 agent 自己决定何时规划、规划多深",
+      "url": "https://huggingface.co/papers/2605.22138",
+      "source": "Hugging Face Papers",
+      "tldr": "这篇论文批评了一个常见问题：让模型无脑拉长 chain-of-thought，经常只是烧 token，不一定换来准确率。作者主张把决策拆成是否规划、如何模拟、何时执行，让 agent 的推理预算可控，这对长任务和生产环境非常关键。",
+      "tags": [
+        "Agent Reasoning",
+        "规划",
+        "论文"
+      ]
+    }
+  ]
+}
